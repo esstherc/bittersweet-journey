@@ -1,0 +1,520 @@
+{
+  "source_summary": {
+    "zh_edition": "《文化苦旅》新版，长江文艺出版社，2014",
+    "en_edition": "A Bittersweet Journey Through Culture, CN Times Books, 2015",
+    "zh_chapter_count": 26,
+    "en_chapter_count": 20,
+    "paired_chapter_count": 20,
+    "untranslated_chapter_count": 6
+  },
+  "paired_chapters": [
+    {
+      "number": 1,
+      "zh_file": "part0006.xhtml",
+      "en_file": "c01.xhtml",
+      "zh": {
+        "title": "牌坊",
+        "section_count": 7,
+        "paragraph_count": 128,
+        "character_count": 7706,
+        "opening": "童年的时候，家乡还有很多牌坊。",
+        "closing": "我只知，自己，就是从那解冻了的乡村走出。"
+      },
+      "en": {
+        "title": "Memorial Archway",
+        "section_count": 7,
+        "paragraph_count": 121,
+        "character_count": 28105,
+        "opening": "IN MY CHILDHOOD, there were many memorial archways in my hometown. The memorial archway is a kind of stone portal, traditionally two stories high. When the national “temple fair” w",
+        "closing": "I only know that I myself walked out of that village thawed."
+      },
+      "section_count_matches": true
+    },
+    {
+      "number": 2,
+      "zh_file": "part0007.xhtml",
+      "en_file": "c02.xhtml",
+      "zh": {
+        "title": "寺庙",
+        "section_count": 5,
+        "paragraph_count": 84,
+        "character_count": 4124,
+        "opening": "还记得吗，离尼姑庵一箭之遥的西北边，是吴山庙。",
+        "closing": "何老师听了一笑，说：“好了，佛在说，动身吧。”"
+      },
+      "en": {
+        "title": "Temple",
+        "section_count": 5,
+        "paragraph_count": 81,
+        "character_count": 15875,
+        "opening": "DO YOU STILL REMEMBER? At the northwest of the nunnery, within a stone’s throw, was the Wuwang Temple.",
+        "closing": "Teacher He smiled and said, “Okay. The Buddha says to go.”"
+      },
+      "section_count_matches": true
+    },
+    {
+      "number": 3,
+      "zh_file": "part0008.xhtml",
+      "en_file": "c03.xhtml",
+      "zh": {
+        "title": "我的山河",
+        "section_count": 5,
+        "paragraph_count": 55,
+        "character_count": 4753,
+        "opening": "我生长在一个靠山傍河的小村庄，是地地道道的“山河之子”。不知从哪里来了一群神秘的女教师，和我妈妈一起，把我从家乡的山河拉进了书本。后来，书本又把我推进了城市。在读了很多很多书，经历了很多很多灾难之后，我终于蓦然醒悟，发现一切文化的终极基准，人间是非的最后衡定，还是要看山河大地。说准确一点，要看山河大地所能给予的生存许诺。",
+        "closing": "这终点，曾被陶渊明准确地表述过：“托体同山阿。”"
+      },
+      "en": {
+        "title": "My Hometown",
+        "section_count": 5,
+        "paragraph_count": 54,
+        "character_count": 18630,
+        "opening": "I WAS BORN in a small village near a mountain and by a river. I’m absolutely a “son of mountains and rivers.” I did not know where such mysterious women teachers came from. However",
+        "closing": "Such a destination was once expressed accurately by Tao Yuanming: “The body is only entrusted to the mountains.”"
+      },
+      "section_count_matches": true
+    },
+    {
+      "number": 4,
+      "zh_file": "part0009.xhtml",
+      "en_file": "c04.xhtml",
+      "zh": {
+        "title": "都江堰",
+        "section_count": 4,
+        "paragraph_count": 49,
+        "character_count": 2942,
+        "opening": "一位年迈的老祖宗，没有成为挂在墙上的画像，没有成为写在书里的回忆，而是直到今天还在给后代挑水、送饭，这样的奇事你相信吗？",
+        "closing": "我想，若能把“拜水”和“问道”这两件事当作一件事，那么，也就领悟了中华文化的一大秘密。"
+      },
+      "en": {
+        "title": "Dujiangyan Irrigation System",
+        "section_count": 4,
+        "paragraph_count": 47,
+        "character_count": 13911,
+        "opening": "IMAGINE AN ANCESTOR from so far back we can’t work out which era they lived in, one who didn’t become notable enough for their portrait to hang on walls, or their name to appear in",
+        "closing": "nnia-old miracle of Dujiangyan, “paying respects to water” and “seeking the path” could be a single pursuit, and in this way, we’d have uncovered a great secret of Chinese culture."
+      },
+      "section_count_matches": true
+    },
+    {
+      "number": 5,
+      "zh_file": "part0010.xhtml",
+      "en_file": "c05.xhtml",
+      "zh": {
+        "title": "道士塔",
+        "section_count": 5,
+        "paragraph_count": 84,
+        "character_count": 5028,
+        "opening": "莫高窟门外，有一条河。过河有一片空地，高高低低建着几座僧人圆寂塔。塔呈圆形，状近葫芦，外敷白色。我去时，有几座已经坍弛，还没有修复。只见塔心是一个个木桩，塔身全是黄土，垒在青砖基座上。夕阳西下，朔风凛冽，整个塔群十分凄凉。",
+        "closing": "至于另一个男人，那个蒋孝琬的坟墓在哪里，我就完全不知道了。有知道的朋友，能告诉我吗？"
+      },
+      "en": {
+        "title": "The Taoist Priest’s Tower",
+        "section_count": 5,
+        "paragraph_count": 82,
+        "character_count": 21005,
+        "opening": "A RIVER FLOWS past the entrance to the Mogao Grottoes. Across the river is a patch of land on which stand several structures of varying heights: the memorial stupas of deceased mon",
+        "closing": "As for the third man, Jiang Xiaowan, I have no idea at all where his grave is. If anyone possesses this knowledge, please let me know?"
+      },
+      "section_count_matches": true
+    },
+    {
+      "number": 6,
+      "zh_file": "part0011.xhtml",
+      "en_file": "c06.xhtml",
+      "zh": {
+        "title": "莫高窟",
+        "section_count": 4,
+        "paragraph_count": 50,
+        "character_count": 4239,
+        "opening": "公元三六六年，有一位僧人在敦煌东南方鸣沙山东麓的断崖上开始开凿石窟，后来代代有人继续，这就成了著名的莫高窟。",
+        "closing": "莫高窟被那些文物拉得很长很长，几乎环绕了整个地球。那么，我们的心情也被拉长了，随着唐宋元明清千年不枯的笑容，延伸到整个世界。"
+      },
+      "en": {
+        "title": "Mogai Caves",
+        "section_count": 4,
+        "paragraph_count": 65,
+        "character_count": 23673,
+        "opening": "SOME OF THE GREATEST CIVILIZATIONS in the world resemble mighty folk we can imagine: the loftier their stature, as time goes on, the harder it is for them to lower themselves to in",
+        "closing": "earts, too, have been stretched, following a smile that has not withered for a thousand years, through the Tang, Song, Yuan, Ming and Qing, expanding to encompass the entire world."
+      },
+      "section_count_matches": true
+    },
+    {
+      "number": 7,
+      "zh_file": "part0012.xhtml",
+      "en_file": "c07.xhtml",
+      "zh": {
+        "title": "沙原隐泉",
+        "section_count": 0,
+        "paragraph_count": 41,
+        "character_count": 2424,
+        "opening": "沙漠中也会有路的，但这儿没有。",
+        "closing": "山，名为鸣沙山；泉，名为月牙泉。皆在敦煌境内。"
+      },
+      "en": {
+        "title": "A Secret Spring in the Sand",
+        "section_count": 0,
+        "paragraph_count": 39,
+        "character_count": 10197,
+        "opening": "ROADS EXIST even within the desert, although there are none here.",
+        "closing": " can raise her head and look at the dazzling walls of sand. This hill is named Echoing Sand Hill; this lake is called Crescent Lake. Both are within the borders of Dunhuang county."
+      },
+      "section_count_matches": true
+    },
+    {
+      "number": 8,
+      "zh_file": "part0013.xhtml",
+      "en_file": "c08.xhtml",
+      "zh": {
+        "title": "阳关雪",
+        "section_count": 0,
+        "paragraph_count": 31,
+        "character_count": 2634,
+        "opening": "在中国古代，文官兼有文化身份和官场身份。在平日，自己和别人关注的大多是官场身份。但奇怪的是，当峨冠博带早已零落成泥，崇楼华堂也都沦为草泽之后，那一杆竹管毛笔偶尔涂画的诗文，却有可能镌刻山河、雕镂人心，永不漫漶。",
+        "closing": "回去吧，时间已经不早，怕还要下雪。"
+      },
+      "en": {
+        "title": "Snow on the Southern Pass",
+        "section_count": 0,
+        "paragraph_count": 30,
+        "character_count": 11298,
+        "opening": "IN ANCIENT CHINA, government officials had both a cultural and bureaucratic status, the latter being the identity they and others generally focused on. The strange thing is, long a",
+        "closing": "Time to go back. It was getting late, and I was afraid it might snow again."
+      },
+      "section_count_matches": true
+    },
+    {
+      "number": 9,
+      "zh_file": "part0014.xhtml",
+      "en_file": "c09.xhtml",
+      "zh": {
+        "title": "西域喀什",
+        "section_count": 5,
+        "paragraph_count": 57,
+        "character_count": 5165,
+        "opening": "一个中国古代文人不管漂泊何处，晚年最大的向往就是回归故乡。这事到了近代那些具有世界历史视野的学者那里就不一样了，他们会以一生的学养把时间和空间浓缩，然后拄着拐杖站在书房的窗口看着远方。他们在想：如果生命能够重来一次，我最希望投生何处？",
+        "closing": "想到这里我笑了，心想汤因比先生向往西域的来世之魂，现在一定已经顺着这白色旗幡找到归宿，乐滋滋地安顿了下来。"
+      },
+      "en": {
+        "title": "Kashgar in the Western Regions",
+        "section_count": 5,
+        "paragraph_count": 55,
+        "character_count": 18503,
+        "opening": "NO MATTER HOW FAR an ancient Chinese writer traveled, his greatest dream was to return home. However, it is completely different for scholars with the world-historical views of mod",
+        "closing": "I smiled, and thought that the soul of Mr. Toynbee, yearning for the West Regions, now must find its destination among the white banners and settle down delightedly."
+      },
+      "section_count_matches": true
+    },
+    {
+      "number": 10,
+      "zh_file": "part0018.xhtml",
+      "en_file": "c10.xhtml",
+      "zh": {
+        "title": "山庄背影",
+        "section_count": 5,
+        "paragraph_count": 83,
+        "character_count": 10404,
+        "opening": "我们这些人，对清代总有一种复杂的情感阻隔。记得很小的时候，历史老师讲到“扬州十日”、“嘉定三屠”时，眼含泪花，这是清代的开始；而讲到“火烧圆明园”、“戊戌变法”时又有泪花了，这是清代的尾声。年迈的老师一哭，孩子们也跟着哭。清代历史，是小学中唯一用眼泪浸润的课程。从小种下的怨恨，很难化解得开。",
+        "closing": "秋雨注：这篇文章发表于一九九三年，后来被中国评论界看成是全部“清宫电视剧”的肇始之文。“清宫电视剧”拍得不错，但整体历史观念与我有很大差别。我对清代宫廷的看法，可参见本书另一篇《宁古塔》。"
+      },
+      "en": {
+        "title": "The Villa from Behind",
+        "section_count": 5,
+        "paragraph_count": 82,
+        "character_count": 43125,
+        "opening": "PEOPLE LIKE US have a complicated emotional reaction regarding the Qing Dynasty. As a child, I remember my history teacher’s eyes would begin to fill with tears as he spoke of the ",
+        "closing": "enturies always starts with a heroic band of strong individuals, but when the final period is dotted on the last sentence, all that is left is usually some refined, mournful souls."
+      },
+      "section_count_matches": true
+    },
+    {
+      "number": 11,
+      "zh_file": "part0022.xhtml",
+      "en_file": "c11.xhtml",
+      "zh": {
+        "title": "鱼尾山屋",
+        "section_count": 6,
+        "paragraph_count": 108,
+        "character_count": 11794,
+        "opening": "说明：",
+        "closing": "车队又开动了，越过峡谷，穿过人群，慢慢地驶进那座白石大门。"
+      },
+      "en": {
+        "title": "Fish Tail Lodge",
+        "section_count": 6,
+        "paragraph_count": 103,
+        "character_count": 41031,
+        "opening": "IN THE LAST YEAR of the twentieth century, with the help of Phoenix satellite television, I committed to tens of thousands of kilometers of adventure, and studied nearly all the ma",
+        "closing": "The motorcade started again, headed across the gorge, through the crowds, and slowly sailed through the white stone doors."
+      },
+      "section_count_matches": true
+    },
+    {
+      "number": 12,
+      "zh_file": "part0023.xhtml",
+      "en_file": "c12.xhtml",
+      "zh": {
+        "title": "北极寒夜",
+        "section_count": 9,
+        "paragraph_count": 99,
+        "character_count": 7253,
+        "opening": "这次考察欧洲，本来是想进一步为中华文明寻找对比坐标的。但是，欧洲果然太厉害了，每次踏入都会让人迷醉。我只知深一步、浅一步地往前走，处处都有感受，每天也写了不少，却忘了出行的目的。",
+        "closing": "这也正是我不赞成亨廷顿教授的地方，他只指出了各个文明之间有可能产生的冲突。事实上，二十一世纪的最根本冲突，产生在文明与非文明之间。守护全人类的整体文明，是迫在眉睫的当代大道。"
+      },
+      "en": {
+        "title": "Arctic Cold Night",
+        "section_count": 9,
+        "paragraph_count": 99,
+        "character_count": 25329,
+        "opening": "THE INVESTIGATION of Europe was meant to find further yardsticks of comparison with Chinese civilization. Europe, however, was also very pleasing, and every time I stepped into it ",
+        "closing": "t, the most fundamental conflict in the twenty-first century has been between civilization and noncivilization. In our time guarding the whole of civilization is the imminent path."
+      },
+      "section_count_matches": true
+    },
+    {
+      "number": 13,
+      "zh_file": "part0024.xhtml",
+      "en_file": "c13.xhtml",
+      "zh": {
+        "title": "远方的海",
+        "section_count": 8,
+        "paragraph_count": 75,
+        "character_count": 5683,
+        "opening": "此刻我正在西太平洋的一条小船上，浑身早已被海浪浇得透湿。一次次让海风吹干了，接着又是劈头盖脑的浪，满嘴咸苦，眼睛渍得生疼。",
+        "closing": "她一笑，说：“当然。”"
+      },
+      "en": {
+        "title": "Faraway Sea",
+        "section_count": 8,
+        "paragraph_count": 72,
+        "character_count": 18953,
+        "opening": "I WAS ON A BOAT IN THE WESTERN PACIFIC, and was already drenched by the waves from head to toe. I was dried by the sea winds time and time again, but again assaulted by the waves, ",
+        "closing": "She smiled and said, “Of course.”"
+      },
+      "section_count_matches": true
+    },
+    {
+      "number": 14,
+      "zh_file": "part0025.xhtml",
+      "en_file": "c14.xhtml",
+      "zh": {
+        "title": "谢家门孔",
+        "section_count": 10,
+        "paragraph_count": 142,
+        "character_count": 9594,
+        "opening": "说明：",
+        "closing": "这个白花的世界，今天就是他一个人，还有一双鞋。"
+      },
+      "en": {
+        "title": "Peephole of Family Xie",
+        "section_count": 10,
+        "paragraph_count": 136,
+        "character_count": 32506,
+        "opening": "AFTER THE “CHINA TOUR” AND “WORLD TOUR,” the third part of A Bittersweet Journey Through Culture—the “life journey”—was begun.",
+        "closing": "In this world of white flowers was only A Si today, as well as a pair of shoes."
+      },
+      "section_count_matches": true
+    },
+    {
+      "number": 15,
+      "zh_file": "part0026.xhtml",
+      "en_file": "c15.xhtml",
+      "zh": {
+        "title": "巴金百年",
+        "section_count": 10,
+        "paragraph_count": 227,
+        "character_count": 13488,
+        "opening": "在当代华人学者中，我也算是应邀到世界各地演讲最多的人之一吧？但我每次都要求邀请者，不向国内报道。原因，就不说了。",
+        "closing": "那就先写下这些文字。去不去看一看，以后再说。"
+      },
+      "en": {
+        "title": "Ba Jin’s Centennial",
+        "section_count": 10,
+        "paragraph_count": 220,
+        "character_count": 46264,
+        "opening": "AMONG CONTEMPORARY CHINESE SCHOLARS, I was the one invited to lecture around the world. But I requested those who invited me not to report to China each time, for reasons I will no",
+        "closing": "Then these words would suffice. As to whether I am going or not, let us talk later."
+      },
+      "section_count_matches": true
+    },
+    {
+      "number": 16,
+      "zh_file": "part0027.xhtml",
+      "en_file": "c16.xhtml",
+      "zh": {
+        "title": "佐临遗言",
+        "section_count": 6,
+        "paragraph_count": 197,
+        "character_count": 11553,
+        "opening": "一九三七年七月十日，萧伯纳的寓所。",
+        "closing": "对不起，黄佐临先生，这一次我没有尊重您的遗言：Let them say！"
+      },
+      "en": {
+        "title": "Last Words of Zuolin",
+        "section_count": 6,
+        "paragraph_count": 193,
+        "character_count": 40113,
+        "opening": "JULY 10, 1937. The house of George Bernard Shaw. More than two weeks later was Shaw’s eighty-first birthday. In those days, lots of people came for congratulations in advance, and ",
+        "closing": "I was sorry, Mr. Huang Zuolin, but this time I did not respect your words: “Let them say!”"
+      },
+      "section_count_matches": true
+    },
+    {
+      "number": 17,
+      "zh_file": "part0028.xhtml",
+      "en_file": "c17.xhtml",
+      "zh": {
+        "title": "寻石之路",
+        "section_count": 8,
+        "paragraph_count": 108,
+        "character_count": 7127,
+        "opening": "二十世纪末，最后那个冬天。我考察人类古文明四万公里，已由中东抵达南亚、中亚之间。处处枪口，步步恐怖，生命悬于一线。",
+        "closing": "我也老了，居然还有闲心写几句。我想，多数上了年纪的人都会像那些退休老教授，听到各种鼓噪绝不作声。因此，可怜的是历史，常常把鼓噪写成了课本。"
+      },
+      "en": {
+        "title": "Path to Shi Yige",
+        "section_count": 8,
+        "paragraph_count": 103,
+        "character_count": 25278,
+        "opening": "AT THE END OF THE TWENTIETH CENTURY, and in its final winter, I studied ancient civilizations for 40,000 kilometers, and arrived from the Middle East in the place between South Asi",
+        "closing": "st elderly people would like those retired professors, not saying a word when hearing any clamor. Therefore, it is the poor history that often writes the clamor into the textbooks."
+      },
+      "section_count_matches": true
+    },
+    {
+      "number": 18,
+      "zh_file": "part0029.xhtml",
+      "en_file": "c18.xhtml",
+      "zh": {
+        "title": "天人对话",
+        "section_count": 0,
+        "paragraph_count": 132,
+        "character_count": 8505,
+        "opening": "说明：",
+        "closing": "但是，我似乎已经听到您的回答：这都不重要。沧海滴水，何问其源？来自无限，归于无限。"
+      },
+      "en": {
+        "title": "Dialogue Between Heaven and Man",
+        "section_count": 0,
+        "paragraph_count": 130,
+        "character_count": 27875,
+        "opening": "THESE WERE THE MEDITATION PARAGRAPHS in my biographical “memory literature,” History of My Family, and also the spiritual conclusions of that book. Here I complete a special writin",
+        "closing": "However, I seemed to have heard your answer: that was not important. Why do you ask the source of water? From the infinite and to the infinite."
+      },
+      "section_count_matches": true
+    },
+    {
+      "number": 19,
+      "zh_file": "part0030.xhtml",
+      "en_file": "c19.xhtml",
+      "zh": {
+        "title": "为妈妈致悼词",
+        "section_count": 0,
+        "paragraph_count": 43,
+        "character_count": 3940,
+        "opening": "感谢诸位，来与我们一起，送别亲爱的妈妈。",
+        "closing": "二○一二年十二月十三日下午四时三十分，在妈妈的追悼会上。"
+      },
+      "en": {
+        "title": "Eulogy for my Mother",
+        "section_count": 0,
+        "paragraph_count": 43,
+        "character_count": 12737,
+        "opening": "THANK YOU ALL FOR COMING and joining us, to say farewell to my dear mother.",
+        "closing": "—4:30 p.m., December 13, 2012, at my mother’s memorial service."
+      },
+      "section_count_matches": true
+    },
+    {
+      "number": 20,
+      "zh_file": "part0031.xhtml",
+      "en_file": "c20.xhtml",
+      "zh": {
+        "title": "祭笔",
+        "section_count": 8,
+        "paragraph_count": 75,
+        "character_count": 8073,
+        "opening": "《秋雨合集》二十卷，在除夕的爆竹声中终于编成了，我轻轻放下手上的笔。",
+        "closing": "癸巳除夕至甲午春节。"
+      },
+      "en": {
+        "title": "Pen Memories",
+        "section_count": 8,
+        "paragraph_count": 75,
+        "character_count": 28382,
+        "opening": "TWENTY VOLUMES OF QIUYU COLLECTIONS were finally completed amid the firecrackers on New Year’s Eve. I gently put down the pen.",
+        "closing": "—From New Year’s Eve in Guisi Year to Spring Festival in Jiawu Year"
+      },
+      "section_count_matches": true
+    }
+  ],
+  "untranslated_chapters": [
+    {
+      "zh_file": "part0015.xhtml",
+      "zh": {
+        "title": "废井冷眼",
+        "section_count": 4,
+        "paragraph_count": 78,
+        "character_count": 5242,
+        "opening": "这儿的秋天已经很冷。",
+        "closing": "当然，这超出了那几个流放学者的知识范围。"
+      }
+    },
+    {
+      "zh_file": "part0016.xhtml",
+      "zh": {
+        "title": "杭州宣言",
+        "section_count": 6,
+        "paragraph_count": 62,
+        "character_count": 5243,
+        "opening": "《马可·波罗游记》说，杭州是世界上最高贵、最美丽的城市。杭州之外，中国还有很多别的美丽。",
+        "closing": "因为这些句子，曾经悄悄地推动过那些远航船队，因此也推动了世界。"
+      }
+    },
+    {
+      "zh_file": "part0017.xhtml",
+      "zh": {
+        "title": "黄州突围",
+        "section_count": 3,
+        "paragraph_count": 100,
+        "character_count": 8416,
+        "opening": "这便是黄州赤壁，或者说是东坡赤壁。赭红色的陡坡直逼着浩荡大江，坡上有险道可供俯瞰，江面有小船可供仰望。",
+        "closing": "引导千古杰作的前奏已经鸣响，一道神秘的天光射向黄州，《念奴娇·赤壁怀古》和前、后《赤壁赋》马上就要产生。"
+      }
+    },
+    {
+      "zh_file": "part0019.xhtml",
+      "zh": {
+        "title": "宁古塔",
+        "section_count": 6,
+        "paragraph_count": 86,
+        "character_count": 8222,
+        "opening": "东北终究是东北，现在已是盛夏的尾梢，江南的西瓜早就收藤了，而这里似乎还刚刚开旺，大路边高高低低地延绵着一堵用西瓜砌成的墙，瓜农们还在从绿油油的瓜地里一个个捧出来往上面堆。买了好几个搬到车上，先切开一个在路边啃起来。一口下去又是一惊，竟是我平生很少领略过的清爽和甘甜！",
+        "closing": "我站在这块古代称为宁古塔的土地上，长时间地举头四顾又终究低下头来，我向一些远年的灵魂祭奠——为他们大多来自浙江、上海、江苏、安徽那些我很熟悉的地方，更为他们在苦难中的高贵。"
+      }
+    },
+    {
+      "zh_file": "part0020.xhtml",
+      "zh": {
+        "title": "抱愧山西",
+        "section_count": 7,
+        "paragraph_count": 127,
+        "character_count": 10916,
+        "opening": "十余年前的某一天，我在翻阅一堆史料的时候大吃一惊，便急速放下手上的其他工作，专心致志地研究起来。很长一段时间，我查检了一本又一本的书籍，阅读了一篇又一篇的文稿，终于将信将疑地接受了这样一个结论：在十九世纪乃至以前相当长的时期内，中国最富有的省份不是我们现在可以想象的那些地区，而竟是山西。直到二十世纪初，山西仍是中国的金融贸易中心。北京、上海、广州、武汉等城市",
+        "closing": "业文明的散文。由这篇文章，我拥有了无数山西朋友。平遥民众为了保护我在文章中记述的城内遗迹，在古城外面兴建市民新区，作为搬迁点。市民新区竟命名为“秋雨新城”，真让我汗颜。更有趣的是，有一度外地几个嫉妒者对我发起了规模不小的诽谤，山西的出版物也有涉及，但很快就有山西学者在报纸上发表文章“山西应该对得起余秋雨”。厚道的山西人立即围起了一道保护我的墙，让我非常感动。"
+      }
+    },
+    {
+      "zh_file": "part0021.xhtml",
+      "zh": {
+        "title": "风雨天一阁",
+        "section_count": 8,
+        "paragraph_count": 75,
+        "character_count": 7122,
+        "opening": "已经决定，明天去天一阁。",
+        "closing": "登天一阁的楼梯时，我的脚步非常缓慢。我不断地问自己：你来了吗？你是哪一代的中国书生？"
+      }
+    }
+  ]
+}

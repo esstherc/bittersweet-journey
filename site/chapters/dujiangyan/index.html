@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="《文化苦旅》双语阅读地图原型：都江堰。故事被阅读，地图才显影。"
+    />
+    <title>山河显影 · 都江堰</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&family=Ysabeau:ital,wght@0,400..700;1,400..700&display=swap"
+    />
+    <link rel="stylesheet" href="./styles.css?v=20260728-4" />
+  </head>
+  <body data-language="zh">
+    <div class="paper-noise" aria-hidden="true"></div>
+
+    <header class="masthead">
+      <a class="wordmark" href="../../index.html" aria-label="返回中国总地图">
+        <span class="wordmark-cn">山河显影</span>
+        <span class="wordmark-en">Land, Made Visible</span>
+      </a>
+
+      <div class="chapter-meta">
+        <span class="chapter-index">04 / 20</span>
+        <span class="chapter-name" data-copy="chapter-title">都江堰</span>
+      </div>
+
+      <div class="header-actions">
+        <a class="back-atlas" href="../../index.html">
+          <span aria-hidden="true">←</span>
+          <span data-copy="back-atlas">总地图</span>
+        </a>
+        <button class="sound-toggle" type="button" aria-pressed="false" title="水声（原型占位）">
+          <span class="sound-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+          <span data-copy="sound">水声</span>
+        </button>
+        <div class="language-switch" role="group" aria-label="Language">
+          <button type="button" data-language="zh" aria-pressed="true">中文</button>
+          <span aria-hidden="true">／</span>
+          <button type="button" data-language="en" aria-pressed="false">EN</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="experience">
+      <section class="map-stage" aria-labelledby="map-title">
+        <div class="map-heading">
+          <p class="eyebrow" data-copy="map-eyebrow">第一卷 · 山河</p>
+          <h1 id="map-title" data-copy="chapter-title">都江堰</h1>
+          <p class="map-subtitle" data-copy="chapter-subtitle">水，被读出来的形状</p>
+        </div>
+
+        <svg
+          class="story-map"
+          viewBox="0 0 1000 760"
+          role="img"
+          aria-labelledby="svg-title svg-desc"
+        >
+          <title id="svg-title">都江堰文学地图</title>
+          <desc id="svg-desc">随着阅读章节推进，岷江、鱼嘴、飞沙堰、宝瓶口与青城山逐层显影。</desc>
+
+          <defs>
+            <filter id="ink-bleed" x="-20%" y="-20%" width="140%" height="140%">
+              <feTurbulence baseFrequency="0.012 0.08" numOctaves="2" seed="11" result="noise" />
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="3.6" />
+            </filter>
+            <filter id="soft-ink" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="1.7" />
+            </filter>
+            <linearGradient id="river-fade" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#607f8b" stop-opacity=".12" />
+              <stop offset="35%" stop-color="#365f70" stop-opacity=".9" />
+              <stop offset="100%" stop-color="#244858" stop-opacity=".68" />
+            </linearGradient>
+            <linearGradient id="terrain-west-fade" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="white" stop-opacity="1" />
+              <stop offset="48%" stop-color="white" stop-opacity=".9" />
+              <stop offset="78%" stop-color="white" stop-opacity=".26" />
+              <stop offset="100%" stop-color="white" stop-opacity="0" />
+            </linearGradient>
+            <filter id="terrain-edge-blur" x="-10%" y="-10%" width="120%" height="120%">
+              <feGaussianBlur stdDeviation="15" />
+            </filter>
+            <mask id="terrain-hillshade-mask" maskUnits="userSpaceOnUse" x="243.8" y="54" width="708.4" height="654">
+              <rect
+                x="251"
+                y="61"
+                width="694"
+                height="640"
+                rx="8"
+                fill="url(#terrain-west-fade)"
+                filter="url(#terrain-edge-blur)"
+              />
+            </mask>
+            <pattern id="field-lines" width="42" height="28" patternUnits="userSpaceOnUse">
+              <path d="M0 0H42M0 0V28" fill="none" stroke="#5d6e61" stroke-opacity=".2" stroke-width=".8" />
+            </pattern>
+            <path id="quote-path" d="M 110 585 C 320 650, 520 655, 800 590" />
+          </defs>
+
+          <g class="terrain-hillshade reveal-layer" data-level="1" aria-hidden="true">
+            <image
+              href="./assets/dujiangyan-hillshade.png"
+              x="243.8"
+              y="54"
+              width="708.4"
+              height="654"
+              preserveAspectRatio="none"
+              mask="url(#terrain-hillshade-mask)"
+            />
+          </g>
+
+          <g class="ghost-contours" aria-hidden="true">
+            <path id="terrain-contours-low" />
+            <path id="terrain-contours-high" class="contours-high" />
+          </g>
+
+          <g class="terrain-caption reveal-layer" data-level="1" aria-hidden="true">
+            <text x="190" y="200" class="terrain-label label-cn">西北山地 · 岷山</text>
+            <text x="190" y="200" class="terrain-label label-en">Min Mountains</text>
+          </g>
+
+          <g class="river-system" filter="url(#ink-bleed)">
+            <g class="reveal-layer source-river" data-level="1">
+              <path id="local-min-shadow" class="river-shadow" d="M418 -55C447 85 398 156 432 255C468 361 432 409 469 506" />
+              <path id="local-min-main" class="river-main" d="M418 -55C447 85 398 156 432 255C468 361 432 409 469 506" />
+            </g>
+
+            <g class="reveal-layer split-river" data-level="2">
+              <path id="local-outer-shadow" class="river-shadow" d="M469 506C402 548 320 553 204 594C98 632 31 688 -62 779" />
+              <path id="local-outer-main" class="river-main" d="M469 506C402 548 320 553 204 594C98 632 31 688 -62 779" />
+              <path id="local-inner-shadow" class="river-shadow narrow" d="M469 506C514 541 534 587 610 622C697 662 793 669 1061 700" />
+              <path id="local-inner-main" class="river-main narrow" d="M469 506C514 541 534 587 610 622C697 662 793 669 1061 700" />
+            </g>
+
+            <g class="reveal-layer irrigation" data-level="3">
+              <path id="local-primary-canals" class="canal fine" />
+              <path id="local-secondary-canals" class="canal hairline" />
+            </g>
+          </g>
+
+          <g class="chengdu-plain reveal-layer" data-level="4" aria-hidden="true">
+            <path id="plain-wash" class="plain-wash" d="M650 390C771 346 937 373 1055 479C1107 528 1075 642 956 690C837 733 693 661 642 559C613 501 614 434 650 390Z" />
+            <path id="field-plane" class="field-plane" d="M708 433C812 397 938 422 1016 491C1058 529 1026 612 945 644C844 684 745 625 703 548C679 504 680 462 708 433Z" />
+            <circle id="chengdu-mark" class="chengdu-mark" cx="898" cy="524" r="4" />
+            <text id="chengdu-plain-label-cn" x="914" y="519" class="plain-label label-cn">成都</text>
+            <text id="chengdu-plain-label-en" x="914" y="519" class="plain-label label-en">Chengdu</text>
+            <text x="830" y="625" class="plain-title label-cn">成都平原</text>
+            <text x="830" y="625" class="plain-title label-en">Chengdu Plain</text>
+          </g>
+
+          <g class="structures">
+            <path id="engineering-leader" class="engineering-leader reveal-layer" data-level="2" />
+            <g id="dujiangyan-site" class="map-point site-point reveal-layer" data-level="1" transform="translate(470 506)">
+              <circle r="15" />
+              <circle class="site-core" r="3" />
+              <text x="25" y="-9" class="label-cn">都江堰</text>
+              <text x="25" y="10" class="label-en">Dujiangyan</text>
+            </g>
+            <g id="qingcheng-point" class="map-point reveal-layer" data-level="4" data-section-target="3" transform="translate(864 535)">
+              <circle r="18" />
+              <path d="M-7 6L0-7L7 6" />
+              <text x="28" y="-11" class="label-cn">青城山</text>
+              <text x="28" y="-11" class="label-en">Qingcheng</text>
+            </g>
+
+            <g class="engineering-inset reveal-layer" data-level="2" transform="translate(650 76)">
+              <rect width="304" height="208" rx="2" />
+              <text x="18" y="25" class="inset-kicker">31.00° N · Engineering detail</text>
+              <text x="18" y="48" class="inset-title label-cn">水利工程放大图</text>
+              <text x="18" y="48" class="inset-title label-en">Dujiangyan Waterworks</text>
+              <g transform="translate(10 24)">
+                <path id="core-waterways" class="core-waterways" />
+                <g id="core-yuzui" class="map-point core-point" data-section-target="1">
+                  <circle r="9" />
+                  <path d="M-4 5L0-6L4 5Z" />
+                  <text x="12" y="-4" class="label-cn">鱼嘴</text>
+                  <text x="12" y="-4" class="label-en">Yuzui</text>
+                </g>
+                <g id="core-feishayan" class="map-point core-point" data-section-target="2">
+                  <circle r="9" />
+                  <path d="M-5 0H5M0-5V5" />
+                  <text x="-12" y="-4" text-anchor="end" class="label-cn">飞沙堰</text>
+                  <text x="-12" y="-4" text-anchor="end" class="label-en">Feishayan</text>
+                </g>
+                <g id="core-baopingkou" class="map-point core-point" data-section-target="2">
+                  <circle r="9" />
+                  <path d="M-4-4H4V4H-4Z" />
+                  <text x="12" y="-4" class="label-cn">宝瓶口</text>
+                  <text x="12" y="-4" class="label-en">Baopingkou</text>
+                </g>
+              </g>
+            </g>
+          </g>
+
+          <g class="place-labels">
+            <text id="minjiang-label-cn" x="382" y="121" class="water-label label-cn">岷江</text>
+            <text id="minjiang-label-en" x="383" y="121" class="water-label label-en">Min River</text>
+            <text id="outer-label" x="115" y="661" class="water-label label-cn reveal-layer" data-level="2">外江 · 金马河</text>
+            <text id="outer-label-en" x="115" y="661" class="water-label label-en reveal-layer" data-level="2">Outer River · Jinma River</text>
+            <text id="inner-label" x="734" y="663" class="water-label label-cn reveal-layer" data-level="2">内江</text>
+            <text id="inner-label-en" x="734" y="663" class="water-label label-en reveal-layer" data-level="2">Inner River</text>
+          </g>
+
+          <g class="map-quote reveal-layer" data-level="4">
+            <text>
+              <textPath href="#quote-path" startOffset="8%" data-copy="map-quote">
+                拜水都江堰，问道青城山
+              </textPath>
+            </text>
+          </g>
+
+        </svg>
+
+        <button class="map-note" type="button" aria-label="地图说明">
+          <span>Schematic map</span>
+          <span data-copy="not-scale">非测绘比例</span>
+        </button>
+
+        <nav class="section-rail" aria-label="章节段落">
+          <span class="rail-line" aria-hidden="true"><i></i></span>
+          <div class="section-buttons"></div>
+        </nav>
+
+        <div class="opening-curtain">
+          <p class="curtain-kicker">Chapter 04 · Land</p>
+          <div class="curtain-title curtain-title-cn" lang="zh-CN">
+            <span>都</span><span>江</span><span>堰</span>
+          </div>
+          <div class="curtain-title curtain-title-en" lang="en">
+            <span>Dujiangyan</span>
+            <span>Irrigation System</span>
+          </div>
+          <p class="curtain-thesis" data-copy="thesis">地图并不存在，直到它被阅读。</p>
+          <button class="open-book" type="button">
+            <span data-copy="open">开卷</span>
+            <svg viewBox="0 0 56 18" aria-hidden="true">
+              <path d="M1 9H51M44 2L52 9L44 16" />
+            </svg>
+          </button>
+        </div>
+      </section>
+
+      <article class="reader-panel" aria-label="章节正文">
+        <div class="reading-copy"></div>
+
+        <footer class="reader-footer">
+          <img src="./assets/seal-water.svg" alt="" class="water-seal" />
+          <button class="finish-chapter" type="button">
+            <span data-copy="finish">完成本章 · 返回总图</span>
+            <svg viewBox="0 0 44 14" aria-hidden="true">
+              <path d="M1 7H39M34 2L40 7L34 12" />
+            </svg>
+          </button>
+        </footer>
+      </article>
+    </main>
+
+    <div class="chapter-complete-overlay" role="status" aria-live="polite" aria-hidden="true">
+      <span class="complete-ripple"></span>
+      <p data-copy="complete-kicker">一处山河已经显影</p>
+      <strong data-copy="complete-line">岷江的水，正在回到中国。</strong>
+    </div>
+
+    <footer class="footnote">
+      <span data-copy="source">文本：余秋雨《文化苦旅》</span>
+      <span>↑ ↓ &nbsp; Read &nbsp; / &nbsp; L &nbsp; Language</span>
+    </footer>
+
+    <script src="../../data/real-geography.js"></script>
+    <script src="./chapter-data.js"></script>
+    <script src="./app.js?v=20260728-3"></script>
+  </body>
+</html>

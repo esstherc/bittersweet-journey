@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="《文化苦旅》双语阅读地图：山庄背影。以承德避暑山庄和外八庙的真实地理关系，阅读一个王朝的背影。"
+    />
+    <title>山河显影 · 山庄背影</title>
+    <link rel="stylesheet" href="./styles.css?v=20260728-1" />
+  </head>
+  <body data-language="zh" data-reading-level="1">
+    <div class="paper-grain" aria-hidden="true"></div>
+
+    <header class="masthead">
+      <a class="wordmark" href="../../index.html" aria-label="返回中国总地图">
+        <span class="wordmark-cn">山河显影</span>
+        <span class="wordmark-en">Land, Made Visible</span>
+      </a>
+      <div class="chapter-meta">
+        <span>10 / 20</span>
+        <span data-copy="chapter-title">山庄背影</span>
+      </div>
+      <nav class="language-switch" aria-label="Language">
+        <button type="button" data-language="zh" aria-pressed="true">中</button>
+        <span>/</span>
+        <button type="button" data-language="en" aria-pressed="false">EN</button>
+      </nav>
+    </header>
+
+    <main class="chapter-layout">
+      <section class="map-stage" aria-label="承德避暑山庄与外八庙地理图">
+        <div class="map-heading">
+          <p data-copy="map-eyebrow">第一卷 · 山河</p>
+          <h1 data-copy="chapter-title">山庄背影</h1>
+          <p class="map-subtitle" data-copy="chapter-subtitle">一把罗圈椅，坐过一个疲惫的王朝</p>
+        </div>
+
+        <svg class="regional-map" viewBox="0 0 980 760" role="img" aria-labelledby="regional-title regional-desc">
+          <title id="regional-title">北京、古北口、承德与木兰围场区域关系</title>
+          <desc id="regional-desc">以真实地理锚点呈现清帝北巡空间，路线和长城线为历史地理示意。</desc>
+          <defs>
+            <radialGradient id="regional-glow" cx="50%" cy="50%" r="50%">
+              <stop offset="0" stop-color="#a25b4c" stop-opacity=".26" />
+              <stop offset="1" stop-color="#a25b4c" stop-opacity="0" />
+            </radialGradient>
+          </defs>
+          <g id="regional-geography"></g>
+        </svg>
+
+        <svg class="resort-map" viewBox="0 0 980 760" role="img" aria-labelledby="map-title map-desc">
+          <title id="map-title">承德避暑山庄与外八庙</title>
+          <desc id="map-desc">按真实经纬度标示避暑山庄及主要外庙，园内分区为文学示意。</desc>
+          <defs>
+            <linearGradient id="lake-silver" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#afc0bd" stop-opacity=".72" />
+              <stop offset="1" stop-color="#6f8b89" stop-opacity=".25" />
+            </linearGradient>
+            <linearGradient id="mountain-ink" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#171c1b" stop-opacity=".9" />
+              <stop offset="1" stop-color="#3b403b" stop-opacity=".18" />
+            </linearGradient>
+            <filter id="soft-shadow">
+              <feGaussianBlur stdDeviation="12" />
+            </filter>
+          </defs>
+
+          <g class="coordinate-grid" aria-hidden="true">
+            <path d="M90 110H890M90 250H890M90 390H890M90 530H890M90 670H890" />
+            <path d="M90 90V690M290 90V690M490 90V690M690 90V690M890 90V690" />
+          </g>
+
+          <g class="chair-shadow" aria-hidden="true">
+            <path d="M112 575C78 480 91 311 165 214C248 105 405 105 502 151C603 82 759 108 840 222C882 280 896 362 878 441" />
+          </g>
+
+          <g class="mountain-chair reveal-layer is-visible" data-level="1" aria-hidden="true">
+            <path
+              class="mountain-mass"
+              d="M94 559C110 481 117 378 154 298C194 210 275 167 359 183C410 193 450 207 500 175C573 128 670 160 737 213C816 275 848 363 841 457L764 456C752 375 718 318 665 288C608 256 562 257 502 290C451 319 408 304 355 294C286 280 239 319 216 380C196 432 190 500 187 563Z"
+            />
+            <path class="ridge-line" d="M121 518C156 436 166 305 267 247C353 197 421 271 500 218C590 157 741 225 810 378" />
+            <path class="ridge-line faint" d="M158 545C190 438 211 349 296 315C374 284 431 340 501 293C581 238 696 268 773 409" />
+            <text x="145" y="322" class="map-note chair-label" data-copy="chair-label">山岭如椅背 · 面南而坐</text>
+          </g>
+
+          <g class="resort-diagram reveal-layer" data-level="2">
+            <path
+              class="resort-boundary"
+              d="M258 418C296 378 360 366 421 382C470 394 506 430 558 437C619 445 670 486 674 548C678 613 619 666 549 678C454 695 336 664 284 608C241 562 225 465 258 418Z"
+            />
+            <path class="zone mountain-zone" d="M258 418C307 375 383 369 445 395C421 465 402 551 418 653C356 643 306 620 278 581C243 531 232 458 258 418Z" />
+            <path class="zone plain-zone" d="M444 395C503 421 553 425 602 463C570 489 531 518 493 543C447 575 421 619 418 653C397 547 421 463 444 395Z" />
+            <path class="zone lake-zone" fill="url(#lake-silver)" d="M493 543C536 512 575 480 602 463C653 505 682 561 656 612C631 658 568 679 503 675C472 673 444 665 418 653C429 609 451 574 493 543Z" />
+            <path class="palace-axis" d="M548 670L548 584L565 567L565 532" />
+            <path class="palace-gate" d="M523 671H573M531 655H565M536 655V625H560V655M540 625L548 616L556 625" />
+            <text x="303" y="515" class="zone-label" data-copy="mountain-zone">山区</text>
+            <text x="463" y="469" class="zone-label" data-copy="plain-zone">平原区</text>
+            <text x="555" y="596" class="zone-label lake-label" data-copy="lake-zone">湖区</text>
+            <text x="588" y="674" class="map-note" data-copy="palace-zone">宫殿区 · 正门</text>
+          </g>
+
+          <g id="geographic-points" class="geographic-points reveal-layer" data-level="3"></g>
+          <g class="empire-lines reveal-layer" data-level="3" aria-hidden="true">
+            <path id="temple-arc" />
+            <text x="625" y="245" class="map-note" data-copy="outer-temples">外庙环列 · 山庄在内</text>
+          </g>
+
+          <g class="wanshu-event reveal-layer" data-level="3">
+            <rect class="event-card" x="335" y="430" width="345" height="92" rx="2" />
+            <circle cx="374" cy="478" r="22" />
+            <path class="wanshu-tent" d="M358 491L374 459L390 491M364 491V476H384V491M353 491H395" />
+            <text x="407" y="455" class="event-year">1793 · 09 · 14</text>
+            <text x="407" y="480" class="event-title" data-copy="wanshu-title">万树园 · 英国使团觐见</text>
+            <text x="407" y="502" class="event-note" data-copy="wanshu-note">原文事件落点 · 园内方位示意</text>
+          </g>
+
+          <g class="closing-shadow reveal-layer" data-level="4" aria-hidden="true">
+            <path d="M231 391C352 342 526 377 657 450L692 706H220Z" />
+            <path class="closed-gate" d="M513 678V624H548V678M548 624H583V678M513 624L548 600L583 624" />
+          </g>
+
+          <g class="reflection reveal-layer" data-level="5" aria-hidden="true">
+            <ellipse cx="554" cy="603" rx="75" ry="27" />
+            <path class="figure" d="M554 548C545 548 539 555 539 565C539 574 544 579 549 583L538 617M554 583L565 617M546 591H563" />
+            <path class="reflection-lines" d="M505 626C530 620 579 620 604 627M520 640C542 635 569 635 590 640M535 653C548 650 563 650 576 653" />
+            <text x="614" y="630" class="map-note" data-copy="afterimage">湖水留下最后的背影</text>
+          </g>
+
+          <g class="summer-palace-memory reveal-layer" data-level="5">
+            <path class="memory-link" d="M556 601C590 564 613 514 626 459" />
+            <text x="555" y="535" class="memory-link-label" data-copy="memory-link">记忆连接 · 不是同一地点</text>
+            <rect x="610" y="354" width="266" height="124" rx="2" />
+            <path class="memory-lake" d="M638 433C664 413 701 414 724 432C700 427 679 438 662 454C652 450 644 443 638 433Z" />
+            <circle cx="633" cy="393" r="4" />
+            <text x="649" y="397" class="memory-place" data-copy="summer-palace">北京 · 颐和园</text>
+            <text x="628" y="424" class="memory-distance" data-copy="memory-distance">距承德约179 km · 直线</text>
+            <text x="628" y="465" class="memory-event" data-copy="wang-event">王国维于此投水 · 1927</text>
+            <text x="458" y="646" class="chengde-present" data-copy="chengde-present">作者此时面对承德湖水</text>
+          </g>
+
+          <g class="north-arrow" aria-hidden="true">
+            <path d="M865 138V92M857 106L865 91L873 106" />
+            <text x="865" y="157" text-anchor="middle">N</text>
+          </g>
+
+          <g class="scale-bar" aria-hidden="true">
+            <path d="M708 690H854M708 684V696M781 684V696M854 684V696" />
+            <text x="708" y="715">0</text>
+            <text x="762" y="715">500 m</text>
+            <text x="838" y="715">1 km</text>
+          </g>
+        </svg>
+
+        <div class="map-status" aria-live="polite">
+          <span class="status-number">1703</span>
+          <span class="status-label" data-copy="status-1">门外 · 暮色</span>
+        </div>
+
+        <div class="time-rail" aria-label="历史时间轴">
+          <span>1703</span><i></i><span>1793</span><i></i><span>1861</span><i></i><span>1927</span>
+          <b aria-hidden="true"></b>
+        </div>
+
+        <button class="map-data-button" type="button" aria-expanded="false">
+          <span aria-hidden="true">◎</span>
+          <span data-copy="map-data">地图数据与准确性</span>
+        </button>
+
+        <aside class="map-data-panel" aria-hidden="true">
+          <button class="close-data" type="button" aria-label="关闭">×</button>
+          <p class="data-kicker">WGS 84 · 2026.07.28</p>
+          <h2 data-copy="data-title">真实地点与文学分区</h2>
+          <dl>
+            <div><dt data-copy="data-property-label">遗产地</dt><dd data-copy="data-property">避暑山庄与周围寺庙，UNESCO中心坐标约40.9875°N、117.9375°E；山庄遗产区611.2公顷。</dd></div>
+            <div><dt data-copy="data-points-label">地点</dt><dd data-copy="data-points">山庄及六处外庙按WGS 84坐标投影，表达彼此真实方位与距离。</dd></div>
+            <div><dt data-copy="data-zones-label">分区</dt><dd data-copy="data-zones">西北山地、北部平原、东南湖区依据承德市文物局总体格局绘制；内部轮廓为阅读示意，不是测绘边界。</dd></div>
+            <div><dt data-copy="data-story-label">叙事</dt><dd data-copy="data-story">“罗圈椅”、闭门和湖中背影来自原文意象，不代表可测量地物。</dd></div>
+            <div><dt data-copy="data-regional-label">区域轴线</dt><dd data-copy="data-regional">北京、古北口、承德使用地理坐标；木兰围场以官方公布区域范围表达。连线表示北巡空间关系，不是复原的逐段御道。</dd></div>
+            <div><dt data-copy="data-memory-label">跨城记忆</dt><dd data-copy="data-memory">颐和园使用UNESCO坐标，与承德直线约179公里。王国维事件发生在北京；承德湖面只是作者产生联想的位置。</dd></div>
+          </dl>
+          <div class="map-legend" aria-label="地图符号">
+            <p data-copy="legend-title">图面语法</p>
+            <span><i class="legend-point"></i><b data-copy="legend-point">坐标地点</b></span>
+            <span><i class="legend-area"></i><b data-copy="legend-area">区域或简化分区</b></span>
+            <span><i class="legend-route"></i><b data-copy="legend-route">历史空间关系</b></span>
+            <span><i class="legend-literary"></i><b data-copy="legend-literary">文学意象</b></span>
+          </div>
+          <p class="data-disclaimer" data-copy="data-disclaimer">文学阅读地图，不替代测绘、导航或遗产地管理信息。</p>
+          <div class="source-links">
+            <a href="https://whc.unesco.org/en/list/703/" target="_blank" rel="noreferrer">UNESCO</a>
+            <a href="https://wwj.chengde.gov.cn/art/2018/11/8/art_962_753975.html" target="_blank" rel="noreferrer" data-copy="chengde-source">承德市文物局</a>
+            <a href="https://whc.unesco.org/en/list/880/maps/" target="_blank" rel="noreferrer" data-copy="summer-source">颐和园坐标</a>
+            <a href="https://shj.chengde.gov.cn/art/2013/7/10/art_820_108214.html" target="_blank" rel="noreferrer" data-copy="mulan-source">木兰区域</a>
+          </div>
+        </aside>
+      </section>
+
+      <aside class="reader-panel">
+        <div class="reader-intro">
+          <p class="reader-kicker" data-copy="reader-kicker">承德 · 塞外</p>
+          <p class="reader-thesis" data-copy="thesis">园林没有移动。移动的是看它的时代。</p>
+          <button class="open-book" type="button">
+            <span data-copy="open">绕到山庄背后</span><i aria-hidden="true">↓</i>
+          </button>
+        </div>
+        <div class="reading-copy" aria-live="polite"></div>
+        <footer class="reader-finish">
+          <p data-copy="complete-line">一个王朝离开后，山水仍坐在原处。</p>
+          <button class="finish-chapter" type="button" data-copy="finish">完成本章 · 返回总图</button>
+          <small data-copy="source">文本：余秋雨《文化苦旅》</small>
+        </footer>
+      </aside>
+    </main>
+
+    <nav class="reading-rail" aria-label="阅读章节">
+      <span data-copy="rail-caption">原文章节</span>
+      <div class="section-buttons"></div>
+      <div class="rail-line"><i></i></div>
+    </nav>
+
+    <div class="opening-gate" aria-hidden="false">
+      <div class="gate-panel gate-left"></div>
+      <div class="gate-panel gate-right"></div>
+      <div class="gate-title">
+        <span data-copy="opening-kicker">承德 · 薄暮</span>
+        <strong data-copy="chapter-title">山庄背影</strong>
+        <small data-copy="opening-line">在椅背之外，先看见山。</small>
+        <button class="gate-open" type="button" data-copy="open">绕到山庄背后</button>
+      </div>
+    </div>
+
+    <div class="chapter-complete-overlay" aria-hidden="true">
+      <span>影</span>
+      <p data-copy="complete-kicker">一处山河已经显影</p>
+      <strong data-copy="complete-line">一个王朝离开后，山水仍坐在原处。</strong>
+    </div>
+
+    <script src="./chapter-data.js"></script>
+    <script src="./geography-data.js"></script>
+    <script src="./app.js?v=20260728-1"></script>
+  </body>
+</html>

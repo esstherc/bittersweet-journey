@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="水字印章">
+  <defs>
+    <filter id="rough" x="-15%" y="-15%" width="130%" height="130%">
+      <feTurbulence baseFrequency=".04" numOctaves="3" seed="9" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.2"/>
+    </filter>
+  </defs>
+  <g fill="none" stroke="#9d3d31" stroke-width="4" stroke-linecap="square" filter="url(#rough)">
+    <path d="M8 9H87V87H8Z"/>
+    <path d="M45 16C50 30 49 48 47 78"/>
+    <path d="M22 34C30 39 35 44 39 49C34 60 29 69 19 76"/>
+    <path d="M72 26C64 34 58 41 53 49C59 62 67 71 79 77"/>
+  </g>
+</svg>
