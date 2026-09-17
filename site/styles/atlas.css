@@ -1035,6 +1035,10 @@ body.is-returning .reveal-receipt {
   letter-spacing: .07em;
 }
 
+.atlas-citation {
+  margin-right: auto;
+}
+
 .reset-progress {
   appearance: none;
   padding: 0;
@@ -1105,10 +1109,15 @@ body.is-returning .reveal-receipt {
 
   .atlas-footer {
     position: static;
+    justify-content: flex-end;
     gap: 16px;
     height: 40px;
     padding: 0 18px;
     font-size: 9px;
+  }
+
+  .atlas-citation {
+    display: none;
   }
 
   .view-stamps {
