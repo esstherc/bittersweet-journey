@@ -97,6 +97,7 @@ button {
 .map-subtitle,
 .map-note,
 .curtain-kicker,
+.curtain-teaser,
 .curtain-en,
 .reader-location,
 .reader-progress,
@@ -637,9 +638,17 @@ body.is-open .opening-curtain {
 }
 
 .curtain-kicker {
-  margin: 0 0 28px;
+  margin: 0 0 10px;
   color: var(--water);
   font-size: 9px;
+}
+
+.curtain-teaser {
+  margin: 0 0 24px;
+  color: var(--seal);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: .04em;
 }
 
 .curtain-title {
@@ -1087,6 +1096,7 @@ body[data-language="en"] :is(
   .map-note,
   .section-button,
   .curtain-kicker,
+  .curtain-teaser,
   .reader-location,
   .reader-progress,
   .footnote,

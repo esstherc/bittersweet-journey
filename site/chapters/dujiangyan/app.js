@@ -10,6 +10,7 @@
   const ui = {
     zh: {
       "map-eyebrow": "第一卷 · 山河",
+      "map-teaser": "水在这里被分开",
       "chapter-title": data.zh.title,
       "chapter-subtitle": "水，被读出来的形状",
       thesis: "地图并不存在，直到它被阅读。",
@@ -27,6 +28,7 @@
     },
     en: {
       "map-eyebrow": "Book I · Land",
+      "map-teaser": "Where water divides",
       "chapter-title": data.en.title,
       "chapter-subtitle": "The shape of water, read into view",
       thesis: "The map does not exist until it is read.",
@@ -44,11 +46,16 @@
     }
   };
 
+  const pageParams = new URLSearchParams(window.location.search);
+  const requestedLanguage = pageParams.get("lang");
   const state = {
-    language: window.localStorage.getItem("bittersweet-journey:language") || "zh",
+    language: ["zh", "en"].includes(requestedLanguage)
+      ? requestedLanguage
+      : window.localStorage.getItem("bittersweet-journey:language") || "zh",
     active: 0,
     open: false
   };
+  window.localStorage.setItem("bittersweet-journey:language", state.language);
 
   const readableEnglishOpenings = new Map([
     ["IMAGINE AN ANCESTOR", "Imagine an ancestor"],
@@ -146,6 +153,7 @@
   const completeOverlay = document.querySelector(".chapter-complete-overlay");
   const sectionButtons = document.querySelector(".section-buttons");
   const finishButton = document.querySelector(".finish-chapter");
+  const backAtlas = document.querySelector(".back-atlas");
   const railProgress = document.querySelector(".rail-line i");
   const languageButtons = [...document.querySelectorAll("[data-language]")];
   const revealLayers = [...document.querySelectorAll(".reveal-layer")];
@@ -202,6 +210,7 @@
   function setText() {
     document.documentElement.lang = state.language === "zh" ? "zh-CN" : "en";
     document.body.dataset.language = state.language;
+    backAtlas.href = `../../index.html?lang=${state.language}`;
 
     document.querySelectorAll("[data-copy]").forEach((node) => {
       const key = node.dataset.copy;
@@ -290,7 +299,7 @@
     document.body.classList.add("is-completing");
     completeOverlay.setAttribute("aria-hidden", "false");
     window.setTimeout(() => {
-      window.location.href = "../../index.html?revealed=dujiangyan";
+      window.location.href = `../../index.html?revealed=dujiangyan&lang=${state.language}`;
     }, 3000);
   }
 

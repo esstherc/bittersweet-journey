@@ -11,6 +11,7 @@
   const ui = {
     zh: {
       "map-eyebrow": "第一卷 · 山河",
+      "map-teaser": "椅背之外的王朝",
       "chapter-title": data.zh.title,
       "chapter-subtitle": "一把罗圈椅，坐过一个疲惫的王朝",
       "chair-label": "山岭如椅背 · 面南而坐",
@@ -67,6 +68,7 @@
     },
     en: {
       "map-eyebrow": "Book I · Land",
+      "map-teaser": "A dynasty behind the chair",
       "chapter-title": data.en.title,
       "chapter-subtitle": "A round-backed chair where an exhausted dynasty rested",
       "chair-label": "The mountains form the chair back · Facing south",
@@ -123,13 +125,18 @@
     }
   };
 
+  const pageParams = new URLSearchParams(window.location.search);
+  const requestedLanguage = pageParams.get("lang");
   const state = {
-    language: window.localStorage.getItem("bittersweet-journey:language") || "zh",
+    language: ["zh", "en"].includes(requestedLanguage)
+      ? requestedLanguage
+      : window.localStorage.getItem("bittersweet-journey:language") || "zh",
     active: 0,
     open: false,
     dataPanelOpen: false,
     previewLock: false
   };
+  window.localStorage.setItem("bittersweet-journey:language", state.language);
 
   const body = document.body;
   const readingCopy = document.querySelector(".reading-copy");
@@ -140,6 +147,7 @@
   const dataButton = document.querySelector(".map-data-button");
   const dataPanel = document.querySelector(".map-data-panel");
   const completeOverlay = document.querySelector(".chapter-complete-overlay");
+  const wordmark = document.querySelector(".wordmark");
   const languageButtons = [...document.querySelectorAll("[data-language]")];
   const revealLayers = [...document.querySelectorAll(".reveal-layer")];
   let readingSections = [];
@@ -367,6 +375,7 @@
   function renderText() {
     document.documentElement.lang = state.language === "zh" ? "zh-CN" : "en";
     body.dataset.language = state.language;
+    wordmark.href = `../../index.html?lang=${state.language}`;
     document.querySelectorAll("[data-copy]").forEach((node) => {
       const value = ui[state.language][node.dataset.copy];
       if (value && !Array.isArray(value)) node.textContent = value;
@@ -464,7 +473,7 @@
     body.classList.add("is-completing");
     completeOverlay.setAttribute("aria-hidden", "false");
     window.setTimeout(() => {
-      window.location.href = "../../index.html?revealed=chengde";
+      window.location.href = `../../index.html?revealed=chengde&lang=${state.language}`;
     }, 2800);
   }
 

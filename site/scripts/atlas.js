@@ -80,7 +80,9 @@
   const stampClose = document.querySelector(".stamp-close");
   const stampCount = document.querySelector(".stamp-count");
   const stampGrid = document.querySelector(".stamp-grid");
-  const returning = new URLSearchParams(window.location.search).get("revealed");
+  const pageParams = new URLSearchParams(window.location.search);
+  const returning = pageParams.get("revealed");
+  const requestedLanguage = pageParams.get("lang");
   let activeStory = STORIES[returning] ? returning : "dujiangyan";
   const orderedStories = Object.entries(STORIES).sort(([, a], [, b]) => {
     const chapterOf = (story) => Number(story.index.match(/\d+/)?.[0] ?? 0);
@@ -254,7 +256,9 @@
   };
 
   const state = {
-    language: window.localStorage.getItem("bittersweet-journey:language") || "zh",
+    language: ["zh", "en"].includes(requestedLanguage)
+      ? requestedLanguage
+      : window.localStorage.getItem("bittersweet-journey:language") || "zh",
     complete: Object.fromEntries(
       Object.entries(STORIES).map(([name, story]) => [
         name,
@@ -262,6 +266,7 @@
       ])
     )
   };
+  window.localStorage.setItem("bittersweet-journey:language", state.language);
 
   function renderPreview() {
     const story = STORIES[activeStory];
@@ -350,7 +355,9 @@
     activeStory = storyName;
     body.classList.add("is-entering");
     window.setTimeout(() => {
-      window.location.href = STORIES[storyName].href;
+      const href = STORIES[storyName].href;
+      const separator = href.includes("?") ? "&" : "?";
+      window.location.href = `${href}${separator}lang=${state.language}`;
     }, 920);
   }
 

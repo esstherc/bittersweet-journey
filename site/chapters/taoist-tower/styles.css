@@ -98,6 +98,7 @@ button {
 .eyebrow,
 .map-subtitle,
 .curtain-kicker,
+.curtain-teaser,
 .reader-location,
 .reader-progress,
 .reader-note,
@@ -1233,11 +1234,19 @@ body.is-open .opening-curtain {
 }
 
 .curtain-kicker {
-  margin: -7vh 0 25px;
+  margin: -7vh 0 10px;
   color: var(--seal);
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.11em;
+}
+
+.curtain-teaser {
+  margin: 0 0 22px;
+  color: var(--seal);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: .03em;
 }
 
 .curtain-title-line {

@@ -12,6 +12,7 @@
   const ui = {
     zh: {
       "map-eyebrow": "第一卷 · 山河",
+      "map-teaser": "沙山后有一弯水",
       "chapter-title": data.zh.title,
       "chapter-subtitle": "水，藏在不该有水的地方",
       thesis: "先有脚印，然后才有泉。",
@@ -47,6 +48,7 @@
     },
     en: {
       "map-eyebrow": "Book I · Land",
+      "map-teaser": "Water beyond the dune",
       "chapter-title": data.en.title,
       "chapter-subtitle": "Water, hidden where water should not be",
       thesis: "First the footprints. Then the spring.",
@@ -82,13 +84,18 @@
     }
   };
 
+  const pageParams = new URLSearchParams(window.location.search);
+  const requestedLanguage = pageParams.get("lang");
   const state = {
-    language: window.localStorage.getItem("bittersweet-journey:language") || "zh",
+    language: ["zh", "en"].includes(requestedLanguage)
+      ? requestedLanguage
+      : window.localStorage.getItem("bittersweet-journey:language") || "zh",
     active: waypointOrder[0],
     open: false,
     dataPanelOpen: false,
     previewLock: false
   };
+  window.localStorage.setItem("bittersweet-journey:language", state.language);
 
   function formatParagraph(paragraph) {
     if (state.language !== "en") return paragraph;
@@ -104,6 +111,7 @@
   const sectionButtons = document.querySelector(".section-buttons");
   const railProgress = document.querySelector(".rail-line i");
   const finishButton = document.querySelector(".finish-chapter");
+  const backAtlas = document.querySelector(".back-atlas");
   const languageButtons = [...document.querySelectorAll("[data-language]")];
   const revealLayers = [...document.querySelectorAll(".reveal-layer")];
   const dataButton = document.querySelector(".map-data-button");
@@ -197,6 +205,7 @@
   function renderText() {
     document.documentElement.lang = state.language === "zh" ? "zh-CN" : "en";
     body.dataset.language = state.language;
+    backAtlas.href = `../../index.html?lang=${state.language}`;
 
     document.querySelectorAll("[data-copy]").forEach((node) => {
       const value = ui[state.language][node.dataset.copy];
@@ -319,7 +328,7 @@
     body.classList.add("is-completing");
     completeOverlay.setAttribute("aria-hidden", "false");
     window.setTimeout(() => {
-      window.location.href = "../../index.html?revealed=secret-spring";
+      window.location.href = `../../index.html?revealed=secret-spring&lang=${state.language}`;
     }, 3000);
   }
 

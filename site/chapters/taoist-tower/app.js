@@ -11,6 +11,7 @@
   const ui = {
     zh: {
       "map-eyebrow": "第一卷 · 山河",
+      "map-teaser": "一扇洞门打开",
       "chapter-title": data.zh.title,
       "map-aria": "藏经洞与文物流散文学地图",
       sectionSubtitle: [
@@ -41,6 +42,7 @@
     },
     en: {
       "map-eyebrow": "Book I · Land",
+      "map-teaser": "A cave opens",
       "chapter-title": data.en.title,
       "map-aria": "A literary map of the Library Cave and the dispersal of its artefacts",
       sectionSubtitle: [
@@ -82,6 +84,7 @@
     noteOpen: false,
     previewLock: false
   };
+  window.localStorage.setItem("bittersweet-journey:language", state.language);
 
   const englishOpenings = new Map([
     ["A RIVER FLOWS ", "A river flows "],
@@ -104,6 +107,7 @@
   const notePanel = document.querySelector(".map-note-panel");
   const completeOverlay = document.querySelector(".chapter-complete-overlay");
   const finishButton = document.querySelector(".finish-chapter");
+  const backAtlas = document.querySelector(".back-atlas");
   const languageButtons = [...document.querySelectorAll("[data-language]")];
   let readingSections = [];
   let scrollFrame = null;
@@ -365,6 +369,7 @@
   function renderText() {
     document.documentElement.lang = state.language === "zh" ? "zh-CN" : "en";
     body.dataset.language = state.language;
+    backAtlas.href = `../../index.html?lang=${state.language}`;
     document.querySelectorAll("[data-copy]").forEach((node) => {
       const value = ui[state.language][node.dataset.copy];
       if (typeof value === "string") node.textContent = value;
@@ -467,7 +472,7 @@
     body.classList.add("is-completing");
     completeOverlay.setAttribute("aria-hidden", "false");
     window.setTimeout(() => {
-      window.location.href = "../../index.html?revealed=taoist-tower";
+      window.location.href = `../../index.html?revealed=taoist-tower&lang=${state.language}`;
     }, 3000);
   }
 
