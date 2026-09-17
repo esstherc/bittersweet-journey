@@ -74,8 +74,18 @@
   const enterButton = document.querySelector(".enter-story");
   const unavailable = document.querySelector(".unavailable-note");
   const receipt = document.querySelector(".reveal-receipt");
+  const progressButton = document.querySelector(".atlas-progress");
+  const viewStampsButton = document.querySelector(".view-stamps");
+  const stampOverlay = document.querySelector(".stamp-overlay");
+  const stampClose = document.querySelector(".stamp-close");
+  const stampCount = document.querySelector(".stamp-count");
+  const stampGrid = document.querySelector(".stamp-grid");
   const returning = new URLSearchParams(window.location.search).get("revealed");
   let activeStory = STORIES[returning] ? returning : "dujiangyan";
+  const orderedStories = Object.entries(STORIES).sort(([, a], [, b]) => {
+    const chapterOf = (story) => Number(story.index.match(/\d+/)?.[0] ?? 0);
+    return chapterOf(a) - chapterOf(b);
+  });
 
   function applyRealGeography() {
     const geography = window.REAL_GEOGRAPHY?.global;
@@ -206,7 +216,11 @@
       "receipt-title": "一处山河已经显影",
       "receipt-body": "岷江的水，在这里成为成都平原。",
       "footer-question": "地图尚未完整，请继续阅读。",
-      reset: "重置阅读痕迹"
+      reset: "重置阅读痕迹",
+      "view-stamps": "文字印",
+      "stamp-kicker": "已显影文字",
+      "stamp-title": "文字印",
+      "stamp-desc": "每完成一段旅程，就会留下一枚字的印记。"
     },
     en: {
       "progress-label": "Revealed",
@@ -219,7 +233,19 @@
       "receipt-title": "One landscape brought to light",
       "receipt-body": "Here, the Min River becomes the Chengdu Plain.",
       "footer-question": "Map is not yet complete, keep reading.",
-      reset: "Reset reading trace"
+      reset: "Reset reading trace",
+      "view-stamps": "Word Seals",
+      "stamp-kicker": "Characters Revealed",
+      "stamp-title": "Word Seals",
+      "stamp-desc": "Each finished journey leaves behind a single character."
+    }
+  };
+
+  const stampText = {
+    zh: { locked: "尚未显影", count: (n, total) => `已集 ${n} / ${total}` },
+    en: {
+      locked: "Not yet revealed",
+      count: (n, total) => `${n} / ${total} collected`
     }
   };
 
@@ -253,6 +279,7 @@
       button.setAttribute("aria-pressed", String(button.dataset.language === state.language));
     });
     renderPreview();
+    renderStampGrid();
     if (STORIES[returning]) {
       receipt.querySelector(".receipt-mark").textContent = STORIES[returning].receipt.mark;
       receipt.querySelector("strong").textContent = STORIES[returning].receipt[state.language];
@@ -266,6 +293,51 @@
     body.classList.toggle("chengde-complete", state.complete.chengde);
     const count = Object.values(state.complete).filter(Boolean).length;
     document.querySelector(".progress-count").textContent = String(count).padStart(2, "0");
+    renderStampGrid();
+  }
+
+  function renderStampGrid() {
+    const text = stampText[state.language];
+    const unlockedCount = orderedStories.filter(([name]) => state.complete[name]).length;
+
+    stampGrid.innerHTML = orderedStories
+      .map(([name, story]) => {
+        const unlocked = Boolean(state.complete[name]);
+        const title = story.title[state.language];
+        const line = unlocked ? story.receipt[state.language] : text.locked;
+        const mark = unlocked ? story.receipt.mark : "";
+        return `
+          <div class="stamp-card${unlocked ? " is-unlocked" : ""}">
+            <span class="stamp-mark">${mark}</span>
+            <span class="stamp-name">${title}</span>
+            <span class="stamp-line">${line}</span>
+          </div>
+        `;
+      })
+      .join("");
+
+    stampCount.textContent = text.count(unlockedCount, orderedStories.length);
+  }
+
+  function openStampModal() {
+    renderStampGrid();
+    stampOverlay.hidden = false;
+    window.requestAnimationFrame(() => stampOverlay.classList.add("is-visible"));
+    document.addEventListener("keydown", onStampKeydown);
+    stampClose.focus();
+  }
+
+  function closeStampModal() {
+    stampOverlay.classList.remove("is-visible");
+    document.removeEventListener("keydown", onStampKeydown);
+    window.setTimeout(() => {
+      stampOverlay.hidden = true;
+    }, 260);
+    progressButton.focus();
+  }
+
+  function onStampKeydown(event) {
+    if (event.key === "Escape") closeStampModal();
   }
 
   function enterStory(storyName = activeStory) {
@@ -322,6 +394,13 @@
 
   receipt.querySelector("button").addEventListener("click", () => {
     body.classList.remove("is-returning");
+  });
+
+  progressButton.addEventListener("click", openStampModal);
+  viewStampsButton.addEventListener("click", openStampModal);
+  stampClose.addEventListener("click", closeStampModal);
+  stampOverlay.addEventListener("click", (event) => {
+    if (event.target === stampOverlay) closeStampModal();
   });
 
   document.querySelector(".reset-progress").addEventListener("click", () => {

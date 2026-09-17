@@ -25,10 +25,15 @@
         <i class="en">Land, Made Visible</i>
       </a>
 
-      <div class="atlas-progress" aria-label="阅读显影进度">
+      <button
+        type="button"
+        class="atlas-progress"
+        aria-haspopup="dialog"
+        aria-label="查看已显影的文字印"
+      >
         <span data-copy="progress-label">已显影</span>
         <b><i class="progress-count">00</i> / 20</b>
-      </div>
+      </button>
 
       <div class="atlas-actions">
         <div class="atlas-language" role="group" aria-label="Language">
@@ -284,8 +289,28 @@
     <footer class="atlas-footer">
       <span data-copy="footer-question">地图尚未全部显影，请继续阅读。</span>
       <span>Scroll / hover / click to reveal</span>
+      <button class="view-stamps" type="button" data-copy="view-stamps">文字印</button>
       <button class="reset-progress" type="button" data-copy="reset">重置阅读痕迹</button>
     </footer>
+
+    <div class="stamp-overlay" hidden>
+      <div
+        class="stamp-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="stamp-modal-title"
+        aria-describedby="stamp-modal-desc"
+      >
+        <button type="button" class="stamp-close" aria-label="关闭">×</button>
+        <p class="stamp-kicker" data-copy="stamp-kicker">已显影文字</p>
+        <h2 id="stamp-modal-title" data-copy="stamp-title">文字印</h2>
+        <p id="stamp-modal-desc" class="stamp-desc" data-copy="stamp-desc">
+          每完成一段旅程，就会留下一枚字的印记。
+        </p>
+        <p class="stamp-count"></p>
+        <div class="stamp-grid"></div>
+      </div>
+    </div>
 
     <script src="./data/real-geography.js"></script>
     <script src="./scripts/atlas.js?v=20260728-2"></script>
