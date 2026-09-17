@@ -215,7 +215,8 @@
       unavailable: "这处故事仍在等待显影",
       "receipt-title": "一处山河已经显影",
       "receipt-body": "岷江的水，在这里成为成都平原。",
-      "footer-question": "地图尚未完整，请继续阅读。",
+      "cta-message": "地图尚未全部显影，请继续阅读",
+      "cta-hint": "滚动／悬停／点击以显影",
       reset: "重置阅读痕迹",
       "view-stamps": "文字印",
       "stamp-kicker": "已显影文字",
@@ -232,7 +233,8 @@
       unavailable: "This story is still waiting to be revealed",
       "receipt-title": "One landscape brought to light",
       "receipt-body": "Here, the Min River becomes the Chengdu Plain.",
-      "footer-question": "Map is not yet complete, keep reading.",
+      "cta-message": "The map is not fully revealed yet, keep reading",
+      "cta-hint": "Scroll / hover / click to reveal",
       reset: "Reset reading trace",
       "view-stamps": "Word Seals",
       "stamp-kicker": "Characters Revealed",
@@ -293,6 +295,7 @@
     body.classList.toggle("chengde-complete", state.complete.chengde);
     const count = Object.values(state.complete).filter(Boolean).length;
     document.querySelector(".progress-count").textContent = String(count).padStart(2, "0");
+    body.classList.toggle("all-revealed", count === orderedStories.length);
     renderStampGrid();
   }
 
