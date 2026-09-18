@@ -339,6 +339,11 @@
   window.addEventListener("scroll", scheduleScrollUpdate, { passive: true });
   window.addEventListener("resize", scheduleScrollUpdate);
 
+  window.addEventListener("pageshow", () => {
+    document.body.classList.remove("is-completing");
+    completeOverlay.setAttribute("aria-hidden", "true");
+  });
+
   document.addEventListener("keydown", (event) => {
     if (event.key.toLowerCase() === "l") {
       state.language = state.language === "zh" ? "en" : "zh";

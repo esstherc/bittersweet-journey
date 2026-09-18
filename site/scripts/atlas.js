@@ -408,6 +408,10 @@
     body.classList.remove("is-returning");
   });
 
+  window.addEventListener("pageshow", () => {
+    body.classList.remove("is-entering");
+  });
+
   progressButton.addEventListener("click", openStampModal);
   viewStampsButton.addEventListener("click", openStampModal);
   stampClose.addEventListener("click", closeStampModal);
