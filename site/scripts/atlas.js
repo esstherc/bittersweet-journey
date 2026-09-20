@@ -5,7 +5,7 @@
     dujiangyan: {
       storageKey: "bittersweet-journey:dujiangyan:complete",
       href: "./chapters/dujiangyan/index.html?from=atlas",
-      index: "Chapter 04 / Land",
+      number: 4,
       title: { zh: "都江堰", en: "Dujiangyan" },
       preview: {
         zh: "一项两千多年前的工程，如何让一片平原成为“天府之国”？",
@@ -21,7 +21,7 @@
     "secret-spring": {
       storageKey: "bittersweet-journey:secret-spring:complete",
       href: "./chapters/secret-spring/index.html?from=atlas",
-      index: "Chapter 07 / Land",
+      number: 7,
       title: { zh: "沙原隐泉", en: "A Secret Spring in the Sand" },
       preview: {
         zh: "翻过一座真实的沙山，水为什么会藏在最不该有水的地方？",
@@ -37,7 +37,7 @@
     "taoist-tower": {
       storageKey: "bittersweet-journey:taoist-tower:complete",
       href: "./chapters/taoist-tower/index.html?from=atlas",
-      index: "Chapter 05 / Land",
+      number: 5,
       title: { zh: "道士塔", en: "The Taoist Priest’s Tower" },
       preview: {
         zh: "藏经洞打开以后，经卷如何从敦煌走向世界？",
@@ -53,7 +53,7 @@
     chengde: {
       storageKey: "bittersweet-journey:mountain-resort:complete",
       href: "./chapters/mountain-resort/index.html?from=atlas",
-      index: "Chapter 10 / Land",
+      number: 10,
       title: { zh: "山庄背影", en: "The Villa from Behind" },
       preview: {
         zh: "一座塞外园林，如何成为一个王朝由盛转衰的椅背与背影？",
@@ -71,6 +71,7 @@
   const languageButtons = [...document.querySelectorAll("[data-language]")];
   const availablePoints = [...document.querySelectorAll(".story-point.available, .story-point.primary")];
   const preview = document.querySelector(".chapter-preview");
+  const experience = document.querySelector(".atlas-experience");
   const enterButton = document.querySelector(".enter-story");
   const unavailable = document.querySelector(".unavailable-note");
   const receipt = document.querySelector(".reveal-receipt");
@@ -84,10 +85,7 @@
   const returning = pageParams.get("revealed");
   const requestedLanguage = pageParams.get("lang");
   let activeStory = STORIES[returning] ? returning : "dujiangyan";
-  const orderedStories = Object.entries(STORIES).sort(([, a], [, b]) => {
-    const chapterOf = (story) => Number(story.index.match(/\d+/)?.[0] ?? 0);
-    return chapterOf(a) - chapterOf(b);
-  });
+  const orderedStories = Object.entries(STORIES).sort(([, a], [, b]) => a.number - b.number);
 
   function applyRealGeography() {
     const geography = window.REAL_GEOGRAPHY?.global;
@@ -208,12 +206,24 @@
 
   const copy = {
     zh: {
+      "site-title": "山河显影",
+      "document-title": "山河显影 · 文化苦旅阅读地图",
+      "view-stamps-aria": "查看已显影的文字印",
+      "close-aria": "关闭",
+      "stage-aria": "文化苦旅中国故事地图",
+      "map-aria": "未完全显影的中国故事地图",
+      "point-kashgar-aria": "西域喀什，尚未接入",
+      "point-yangguan-aria": "阳关雪，尚未接入",
+      "point-secret-spring-aria": "进入沙原隐泉",
+      "point-taoist-tower-aria": "进入道士塔",
+      "point-dujiangyan-aria": "进入都江堰",
+      "point-chengde-aria": "进入山庄背影",
+      "point-jiangnan-aria": "江南故事，尚未接入",
+      "point-shanghai-aria": "人生故事群，尚未接入",
+      kicker: "第 {n} 章 · 山河",
       "progress-label": "已显影",
-      volume: "第一卷 · 山河",
       "question-line-1": "一部书能够",
       "question-line-2": "照亮多少中国？",
-      thesis: "这里没有完整国界。河流、道路和地名，只在故事被阅读之后留下。",
-      disclaimer: "文学示意图 · 非行政地图",
       unavailable: "这处故事仍在等待显影",
       "receipt-title": "一处山河已经显影",
       "receipt-body": "岷江的水，在这里成为成都平原。",
@@ -227,12 +237,24 @@
       "stamp-desc": "每完成一段旅程，就会留下一枚字的印记。"
     },
     en: {
+      "site-title": "Land, Made Visible",
+      "document-title": "Land, Made Visible · A Reading Atlas of A Bittersweet Journey",
+      "view-stamps-aria": "View the collected word seals",
+      "close-aria": "Close",
+      "stage-aria": "Story map of China for A Bittersweet Journey Through Culture",
+      "map-aria": "A partly revealed story map of China",
+      "point-kashgar-aria": "Western Regions, Kashgar — not yet available",
+      "point-yangguan-aria": "The Pass, Yangguan — not yet available",
+      "point-secret-spring-aria": "Enter A Secret Spring in the Sand",
+      "point-taoist-tower-aria": "Enter The Taoist Priest’s Tower",
+      "point-dujiangyan-aria": "Enter Dujiangyan",
+      "point-chengde-aria": "Enter The Villa from Behind",
+      "point-jiangnan-aria": "Home stories in Jiangnan — not yet available",
+      "point-shanghai-aria": "Later life stories — not yet available",
+      kicker: "Chapter {n} · Land",
       "progress-label": "Revealed",
-      volume: "Book I · Land",
       "question-line-1": "How much of China",
       "question-line-2": "can one book illuminate?",
-      thesis: "There is no complete border here. Rivers, roads and names remain only after their stories have been read.",
-      disclaimer: "Literary diagram · No administrative border",
       unavailable: "This story is still waiting to be revealed",
       "receipt-title": "One landscape brought to light",
       "receipt-body": "Here, the Min River becomes the Chengdu Plain.",
@@ -270,16 +292,167 @@
 
   function renderPreview() {
     const story = STORIES[activeStory];
-    preview.querySelector(".preview-index").textContent = story.index;
-    preview.querySelector('[data-preview-title="zh"]').textContent = story.title.zh;
-    preview.querySelector('[data-preview-title="en"]').textContent = story.title.en;
+    preview.querySelector(".preview-index").textContent =
+      copy[state.language].kicker.replace("{n}", String(story.number).padStart(2, "0"));
+    preview.querySelector("[data-preview-title]").textContent = story.title[state.language];
     preview.querySelector('[data-copy="preview-text"]').textContent = story.preview[state.language];
     enterButton.querySelector("span").textContent = story.enter[state.language];
+  }
+
+  /* ---------- chapter callout: anchored next to the dot ---------- */
+
+  let anchorPoint = null;
+  let hideTimer = null;
+
+  function overlapArea(a, b) {
+    const w = Math.min(a.right, b.right) - Math.max(a.left, b.left);
+    const h = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
+    return w > 0 && h > 0 ? w * h : 0;
+  }
+
+  // What a dot really occupies on screen: its core (a little padded, it is the click target),
+  // its number and its current-language label. The empty glow is ignored.
+  function parts(point) {
+    const found = [];
+    point.querySelectorAll(".point-core, .point-number, .point-clue").forEach((node) => {
+      if (getComputedStyle(node).display === "none") return;
+      const rect = node.getBoundingClientRect();
+      if (!rect.width && !rect.height) return;
+      const core = node.classList.contains("point-core");
+      const pad = core ? 14 : 0;
+      found.push({
+        core,
+        left: rect.left - pad,
+        right: rect.right + pad,
+        top: rect.top - pad,
+        bottom: rect.bottom + pad
+      });
+    });
+    return found;
+  }
+
+  // Try every side at a few distances and alignments; keep the placement that hides the least.
+  // Close is better, but when the dots are crowded the card may sit farther off, joined by a leader line.
+  function positionPreview(point) {
+    const host = experience.getBoundingClientRect();
+    const core = point.querySelector(".point-core").getBoundingClientRect();
+    const cx = core.left + core.width / 2 - host.left;
+    const cy = core.top + core.height / 2 - host.top;
+    const width = preview.offsetWidth;
+    const height = preview.offsetHeight;
+    const near = 28;
+    const gaps = [near, near + 44, near + 88, near + 132];
+    const shift = 44;
+    const margin = 12;
+    const minTop = parseFloat(getComputedStyle(experience).paddingTop) + margin;
+    const footer = document.querySelector(".atlas-footer").getBoundingClientRect();
+    const maxBottom = (footer.top < host.bottom ? footer.top : host.bottom) - host.top - margin;
+
+    const rel = (rect) => ({
+      left: rect.left - host.left,
+      right: rect.right - host.left,
+      top: rect.top - host.top,
+      bottom: rect.bottom - host.top
+    });
+    const weighed = [];
+    const cores = [];
+    document.querySelectorAll(".story-point").forEach((other) => {
+      const own = other === point;
+      const quiet = other.classList.contains("quiet");
+      parts(other).forEach((part) => {
+        const box = rel(part);
+        if (part.core) cores.push(box);
+        const weight = part.core
+          ? (own ? 200 : quiet ? 6 : 60)
+          : (own ? 8 : quiet ? 0.6 : 4);
+        weighed.push({ box, weight });
+      });
+    });
+    const headline = document.createRange();
+    headline.selectNodeContents(document.querySelector(".atlas-intro h1"));
+    const intro = [headline, document.querySelector(".cta-callout")].map((node) => rel(node.getBoundingClientRect()));
+
+    const clampX = (x) => Math.min(Math.max(x, margin), host.width - margin - width);
+    const clampY = (y) => Math.min(Math.max(y, minTop), maxBottom - height);
+    const candidates = [];
+    gaps.forEach((gap) => {
+      [0, -shift, shift, -shift * 2, shift * 2].forEach((offset) => {
+        const x = clampX(cx - width / 2 + offset);
+        candidates.push({ side: "below", gap, left: x, top: cy + gap });
+        candidates.push({ side: "above", gap, left: x, top: cy - gap - height });
+        const y = clampY(cy - height / 2 + offset);
+        candidates.push({ side: "left", gap, left: cx - gap - width, top: y });
+        candidates.push({ side: "right", gap, left: cx + gap, top: y });
+      });
+    });
+
+    let best = null;
+    candidates.forEach((candidate, order) => {
+      const box = {
+        left: candidate.left,
+        right: candidate.left + width,
+        top: candidate.top,
+        bottom: candidate.top + height
+      };
+      const outside =
+        Math.max(0, margin - box.left) +
+        Math.max(0, box.right - (host.width - margin)) +
+        Math.max(0, minTop - box.top) +
+        Math.max(0, box.bottom - maxBottom);
+      const covered =
+        weighed.reduce((sum, item) => sum + overlapArea(box, item.box) * item.weight, 0) +
+        intro.reduce((sum, item) => sum + overlapArea(box, item), 0) * 3;
+      // the card's button (bottom-left) must never land on a dot: a tap there would enter the wrong chapter
+      const button = {
+        left: box.left + 8,
+        right: box.left + 180,
+        top: box.bottom - 46,
+        bottom: box.bottom - 6
+      };
+      const onDot = cores.reduce((sum, item) => sum + overlapArea(button, item), 0) * 400;
+      candidate.cost = outside * 1e6 + covered + onDot + (candidate.gap - near) * 30 + order * 0.01;
+      if (!best || candidate.cost < best.cost) best = candidate;
+    });
+
+    const vertical = best.side === "below" || best.side === "above";
+    const tip = vertical ? cx - best.left : cy - best.top;
+    const limit = vertical ? width : height;
+    preview.dataset.side = best.side;
+    preview.style.left = `${Math.round(best.left)}px`;
+    preview.style.top = `${Math.round(best.top)}px`;
+    preview.style.setProperty("--tip", `${Math.round(Math.min(Math.max(tip, 18), limit - 18))}px`);
+    preview.style.setProperty("--lead", `${Math.max(0, best.gap - near)}px`);
+  }
+
+  function showPreview(point) {
+    window.clearTimeout(hideTimer);
+    anchorPoint = point;
+    activeStory = point.dataset.story;
+    renderPreview();
+    positionPreview(point);
+    preview.classList.add("is-visible");
+  }
+
+  function hidePreview() {
+    window.clearTimeout(hideTimer);
+    anchorPoint = null;
+    preview.classList.remove("is-visible");
+  }
+
+  // A short grace period lets the pointer travel from the dot into the card.
+  function scheduleHide() {
+    window.clearTimeout(hideTimer);
+    hideTimer = window.setTimeout(hidePreview, 260);
   }
 
   function renderLanguage() {
     body.dataset.language = state.language;
     document.documentElement.lang = state.language === "zh" ? "zh-CN" : "en";
+    document.title = copy[state.language]["document-title"];
+    document.querySelectorAll("[data-aria]").forEach((node) => {
+      const value = copy[state.language][node.dataset.aria];
+      if (value) node.setAttribute("aria-label", value);
+    });
     document.querySelectorAll("[data-copy]").forEach((node) => {
       const value = copy[state.language][node.dataset.copy];
       if (value) node.textContent = value;
@@ -288,6 +461,7 @@
       button.setAttribute("aria-pressed", String(button.dataset.language === state.language));
     });
     renderPreview();
+    if (anchorPoint && preview.classList.contains("is-visible")) positionPreview(anchorPoint);
     renderStampGrid();
     if (STORIES[returning]) {
       receipt.querySelector(".receipt-mark").textContent = STORIES[returning].receipt.mark;
@@ -385,19 +559,45 @@
   });
 
   availablePoints.forEach((point) => {
-    const selectStory = () => {
-      activeStory = point.dataset.story;
-      renderPreview();
-      preview.classList.add("is-visible");
-    };
-    point.addEventListener("mouseenter", selectStory);
-    point.addEventListener("focus", selectStory);
-    point.addEventListener("click", () => enterStory(point.dataset.story));
+    point.addEventListener("mouseenter", () => showPreview(point));
+    point.addEventListener("mouseleave", scheduleHide);
+    point.addEventListener("focus", () => showPreview(point));
+    point.addEventListener("blur", scheduleHide);
+    // A touch tap fires an emulated mouseenter before click, so what the callout looked like
+    // *before* the tap is recorded at pointerdown. First tap opens the callout; a second tap
+    // on the same dot (or the callout's button) enters the chapter. Mouse clicks always enter.
+    let tap = null;
+    point.addEventListener("pointerdown", (event) => {
+      tap = {
+        touch: event.pointerType === "touch",
+        wasShowing: anchorPoint === point && preview.classList.contains("is-visible")
+      };
+    });
+    point.addEventListener("click", () => {
+      const last = tap;
+      tap = null;
+      if (last && last.touch && !last.wasShowing) showPreview(point);
+      else enterStory(point.dataset.story);
+    });
     point.addEventListener("keydown", (event) => {
       onKeyboardActivate(event, () => enterStory(point.dataset.story));
     });
   });
   enterButton.addEventListener("click", () => enterStory(activeStory));
+
+  preview.addEventListener("mouseenter", () => window.clearTimeout(hideTimer));
+  preview.addEventListener("mouseleave", scheduleHide);
+  preview.addEventListener("focusin", () => window.clearTimeout(hideTimer));
+  preview.addEventListener("focusout", scheduleHide);
+  document.addEventListener("pointerdown", (event) => {
+    if (!preview.contains(event.target) && !event.target.closest(".story-point")) hidePreview();
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") hidePreview();
+  });
+  window.addEventListener("resize", () => {
+    if (anchorPoint && preview.classList.contains("is-visible")) positionPreview(anchorPoint);
+  });
 
   document.querySelectorAll(".story-point.quiet").forEach((point) => {
     point.addEventListener("click", showUnavailable);
@@ -410,6 +610,7 @@
 
   window.addEventListener("pageshow", () => {
     body.classList.remove("is-entering");
+    hidePreview();
   });
 
   progressButton.addEventListener("click", openStampModal);

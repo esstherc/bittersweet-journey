@@ -14,21 +14,21 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&family=Ysabeau:ital,wght@0,400..700;1,400..700&display=swap"
     />
-    <link rel="stylesheet" href="./styles/atlas.css?v=20260917-1" />
+    <link rel="stylesheet" href="./styles/atlas.css?v=20260920-1" />
   </head>
   <body data-language="zh">
     <div class="paper-noise" aria-hidden="true"></div>
 
     <header class="atlas-masthead">
       <a class="atlas-wordmark" href="./index.html">
-        <span class="cn">山河显影</span>
-        <i class="en">Land, Made Visible</i>
+        <span data-copy="site-title">山河显影</span>
       </a>
 
       <button
         type="button"
         class="atlas-progress"
         aria-haspopup="dialog"
+        data-aria="view-stamps-aria"
         aria-label="查看已显影的文字印"
       >
         <span data-copy="progress-label">已显影</span>
@@ -46,13 +46,9 @@
 
     <main class="atlas-experience">
       <section class="atlas-intro">
-        <p class="atlas-volume" data-copy="volume">第一卷 · 山河</p>
         <h1>
           <span data-copy="question-line-1">一部书能够</span><span class="question-accent" data-copy="question-line-2">照亮多少中国？</span>
         </h1>
-        <p class="atlas-thesis" data-copy="thesis">
-          这里没有完整国界。河流、道路和地名，只在故事被阅读之后留下。
-        </p>
         <div class="cta-callout" role="status">
           <svg class="cta-arrow" viewBox="0 0 40 14" aria-hidden="true">
             <path d="M1 7H35M28 1L38 7L28 13" />
@@ -64,17 +60,14 @@
         </div>
       </section>
 
-      <section class="atlas-map-stage" aria-label="文化苦旅中国故事地图">
+      <section class="atlas-map-stage" data-aria="stage-aria" aria-label="文化苦旅中国故事地图">
         <svg
           class="china-map"
-          viewBox="0 0 1200 760"
+          viewBox="46 98 944 590"
           role="img"
-          aria-labelledby="china-map-title china-map-desc"
+          data-aria="map-aria"
+          aria-label="未完全显影的中国故事地图"
         >
-          <title id="china-map-title">未完全显影的中国故事地图</title>
-          <desc id="china-map-desc">
-            地图不显示完整中国国界，只显示黄河、长江、古道、零星山地以及故事所在的光点。
-          </desc>
 
           <defs>
             <filter id="atlas-bleed" x="-15%" y="-15%" width="130%" height="130%">
@@ -112,28 +105,29 @@
           <g class="river-skeleton" filter="url(#atlas-bleed)">
             <g class="yellow-river">
               <path id="global-yellow" d="M213 342C275 312 302 255 363 274C419 292 394 357 454 364C533 373 557 300 629 300C719 300 766 358 858 346C917 338 972 302 1086 314" />
-              <text id="global-yellow-label-cn" x="707" y="314" class="map-text cn">黄河</text>
-              <text id="global-yellow-label-en" x="708" y="329" class="map-text en">Yellow River</text>
+              <text id="global-yellow-label-cn" x="707" y="314" class="map-text cn" lang="zh">黄河</text>
+              <text id="global-yellow-label-en" x="708" y="329" class="map-text en" lang="en">Yellow River</text>
             </g>
             <g class="yangtze-river">
               <path id="global-yangtze" d="M164 503C259 466 342 524 430 502C512 481 551 521 630 530C733 543 781 489 859 510C947 534 1006 568 1132 553" />
-              <text id="global-yangtze-label-cn" x="696" y="539" class="map-text cn">长江</text>
-              <text id="global-yangtze-label-en" x="697" y="554" class="map-text en">Yangtze</text>
+              <text id="global-yangtze-label-cn" x="696" y="539" class="map-text cn" lang="zh">长江</text>
+              <text id="global-yangtze-label-en" x="697" y="554" class="map-text en" lang="en">Yangtze</text>
             </g>
             <g id="global-secondary-rivers" class="secondary-rivers" aria-hidden="true"></g>
             <g class="grand-canal">
               <path d="M954 350C943 407 950 453 971 526" />
-              <text x="967" y="419" class="map-text cn vertical">运河</text>
+              <text x="967" y="419" class="map-text cn vertical" lang="zh">运河</text>
+            <text x="967" y="419" class="map-text en vertical" lang="en">Grand Canal</text>
             </g>
           </g>
 
           <g class="ancient-routes" aria-hidden="true">
             <path class="silk-road" d="M127 315C226 270 298 286 363 274C457 256 523 233 635 216" />
             <path class="tea-road" d="M171 505C241 552 338 561 430 503C456 487 462 473 474 458" />
-            <text x="337" y="246" class="route-label cn">古丝路</text>
-            <text x="337" y="260" class="route-label en">Silk Road</text>
-            <text x="275" y="575" class="route-label cn">西南古道</text>
-            <text x="276" y="589" class="route-label en">Southwestern Road</text>
+            <text x="337" y="246" class="route-label cn" lang="zh">古丝路</text>
+            <text x="337" y="260" class="route-label en" lang="en">Silk Road</text>
+            <text x="275" y="575" class="route-label cn" lang="zh">西南古道</text>
+            <text x="276" y="589" class="route-label en" lang="en">Southwestern Road</text>
           </g>
 
           <g class="dujiangyan-memory" aria-hidden="true">
@@ -144,15 +138,15 @@
             <path id="memory-line-c" class="memory-line fine" d="M495 505C536 545 559 571 601 603" />
             <path id="plain-memory" class="plain-memory" d="M467 474C522 452 616 474 678 542C612 610 521 610 482 544Z" />
             <circle id="chengdu-dot" class="chengdu-dot" cx="563" cy="530" r="4" />
-            <text id="chengdu-label-cn" x="573" y="525" class="memory-label cn">成都平原</text>
-            <text id="chengdu-label-en" x="573" y="541" class="memory-label en">Chengdu Plain</text>
+            <text id="chengdu-label-cn" x="573" y="525" class="memory-label cn" lang="zh">成都平原</text>
+            <text id="chengdu-label-en" x="573" y="541" class="memory-label en" lang="en">Chengdu Plain</text>
           </g>
 
           <g class="secret-spring-memory" aria-hidden="true" transform="translate(286 272)">
             <path class="memory-dune" d="M-37 17C-23-5-4-12 10 1C24-15 42-8 52 10" />
             <path class="memory-crescent" d="M7 7C17-2 31-1 38 8C28 5 20 9 15 17C11 15 8 11 7 7Z" />
-            <text x="16" y="37" class="memory-label cn">月牙泉</text>
-            <text x="16" y="37" class="memory-label en">Crescent Spring</text>
+            <text x="16" y="25" class="memory-label cn" lang="zh">月牙泉</text>
+            <text x="16" y="25" class="memory-label en" lang="en">Crescent Spring</text>
           </g>
 
           <g class="taoist-tower-memory" aria-hidden="true" transform="translate(314 245)">
@@ -160,116 +154,104 @@
             <path class="archive-thread east" d="M0 0C82-46 174-50 270-21" />
             <path class="memory-stupa" d="M-9 14H9M-7 8H7M-6 8C-8 1-4-5 0-8C4-5 8 1 6 8M0-8V-14" />
             <circle class="archive-absence" r="18" />
-            <text x="23" y="-11" class="memory-label cn">藏经洞</text>
-            <text x="23" y="-11" class="memory-label en">Library Cave</text>
+            <text x="30" y="-21" class="memory-label cn" lang="zh">藏经洞</text>
+            <text x="30" y="-21" class="memory-label en" lang="en">Library Cave</text>
           </g>
 
           <g class="chengde-memory" aria-hidden="true" transform="translate(856 252)">
             <path class="memory-chair" d="M-43 20C-37-18-12-39 14-31C38-48 69-29 77 3" />
             <path class="memory-gate" d="M5 22V-1H27V22M27-1H49V22M5-1L27-17L49-1" />
             <path class="memory-reflection" d="M2 29C17 25 37 25 52 29M10 36C22 33 34 33 45 36" />
-            <text x="61" y="21" class="memory-label cn">山庄背影</text>
-            <text x="61" y="21" class="memory-label en">The Villa</text>
+            <text x="61" y="21" class="memory-label cn" lang="zh">山庄背影</text>
+            <text x="61" y="21" class="memory-label en" lang="en">The Villa</text>
           </g>
 
           <g class="story-points">
-            <g class="story-point quiet" role="button" tabindex="0" data-story="kashgar" aria-label="西域喀什，尚未接入">
+            <g class="story-point quiet" role="button" tabindex="0" data-story="kashgar" data-aria="point-kashgar-aria" aria-label="西域喀什，尚未接入">
               <circle class="point-glow" cx="118" cy="327" r="35" />
               <circle class="point-core" cx="118" cy="327" r="3" />
               <text x="128" y="313" class="point-number">09</text>
-              <text x="128" y="335" class="point-clue cn">西域</text>
-              <text x="128" y="335" class="point-clue en">Western Regions</text>
+              <text x="128" y="335" class="point-clue cn" lang="zh">西域</text>
+              <text x="128" y="335" class="point-clue en" lang="en">Western Regions</text>
             </g>
 
-            <g class="story-point quiet" role="button" tabindex="0" data-story="yangguan" aria-label="阳关雪，尚未接入">
+            <g class="story-point quiet" role="button" tabindex="0" data-story="yangguan" data-aria="point-yangguan-aria" aria-label="阳关雪，尚未接入">
               <circle class="point-glow" cx="235" cy="304" r="31" />
               <circle class="point-core" cx="235" cy="304" r="3" />
               <text x="245" y="291" class="point-number">08</text>
-              <text x="245" y="314" class="point-clue cn">关</text>
-              <text x="245" y="314" class="point-clue en">The Pass</text>
+              <text x="245" y="314" class="point-clue cn" lang="zh">关</text>
+              <text x="245" y="314" class="point-clue en" lang="en">The Pass</text>
             </g>
 
-            <g class="story-point available cluster" role="button" tabindex="0" data-story="secret-spring" aria-label="进入沙原隐泉">
+            <g class="story-point available cluster" role="button" tabindex="0" data-story="secret-spring" data-aria="point-secret-spring-aria" aria-label="进入沙原隐泉">
               <circle class="point-glow" cx="286" cy="272" r="42" />
               <circle class="point-pulse" cx="286" cy="272" r="14" />
               <circle class="point-core" cx="286" cy="272" r="4" />
               <circle class="point-orbit" cx="286" cy="272" r="12" />
-              <text x="301" y="251" class="point-number">07</text>
-              <text x="301" y="277" class="point-clue unread cn">沙山后有一弯水</text>
-              <text x="301" y="277" class="point-clue unread en">Water beyond the dune</text>
-              <text x="301" y="277" class="point-clue complete cn">沙原隐泉</text>
-              <text x="301" y="277" class="point-clue complete en">The Secret Spring</text>
+              <text x="275" y="260" class="point-number">07</text>
+              <text x="275" y="280" class="point-clue unread cn" lang="zh">沙山后有一弯水</text>
+              <text x="275" y="280" class="point-clue unread en" lang="en">Water beyond the dune</text>
+              <text x="275" y="280" class="point-clue complete cn" lang="zh">沙原隐泉</text>
+              <text x="275" y="280" class="point-clue complete en" lang="en">The Secret Spring</text>
             </g>
 
-            <g class="story-point available archive-cluster" role="button" tabindex="0" data-story="taoist-tower" aria-label="进入道士塔">
+            <g class="story-point available archive-cluster" role="button" tabindex="0" data-story="taoist-tower" data-aria="point-taoist-tower-aria" aria-label="进入道士塔">
               <circle class="point-glow" cx="314" cy="245" r="39" />
               <circle class="point-pulse" cx="314" cy="245" r="13" />
               <circle class="point-core" cx="314" cy="245" r="4" />
               <path class="point-archive-mark" d="M308 252V238C308 232 320 232 320 238V252M304 252H324" />
-              <text x="332" y="218" class="point-number">05</text>
-              <text x="332" y="242" class="point-clue unread cn">一扇洞门打开</text>
-              <text x="332" y="242" class="point-clue unread en">A cave opens</text>
-              <text x="332" y="242" class="point-clue complete cn">道士塔</text>
-              <text x="332" y="242" class="point-clue complete en">The Taoist Priest’s Tower</text>
+              <text x="325" y="218" class="point-number">05</text>
+              <text x="325" y="242" class="point-clue unread cn" lang="zh">一扇洞门打开</text>
+              <text x="325" y="242" class="point-clue unread en" lang="en">A cave opens</text>
+              <text x="325" y="242" class="point-clue complete cn" lang="zh">道士塔</text>
+              <text x="325" y="242" class="point-clue complete en" lang="en">The Taoist Priest’s Tower</text>
             </g>
 
-            <g class="story-point primary" role="button" tabindex="0" data-story="dujiangyan" aria-label="进入都江堰">
+            <g class="story-point primary" role="button" tabindex="0" data-story="dujiangyan" data-aria="point-dujiangyan-aria" aria-label="进入都江堰">
               <circle class="point-glow" cx="455" cy="476" r="47" />
               <circle class="point-pulse" cx="455" cy="476" r="14" />
               <circle class="point-core" cx="455" cy="476" r="4.5" />
-              <text x="473" y="450" class="point-number">04</text>
-              <text x="437" y="480" class="point-clue unread cn">水在这里被分开</text>
-              <text x="437" y="480" class="point-clue unread en">Where water divides</text>
-              <text x="435" y="480" class="point-clue complete complete-location cn">都江堰</text>
-              <text x="435" y="480" class="point-clue complete complete-location en">Dujiangyan</text>
+              <text x="420" y="460" class="point-number">04</text>
+              <text x="440" y="480" class="point-clue unread cn" lang="zh">水在这里被分开</text>
+              <text x="440" y="480" class="point-clue unread en" lang="en">Where water divides</text>
+              <text x="440" y="480" class="point-clue complete complete-location cn" lang="zh">都江堰</text>
+              <text x="440" y="480" class="point-clue complete complete-location en" lang="en">Dujiangyan</text>
             </g>
 
-            <g class="story-point available" role="button" tabindex="0" data-story="chengde" aria-label="进入山庄背影">
+            <g class="story-point available" role="button" tabindex="0" data-story="chengde" data-aria="point-chengde-aria" aria-label="进入山庄背影">
               <circle class="point-glow" cx="856" cy="252" r="32" />
               <circle class="point-pulse" cx="856" cy="252" r="12" />
               <circle class="point-core" cx="856" cy="252" r="4" />
               <text x="869" y="237" class="point-number">10</text>
-              <text x="869" y="260" class="point-clue unread cn">椅背之外的王朝</text>
-              <text x="869" y="260" class="point-clue unread en">A dynasty behind the chair</text>
-              <text x="869" y="260" class="point-clue complete cn">山庄背影</text>
-              <text x="869" y="260" class="point-clue complete en">The Villa from Behind</text>
+              <text x="869" y="260" class="point-clue unread cn" lang="zh">椅背之外的王朝</text>
+              <text x="869" y="260" class="point-clue unread en" lang="en">A dynasty behind the chair</text>
+              <text x="869" y="260" class="point-clue complete cn" lang="zh">山庄背影</text>
+              <text x="869" y="260" class="point-clue complete en" lang="en">The Villa from Behind</text>
             </g>
 
-            <g class="story-point quiet" role="button" tabindex="0" data-story="jiangnan" aria-label="江南故事，尚未接入">
+            <g class="story-point quiet" role="button" tabindex="0" data-story="jiangnan" data-aria="point-jiangnan-aria" aria-label="江南故事，尚未接入">
               <circle class="point-glow" cx="938" cy="532" r="31" />
               <circle class="point-core" cx="938" cy="532" r="3" />
               <text x="950" y="516" class="point-number">01—03</text>
-              <text x="950" y="539" class="point-clue cn">故乡 · 江南</text>
-              <text x="950" y="539" class="point-clue en">Home · Jiangnan</text>
+              <text x="950" y="539" class="point-clue cn" lang="zh">故乡 · 江南</text>
+              <text x="950" y="539" class="point-clue en" lang="en">Home · Jiangnan</text>
             </g>
 
-            <g class="story-point quiet" role="button" tabindex="0" data-story="shanghai" aria-label="人生故事群，尚未接入">
+            <g class="story-point quiet" role="button" tabindex="0" data-story="shanghai" data-aria="point-shanghai-aria" aria-label="人生故事群，尚未接入">
               <circle class="point-glow" cx="1055" cy="525" r="36" />
               <circle class="point-core" cx="1055" cy="525" r="3" />
               <text x="1068" y="508" class="point-number">14—20</text>
-              <text x="1068" y="532" class="point-clue cn">人间</text>
-              <text x="1068" y="532" class="point-clue en">Lives</text>
+              <text x="1068" y="532" class="point-clue cn" lang="zh">人间</text>
+              <text x="1068" y="532" class="point-clue en" lang="en">Lives</text>
             </g>
           </g>
         </svg>
 
-        <div class="map-coordinate" aria-hidden="true">
-          <span>32.0000° N</span>
-          <i></i>
-          <span>105.0000° E</span>
-        </div>
-
-        <p class="map-disclaimer" data-copy="disclaimer">
-          文学示意图 · 非行政地图 · 非测绘比例
-        </p>
       </section>
 
       <aside class="chapter-preview" aria-live="polite">
-        <p class="preview-index">Chapter 04 / Land</p>
-        <h2>
-          <span class="cn" data-preview-title="zh">都江堰</span>
-          <span class="en" data-preview-title="en">Dujiangyan</span>
-        </h2>
+        <p class="preview-index">第 04 章 · 山河</p>
+        <h2 data-preview-title>都江堰</h2>
         <p data-copy="preview-text">
           一项两千多年前的工程，如何让一片平原成为“天府之国”？
         </p>
@@ -291,7 +273,7 @@
           <p data-copy="receipt-title">一处山河已经显影</p>
           <strong data-copy="receipt-body">岷江的水，在这里成为成都平原。</strong>
         </div>
-        <button type="button" aria-label="关闭">×</button>
+        <button type="button" data-aria="close-aria" aria-label="关闭">×</button>
       </aside>
     </main>
 
@@ -309,8 +291,7 @@
         aria-labelledby="stamp-modal-title"
         aria-describedby="stamp-modal-desc"
       >
-        <button type="button" class="stamp-close" aria-label="关闭">×</button>
-        <p class="stamp-kicker" data-copy="stamp-kicker">已显影文字</p>
+        <button type="button" class="stamp-close" data-aria="close-aria" aria-label="关闭">×</button>
         <h2 id="stamp-modal-title" data-copy="stamp-title">文字印</h2>
         <p id="stamp-modal-desc" class="stamp-desc" data-copy="stamp-desc">
           每完成一段旅程，就会留下一枚字的印记。
@@ -321,6 +302,6 @@
     </div>
 
     <script src="./data/real-geography.js"></script>
-    <script src="./scripts/atlas.js?v=20260917-2"></script>
+    <script src="./scripts/atlas.js?v=20260920-1"></script>
   </body>
 </html>

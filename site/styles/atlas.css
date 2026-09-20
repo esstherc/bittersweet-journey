@@ -74,16 +74,14 @@ button { font: inherit; }
   text-decoration: none;
 }
 
-.atlas-wordmark span,
-.atlas-wordmark i {
+.atlas-wordmark span {
   font-size: 20px;
   font-weight: 700;
   letter-spacing: .18em;
 }
 
-.atlas-wordmark i {
+body[data-language="en"] .atlas-wordmark span {
   font-family: var(--label);
-  font-style: normal;
   letter-spacing: .17em;
 }
 
@@ -156,14 +154,6 @@ button { font: inherit; }
   left: 5vw;
   width: min(1000px, 90vw);
   pointer-events: none;
-}
-
-.atlas-volume {
-  margin: 0 0 21px;
-  color: var(--water);
-  font: 600 12px/1.35 var(--label);
-  font-weight: 600;
-  letter-spacing: .12em;
 }
 
 .cta-callout {
@@ -239,21 +229,6 @@ body[data-language="en"] .atlas-intro .question-accent::before {
   content: " ";
 }
 
-.atlas-thesis {
-  max-width: 28em;
-  margin: 26px 0 0;
-  color: var(--ink-soft);
-  font-size: 12px;
-  line-height: 2;
-  letter-spacing: .13em;
-}
-
-body[data-language="en"] .atlas-thesis {
-  max-width: 34em;
-  font: 16px/1.6 var(--en);
-  letter-spacing: .01em;
-}
-
 .atlas-map-stage {
   position: absolute;
   inset: 72px 0 28px;
@@ -266,7 +241,7 @@ body[data-language="en"] .atlas-thesis {
   width: 98%;
   height: 99%;
   overflow: visible;
-  transform-origin: 45% 63%;
+  transform-origin: 53% 64%;
   transition:
     transform 1.25s cubic-bezier(.72, 0, .25, 1),
     opacity .7s ease;
@@ -421,9 +396,11 @@ body.dujiangyan-complete .secondary-rivers path[data-river="min"] {
   letter-spacing: .15em;
 }
 
-body[data-language="zh"] .en,
-body[data-language="en"] .cn {
-  display: none;
+/* One language at a time. Every paired label carries lang="zh" or lang="en"; the one for the other
+   language is removed whatever else styles it, so both can never show together. */
+body[data-language="zh"] [lang="en"],
+body[data-language="en"] [lang="zh"] {
+  display: none !important;
 }
 
 .story-point.quiet .point-clue,
@@ -468,22 +445,12 @@ body.dujiangyan-complete .story-point[data-story="dujiangyan"] .complete {
   display: block;
 }
 
-body.dujiangyan-complete[data-language="zh"] .story-point[data-story="dujiangyan"] .complete.en,
-body.dujiangyan-complete[data-language="en"] .story-point[data-story="dujiangyan"] .complete.cn {
-  display: none;
-}
-
 body.secret-spring-complete .story-point[data-story="secret-spring"] .unread {
   display: none;
 }
 
 body.secret-spring-complete .story-point[data-story="secret-spring"] .complete {
   display: block;
-}
-
-body.secret-spring-complete[data-language="zh"] .story-point[data-story="secret-spring"] .complete.en,
-body.secret-spring-complete[data-language="en"] .story-point[data-story="secret-spring"] .complete.cn {
-  display: none;
 }
 
 body.taoist-tower-complete .story-point[data-story="taoist-tower"] .unread {
@@ -494,22 +461,12 @@ body.taoist-tower-complete .story-point[data-story="taoist-tower"] .complete {
   display: block;
 }
 
-body.taoist-tower-complete[data-language="zh"] .story-point[data-story="taoist-tower"] .complete.en,
-body.taoist-tower-complete[data-language="en"] .story-point[data-story="taoist-tower"] .complete.cn {
-  display: none;
-}
-
 body.chengde-complete .story-point[data-story="chengde"] .unread {
   display: none;
 }
 
 body.chengde-complete .story-point[data-story="chengde"] .complete {
   display: block;
-}
-
-body.chengde-complete[data-language="zh"] .story-point[data-story="chengde"] .complete.en,
-body.chengde-complete[data-language="en"] .story-point[data-story="chengde"] .complete.cn {
-  display: none;
 }
 
 .dujiangyan-memory {
@@ -631,7 +588,7 @@ body.taoist-tower-complete .taoist-tower-memory {
 
 .taoist-tower-memory .memory-label {
   opacity: 0;
-  fill: var(--seal);
+  fill: var(--water);
   font-size: 12px;
 }
 
@@ -672,7 +629,7 @@ body.chengde-complete .chengde-memory {
 .memory-gate { stroke-width: 1.1; }
 .memory-reflection { stroke-width: .9; opacity: .55; }
 .chengde-memory .memory-label {
-  fill: var(--seal);
+  fill: var(--water);
   font-size: 12px;
   opacity: 0;
 }
@@ -687,57 +644,122 @@ body.chengde-complete .chengde-memory .memory-label {
   animation: plain-bloom .9s ease .8s both;
 }
 
-.map-coordinate {
-  position: absolute;
-  right: 3.2vw;
-  bottom: 35px;
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  color: var(--ink-soft);
-  font: 7px var(--label);
-  letter-spacing: .15em;
-}
-
-.map-coordinate i {
-  display: block;
-  width: 24px;
-  height: 1px;
-  background: var(--line);
-}
-
-.map-disclaimer {
-  position: absolute;
-  left: 5vw;
-  bottom: 29px;
-  margin: 0;
-  color: var(--ink-soft);
-  font: 10px/1.4 var(--label);
-  letter-spacing: .08em;
-}
-
+/* Chapter callout: placed next to the hovered dot by atlas.js (left/top, data-side, --tip). It takes no layout space. */
 .chapter-preview {
+  --callout-bg: rgba(243, 239, 229, .97);
+  --callout-line: rgba(157, 61, 49, .38);
   position: absolute;
   z-index: 9;
-  right: 5vw;
-  top: 120px;
-  width: min(285px, 24vw);
-  padding: 19px 0 22px;
-  border-top: 1px solid var(--ink);
-  border-bottom: 1px solid var(--line);
+  left: 0;
+  top: 0;
+  width: min(280px, calc(100% - 24px));
+  padding: 14px 18px 12px;
+  border: 1px solid var(--callout-line);
+  background: var(--callout-bg);
+  box-shadow: 0 16px 44px rgba(41, 38, 29, .14);
   opacity: 0;
-  transform: translateY(-8px);
+  visibility: hidden;
+  transform: translateY(6px);
   pointer-events: none;
   transition:
-    opacity .4s ease,
-    transform .4s ease;
+    opacity .28s ease,
+    transform .28s ease,
+    visibility .28s;
 }
 
-.atlas-experience:has(.story-point.primary:hover) .chapter-preview,
+.chapter-preview[data-side="above"] { transform: translateY(-6px); }
+.chapter-preview[data-side="left"] { transform: translateX(6px); }
+.chapter-preview[data-side="right"] { transform: translateX(-6px); }
+
 .chapter-preview.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  visibility: visible;
+  transform: none;
   pointer-events: auto;
+}
+
+/* touch: a card may sit on top of a neighbouring dot, so only its button captures taps */
+@media (hover: none) {
+  .chapter-preview.is-visible { pointer-events: none; }
+  .chapter-preview.is-visible .enter-story { pointer-events: auto; }
+}
+
+/* pointer toward the dot: a rotated square showing two borders */
+.chapter-preview::before {
+  content: "";
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  background: var(--callout-bg);
+  border: 0 solid var(--callout-line);
+  transform: rotate(45deg);
+}
+
+.chapter-preview[data-side="below"]::before {
+  top: -6px;
+  left: var(--tip, 50%);
+  margin-left: -6px;
+  border-width: 1px 0 0 1px;
+}
+
+.chapter-preview[data-side="above"]::before {
+  bottom: -6px;
+  left: var(--tip, 50%);
+  margin-left: -6px;
+  border-width: 0 1px 1px 0;
+}
+
+.chapter-preview[data-side="left"]::before {
+  right: -6px;
+  top: var(--tip, 50%);
+  margin-top: -6px;
+  border-width: 1px 1px 0 0;
+}
+
+.chapter-preview[data-side="right"]::before {
+  left: -6px;
+  top: var(--tip, 50%);
+  margin-top: -6px;
+  border-width: 0 0 1px 1px;
+}
+
+/* dotted leader from the pointer to the dot, only when the card sits farther off (--lead > 0) */
+.chapter-preview::after {
+  content: "";
+  position: absolute;
+  border: 0 dotted var(--callout-line);
+}
+
+.chapter-preview[data-side="below"]::after {
+  left: var(--tip, 50%);
+  bottom: 100%;
+  height: var(--lead, 0px);
+  margin-bottom: 6px;
+  border-left-width: 1px;
+}
+
+.chapter-preview[data-side="above"]::after {
+  left: var(--tip, 50%);
+  top: 100%;
+  height: var(--lead, 0px);
+  margin-top: 6px;
+  border-left-width: 1px;
+}
+
+.chapter-preview[data-side="left"]::after {
+  top: var(--tip, 50%);
+  left: 100%;
+  width: var(--lead, 0px);
+  margin-left: 6px;
+  border-top-width: 1px;
+}
+
+.chapter-preview[data-side="right"]::after {
+  top: var(--tip, 50%);
+  right: 100%;
+  width: var(--lead, 0px);
+  margin-right: 6px;
+  border-top-width: 1px;
 }
 
 .preview-index {
@@ -748,19 +770,19 @@ body.chengde-complete .chengde-memory .memory-label {
 }
 
 .chapter-preview h2 {
-  margin: 15px 0 13px;
-  font-size: 32px;
+  margin: 8px 0 7px;
+  font-size: 24px;
   font-weight: 400;
-  letter-spacing: .11em;
+  letter-spacing: .1em;
 }
 
-.chapter-preview h2 .en {
-  font: 25px var(--en);
+body[data-language="en"] .chapter-preview h2 {
+  font: 21px var(--en);
   letter-spacing: -.02em;
 }
 
 .chapter-preview > p:not(.preview-index) {
-  margin: 0 0 18px;
+  margin: 0 0 12px;
   color: var(--ink-soft);
   font-size: 11px;
   line-height: 1.8;
@@ -1073,39 +1095,19 @@ body.is-returning .reveal-receipt {
     padding: 25px 22px 0;
   }
 
-  .atlas-thesis { max-width: 31em; }
-
   .atlas-map-stage {
     position: relative;
     inset: auto;
-    height: 67vh;
-    min-height: 500px;
+    height: 76vh;
+    min-height: 560px;
     margin-top: -10px;
   }
 
   .china-map {
-    inset: 0 -38% 0 -14%;
-    width: 152%;
+    inset: 0 auto 0 -27%;
+    width: 123%;
     height: 100%;
   }
-
-  .chapter-preview {
-    position: relative;
-    top: auto;
-    right: auto;
-    width: auto;
-    margin: -22px 22px 80px;
-    opacity: 1;
-    transform: none;
-    pointer-events: auto;
-  }
-
-  .map-disclaimer {
-    left: 22px;
-    bottom: 20px;
-  }
-
-  .map-coordinate { display: none; }
 
   .atlas-footer {
     position: static;
@@ -1142,22 +1144,29 @@ body.is-returning .reveal-receipt {
 }
 
 @media (max-width: 520px) {
-  .atlas-wordmark span,
-  .atlas-wordmark i { font-size: 17px; }
+  .atlas-wordmark span { font-size: 17px; }
 
   .atlas-map-stage {
-    height: 58vh;
-    min-height: 440px;
+    height: 66vh;
+    min-height: 480px;
   }
 
   .china-map {
-    inset: 0 -72% 0 -28%;
-    width: 200%;
+    inset: 0 auto 0 -73%;
+    width: 180%;
   }
 
   .chapter-preview {
-    margin-top: -7px;
+    width: min(232px, calc(100% - 24px));
+    padding: 12px 14px 10px;
   }
+
+  .chapter-preview h2 {
+    margin: 6px 0 5px;
+    font-size: 21px;
+  }
+
+  body[data-language="en"] .chapter-preview h2 { font-size: 19px; }
 
   .reset-progress,
   .view-stamps { font-size: 6px; }
@@ -1192,7 +1201,6 @@ body[data-language="en"] :is(
 body[data-language="en"] :is(
   .atlas-progress,
   .atlas-language,
-  .atlas-volume,
   .map-text.en,
   .route-label.en,
   .memory-label.en,
@@ -1220,11 +1228,6 @@ body[data-language="en"] :is(
   font-weight: 600;
 }
 
-.map-coordinate {
-  font-size: 11px;
-}
-
-.map-disclaimer,
 .preview-index,
 .unavailable-note {
   font-size: 12px;
@@ -1258,11 +1261,6 @@ body[data-language="en"] .chapter-preview > p:not(.preview-index) {
 @media (max-width: 900px) {
   .atlas-intro {
     width: 100%;
-  }
-
-  .atlas-thesis {
-    max-width: 100%;
-    overflow-wrap: break-word;
   }
 
   .atlas-footer {

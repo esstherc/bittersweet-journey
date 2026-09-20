@@ -8,38 +8,42 @@
       content="《文化苦旅》双语阅读地图：山庄背影。以承德避暑山庄和外八庙的真实地理关系，阅读一个王朝的背影。"
     />
     <title>山河显影 · 山庄背影</title>
-    <link rel="stylesheet" href="./styles.css?v=20260917-1" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&family=Ysabeau:ital,wght@0,400..700;1,400..700&display=swap"
+    />
+    <link rel="stylesheet" href="../_shared/chapter-shell.css?v=20260919-6" />
+    <link rel="stylesheet" href="./styles.css?v=20260919-5" />
   </head>
   <body data-language="zh" data-reading-level="1">
-    <div class="paper-grain" aria-hidden="true"></div>
+    <div class="paper-noise" aria-hidden="true"></div>
 
     <header class="masthead">
-      <a class="wordmark" href="../../index.html" aria-label="返回中国总地图">
-        <span class="wordmark-cn">山河显影</span>
-        <span class="wordmark-en">Land, Made Visible</span>
+      <a class="wordmark" href="../../index.html" data-atlas-link data-aria="wordmark-aria" aria-label="山河显影，返回中国总地图">
+        <span data-copy="site-title">山河显影</span>
       </a>
+
       <div class="chapter-meta">
-        <span>10 / 20</span>
-        <span data-copy="chapter-title">山庄背影</span>
+        <span class="chapter-index">10 / 20</span>
+        <span class="chapter-name" data-copy="chapter-title">山庄背影</span>
       </div>
-      <nav class="language-switch" aria-label="Language">
-        <button type="button" data-language="zh" aria-pressed="true">中</button>
-        <span>/</span>
+
+      <div class="language-switch" role="group" aria-label="Language">
+        <button type="button" data-language="zh" aria-pressed="true">中文</button>
+        <span aria-hidden="true">／</span>
         <button type="button" data-language="en" aria-pressed="false">EN</button>
-      </nav>
+      </div>
     </header>
 
-    <main class="chapter-layout">
-      <section class="map-stage" aria-label="承德避暑山庄与外八庙地理图">
-        <div class="map-heading">
-          <p data-copy="map-eyebrow">第一卷 · 山河</p>
-          <h1 data-copy="chapter-title">山庄背影</h1>
-          <p class="map-subtitle" data-copy="chapter-subtitle">一把罗圈椅，坐过一个疲惫的王朝</p>
-        </div>
+    <main class="chapter-frame">
+      <section class="map-stage has-timeline" inert data-aria="map-aria" aria-label="承德避暑山庄与外八庙地理图">
+        <h1 class="sr-only" data-copy="chapter-title">山庄背影</h1>
 
         <svg class="regional-map" viewBox="0 0 980 760" role="img" aria-labelledby="regional-title regional-desc">
-          <title id="regional-title">北京、古北口、承德与木兰围场区域关系</title>
-          <desc id="regional-desc">以真实地理锚点呈现清帝北巡空间，路线和长城线为历史地理示意。</desc>
+          <title id="regional-title" data-copy="regional-svg-title">北京、古北口、承德与木兰围场区域关系</title>
+          <desc id="regional-desc" data-copy="regional-svg-desc">以真实地理锚点呈现清帝北巡空间，路线和长城线为历史地理示意。</desc>
           <defs>
             <radialGradient id="regional-glow" cx="50%" cy="50%" r="50%">
               <stop offset="0" stop-color="#a25b4c" stop-opacity=".26" />
@@ -50,8 +54,8 @@
         </svg>
 
         <svg class="resort-map" viewBox="0 0 980 760" role="img" aria-labelledby="map-title map-desc">
-          <title id="map-title">承德避暑山庄与外八庙</title>
-          <desc id="map-desc">按真实经纬度标示避暑山庄及主要外庙，园内分区为文学示意。</desc>
+          <title id="map-title" data-copy="resort-svg-title">承德避暑山庄与外八庙</title>
+          <desc id="map-desc" data-copy="resort-svg-desc">按真实经纬度标示避暑山庄及主要外庙，园内分区为文学示意。</desc>
           <defs>
             <linearGradient id="lake-silver" x1="0" y1="0" x2="1" y2="1">
               <stop offset="0" stop-color="#afc0bd" stop-opacity=".72" />
@@ -154,92 +158,124 @@
         </svg>
 
         <div class="map-status" aria-live="polite">
-          <span class="status-number">1703</span>
-          <span class="status-label" data-copy="status-1">门外 · 暮色</span>
+          <span class="status-number">清代</span>
+          <span class="status-label"></span>
         </div>
 
-        <div class="time-rail" aria-label="历史时间轴">
-          <span>1703</span><i></i><span>1793</span><i></i><span>1861</span><i></i><span>1927</span>
-          <b aria-hidden="true"></b>
+        <div class="timeline" role="group" data-aria="timeline-aria" aria-label="历史时间线">
+          <span class="timeline-caption" data-copy="timeline-caption">时间线</span>
+          <div class="timeline-track"></div>
         </div>
-
-        <button class="map-data-button" type="button" aria-expanded="false">
-          <span aria-hidden="true">◎</span>
-          <span data-copy="map-data">地图数据与准确性</span>
-        </button>
-
-        <aside class="map-data-panel" aria-hidden="true">
-          <button class="close-data" type="button" aria-label="关闭">×</button>
-          <p class="data-kicker">WGS 84 · 2026.07.28</p>
-          <h2 data-copy="data-title">真实地点与文学分区</h2>
-          <dl>
-            <div><dt data-copy="data-property-label">遗产地</dt><dd data-copy="data-property">避暑山庄与周围寺庙，UNESCO中心坐标约40.9875°N、117.9375°E；山庄遗产区611.2公顷。</dd></div>
-            <div><dt data-copy="data-points-label">地点</dt><dd data-copy="data-points">山庄及六处外庙按WGS 84坐标投影，表达彼此真实方位与距离。</dd></div>
-            <div><dt data-copy="data-zones-label">分区</dt><dd data-copy="data-zones">西北山地、北部平原、东南湖区依据承德市文物局总体格局绘制；内部轮廓为阅读示意，不是测绘边界。</dd></div>
-            <div><dt data-copy="data-story-label">叙事</dt><dd data-copy="data-story">“罗圈椅”、闭门和湖中背影来自原文意象，不代表可测量地物。</dd></div>
-            <div><dt data-copy="data-regional-label">区域轴线</dt><dd data-copy="data-regional">北京、古北口、承德使用地理坐标；木兰围场以官方公布区域范围表达。连线表示北巡空间关系，不是复原的逐段御道。</dd></div>
-            <div><dt data-copy="data-memory-label">跨城记忆</dt><dd data-copy="data-memory">颐和园使用UNESCO坐标，与承德直线约179公里。王国维事件发生在北京；承德湖面只是作者产生联想的位置。</dd></div>
-          </dl>
-          <div class="map-legend" aria-label="地图符号">
-            <p data-copy="legend-title">图面语法</p>
-            <span><i class="legend-point"></i><b data-copy="legend-point">坐标地点</b></span>
-            <span><i class="legend-area"></i><b data-copy="legend-area">区域或简化分区</b></span>
-            <span><i class="legend-route"></i><b data-copy="legend-route">历史空间关系</b></span>
-            <span><i class="legend-literary"></i><b data-copy="legend-literary">文学意象</b></span>
-          </div>
-          <p class="data-disclaimer" data-copy="data-disclaimer">文学阅读地图，不替代测绘、导航或遗产地管理信息。</p>
-          <div class="source-links">
-            <a href="https://whc.unesco.org/en/list/703/" target="_blank" rel="noreferrer">UNESCO</a>
-            <a href="https://wwj.chengde.gov.cn/art/2018/11/8/art_962_753975.html" target="_blank" rel="noreferrer" data-copy="chengde-source">承德市文物局</a>
-            <a href="https://whc.unesco.org/en/list/880/maps/" target="_blank" rel="noreferrer" data-copy="summer-source">颐和园坐标</a>
-            <a href="https://shj.chengde.gov.cn/art/2013/7/10/art_820_108214.html" target="_blank" rel="noreferrer" data-copy="mulan-source">木兰区域</a>
-          </div>
-        </aside>
       </section>
 
-      <aside class="reader-panel">
-        <div class="reader-intro">
-          <p class="reader-kicker" data-copy="reader-kicker">承德 · 塞外</p>
-          <p class="reader-thesis" data-copy="thesis">园林没有移动。移动的是看它的时代。</p>
-          <button class="open-book" type="button">
-            <span data-copy="open">绕到山庄背后</span><i aria-hidden="true">↓</i>
-          </button>
+      <article class="reader-panel" inert data-aria="reader-aria" aria-label="章节正文">
+        <div class="reader-scroll">
+          <p class="reader-note" data-copy="reader-note">园林没有移动。移动的是看它的时代。</p>
+          <div class="reading-copy"></div>
+
+          <div class="reader-end">
+            <span class="seal seal-m" aria-hidden="true">影</span>
+            <button class="finish-chapter" type="button">
+              <span data-copy="finish">完成本章 · 返回总图</span>
+              <svg viewBox="0 0 44 14" aria-hidden="true">
+                <path d="M1 7H39M34 2L40 7L34 12" />
+              </svg>
+            </button>
+          </div>
         </div>
-        <div class="reading-copy" aria-live="polite"></div>
-        <footer class="reader-finish">
-          <p data-copy="complete-line">一个王朝离开后，山水仍坐在原处。</p>
-          <button class="finish-chapter" type="button" data-copy="finish">完成本章 · 返回总图</button>
-          <small data-copy="source">文本：余秋雨《文化苦旅》</small>
-        </footer>
-      </aside>
+
+        <nav class="section-rail" data-aria="rail-aria" aria-label="章节段落">
+          <span class="rail-caption" data-copy="rail-caption">原文章节</span>
+          <div class="section-buttons"></div>
+          <span class="rail-line" aria-hidden="true"><i></i></span>
+        </nav>
+      </article>
+
+      <div class="opening-curtain" role="dialog" aria-modal="false" aria-labelledby="curtain-title">
+        <p class="curtain-kicker" data-copy="curtain-kicker">第 10 章 · 山河</p>
+        <p class="curtain-teaser" data-copy="map-teaser">椅背之外的王朝</p>
+        <h1 class="curtain-title" id="curtain-title" data-copy="chapter-title">山庄背影</h1>
+        <p class="curtain-thesis" data-copy="thesis">在椅背之外，先看见山。</p>
+        <button class="open-book" type="button">
+          <span data-copy="open">绕到山庄背后</span>
+          <svg viewBox="0 0 56 18" aria-hidden="true">
+            <path d="M1 9H51M44 2L52 9L44 16" />
+          </svg>
+        </button>
+      </div>
     </main>
 
-    <nav class="reading-rail" aria-label="阅读章节">
-      <span data-copy="rail-caption">原文章节</span>
-      <div class="section-buttons"></div>
-      <div class="rail-line"><i></i></div>
-    </nav>
-
-    <div class="opening-gate" aria-hidden="false">
-      <div class="gate-panel gate-left"></div>
-      <div class="gate-panel gate-right"></div>
-      <div class="gate-title">
-        <span data-copy="opening-kicker">承德 · 薄暮</span>
-        <span class="gate-teaser" data-copy="map-teaser">椅背之外的王朝</span>
-        <strong data-copy="chapter-title">山庄背影</strong>
-        <small data-copy="opening-line">在椅背之外，先看见山。</small>
-        <button class="gate-open" type="button" data-copy="open">绕到山庄背后</button>
+    <footer class="bottom-bar">
+      <div class="bar-left">
+        <span class="credit" data-copy="source">文本：余秋雨《文化苦旅》</span>
+        <button class="notes-button" type="button" aria-expanded="false" aria-controls="notes-drawer">
+          <span aria-hidden="true">ⓘ</span>
+          <span data-copy="notes-button">地图说明与数据来源</span>
+        </button>
       </div>
-    </div>
+      <a class="back-atlas" href="../../index.html" data-atlas-link>
+        <span aria-hidden="true">←</span>
+        <span data-copy="back-atlas">总地图</span>
+      </a>
+    </footer>
 
-    <div class="chapter-complete-overlay" aria-hidden="true">
-      <span>影</span>
+    <aside class="notes-drawer" id="notes-drawer" aria-hidden="true" aria-labelledby="notes-title">
+      <button class="close-notes" type="button" data-aria="close-aria" aria-label="关闭">×</button>
+      <h2 id="notes-title" data-copy="notes-title">地图说明与数据来源</h2>
+
+      <section>
+        <h3 data-copy="notes-map-title">如何阅读这幅地图</h3>
+        <p><b data-copy="data-zones-label">分区</b><span data-copy="data-zones"></span></p>
+        <p><b data-copy="data-story-label">叙事</b><span data-copy="data-story"></span></p>
+        <p><b data-copy="data-regional-label">区域轴线</b><span data-copy="data-regional"></span></p>
+        <div class="map-legend" role="group" aria-labelledby="legend-title">
+          <p class="legend-title" id="legend-title" data-copy="legend-title">图面语法</p>
+          <span><i class="legend-point"></i><em data-copy="legend-point">坐标地点</em></span>
+          <span><i class="legend-area"></i><em data-copy="legend-area">区域或简化分区</em></span>
+          <span><i class="legend-route"></i><em data-copy="legend-route">历史空间关系</em></span>
+          <span><i class="legend-literary"></i><em data-copy="legend-literary">文学意象</em></span>
+        </div>
+      </section>
+
+      <section>
+        <h3 data-copy="notes-data-title">数据与投影</h3>
+        <p class="notes-datum">WGS 84 · 2026.07.28</p>
+        <p><b data-copy="data-property-label">遗产地</b><span data-copy="data-property"></span></p>
+        <p><b data-copy="data-points-label">地点</b><span data-copy="data-points"></span></p>
+        <p><b data-copy="data-memory-label">跨城记忆</b><span data-copy="data-memory"></span></p>
+      </section>
+
+      <section>
+        <h3 data-copy="notes-sources-title">数据来源</h3>
+        <ul>
+          <li><a href="https://whc.unesco.org/en/list/703/" target="_blank" rel="noreferrer">UNESCO</a></li>
+          <li><a href="https://wwj.chengde.gov.cn/art/2018/11/8/art_962_753975.html" target="_blank" rel="noreferrer" data-copy="chengde-source">承德市文物局</a></li>
+          <li><a href="https://whc.unesco.org/en/list/880/maps/" target="_blank" rel="noreferrer" data-copy="summer-source">颐和园坐标</a></li>
+          <li><a href="https://shj.chengde.gov.cn/art/2013/7/10/art_820_108214.html" target="_blank" rel="noreferrer" data-copy="mulan-source">木兰区域</a></li>
+        </ul>
+      </section>
+
+      <section>
+        <h3 data-copy="notes-disclaimer-title">声明</h3>
+        <p data-copy="data-disclaimer">文学阅读地图，不替代测绘、导航或遗产地管理信息。</p>
+      </section>
+
+      <section>
+        <h3 data-copy="notes-keyboard-title">键盘</h3>
+        <p data-copy="notes-keyboard"></p>
+      </section>
+    </aside>
+
+    <div class="chapter-complete-overlay" role="status" aria-live="polite" aria-hidden="true">
+      <span class="complete-ripple"></span>
+      <span class="seal seal-l" aria-hidden="true">影</span>
       <p data-copy="complete-kicker">一处山河已经显影</p>
       <strong data-copy="complete-line">一个王朝离开后，山水仍坐在原处。</strong>
     </div>
 
     <script src="./chapter-data.js"></script>
     <script src="./geography-data.js"></script>
-    <script src="./app.js?v=20260917-2"></script>
+    <script src="../_shared/chapter-shell.js?v=20260919-5"></script>
+    <script src="./app.js?v=20260919-5"></script>
   </body>
 </html>

@@ -14,15 +14,15 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&family=Ysabeau:ital,wght@0,400..700;1,400..700&display=swap"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260917-1" />
+    <link rel="stylesheet" href="../_shared/chapter-shell.css?v=20260919-6" />
+    <link rel="stylesheet" href="./styles.css?v=20260919-5" />
   </head>
-  <body data-language="zh">
+  <body data-language="zh" data-reading-level="1">
     <div class="paper-noise" aria-hidden="true"></div>
 
     <header class="masthead">
-      <a class="wordmark" href="../../index.html" aria-label="返回中国总地图">
-        <span class="wordmark-cn">山河显影</span>
-        <span class="wordmark-en">Land, Made Visible</span>
+      <a class="wordmark" href="../../index.html" data-atlas-link data-aria="wordmark-aria" aria-label="山河显影，返回中国总地图">
+        <span data-copy="site-title">山河显影</span>
       </a>
 
       <div class="chapter-meta">
@@ -30,26 +30,16 @@
         <span class="chapter-name" data-copy="chapter-title">沙原隐泉</span>
       </div>
 
-      <div class="header-actions">
-        <a class="back-atlas" href="../../index.html">
-          <span aria-hidden="true">←</span>
-          <span data-copy="back-atlas">总地图</span>
-        </a>
-        <div class="language-switch" role="group" aria-label="Language">
-          <button type="button" data-language="zh" aria-pressed="true">中文</button>
-          <span aria-hidden="true">／</span>
-          <button type="button" data-language="en" aria-pressed="false">EN</button>
-        </div>
+      <div class="language-switch" role="group" aria-label="Language">
+        <button type="button" data-language="zh" aria-pressed="true">中文</button>
+        <span aria-hidden="true">／</span>
+        <button type="button" data-language="en" aria-pressed="false">EN</button>
       </div>
     </header>
 
-    <main class="experience">
-      <section class="map-stage" aria-labelledby="map-title">
-        <div class="map-heading">
-          <p class="eyebrow" data-copy="map-eyebrow">第一卷 · 山河</p>
-          <h1 id="map-title" data-copy="chapter-title">沙原隐泉</h1>
-          <p class="map-subtitle" data-copy="chapter-subtitle">水，藏在不该有水的地方</p>
-        </div>
+    <main class="chapter-frame">
+      <section class="map-stage" inert data-aria="map-aria" aria-label="鸣沙山与月牙泉三维地形图">
+        <h1 class="sr-only" data-copy="chapter-title">沙原隐泉</h1>
 
         <div class="terrain-viewport" aria-hidden="true">
           <canvas class="terrain-canvas"></canvas>
@@ -62,8 +52,8 @@
           role="img"
           aria-labelledby="svg-title svg-desc"
         >
-          <title id="svg-title">鸣沙山与月牙泉文学地图</title>
-          <desc id="svg-desc">三维地形和月牙泉轮廓随阅读逐层显影；虚线脚印为文学叙事路径。</desc>
+          <title id="svg-title" data-copy="map-svg-title">鸣沙山与月牙泉文学地图</title>
+          <desc id="svg-desc" data-copy="map-svg-desc">三维地形和月牙泉轮廓随阅读逐层显影；虚线脚印为文学叙事路径，不是实测路线。</desc>
 
           <defs>
             <filter id="sand-bleed" x="-20%" y="-20%" width="140%" height="140%">
@@ -98,7 +88,10 @@
               <circle r="7" />
               <path d="M-3 0C0-4 5-3 6 1C2 0 0 2-1 5C-3 4-4 2-3 0Z" />
               <text x="-12" y="20" text-anchor="end" class="label-cn">鸣沙山 · 月牙泉</text>
-              <text x="-12" y="20" text-anchor="end" class="label-en">Mingsha · Crescent Spring</text>
+              <text x="-12" y="20" text-anchor="end" class="label-en">
+                <tspan x="-12">Mingsha ·</tspan>
+                <tspan x="-12" dy="15">Crescent Spring</tspan>
+              </text>
             </g>
 
             <g class="regional-point mogao-point" transform="translate(263 394)">
@@ -118,7 +111,7 @@
             </g>
 
             <text x="206" y="303" class="distance-label">6.6 km</text>
-            <text x="218" y="397" class="distance-label">12.3 km</text>
+            <text x="192" y="412" class="distance-label">12.3 km</text>
             <text x="538" y="380" text-anchor="middle" class="distance-label">95.9 km · 直线距离 / Straight-line</text>
             <text x="95" y="223" class="regional-title label-cn">敦煌文化地景 · 从沙山到石窟</text>
             <text x="95" y="223" class="regional-title label-en">Dunhuang Cultural Landscape · Dune to Caves</text>
@@ -204,112 +197,115 @@
           </g>
         </svg>
 
-        <button class="map-data-button" type="button" aria-expanded="false">
-          <span class="data-icon" aria-hidden="true">◎</span>
-          <span data-copy="map-data">地图数据与准确性</span>
-        </button>
-
         <div class="camera-caption" aria-hidden="true">
-          <span class="camera-mode" data-copy="camera-mode">贴近沙脊</span>
+          <span class="camera-mode">贴近沙脊</span>
           <span class="camera-tech">3D terrain · DEM</span>
-        </div>
-
-        <aside class="map-data-panel" aria-hidden="true" aria-label="地图数据与准确性">
-          <button class="close-data" type="button" aria-label="关闭">×</button>
-          <p class="data-kicker">Map data / 2026.07.24</p>
-          <h2 data-copy="data-title">真实地理与文学路径</h2>
-          <dl>
-            <div>
-              <dt data-copy="data-projection-label">投影</dt>
-              <dd data-copy="data-projection">WGS 84 / UTM 46N，地图保持地点与地形的相对关系。</dd>
-            </div>
-            <div>
-              <dt data-copy="data-terrain-label">地形</dt>
-              <dd data-copy="data-terrain">Copernicus DEM GLO-30，约30米网格；作为三维沙山的高程基础。</dd>
-            </div>
-            <div>
-              <dt data-copy="data-features-label">地物</dt>
-              <dd data-copy="data-features">月牙泉、鸣沙山和党河来自 OpenStreetMap，获取于2026年7月24日。</dd>
-            </div>
-            <div>
-              <dt data-copy="data-region-label">区域</dt>
-              <dd data-copy="data-region">敦煌、莫高窟、榆林窟按真实坐标定位；图中距离为大圆直线距离，不是公路里程。</dd>
-            </div>
-            <div>
-              <dt data-copy="data-3d-label">三维</dt>
-              <dd data-copy="data-3d">3D沙山直接由DEM高程网格生成，并随阅读切换镜头。</dd>
-            </div>
-            <div>
-              <dt data-copy="data-route-label">脚印</dt>
-              <dd data-copy="data-route">原文没有可核验的行走坐标。虚线脚印仅表达阅读中的攀登，不是作者的实测路线。</dd>
-            </div>
-          </dl>
-          <p class="data-disclaimer" data-copy="data-disclaimer">
-            文学阅读地图，不替代测绘、导航或景区安全信息。
-          </p>
-        </aside>
-
-        <nav class="section-rail" aria-label="阅读路标">
-          <span class="rail-caption" data-copy="rail-caption">阅读路标</span>
-          <span class="rail-line" aria-hidden="true"><i></i></span>
-          <div class="section-buttons"></div>
-        </nav>
-
-        <div class="opening-curtain">
-          <div class="curtain-sand" aria-hidden="true"></div>
-          <p class="curtain-kicker">Chapter 07 · Land</p>
-          <p class="curtain-teaser" data-copy="map-teaser">沙山后有一弯水</p>
-          <div class="curtain-title curtain-title-cn" lang="zh-CN">
-            <span>沙原</span>
-            <span class="title-spring">隐泉</span>
-          </div>
-          <div class="curtain-title curtain-title-en" lang="en">
-            <span>A Secret Spring</span>
-            <span>in the Sand</span>
-          </div>
-          <p class="curtain-thesis" data-copy="thesis">先有脚印，然后才有泉。</p>
-          <button class="open-book" type="button">
-            <span data-copy="open">开始攀登</span>
-            <svg viewBox="0 0 56 18" aria-hidden="true">
-              <path d="M1 9H51M44 2L52 9L44 16" />
-            </svg>
-          </button>
         </div>
       </section>
 
-      <article class="reader-panel" aria-label="章节正文">
-        <div class="reader-note">
-          <span data-copy="reader-note">四个“路标”用于交互节奏，不是原文编号分节。</span>
-        </div>
-        <div class="reading-copy"></div>
+      <article class="reader-panel" inert data-aria="reader-aria" aria-label="章节正文">
+        <div class="reader-scroll">
+          <p class="reader-note" data-copy="reader-note">四个“路标”用于交互节奏，不是原文编号分节。</p>
+          <div class="reading-copy"></div>
 
-        <footer class="reader-footer">
-          <span class="spring-seal" aria-hidden="true">泉</span>
-          <button class="finish-chapter" type="button">
-            <span data-copy="finish">完成本章 · 返回总图</span>
-            <svg viewBox="0 0 44 14" aria-hidden="true">
-              <path d="M1 7H39M34 2L40 7L34 12" />
-            </svg>
-          </button>
-        </footer>
+          <div class="reader-end">
+            <span class="seal seal-m" aria-hidden="true">泉</span>
+            <button class="finish-chapter" type="button">
+              <span data-copy="finish">完成本章 · 返回总图</span>
+              <svg viewBox="0 0 44 14" aria-hidden="true">
+                <path d="M1 7H39M34 2L40 7L34 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <nav class="section-rail" data-aria="rail-aria" aria-label="阅读路标">
+          <span class="rail-caption" data-copy="rail-caption">阅读路标</span>
+          <div class="section-buttons"></div>
+          <span class="rail-line" aria-hidden="true"><i></i></span>
+        </nav>
       </article>
+
+      <div class="opening-curtain" role="dialog" aria-modal="false" aria-labelledby="curtain-title">
+        <p class="curtain-kicker" data-copy="curtain-kicker">第 07 章 · 山河</p>
+        <p class="curtain-teaser" data-copy="map-teaser">沙山后有一弯水</p>
+        <h1 class="curtain-title" id="curtain-title" data-copy="chapter-title">沙原隐泉</h1>
+        <p class="curtain-thesis" data-copy="thesis">先有脚印，然后才有泉。</p>
+        <button class="open-book" type="button">
+          <span data-copy="open">开始攀登</span>
+          <svg viewBox="0 0 56 18" aria-hidden="true">
+            <path d="M1 9H51M44 2L52 9L44 16" />
+          </svg>
+        </button>
+      </div>
     </main>
 
+    <footer class="bottom-bar">
+      <div class="bar-left">
+        <span class="credit" data-copy="source">文本：余秋雨《文化苦旅》</span>
+        <button class="notes-button" type="button" aria-expanded="false" aria-controls="notes-drawer">
+          <span aria-hidden="true">ⓘ</span>
+          <span data-copy="notes-button">地图说明与数据来源</span>
+        </button>
+      </div>
+      <a class="back-atlas" href="../../index.html" data-atlas-link>
+        <span aria-hidden="true">←</span>
+        <span data-copy="back-atlas">总地图</span>
+      </a>
+    </footer>
+
+    <aside class="notes-drawer" id="notes-drawer" aria-hidden="true" aria-labelledby="notes-title">
+      <button class="close-notes" type="button" data-aria="close-aria" aria-label="关闭">×</button>
+      <h2 id="notes-title" data-copy="notes-title">地图说明与数据来源</h2>
+
+      <section>
+        <h3 data-copy="notes-map-title">如何阅读这幅地图</h3>
+        <p><b data-copy="data-3d-label">三维</b><span data-copy="data-3d"></span></p>
+        <p><b data-copy="data-route-label">脚印</b><span data-copy="data-route"></span></p>
+        <p><b data-copy="data-region-label">区域</b><span data-copy="data-region"></span></p>
+      </section>
+
+      <section>
+        <h3 data-copy="notes-data-title">数据与投影</h3>
+        <p class="notes-datum">WGS 84 / UTM 46N · 2026.07.24</p>
+        <p><b data-copy="data-projection-label">投影</b><span data-copy="data-projection"></span></p>
+        <p><b data-copy="data-terrain-label">地形</b><span data-copy="data-terrain"></span></p>
+        <p><b data-copy="data-features-label">地物</b><span data-copy="data-features"></span></p>
+      </section>
+
+      <section>
+        <h3 data-copy="notes-sources-title">数据来源</h3>
+        <ul>
+          <li data-copy="notes-source-1"></li>
+          <li data-copy="notes-source-2"></li>
+          <li data-copy="notes-source-3"></li>
+          <li data-copy="notes-source-4"></li>
+        </ul>
+      </section>
+
+      <section>
+        <h3 data-copy="notes-disclaimer-title">声明</h3>
+        <p data-copy="data-disclaimer"></p>
+      </section>
+
+      <section>
+        <h3 data-copy="notes-keyboard-title">键盘</h3>
+        <p data-copy="notes-keyboard"></p>
+      </section>
+    </aside>
+
     <div class="chapter-complete-overlay" role="status" aria-live="polite" aria-hidden="true">
-      <span class="complete-crescent"></span>
+      <span class="complete-ripple"></span>
+      <span class="seal seal-l" aria-hidden="true">泉</span>
       <p data-copy="complete-kicker">一处山河已经显影</p>
       <strong data-copy="complete-line">荒漠记住了一弯清泉。</strong>
     </div>
-
-    <footer class="footnote">
-      <span data-copy="source">文本：余秋雨《文化苦旅》</span>
-      <span data-copy="source-map">地图：Copernicus DEM GLO-30 · OpenStreetMap</span>
-    </footer>
 
     <script src="./geography-data.js"></script>
     <script src="./terrain-data.js"></script>
     <script src="./chapter-data.js"></script>
     <script src="./terrain-3d.js?v=20260724-3"></script>
-    <script src="./app.js?v=20260917-2"></script>
+    <script src="../_shared/chapter-shell.js?v=20260919-5"></script>
+    <script src="./app.js?v=20260919-1"></script>
   </body>
 </html>

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="《文化苦旅》双语阅读地图原型：都江堰。故事被阅读，地图才显影。"
+      content="《文化苦旅》双语阅读地图：都江堰。故事被阅读，地图才显影。"
     />
     <title>山河显影 · 都江堰</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -14,15 +14,15 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&family=Ysabeau:ital,wght@0,400..700;1,400..700&display=swap"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260917-1" />
+    <link rel="stylesheet" href="../_shared/chapter-shell.css?v=20260919-6" />
+    <link rel="stylesheet" href="./styles.css?v=20260919-2" />
   </head>
   <body data-language="zh">
     <div class="paper-noise" aria-hidden="true"></div>
 
     <header class="masthead">
-      <a class="wordmark" href="../../index.html" aria-label="返回中国总地图">
-        <span class="wordmark-cn">山河显影</span>
-        <span class="wordmark-en">Land, Made Visible</span>
+      <a class="wordmark" href="../../index.html" data-atlas-link data-aria="wordmark-aria" aria-label="山河显影，返回中国总地图">
+        <span data-copy="site-title">山河显影</span>
       </a>
 
       <div class="chapter-meta">
@@ -30,30 +30,16 @@
         <span class="chapter-name" data-copy="chapter-title">都江堰</span>
       </div>
 
-      <div class="header-actions">
-        <a class="back-atlas" href="../../index.html">
-          <span aria-hidden="true">←</span>
-          <span data-copy="back-atlas">总地图</span>
-        </a>
-        <button class="sound-toggle" type="button" aria-pressed="false" title="水声（原型占位）">
-          <span class="sound-bars" aria-hidden="true"><i></i><i></i><i></i></span>
-          <span data-copy="sound">水声</span>
-        </button>
-        <div class="language-switch" role="group" aria-label="Language">
-          <button type="button" data-language="zh" aria-pressed="true">中文</button>
-          <span aria-hidden="true">／</span>
-          <button type="button" data-language="en" aria-pressed="false">EN</button>
-        </div>
+      <div class="language-switch" role="group" aria-label="Language">
+        <button type="button" data-language="zh" aria-pressed="true">中文</button>
+        <span aria-hidden="true">／</span>
+        <button type="button" data-language="en" aria-pressed="false">EN</button>
       </div>
     </header>
 
-    <main class="experience">
-      <section class="map-stage" aria-labelledby="map-title">
-        <div class="map-heading">
-          <p class="eyebrow" data-copy="map-eyebrow">第一卷 · 山河</p>
-          <h1 id="map-title" data-copy="chapter-title">都江堰</h1>
-          <p class="map-subtitle" data-copy="chapter-subtitle">水，被读出来的形状</p>
-        </div>
+    <main class="chapter-frame">
+      <section class="map-stage" inert data-aria="map-aria" aria-label="都江堰文学地图">
+        <h1 class="sr-only" data-copy="chapter-title">都江堰</h1>
 
         <svg
           class="story-map"
@@ -61,8 +47,8 @@
           role="img"
           aria-labelledby="svg-title svg-desc"
         >
-          <title id="svg-title">都江堰文学地图</title>
-          <desc id="svg-desc">随着阅读章节推进，岷江、鱼嘴、飞沙堰、宝瓶口与青城山逐层显影。</desc>
+          <title id="svg-title" data-copy="map-svg-title">都江堰文学地图</title>
+          <desc id="svg-desc" data-copy="map-svg-desc">随着阅读章节推进，岷江、鱼嘴、飞沙堰、宝瓶口与青城山逐层显影。</desc>
 
           <defs>
             <filter id="ink-bleed" x="-20%" y="-20%" width="140%" height="140%">
@@ -216,65 +202,98 @@
           </g>
 
         </svg>
-
-        <button class="map-note" type="button" aria-label="地图说明">
-          <span>Schematic map</span>
-          <span data-copy="not-scale">非测绘比例</span>
-        </button>
-
-        <nav class="section-rail" aria-label="章节段落">
-          <span class="rail-line" aria-hidden="true"><i></i></span>
-          <div class="section-buttons"></div>
-        </nav>
-
-        <div class="opening-curtain">
-          <p class="curtain-kicker">Chapter 04 · Land</p>
-          <p class="curtain-teaser" data-copy="map-teaser">水在这里被分开</p>
-          <div class="curtain-title curtain-title-cn" lang="zh-CN">
-            <span>都</span><span>江</span><span>堰</span>
-          </div>
-          <div class="curtain-title curtain-title-en" lang="en">
-            <span>Dujiangyan</span>
-            <span>Irrigation System</span>
-          </div>
-          <p class="curtain-thesis" data-copy="thesis">地图并不存在，直到它被阅读。</p>
-          <button class="open-book" type="button">
-            <span data-copy="open">开卷</span>
-            <svg viewBox="0 0 56 18" aria-hidden="true">
-              <path d="M1 9H51M44 2L52 9L44 16" />
-            </svg>
-          </button>
-        </div>
       </section>
 
-      <article class="reader-panel" aria-label="章节正文">
-        <div class="reading-copy"></div>
+      <article class="reader-panel" inert data-aria="reader-aria" aria-label="章节正文">
+        <div class="reader-scroll">
+          <div class="reading-copy"></div>
 
-        <footer class="reader-footer">
-          <img src="./assets/seal-water.svg" alt="" class="water-seal" />
-          <button class="finish-chapter" type="button">
-            <span data-copy="finish">完成本章 · 返回总图</span>
-            <svg viewBox="0 0 44 14" aria-hidden="true">
-              <path d="M1 7H39M34 2L40 7L34 12" />
-            </svg>
-          </button>
-        </footer>
+          <div class="reader-end">
+            <span class="seal seal-m" aria-hidden="true">水</span>
+            <button class="finish-chapter" type="button">
+              <span data-copy="finish">完成本章 · 返回总图</span>
+              <svg viewBox="0 0 44 14" aria-hidden="true">
+                <path d="M1 7H39M34 2L40 7L34 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <nav class="section-rail" data-aria="rail-aria" aria-label="章节段落">
+          <span class="rail-caption" data-copy="rail-caption">阅读章节</span>
+          <div class="section-buttons"></div>
+          <span class="rail-line" aria-hidden="true"><i></i></span>
+        </nav>
       </article>
+
+      <div class="opening-curtain" role="dialog" aria-modal="false" aria-labelledby="curtain-title">
+        <p class="curtain-kicker" data-copy="curtain-kicker">第 04 章 · 山河</p>
+        <p class="curtain-teaser" data-copy="map-teaser">水在这里被分开</p>
+        <h1 class="curtain-title" id="curtain-title" data-copy="chapter-title">都江堰</h1>
+        <p class="curtain-thesis" data-copy="thesis">水，被读出来的形状</p>
+        <button class="open-book" type="button">
+          <span data-copy="open">开卷</span>
+          <svg viewBox="0 0 56 18" aria-hidden="true">
+            <path d="M1 9H51M44 2L52 9L44 16" />
+          </svg>
+        </button>
+      </div>
     </main>
+
+    <footer class="bottom-bar">
+      <div class="bar-left">
+        <span class="credit" data-copy="source">文本：余秋雨《文化苦旅》</span>
+        <button class="notes-button" type="button" aria-expanded="false" aria-controls="notes-drawer">
+          <span aria-hidden="true">ⓘ</span>
+          <span data-copy="notes-button">地图说明与数据来源</span>
+        </button>
+      </div>
+      <a class="back-atlas" href="../../index.html" data-atlas-link>
+        <span aria-hidden="true">←</span>
+        <span data-copy="back-atlas">总地图</span>
+      </a>
+    </footer>
+
+    <aside class="notes-drawer" id="notes-drawer" aria-hidden="true" aria-labelledby="notes-title">
+      <button class="close-notes" type="button" data-aria="close-aria" aria-label="关闭">×</button>
+      <h2 id="notes-title" data-copy="notes-title">地图说明与数据来源</h2>
+      <section>
+        <h3 data-copy="notes-map-title">如何阅读这幅地图</h3>
+        <p data-copy="notes-map"></p>
+      </section>
+      <section>
+        <h3 data-copy="notes-data-title">数据与投影</h3>
+        <p data-copy="notes-data"></p>
+      </section>
+      <section>
+        <h3 data-copy="notes-sources-title">数据来源</h3>
+        <ul>
+          <li data-copy="notes-source-1"></li>
+          <li data-copy="notes-source-2"></li>
+          <li data-copy="notes-source-3"></li>
+          <li data-copy="notes-source-4"></li>
+        </ul>
+      </section>
+      <section>
+        <h3 data-copy="notes-disclaimer-title">声明</h3>
+        <p data-copy="notes-disclaimer"></p>
+      </section>
+      <section>
+        <h3 data-copy="notes-keyboard-title">键盘</h3>
+        <p data-copy="notes-keyboard"></p>
+      </section>
+    </aside>
 
     <div class="chapter-complete-overlay" role="status" aria-live="polite" aria-hidden="true">
       <span class="complete-ripple"></span>
+      <span class="seal seal-l" aria-hidden="true">水</span>
       <p data-copy="complete-kicker">一处山河已经显影</p>
       <strong data-copy="complete-line">岷江的水，正在回到中国。</strong>
     </div>
 
-    <footer class="footnote">
-      <span data-copy="source">文本：余秋雨《文化苦旅》</span>
-      <span>↑ ↓ &nbsp; Read &nbsp; / &nbsp; L &nbsp; Language</span>
-    </footer>
-
     <script src="../../data/real-geography.js"></script>
     <script src="./chapter-data.js"></script>
-    <script src="./app.js?v=20260917-2"></script>
+    <script src="../_shared/chapter-shell.js?v=20260919-5"></script>
+    <script src="./app.js?v=20260919-2"></script>
   </body>
 </html>

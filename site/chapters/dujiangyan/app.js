@@ -2,60 +2,72 @@
   "use strict";
 
   const data = window.CHAPTER_DATA;
-  if (!data) {
+  if (!data || !window.ChapterShell) {
     document.body.innerHTML = "<p>Chapter data could not be loaded.</p>";
     return;
   }
 
-  const ui = {
-    zh: {
-      "map-eyebrow": "第一卷 · 山河",
-      "map-teaser": "水在这里被分开",
-      "chapter-title": data.zh.title,
-      "chapter-subtitle": "水，被读出来的形状",
-      thesis: "地图并不存在，直到它被阅读。",
-      open: "开卷",
-      "back-atlas": "总地图",
-      sound: "水声",
-      "not-scale": "非测绘比例",
-      section: ["第一节", "第二节", "第三节", "第四节"],
-      location: ["岷江 · 都江堰", "江声 · 鱼嘴", "水理 · 李冰", "青城山 · 伏龙观"],
-      finish: "完成本章 · 返回总图",
-      "map-quote": "拜水都江堰，问道青城山",
-      "complete-kicker": "一处山河已经显影",
-      "complete-line": "岷江的水，正在回到中国。",
-      source: "文本：余秋雨《文化苦旅》"
-    },
-    en: {
-      "map-eyebrow": "Book I · Land",
-      "map-teaser": "Where water divides",
-      "chapter-title": data.en.title,
-      "chapter-subtitle": "The shape of water, read into view",
-      thesis: "The map does not exist until it is read.",
-      open: "Begin",
-      "back-atlas": "Atlas",
-      sound: "Water",
-      "not-scale": "Not to scale",
-      section: ["Section I", "Section II", "Section III", "Section IV"],
-      location: ["Min River · Dujiangyan", "The roar · Yuzui", "Water logic · Li Bing", "Qingcheng · Fulong"],
-      finish: "Complete chapter · Return to atlas",
-      "map-quote": "Pay homage to the water; seek the Way in Qingcheng",
-      "complete-kicker": "One landscape brought to light",
-      "complete-line": "The Min River is returning to the map.",
-      source: "Text: Yu Qiuyu, A Bittersweet Journey Through Culture"
-    }
+  // Section label = ordinal + short title; location = the place line (guideline R-3).
+  const sections = {
+    zh: [
+      { label: "一 · 岷江", location: "都江堰" },
+      { label: "二 · 江声", location: "鱼嘴" },
+      { label: "三 · 水理", location: "李冰" },
+      { label: "四 · 青城山", location: "伏龙观" }
+    ],
+    en: [
+      { label: "I · Min River", location: "Dujiangyan" },
+      { label: "II · The roar", location: "Yuzui" },
+      { label: "III · Water logic", location: "Li Bing" },
+      { label: "IV · Qingcheng", location: "Fulong" }
+    ]
   };
 
-  const pageParams = new URLSearchParams(window.location.search);
-  const requestedLanguage = pageParams.get("lang");
-  const state = {
-    language: ["zh", "en"].includes(requestedLanguage)
-      ? requestedLanguage
-      : window.localStorage.getItem("bittersweet-journey:language") || "zh",
-    active: 0,
-    open: false
+  // Chapter copy. Shared strings (site title, bar, drawer headings, finish…) come from the shell.
+  const copy = {
+    zh: {
+      "map-teaser": "水在这里被分开",
+      thesis: "水，被读出来的形状",
+      open: "开卷",
+      "map-aria": "都江堰文学地图",
+      "map-svg-title": "都江堰文学地图",
+      "map-svg-desc": "随着阅读章节推进，岷江、鱼嘴、飞沙堰、宝瓶口与青城山逐层显影。",
+      "map-quote": "拜水都江堰，问道青城山",
+      "complete-line": "岷江的水，正在回到中国。",
+      "notes-map":
+        "这是一幅文学阅读地图：岷江、鱼嘴、飞沙堰、宝瓶口与青城山随阅读逐层显影。区域图保持都江堰与成都的真实相对方位；水利工程核心区使用真实坐标的局部放大图。不显示国界、省界或普通道路。",
+      "notes-data":
+        "都江堰区域采用 WGS84 / UTM 48N 投影。地形晕渲与区域水系使用相同的 UTM 48N 范围和画布位置，西部山地保留较高对比度，向成都平原渐隐。原始河流经过裁剪和 Douglas–Peucker 抽稀，只保留叙事需要的水系层级。",
+      "notes-source-1": "水系与地点：OpenStreetMap contributors，经 Overpass API 获取（WGS84）。",
+      "notes-source-2": "都江堰、鱼嘴、飞沙堰、宝瓶口的空间关系：同时参考 UNESCO 世界遗产资料。",
+      "notes-source-3": "地形：Copernicus DEM GLO-90，用于生成多向 hillshade，并提取 200 米等高线。",
+      "notes-source-4": "数据生成于 2026-07-24；页面离线运行，阅读时不会请求在线地图服务。",
+      "notes-disclaimer": "地图用于文学阅读与地理关系解释，不替代工程图、行政地图或导航地图。"
+    },
+    en: {
+      "map-teaser": "Where water divides",
+      thesis: "The shape of water, read into view",
+      open: "Begin",
+      "map-aria": "A literary map of Dujiangyan",
+      "map-svg-title": "A literary map of Dujiangyan",
+      "map-svg-desc":
+        "As the reading advances, the Min River, Yuzui, Feishayan, Baopingkou and Mount Qingcheng appear layer by layer.",
+      "map-quote": "Pay homage to the water; seek the Way in Qingcheng",
+      "complete-line": "The Min River is returning to the map.",
+      "notes-map":
+        "This is a literary reading map: the Min River, Yuzui, Feishayan, Baopingkou and Mount Qingcheng appear layer by layer as you read. The regional view keeps the true relative bearing of Dujiangyan and Chengdu; the waterworks inset uses real coordinates at a larger scale. National and provincial borders and ordinary roads are not shown.",
+      "notes-data":
+        "The Dujiangyan region uses the WGS 84 / UTM zone 48N projection. Hillshade and regional waterways share the same UTM 48N extent and canvas position; the western mountains keep higher contrast and fade toward the Chengdu Plain. Source rivers were clipped and simplified (Douglas–Peucker), keeping only the waterway hierarchy the narrative needs.",
+      "notes-source-1": "Waterways and places: OpenStreetMap contributors, retrieved via the Overpass API (WGS 84).",
+      "notes-source-2":
+        "Spatial relationships of Dujiangyan, Yuzui, Feishayan and Baopingkou: also checked against UNESCO World Heritage documentation.",
+      "notes-source-3": "Terrain: Copernicus DEM GLO-90, used for multi-directional hillshade and 200 m contours.",
+      "notes-source-4":
+        "Data generated 2026-07-24; the page runs offline and does not call online map services while you read.",
+      "notes-disclaimer":
+        "This map serves literary reading and the explanation of geographic relationships. It does not replace engineering drawings, administrative maps or navigation maps."
+    }
   };
-  window.localStorage.setItem("bittersweet-journey:language", state.language);
 
   const readableEnglishOpenings = new Map([
     ["IMAGINE AN ANCESTOR", "Imagine an ancestor"],
@@ -64,8 +76,8 @@
     ["I SAW A BRIDGE", "I saw a bridge"]
   ]);
 
-  function formatParagraph(paragraph) {
-    if (state.language !== "en") return paragraph;
+  function formatParagraph(paragraph, language) {
+    if (language !== "en") return paragraph;
     for (const [opening, replacement] of readableEnglishOpenings) {
       if (paragraph.startsWith(opening)) return paragraph.replace(opening, replacement);
     }
@@ -148,213 +160,28 @@
     });
   }
 
-  const readingCopy = document.querySelector(".reading-copy");
-  const readerPanel = document.querySelector(".reader-panel");
-  const completeOverlay = document.querySelector(".chapter-complete-overlay");
-  const sectionButtons = document.querySelector(".section-buttons");
-  const finishButton = document.querySelector(".finish-chapter");
-  const backAtlas = document.querySelector(".back-atlas");
-  const railProgress = document.querySelector(".rail-line i");
-  const languageButtons = [...document.querySelectorAll("[data-language]")];
   const revealLayers = [...document.querySelectorAll(".reveal-layer")];
-  let readingSections = [];
-  let scrollFrame = null;
 
-  function renderReadingSections() {
-    readingCopy.innerHTML = "";
-
-    data[state.language].sections.forEach((section, sectionIndex) => {
-      const sectionElement = document.createElement("section");
-      sectionElement.className = "reading-section";
-      sectionElement.id = `reading-section-${sectionIndex + 1}`;
-      sectionElement.dataset.sectionIndex = String(sectionIndex);
-
-      const header = document.createElement("header");
-      header.className = "reader-header";
-
-      const headingGroup = document.createElement("div");
-      const sectionLabel = document.createElement("p");
-      sectionLabel.className = "reader-section-label";
-      sectionLabel.textContent = ui[state.language].section[sectionIndex];
-      const location = document.createElement("p");
-      location.className = "reader-location";
-      location.textContent = ui[state.language].location[sectionIndex];
-      headingGroup.append(sectionLabel, location);
-
-      const progress = document.createElement("span");
-      progress.className = "reader-progress";
-      progress.setAttribute("aria-label", state.language === "zh" ? "阅读进度" : "Reading progress");
-      progress.textContent = `${String(sectionIndex + 1).padStart(2, "0")} / 04`;
-      header.append(headingGroup, progress);
-
-      const rule = document.createElement("div");
-      rule.className = "reader-rule";
-      rule.setAttribute("aria-hidden", "true");
-
-      const body = document.createElement("div");
-      body.className = "reading-section-body";
-      section.paragraphs.forEach((paragraph, paragraphIndex) => {
-        const p = document.createElement("p");
-        p.textContent = formatParagraph(paragraph);
-        p.style.animationDelay = `${Math.min(paragraphIndex * 35, 280)}ms`;
-        body.appendChild(p);
-      });
-
-      sectionElement.append(header, rule, body);
-      readingCopy.appendChild(sectionElement);
-    });
-
-    readingSections = [...readingCopy.querySelectorAll(".reading-section")];
-  }
-
-  function setText() {
-    document.documentElement.lang = state.language === "zh" ? "zh-CN" : "en";
-    document.body.dataset.language = state.language;
-    backAtlas.href = `../../index.html?lang=${state.language}`;
-
-    document.querySelectorAll("[data-copy]").forEach((node) => {
-      const key = node.dataset.copy;
-      const value = ui[state.language][key];
-      if (!Array.isArray(value) && value) {
-        node.textContent = value;
-      }
-    });
-
-    renderReadingSections();
-
-    languageButtons.forEach((button) => {
-      button.setAttribute("aria-pressed", String(button.dataset.language === state.language));
-    });
-  }
-
-  function setMap() {
-    const revealLevel = state.active + 1;
+  function setMap(index) {
+    const level = index + 1;
     revealLayers.forEach((layer) => {
-      layer.classList.toggle("is-visible", Number(layer.dataset.level) <= revealLevel);
+      layer.classList.toggle("is-visible", Number(layer.dataset.level) <= level);
     });
-    railProgress.style.width = `${(revealLevel / 4) * 100}%`;
-
-    [...sectionButtons.children].forEach((button, index) => {
-      button.setAttribute("aria-current", String(index === state.active));
-    });
-  }
-
-  function renderSections() {
-    sectionButtons.innerHTML = "";
-    for (let index = 0; index < 4; index += 1) {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "section-button";
-      button.textContent = String(index + 1).padStart(2, "0");
-      button.setAttribute("aria-label", `Section ${index + 1}`);
-      button.addEventListener("click", () => goToSection(index));
-      sectionButtons.appendChild(button);
-    }
-  }
-
-  function setActiveSection(index) {
-    const nextIndex = Math.max(0, Math.min(3, index));
-    if (state.active === nextIndex) return;
-    state.active = nextIndex;
-    setMap();
-  }
-
-  function goToSection(index) {
-    const targetIndex = Math.max(0, Math.min(3, index));
-    if (!state.open) openBook();
-    setActiveSection(targetIndex);
-    window.requestAnimationFrame(() => {
-      readingSections[targetIndex]?.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-  }
-
-  function updateSectionFromScroll() {
-    scrollFrame = null;
-    if (!state.open || !readingSections.length) return;
-
-    const threshold = window.innerHeight * 0.34;
-    let nextIndex = 0;
-    readingSections.forEach((section, index) => {
-      if (section.getBoundingClientRect().top <= threshold) nextIndex = index;
-    });
-    setActiveSection(nextIndex);
-  }
-
-  function scheduleScrollUpdate() {
-    if (scrollFrame !== null) return;
-    scrollFrame = window.requestAnimationFrame(updateSectionFromScroll);
-  }
-
-  function openBook() {
-    state.open = true;
-    document.body.classList.add("is-open");
-    readerPanel.setAttribute("tabindex", "-1");
-    setTimeout(() => readerPanel.focus({ preventScroll: true }), 700);
-  }
-
-  function finishChapter() {
-    if (document.body.classList.contains("is-completing")) return;
-    window.localStorage.setItem("bittersweet-journey:dujiangyan:complete", "true");
-    window.localStorage.setItem("bittersweet-journey:language", state.language);
-    document.body.classList.add("is-completing");
-    completeOverlay.setAttribute("aria-hidden", "false");
-    window.setTimeout(() => {
-      window.location.href = `../../index.html?revealed=dujiangyan&lang=${state.language}`;
-    }, 3000);
   }
 
   applyRealGeography();
-  renderSections();
-  setText();
-  setMap();
 
-  document.querySelector(".open-book").addEventListener("click", openBook);
-
-  finishButton.addEventListener("click", finishChapter);
-
-  languageButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      state.language = button.dataset.language;
-      window.localStorage.setItem("bittersweet-journey:language", state.language);
-      setText();
-      setMap();
-      if (state.open) {
-        window.requestAnimationFrame(() => {
-          readingSections[state.active]?.scrollIntoView({ behavior: "auto", block: "start" });
-        });
-      }
-    });
-  });
-
-  document.querySelector(".sound-toggle").addEventListener("click", (event) => {
-    const button = event.currentTarget;
-    const nextValue = button.getAttribute("aria-pressed") !== "true";
-    button.setAttribute("aria-pressed", String(nextValue));
+  const shell = window.ChapterShell.init({
+    id: "dujiangyan",
+    number: data.number,
+    data,
+    sections,
+    copy,
+    formatParagraph,
+    onSection: setMap
   });
 
   document.querySelectorAll("[data-section-target]").forEach((point) => {
-    point.addEventListener("click", () => goToSection(Number(point.dataset.sectionTarget)));
-  });
-
-  window.addEventListener("scroll", scheduleScrollUpdate, { passive: true });
-  window.addEventListener("resize", scheduleScrollUpdate);
-
-  window.addEventListener("pageshow", () => {
-    document.body.classList.remove("is-completing");
-    completeOverlay.setAttribute("aria-hidden", "true");
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key.toLowerCase() === "l") {
-      state.language = state.language === "zh" ? "en" : "zh";
-      window.localStorage.setItem("bittersweet-journey:language", state.language);
-      setText();
-      setMap();
-      if (state.open) {
-        window.requestAnimationFrame(() => {
-          readingSections[state.active]?.scrollIntoView({ behavior: "auto", block: "start" });
-        });
-      }
-    }
+    point.addEventListener("click", () => shell.goToSection(Number(point.dataset.sectionTarget)));
   });
 })();

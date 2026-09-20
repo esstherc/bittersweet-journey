@@ -1,0 +1,172 @@
+<!doctype html>
+<!--
+  CHAPTER TEMPLATE - copy to site/chapters/<id>/index.html and replace every __PLACEHOLDER__.
+  Rules: docs/chapter-layout-guideline.md. Behavior: ../_shared/chapter-shell.js. Frame CSS: ../_shared/chapter-shell.css.
+  Also needed in the chapter folder: chapter-data.js (CHAPTER_DATA), app.js (ChapterShell.init), styles.css (--accent + map canvas).
+  Bump every ?v= whenever a referenced file changes.
+-->
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="《文化苦旅》双语阅读地图：__TITLE_ZH__。__ONE_LINE_DESCRIPTION__"
+    />
+    <title>山河显影 · __TITLE_ZH__</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&family=Ysabeau:ital,wght@0,400..700;1,400..700&display=swap"
+    />
+    <link rel="stylesheet" href="../_shared/chapter-shell.css?v=20260919-2" />
+    <link rel="stylesheet" href="./styles.css?v=20260919-2" />
+  </head>
+  <body data-language="zh">
+    <div class="paper-noise" aria-hidden="true"></div>
+
+    <header class="masthead">
+      <a class="wordmark" href="../../index.html" data-atlas-link data-aria="wordmark-aria" aria-label="山河显影，返回中国总地图">
+        <span data-copy="site-title">山河显影</span>
+      </a>
+
+      <div class="chapter-meta">
+        <span class="chapter-index">__NN__ / 20</span>
+        <span class="chapter-name" data-copy="chapter-title">__TITLE_ZH__</span>
+      </div>
+
+      <div class="language-switch" role="group" aria-label="Language">
+        <button type="button" data-language="zh" aria-pressed="true">中文</button>
+        <span aria-hidden="true">／</span>
+        <button type="button" data-language="en" aria-pressed="false">EN</button>
+      </div>
+    </header>
+
+    <main class="chapter-frame">
+      <section class="map-stage" inert data-aria="map-aria" aria-label="__TITLE_ZH__文学地图">
+        <h1 class="sr-only" data-copy="chapter-title">__TITLE_ZH__</h1>
+
+        <!--
+          MAP CANVAS (free zone, guideline M-1): an <svg viewBox> or <canvas> that fills the panel.
+          Keep it inside .map-stage. Nothing else belongs at the top of this panel (M-2).
+          Reveal state: ChapterShell calls config.onSection(index) - toggle your own layers there.
+        -->
+        <svg class="story-map" viewBox="0 0 1000 760" role="img" aria-labelledby="svg-title svg-desc">
+          <title id="svg-title" data-copy="map-svg-title">__TITLE_ZH__文学地图</title>
+          <desc id="svg-desc" data-copy="map-svg-desc"></desc>
+        </svg>
+
+        <!--
+          OPTIONAL on-map caption (guideline M-5): one short line at the bottom-left of the map panel
+          that says what the current map view shows. Set its text from config.onSection / onRender.
+
+          <p class="map-caption" aria-live="polite"></p>
+        -->
+
+        <!--
+          OPTIONAL (only if the chapter has a real chronology, guideline M-4): a docked timeline.
+          Add class "has-timeline" to .map-stage, keep the canvas above it (height: calc(100% - var(--rail-h))),
+          and pass config.timeline = { zh: ["清代", "1703", ...], en: [...] } to ChapterShell.init.
+
+          <div class="timeline" role="group" data-aria="timeline-aria" aria-label="历史时间线">
+            <span class="timeline-caption" data-copy="timeline-caption">时间线</span>
+            <div class="timeline-track"></div>
+          </div>
+        -->
+      </section>
+
+      <article class="reader-panel" inert data-aria="reader-aria" aria-label="章节正文">
+        <div class="reader-scroll">
+          <!-- OPTIONAL reader note (guideline R-2): <p class="reader-note" data-copy="reader-note">…</p> -->
+          <div class="reading-copy"></div>
+
+          <div class="reader-end">
+            <span class="seal seal-m" aria-hidden="true">__MARK__</span>
+            <button class="finish-chapter" type="button">
+              <span data-copy="finish">完成本章 · 返回总图</span>
+              <svg viewBox="0 0 44 14" aria-hidden="true">
+                <path d="M1 7H39M34 2L40 7L34 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <nav class="section-rail" data-aria="rail-aria" aria-label="章节段落">
+          <span class="rail-caption" data-copy="rail-caption">阅读章节</span>
+          <div class="section-buttons"></div>
+          <span class="rail-line" aria-hidden="true"><i></i></span>
+        </nav>
+      </article>
+
+      <div class="opening-curtain" role="dialog" aria-modal="false" aria-labelledby="curtain-title">
+        <p class="curtain-kicker" data-copy="curtain-kicker">第 __NN__ 章 · 山河</p>
+        <p class="curtain-teaser" data-copy="map-teaser">__TEASER_ZH__</p>
+        <h1 class="curtain-title" id="curtain-title" data-copy="chapter-title">__TITLE_ZH__</h1>
+        <p class="curtain-thesis" data-copy="thesis">__THESIS_ZH__</p>
+        <button class="open-book" type="button">
+          <span data-copy="open">__OPEN_VERB_ZH__</span>
+          <svg viewBox="0 0 56 18" aria-hidden="true">
+            <path d="M1 9H51M44 2L52 9L44 16" />
+          </svg>
+        </button>
+      </div>
+    </main>
+
+    <footer class="bottom-bar">
+      <div class="bar-left">
+        <span class="credit" data-copy="source">文本：余秋雨《文化苦旅》</span>
+        <button class="notes-button" type="button" aria-expanded="false" aria-controls="notes-drawer">
+          <span aria-hidden="true">ⓘ</span>
+          <span data-copy="notes-button">地图说明与数据来源</span>
+        </button>
+      </div>
+      <a class="back-atlas" href="../../index.html" data-atlas-link>
+        <span aria-hidden="true">←</span>
+        <span data-copy="back-atlas">总地图</span>
+      </a>
+    </footer>
+
+    <aside class="notes-drawer" id="notes-drawer" aria-hidden="true" aria-labelledby="notes-title">
+      <button class="close-notes" type="button" data-aria="close-aria" aria-label="关闭">×</button>
+      <h2 id="notes-title" data-copy="notes-title">地图说明与数据来源</h2>
+      <section>
+        <h3 data-copy="notes-map-title">如何阅读这幅地图</h3>
+        <p data-copy="notes-map"></p>
+      </section>
+      <section>
+        <h3 data-copy="notes-data-title">数据与投影</h3>
+        <p data-copy="notes-data"></p>
+      </section>
+      <section>
+        <h3 data-copy="notes-sources-title">数据来源</h3>
+        <ul>
+          <li data-copy="notes-source-1"></li>
+          <li data-copy="notes-source-2"></li>
+          <li data-copy="notes-source-3"></li>
+          <li data-copy="notes-source-4"></li>
+        </ul>
+      </section>
+      <section>
+        <h3 data-copy="notes-disclaimer-title">声明</h3>
+        <p data-copy="notes-disclaimer"></p>
+      </section>
+      <section>
+        <h3 data-copy="notes-keyboard-title">键盘</h3>
+        <p data-copy="notes-keyboard"></p>
+      </section>
+    </aside>
+
+    <div class="chapter-complete-overlay" role="status" aria-live="polite" aria-hidden="true">
+      <span class="complete-ripple"></span>
+      <span class="seal seal-l" aria-hidden="true">__MARK__</span>
+      <p data-copy="complete-kicker">一处山河已经显影</p>
+      <strong data-copy="complete-line">__COMPLETE_LINE_ZH__</strong>
+    </div>
+
+    <script src="../../data/real-geography.js"></script>
+    <script src="./chapter-data.js"></script>
+    <script src="../_shared/chapter-shell.js?v=20260919-2"></script>
+    <script src="./app.js?v=20260919-2"></script>
+  </body>
+</html>

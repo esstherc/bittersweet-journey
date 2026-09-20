@@ -3,17 +3,59 @@
 
   const data = window.CHAPTER_DATA;
   const geography = window.MOUNTAIN_RESORT_GEOGRAPHY;
-  if (!data || !geography) {
+  if (!data || !geography || !window.ChapterShell) {
     document.body.innerHTML = "<p>Chapter data could not be loaded.</p>";
     return;
   }
 
-  const ui = {
+  // Section label = ordinal + short title; location = the line under it (guideline R-3).
+  const sections = {
+    zh: [
+      { label: "一 · 门外", location: "历史情绪" },
+      { label: "二 · 椅背", location: "避暑山庄 · 北岭" },
+      { label: "三 · 万树", location: "万树园 · 外庙" },
+      { label: "四 · 闭门", location: "宫门 · 1861" },
+      { label: "五 · 背影", location: "湖水 · 1927" }
+    ],
+    en: [
+      { label: "I · Outside", location: "Historical emotion" },
+      { label: "II · The Chair Back", location: "North ridge · Mountain Resort" },
+      { label: "III · Ten Thousand Trees", location: "Wanshu Garden · Outlying temples" },
+      { label: "IV · The Gates Close", location: "Palace gate · 1861" },
+      { label: "V · Afterimage", location: "Lake · 1927" }
+    ]
+  };
+
+  // A real chronology, so this chapter uses the optional docked timeline (guideline M-4).
+  const timeline = {
+    zh: ["清代", "1703", "1793", "1861", "1927"],
+    en: ["QING", "1703", "1793", "1861", "1927"]
+  };
+
+  // On-map caption next to the timeline (kept from the original "status" line).
+  const status = {
+    zh: ["空间框架 · 长城内外", "椅背 · 园林展开", "帝国 · 向外环列", "闭门 · 王朝退场", "背影 · 两座园林"],
+    en: [
+      "Spatial frame · Inside and beyond the Wall",
+      "Chair back · Garden opens",
+      "Empire · Facing outward",
+      "Closed · Dynasty recedes",
+      "Afterimage · Two gardens"
+    ]
+  };
+
+  const copy = {
     zh: {
-      "map-eyebrow": "第一卷 · 山河",
       "map-teaser": "椅背之外的王朝",
-      "chapter-title": data.zh.title,
-      "chapter-subtitle": "一把罗圈椅，坐过一个疲惫的王朝",
+      thesis: "在椅背之外，先看见山。",
+      open: "绕到山庄背后",
+      "reader-note": "园林没有移动。移动的是看它的时代。",
+      "rail-caption": "原文章节",
+      "map-aria": "承德避暑山庄与外八庙地理图",
+      "regional-svg-title": "北京、古北口、承德与木兰围场区域关系",
+      "regional-svg-desc": "以真实地理锚点呈现清帝北巡空间，路线和长城线为历史地理示意。",
+      "resort-svg-title": "承德避暑山庄与外八庙",
+      "resort-svg-desc": "按真实经纬度标示避暑山庄及主要外庙，园内分区为文学示意。",
       "chair-label": "山岭如椅背 · 面南而坐",
       "mountain-zone": "山区",
       "plain-zone": "平原区",
@@ -28,14 +70,6 @@
       "memory-distance": "距承德约179 km · 直线",
       "wang-event": "王国维于此投水 · 1927",
       "chengde-present": "作者此时面对承德湖水",
-      "reader-kicker": "承德 · 塞外",
-      thesis: "园林没有移动。移动的是看它的时代。",
-      open: "绕到山庄背后",
-      "opening-kicker": "承德 · 薄暮",
-      "opening-line": "在椅背之外，先看见山。",
-      "rail-caption": "原文章节",
-      "map-data": "地图数据与准确性",
-      "data-title": "真实地点与文学分区",
       "data-property-label": "遗产地",
       "data-property": "避暑山庄与周围寺庙，UNESCO中心坐标约40.9875°N、117.9375°E；山庄遗产区611.2公顷。",
       "data-points-label": "地点",
@@ -57,20 +91,21 @@
       "legend-area": "区域或简化分区",
       "legend-route": "历史空间关系",
       "legend-literary": "文学意象",
-      section: ["一 · 门外", "二 · 椅背", "三 · 万树", "四 · 闭门", "五 · 背影"],
-      location: ["历史情绪", "避暑山庄 · 北岭", "万树园 · 外庙", "宫门 · 1861", "湖水 · 1927"],
-      status: ["空间框架 · 长城内外", "椅背 · 园林展开", "帝国 · 向外环列", "闭门 · 王朝退场", "背影 · 两座园林"],
-      years: ["清代", "1703", "1793", "1861", "1927"],
-      finish: "完成本章 · 返回总图",
-      "complete-kicker": "一处山河已经显影",
-      "complete-line": "一个王朝离开后，山水仍坐在原处。",
-      source: "文本：余秋雨《文化苦旅》"
+      "complete-line": "一个王朝离开后，山水仍坐在原处。"
     },
     en: {
-      "map-eyebrow": "Book I · Land",
       "map-teaser": "A dynasty behind the chair",
-      "chapter-title": data.en.title,
-      "chapter-subtitle": "A round-backed chair where an exhausted dynasty rested",
+      thesis: "Beyond the chair back, the mountain appears first.",
+      open: "Walk behind the villa",
+      "reader-note": "The garden does not move. The age looking at it does.",
+      "rail-caption": "Original sections",
+      "map-aria": "Geographic map of the Chengde Mountain Resort and the Outlying Temples",
+      "regional-svg-title": "Beijing, Gubeikou, Chengde and Mulan: a regional map",
+      "regional-svg-desc":
+        "Real geographic anchors show the space of the Qing emperors' northern tours; the route and the Great Wall line are historical-geographic diagrams.",
+      "resort-svg-title": "The Chengde Mountain Resort and the Outlying Temples",
+      "resort-svg-desc":
+        "The resort and the main outlying temples are placed at their real coordinates; the zones inside the garden are literary diagrams.",
       "chair-label": "The mountains form the chair back · Facing south",
       "mountain-zone": "Hills",
       "plain-zone": "Plain",
@@ -85,27 +120,26 @@
       "memory-distance": "Approx. 179 km from Chengde · straight-line",
       "wang-event": "Wang Guowei died here · 1927",
       "chengde-present": "The writer is facing the Chengde lake",
-      "reader-kicker": "Chengde · Beyond the Wall",
-      thesis: "The garden does not move. The age looking at it does.",
-      open: "Walk behind the villa",
-      "opening-kicker": "Chengde · Twilight",
-      "opening-line": "Beyond the chair back, the mountain appears first.",
-      "rail-caption": "Original sections",
-      "map-data": "Map data & accuracy",
-      "data-title": "Measured places, literary zones",
       "data-property-label": "Property",
-      "data-property": "The Mountain Resort and its Outlying Temples is centered at approximately 40.9875°N, 117.9375°E. The UNESCO resort property covers 611.2 hectares.",
+      "data-property":
+        "The Mountain Resort and its Outlying Temples is centered at approximately 40.9875°N, 117.9375°E. The UNESCO resort property covers 611.2 hectares.",
       "data-points-label": "Places",
-      "data-points": "The resort and six outlying temples are projected from WGS 84 coordinates to preserve their relative directions and distances.",
+      "data-points":
+        "The resort and six outlying temples are projected from WGS 84 coordinates to preserve their relative directions and distances.",
       "data-zones-label": "Zones",
-      "data-zones": "The northwest hills, northern plain and southeast lakes follow the overall layout published by the Chengde Cultural Heritage Bureau. Interior outlines are a reading diagram, not a surveyed boundary.",
+      "data-zones":
+        "The northwest hills, northern plain and southeast lakes follow the overall layout published by the Chengde Cultural Heritage Bureau. Interior outlines are a reading diagram, not a surveyed boundary.",
       "data-story-label": "Narrative",
-      "data-story": "The round-backed chair, closing gate and reflected figure are images from the essay, not measurable geographic features.",
+      "data-story":
+        "The round-backed chair, closing gate and reflected figure are images from the essay, not measurable geographic features.",
       "data-regional-label": "Regional axis",
-      "data-regional": "Beijing, Gubeikou and Chengde use geographic coordinates. Mulan is shown as an officially published regional extent. Connecting lines express the northern inspection geography, not a reconstructed turn-by-turn imperial road.",
+      "data-regional":
+        "Beijing, Gubeikou and Chengde use geographic coordinates. Mulan is shown as an officially published regional extent. Connecting lines express the northern inspection geography, not a reconstructed turn-by-turn imperial road.",
       "data-memory-label": "Cross-city memory",
-      "data-memory": "The Summer Palace uses its UNESCO coordinate and lies approximately 179 km from Chengde in a straight line. Wang Guowei died in Beijing; the Chengde lake is where the writer remembers him.",
-      "data-disclaimer": "A literary reading map, not a substitute for survey, navigation or heritage-site management information.",
+      "data-memory":
+        "The Summer Palace uses its UNESCO coordinate and lies approximately 179 km from Chengde in a straight line. Wang Guowei died in Beijing; the Chengde lake is where the writer remembers him.",
+      "data-disclaimer":
+        "A literary reading map, not a substitute for survey, navigation or heritage-site management information.",
       "chengde-source": "Chengde Cultural Heritage Bureau",
       "summer-source": "Summer Palace coordinates",
       "mulan-source": "Mulan regional extent",
@@ -114,44 +148,33 @@
       "legend-area": "Region or simplified zone",
       "legend-route": "Historical spatial relation",
       "legend-literary": "Literary image",
-      section: ["I · Outside", "II · The Chair Back", "III · Ten Thousand Trees", "IV · The Gates Close", "V · Afterimage"],
-      location: ["Historical emotion", "North ridge · Mountain Resort", "Wanshu Garden · Outlying temples", "Palace gate · 1861", "Lake · 1927"],
-      status: ["Spatial frame · Inside and beyond the Wall", "Chair back · Garden opens", "Empire · Facing outward", "Closed · Dynasty recedes", "Afterimage · Two gardens"],
-      years: ["QING", "1703", "1793", "1861", "1927"],
-      finish: "Complete chapter · Return to atlas",
-      "complete-kicker": "One landscape brought to light",
-      "complete-line": "After a dynasty leaves, the mountains and water remain seated.",
-      source: "Text: Yu Qiuyu, A Bittersweet Journey Through Culture"
+      "complete-line": "After a dynasty leaves, the mountains and water remain seated."
     }
   };
 
-  const pageParams = new URLSearchParams(window.location.search);
-  const requestedLanguage = pageParams.get("lang");
-  const state = {
-    language: ["zh", "en"].includes(requestedLanguage)
-      ? requestedLanguage
-      : window.localStorage.getItem("bittersweet-journey:language") || "zh",
-    active: 0,
-    open: false,
-    dataPanelOpen: false,
-    previewLock: false
-  };
-  window.localStorage.setItem("bittersweet-journey:language", state.language);
+  // The English source opens each section in capitals (small caps in the EPUB); show sentence case.
+  const readableEnglishOpenings = new Map([
+    ["PEOPLE LIKE US", "People like us"],
+    ["THE CHENGDE MOUNTAIN RESORT BELONGED", "The Chengde Mountain Resort belonged"],
+    ["KANGXI’S DIFFERENCE FROM WANLI", "Kangxi’s difference from Wanli"],
+    ["ON THE WESTERN SIDE", "On the western side"],
+    ["THE QING DYNASTY FELL", "The Qing dynasty fell"]
+  ]);
+
+  function formatParagraph(paragraph, lang) {
+    if (lang !== "en") return paragraph;
+    for (const [opening, replacement] of readableEnglishOpenings) {
+      if (paragraph.startsWith(opening)) return paragraph.replace(opening, replacement);
+    }
+    return paragraph;
+  }
 
   const body = document.body;
-  const readingCopy = document.querySelector(".reading-copy");
-  const sectionButtons = document.querySelector(".section-buttons");
-  const railProgress = document.querySelector(".rail-line i");
   const statusNumber = document.querySelector(".status-number");
   const statusLabel = document.querySelector(".status-label");
-  const dataButton = document.querySelector(".map-data-button");
-  const dataPanel = document.querySelector(".map-data-panel");
-  const completeOverlay = document.querySelector(".chapter-complete-overlay");
-  const wordmark = document.querySelector(".wordmark");
-  const languageButtons = [...document.querySelectorAll("[data-language]")];
   const revealLayers = [...document.querySelectorAll(".reveal-layer")];
-  let readingSections = [];
-  let scrollFrame = null;
+  let language = "zh"; // real value arrives through onRender
+  let active = 0;
 
   function project([longitude, latitude]) {
     const { west, east, south, north } = geography.extent;
@@ -217,7 +240,6 @@
       y: wallMid.y + 35
     });
     wallLabel.dataset.regionalFixed = "wall";
-    wallLabel.textContent = state.language === "zh" ? "长城" : "Great Wall";
     group.appendChild(wallLabel);
 
     const offsets = {
@@ -249,7 +271,6 @@
         "text-anchor": offset.anchor
       });
       label.dataset.regionalLabel = place.id;
-      label.textContent = place[state.language];
       pointGroup.appendChild(label);
 
       group.appendChild(pointGroup);
@@ -289,7 +310,6 @@
       label.setAttribute("x", labelLeft ? "-11" : "11");
       label.setAttribute("y", labelY);
       label.setAttribute("text-anchor", labelLeft ? "end" : "start");
-      label.textContent = place[state.language];
       label.dataset.geoLabel = place.id;
 
       const coordinate = document.createElementNS("http://www.w3.org/2000/svg", "text");
@@ -310,220 +330,59 @@
   function updateGeographyLabels() {
     geography.places.forEach((place) => {
       const label = document.querySelector(`[data-geo-label="${place.id}"]`);
-      if (label) label.textContent = place[state.language];
+      if (label) label.textContent = place[language];
     });
     geography.regional.places.forEach((place) => {
       const label = document.querySelector(`[data-regional-label="${place.id}"]`);
-      if (label) label.textContent = place[state.language];
+      if (label) label.textContent = place[language];
     });
     const wallLabel = document.querySelector('[data-regional-fixed="wall"]');
-    if (wallLabel) wallLabel.textContent = state.language === "zh" ? "长城" : "Great Wall";
+    if (wallLabel) wallLabel.textContent = language === "zh" ? "长城" : "Great Wall";
   }
 
-  function renderReadingSections() {
-    readingCopy.innerHTML = "";
-    data[state.language].sections.forEach((section, sectionIndex) => {
-      const element = document.createElement("section");
-      element.className = "reading-section";
-      element.dataset.sectionIndex = String(sectionIndex);
-      element.id = `section-${sectionIndex + 1}`;
-
-      const header = document.createElement("header");
-      header.className = "reader-header";
-      const headingGroup = document.createElement("div");
-      const heading = document.createElement("h2");
-      heading.className = "reader-waypoint";
-      heading.textContent = ui[state.language].section[sectionIndex];
-      const location = document.createElement("p");
-      location.className = "reader-location";
-      location.textContent = ui[state.language].location[sectionIndex];
-      headingGroup.append(heading, location);
-      const progress = document.createElement("span");
-      progress.className = "reader-progress";
-      progress.textContent = `${String(sectionIndex + 1).padStart(2, "0")} / 05`;
-      header.append(headingGroup, progress);
-
-      const rule = document.createElement("div");
-      rule.className = "reader-rule";
-      const sectionBody = document.createElement("div");
-      sectionBody.className = "reading-section-body";
-      section.paragraphs.forEach((paragraph) => {
-        const p = document.createElement("p");
-        p.textContent = paragraph;
-        sectionBody.appendChild(p);
-      });
-      element.append(header, rule, sectionBody);
-      readingCopy.appendChild(element);
-    });
-    readingSections = [...readingCopy.querySelectorAll(".reading-section")];
+  function renderStatus() {
+    statusNumber.textContent = timeline[language][active];
+    statusLabel.textContent = status[language][active];
   }
 
-  function renderSectionButtons() {
-    sectionButtons.innerHTML = "";
-    for (let index = 0; index < 5; index += 1) {
-      const button = document.createElement("button");
-      button.type = "button";
-      button.className = "section-button";
-      button.dataset.sectionIndex = String(index);
-      button.textContent = String(index + 1).padStart(2, "0");
-      button.setAttribute("aria-label", `${state.language === "zh" ? "原文章节" : "Original section"} ${index + 1}`);
-      button.addEventListener("click", () => goToSection(index));
-      sectionButtons.appendChild(button);
-    }
-  }
-
-  function renderText() {
-    document.documentElement.lang = state.language === "zh" ? "zh-CN" : "en";
-    body.dataset.language = state.language;
-    wordmark.href = `../../index.html?lang=${state.language}`;
-    document.querySelectorAll("[data-copy]").forEach((node) => {
-      const value = ui[state.language][node.dataset.copy];
-      if (value && !Array.isArray(value)) node.textContent = value;
-    });
-    languageButtons.forEach((button) => {
-      button.setAttribute("aria-pressed", String(button.dataset.language === state.language));
-    });
-    renderReadingSections();
-    renderSectionButtons();
+  // Called by the shell whenever copy is (re)applied, including the first time.
+  function onRender(nextLanguage) {
+    language = nextLanguage;
     updateGeographyLabels();
+    renderStatus();
   }
 
-  function renderMap() {
-    const level = state.active + 1;
+  // Called by the shell whenever the active section changes (and once at start).
+  function onSection(index, _state, previous) {
+    active = index;
+    const level = index + 1;
     body.dataset.readingLevel = String(level);
     revealLayers.forEach((layer) => {
       layer.classList.toggle("is-visible", Number(layer.dataset.level) <= level);
     });
-    [...sectionButtons.children].forEach((button) => {
-      button.setAttribute("aria-current", String(Number(button.dataset.sectionIndex) === state.active));
-    });
-    railProgress.style.width = `${(state.active + 1) * 20}%`;
-    statusNumber.textContent = ui[state.language].years[state.active];
-    statusLabel.textContent = ui[state.language].status[state.active];
-    body.style.setProperty("--timeline-progress", `${state.active * 25}%`);
-  }
-
-  function openBook() {
-    if (state.open) return;
-    state.open = true;
-    body.classList.add("is-open");
-    document.querySelector(".opening-gate").setAttribute("aria-hidden", "true");
-  }
-
-  function setActiveSection(index) {
-    const next = Math.max(0, Math.min(4, Number(index) || 0));
-    if (state.active === next) return;
-    const previous = state.active;
-    state.active = next;
-    if ((previous === 0 && next === 1) || (previous === 1 && next === 0)) {
+    if ((previous === 0 && index === 1) || (previous === 1 && index === 0)) {
       body.classList.add("is-scale-transition");
-      window.clearTimeout(setActiveSection.scaleTimer);
-      setActiveSection.scaleTimer = window.setTimeout(() => {
+      window.clearTimeout(onSection.scaleTimer);
+      onSection.scaleTimer = window.setTimeout(() => {
         body.classList.remove("is-scale-transition");
       }, 1650);
     }
-    renderMap();
-  }
-
-  function goToSection(index) {
-    openBook();
-    setActiveSection(index);
-    window.requestAnimationFrame(() => {
-      readingSections[index]?.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
-  }
-
-  function updateFromScroll() {
-    scrollFrame = null;
-    if (!state.open || state.previewLock) return;
-    const threshold = window.innerHeight * .34;
-    let next = 0;
-    readingSections.forEach((section) => {
-      if (section.getBoundingClientRect().top <= threshold) {
-        next = Number(section.dataset.sectionIndex);
-      }
-    });
-    setActiveSection(next);
-  }
-
-  function scheduleScrollUpdate() {
-    if (scrollFrame !== null) return;
-    scrollFrame = window.requestAnimationFrame(updateFromScroll);
-  }
-
-  function toggleDataPanel(force) {
-    state.dataPanelOpen = typeof force === "boolean" ? force : !state.dataPanelOpen;
-    body.classList.toggle("data-panel-open", state.dataPanelOpen);
-    dataButton.setAttribute("aria-expanded", String(state.dataPanelOpen));
-    dataPanel.setAttribute("aria-hidden", String(!state.dataPanelOpen));
-    if (state.dataPanelOpen) dataPanel.querySelector(".close-data").focus();
-  }
-
-  function changeLanguage(language) {
-    state.language = language;
-    window.localStorage.setItem("bittersweet-journey:language", language);
-    renderText();
-    renderMap();
-  }
-
-  function finishChapter() {
-    if (body.classList.contains("is-completing")) return;
-    window.localStorage.setItem("bittersweet-journey:mountain-resort:complete", "true");
-    window.localStorage.setItem("bittersweet-journey:language", state.language);
-    body.classList.add("is-completing");
-    completeOverlay.setAttribute("aria-hidden", "false");
-    window.setTimeout(() => {
-      window.location.href = `../../index.html?revealed=chengde&lang=${state.language}`;
-    }, 2800);
+    renderStatus();
   }
 
   applyRegionalGeography();
   applyGeography();
-  renderText();
-  renderMap();
 
-  document.querySelector(".open-book").addEventListener("click", openBook);
-  document.querySelector(".gate-open").addEventListener("click", openBook);
-  document.querySelector(".finish-chapter").addEventListener("click", finishChapter);
-  dataButton.addEventListener("click", () => toggleDataPanel());
-  document.querySelector(".close-data").addEventListener("click", () => toggleDataPanel(false));
-  languageButtons.forEach((button) => {
-    button.addEventListener("click", () => changeLanguage(button.dataset.language));
+  window.ChapterShell.init({
+    id: "mountain-resort",
+    revealId: "chengde", // the homepage still knows this story as "chengde"
+    number: data.number,
+    data,
+    sections,
+    timeline,
+    copy,
+    formatParagraph,
+    onRender,
+    onSection
   });
-
-  window.addEventListener("scroll", scheduleScrollUpdate, { passive: true });
-  window.addEventListener("resize", scheduleScrollUpdate);
-  window.addEventListener("pageshow", () => {
-    body.classList.remove("is-completing");
-    completeOverlay.setAttribute("aria-hidden", "true");
-  });
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && state.dataPanelOpen) {
-      toggleDataPanel(false);
-      dataButton.focus();
-      return;
-    }
-    if (event.key.toLowerCase() === "l") {
-      changeLanguage(state.language === "zh" ? "en" : "zh");
-      return;
-    }
-    if (!state.open || event.target.matches("button, a")) return;
-    if (event.key === "ArrowDown" || event.key === "ArrowRight") {
-      event.preventDefault();
-      goToSection(Math.min(state.active + 1, 4));
-    }
-    if (event.key === "ArrowUp" || event.key === "ArrowLeft") {
-      event.preventDefault();
-      goToSection(Math.max(state.active - 1, 0));
-    }
-  });
-
-  const params = new URLSearchParams(window.location.search);
-  if (params.get("open") === "1") {
-    state.previewLock = true;
-    openBook();
-    const requested = params.has("section") ? Number(params.get("section")) - 1 : 0;
-    setActiveSection(requested);
-  }
-  if (params.get("data") === "1") toggleDataPanel(true);
 })();

@@ -14,15 +14,15 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&family=Ysabeau:ital,wght@0,400..700;1,400..700&display=swap"
     />
-    <link rel="stylesheet" href="./styles.css?v=20260917-1" />
+    <link rel="stylesheet" href="../_shared/chapter-shell.css?v=20260919-6" />
+    <link rel="stylesheet" href="./styles.css?v=20260919-8" />
   </head>
   <body data-language="zh" data-reading-level="1">
     <div class="paper-noise" aria-hidden="true"></div>
 
     <header class="masthead">
-      <a class="wordmark" href="../../index.html" aria-label="返回中国总地图">
-        <span class="wordmark-cn">山河显影</span>
-        <span class="wordmark-en">Land, Made Visible</span>
+      <a class="wordmark" href="../../index.html" data-atlas-link data-aria="wordmark-aria" aria-label="山河显影，返回中国总地图">
+        <span data-copy="site-title">山河显影</span>
       </a>
 
       <div class="chapter-meta">
@@ -30,56 +30,26 @@
         <span class="chapter-name" data-copy="chapter-title">道士塔</span>
       </div>
 
-      <div class="header-actions">
-        <a class="back-atlas" href="../../index.html">
-          <span aria-hidden="true">←</span>
-          <span data-copy="back-atlas">总地图</span>
-        </a>
-        <div class="language-switch" role="group" aria-label="Language">
-          <button type="button" data-language="zh" aria-pressed="true">中文</button>
-          <span aria-hidden="true">／</span>
-          <button type="button" data-language="en" aria-pressed="false">EN</button>
-        </div>
+      <div class="language-switch" role="group" aria-label="Language">
+        <button type="button" data-language="zh" aria-pressed="true">中文</button>
+        <span aria-hidden="true">／</span>
+        <button type="button" data-language="en" aria-pressed="false">EN</button>
       </div>
     </header>
 
-    <main class="experience">
-      <section class="map-stage" aria-labelledby="map-title">
-        <div class="map-heading">
-          <p class="eyebrow" data-copy="map-eyebrow">第一卷 · 山河</p>
-          <h1 id="map-title" data-copy="chapter-title">道士塔</h1>
-          <p class="map-subtitle">人物地理 · 从湖北到河西走廊</p>
-        </div>
+    <main class="chapter-frame">
+      <section class="map-stage" inert data-aria="map-aria" aria-label="藏经洞与文物流散文学地图">
+        <h1 class="sr-only" data-copy="chapter-title">道士塔</h1>
 
-        <svg
-          class="story-map"
-          viewBox="0 0 1000 760"
-          role="img"
-          aria-label="藏经洞与文物流散文学地图"
-        >
+        <svg class="story-map" viewBox="0 0 1000 760" role="img" aria-labelledby="map-svg-title">
+          <title id="map-svg-title" data-copy="map-aria">藏经洞与文物流散文学地图</title>
           <defs>
-            <filter id="archive-bleed" x="-15%" y="-15%" width="130%" height="130%">
-              <feTurbulence baseFrequency=".018 .09" numOctaves="2" seed="31" result="noise" />
-              <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.8" />
-            </filter>
-            <filter id="soft-glow" x="-80%" y="-80%" width="260%" height="260%">
-              <feGaussianBlur stdDeviation="11" />
-            </filter>
             <pattern id="archive-grid" width="70" height="70" patternUnits="userSpaceOnUse">
               <path d="M70 0H0V70" fill="none" stroke="rgba(50,43,32,.08)" stroke-width=".7" />
             </pattern>
-            <linearGradient id="cave-wash" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#352d23" stop-opacity=".22" />
-              <stop offset="100%" stop-color="#8a6c45" stop-opacity=".04" />
-            </linearGradient>
-            <radialGradient id="manuscript-light">
-              <stop offset="0%" stop-color="#d6ad68" stop-opacity=".34" />
-              <stop offset="100%" stop-color="#d6ad68" stop-opacity="0" />
-            </radialGradient>
             <clipPath id="eurasia-clip">
               <rect x="70" y="145" width="860" height="505" />
             </clipPath>
-            <path id="departure-text-path" d="M338 567C464 540 587 493 724 376C796 314 848 254 920 205" />
           </defs>
 
           <rect class="archive-grid" x="0" y="0" width="1000" height="760" fill="url(#archive-grid)" />
@@ -90,14 +60,17 @@
               <path d="M34 220H966M34 306H966M34 392H966M34 478H966M34 564H966" />
               <path d="M189 135V650M344 135V650M500 135V650M655 135V650M811 135V650" />
             </g>
-            <text x="52" y="625" class="projection-label">Natural Earth · Equirectangular projection</text>
+            <text x="88" y="646" class="projection-label">Natural Earth · Equirectangular projection</text>
           </g>
 
           <g class="level geo-level geo-level-one" data-level="1" aria-hidden="true">
             <rect class="geo-sheet" x="73" y="145" width="854" height="512" />
             <rect class="china-inset-frame" x="710" y="478" width="122" height="148" rx="2" />
             <text x="720" y="499" class="china-inset-label label-cn">南海诸岛</text>
-            <text x="720" y="499" class="china-inset-label label-en">South China Sea Islands</text>
+            <text x="720" y="499" class="china-inset-label label-en">
+              <tspan x="720">South China Sea</tspan>
+              <tspan x="720" dy="13">Islands</tspan>
+            </text>
             <path class="china-outline" id="china-outline" />
             <path class="china-provinces" id="china-provinces" />
             <path class="province-highlight hubei" id="china-hubei" />
@@ -280,19 +253,19 @@
             </g>
 
             <g class="crate-manifest" aria-label="二十九只大木箱，装有九千余经卷与五百余幅绘画">
-              <rect class="crate-manifest-sheet" x="70" y="398" width="316" height="198" rx="4" />
+              <rect class="crate-manifest-sheet" x="70" y="398" width="316" height="216" rx="4" />
               <text x="88" y="425" class="manifest-kicker label-cn">装箱记录 · 七日</text>
               <text x="88" y="425" class="manifest-kicker label-en">Packing record · Seven days</text>
-              <g class="crate-stack geo-crate-stack" transform="translate(223 480)"></g>
-              <text x="88" y="556" class="crate-count">29</text>
-              <text x="142" y="554" class="crate-label label-cn">只大木箱</text>
-              <text x="142" y="554" class="crate-label label-en">large wooden crates</text>
-              <text x="88" y="579" class="archive-count label-cn">九千余经卷 · 五百余幅绘画</text>
-              <text x="88" y="579" class="archive-count label-en">9,000+ scrolls · 500+ paintings</text>
+              <g class="crate-stack geo-crate-stack" transform="translate(223 493)"></g>
+              <text x="88" y="585" class="crate-count">29</text>
+              <text x="142" y="583" class="crate-label label-cn">只大木箱</text>
+              <text x="142" y="583" class="crate-label label-en">large wooden crates</text>
+              <text x="88" y="605" class="archive-count label-cn">九千余经卷 · 五百余幅绘画</text>
+              <text x="88" y="605" class="archive-count label-en">9,000+ scrolls · 500+ paintings</text>
             </g>
 
-            <text x="85" y="625" class="geo-legend label-cn">红色实线：本篇叙述的敦煌—伦敦方向　赭色虚线：法、俄敦煌收藏的后续背景</text>
-            <text x="85" y="625" class="geo-legend label-en">Red: Dunhuang–London in this essay · Ochre dashes: later French and Russian collection context</text>
+            <text x="88" y="634" class="geo-legend label-cn">红色实线：本篇叙述的敦煌—伦敦方向　赭色虚线：法、俄敦煌收藏的后续背景</text>
+            <text x="88" y="634" class="geo-legend label-en">Red: Dunhuang–London in this essay · Ochre dashes: later French and Russian collection context</text>
           </g>
 
           <g class="level geo-level geo-level-five" data-level="5" aria-hidden="true">
@@ -323,233 +296,110 @@
             <text x="85" y="625" class="geo-legend label-en">Unknown is not an arbitrary point; it is a question the map cannot answer</text>
           </g>
 
-          <g class="level level-one local-ground" data-level="1" aria-hidden="true">
-            <path class="cliff-shadow" d="M565 130C694 94 829 112 940 175L940 565C813 616 697 599 573 625C519 526 498 411 516 292C524 232 539 178 565 130Z" />
-            <path class="cliff-line" d="M574 142C690 111 811 121 924 183M554 229C674 203 809 219 924 263M535 325C676 298 815 317 924 345M529 430C660 403 813 411 923 443M555 535C677 507 808 513 923 526" />
-            <path class="river" d="M287 118C243 207 315 277 274 365C237 444 294 535 249 647" />
-            <path class="river-bank" d="M310 122C273 210 340 278 301 368C267 446 324 533 279 649" />
-            <path class="crossing" d="M270 420L315 414" />
-            <text x="228" y="365" class="map-label vertical label-cn">大泉河</text>
-            <text x="231" y="365" class="map-label vertical label-en">Daquan River</text>
-            <text x="610" y="177" class="place-title label-cn">莫高窟</text>
-            <text x="610" y="177" class="place-title label-en">Mogao Caves</text>
-            <text x="610" y="200" class="coordinate-label">40.043°N · 94.809°E</text>
-
-            <g class="tower-cluster">
-              <g class="small-stupa" transform="translate(374 438)">
-                <path d="M-18 27H18M-13 16H13M-10 16C-13 4-7-5 0-10C7-5 13 4 10 16M0-10V-20" />
-              </g>
-              <g class="small-stupa" transform="translate(418 463) scale(.72)">
-                <path d="M-18 27H18M-13 16H13M-10 16C-13 4-7-5 0-10C7-5 13 4 10 16M0-10V-20" />
-              </g>
-              <g class="small-stupa" transform="translate(344 486) scale(.58)">
-                <path d="M-18 27H18M-13 16H13M-10 16C-13 4-7-5 0-10C7-5 13 4 10 16M0-10V-20" />
-              </g>
-              <g class="wang-stupa" transform="translate(392 427)">
-                <circle class="tower-halo" r="52" />
-                <path d="M-27 42H27M-21 29H21M-17 29C-21 10-10-5 0-12C10-5 21 10 17 29M0-12V-28M-6-28H6" />
-                <text x="38" y="-5" class="person-label label-cn">王圆箓塔</text>
-                <text x="38" y="-5" class="person-label label-en">Wang Yuanlu’s stupa</text>
-              </g>
-              <path class="long-shadow" d="M399 465C484 504 559 523 655 538" />
-            </g>
-
-            <g class="cave-door" transform="translate(709 337)">
-              <path class="door-halo" d="M-72-72H72V72H-72Z" />
-              <path class="facade" d="M-46 62V-18C-46-52 46-52 46-18V62M-27 62V-6C-27-29 27-29 27-6V62" />
-              <path class="sealed-line" d="M-24-3L24 35M-24 16L24-3M-24 35L24 16" />
-              <text x="68" y="1" class="cave-label label-cn">藏经洞 · 第17窟</text>
-              <text x="68" y="1" class="cave-label label-en">Library Cave · Cave 17</text>
-              <text x="68" y="23" class="coordinate-label label-cn">1900年6月22日开启</text>
-              <text x="68" y="23" class="coordinate-label label-en">Opened 22 June 1900</text>
-            </g>
-          </g>
-
-          <g class="level level-two archive-room" data-level="2" aria-hidden="true">
-            <path class="room" d="M150 126H850V622H150Z" />
-            <path class="room-inner" d="M193 171H807V578H193Z" />
-            <circle class="manuscript-glow" cx="504" cy="366" r="245" />
-            <path class="shelf" d="M215 250H785M215 348H785M215 446H785M304 193V557M415 193V557M526 193V557M637 193V557M748 193V557" />
-            <g class="manuscript-field"></g>
-            <path class="opening-slit" d="M805 262V478" />
-            <text x="205" y="151" class="archive-title label-cn">藏经洞 · 满满实实</text>
-            <text x="205" y="151" class="archive-title label-en">The Library Cave · Filled to the walls</text>
-            <text x="794" y="604" text-anchor="end" class="archive-count label-cn">经卷、绘画与千年的文字</text>
-            <text x="794" y="604" text-anchor="end" class="archive-count label-en">Scrolls, paintings, a millennium of words</text>
-          </g>
-
-          <g class="level level-three meeting-diagram" data-level="3" aria-hidden="true">
-            <path class="triangle-line line-wang-stein" d="M274 469C379 326 511 246 689 246" />
-            <path class="triangle-line line-stein-jiang" d="M689 246C648 391 574 470 500 512" />
-            <path class="triangle-line line-jiang-wang" d="M500 512C405 522 334 506 274 469" />
-            <g class="person-node node-wang" transform="translate(274 469)">
-              <circle r="51" />
-              <circle class="node-core" r="5" />
-              <text x="0" y="-70" text-anchor="middle" class="person-name label-cn">王圆箓</text>
-              <text x="0" y="-70" text-anchor="middle" class="person-name label-en">Wang Yuanlu</text>
-              <text x="0" y="78" text-anchor="middle" class="person-role label-cn">守窟人</text>
-              <text x="0" y="78" text-anchor="middle" class="person-role label-en">Keeper</text>
-            </g>
-            <g class="person-node node-stein" transform="translate(689 246)">
-              <circle r="51" />
-              <circle class="node-core" r="5" />
-              <text x="0" y="-70" text-anchor="middle" class="person-name label-cn">斯坦因</text>
-              <text x="0" y="-70" text-anchor="middle" class="person-name label-en">Aurel Stein</text>
-              <text x="0" y="78" text-anchor="middle" class="person-role label-cn">探险者</text>
-              <text x="0" y="78" text-anchor="middle" class="person-role label-en">Explorer</text>
-            </g>
-            <g class="person-node node-jiang" transform="translate(500 512)">
-              <circle r="51" />
-              <circle class="node-core" r="5" />
-              <text x="0" y="-70" text-anchor="middle" class="person-name label-cn">蒋孝琬</text>
-              <text x="0" y="-70" text-anchor="middle" class="person-name label-en">Jiang Xiaowan</text>
-              <text x="0" y="78" text-anchor="middle" class="person-role label-cn">翻译者</text>
-              <text x="0" y="78" text-anchor="middle" class="person-role label-en">Interpreter</text>
-            </g>
-            <text x="495" y="133" text-anchor="middle" class="diagram-title label-cn">三个男人在莫高窟相遇</text>
-            <text x="495" y="133" text-anchor="middle" class="diagram-title label-en">Three men meet at Mogao</text>
-            <text x="484" y="363" text-anchor="middle" class="diagram-note label-cn">语言 · 交易 · 选择</text>
-            <text x="484" y="363" text-anchor="middle" class="diagram-note label-en">Language · Exchange · Choice</text>
-          </g>
-
-          <g class="level level-four departure-map" data-level="4" aria-hidden="true">
-            <path class="world-coast" d="M87 236C132 176 226 159 284 198C324 225 295 280 351 299C412 320 454 269 513 278C586 290 608 344 678 343C752 342 794 289 905 309M115 430C225 385 316 422 407 402C508 381 564 419 649 446C739 475 818 456 914 486" />
-            <path class="departure-route" d="M276 451C384 425 441 403 510 367C594 323 654 294 729 266C798 240 852 217 920 179" />
-            <text class="route-caption">
-              <textPath href="#departure-text-path" startOffset="3%" data-copy="route-caption">叙事路径 · 非精确运输路线</textPath>
-            </text>
-            <g class="map-node dunhuang-node" transform="translate(276 451)">
-              <circle class="route-ring" r="19" />
-              <circle r="4" />
-              <text x="-17" y="35" text-anchor="end" class="map-place label-cn">敦煌</text>
-              <text x="-17" y="35" text-anchor="end" class="map-place label-en">Dunhuang</text>
-            </g>
-            <g class="map-node kashgar-node" transform="translate(154 379)">
-              <circle r="4" />
-              <text x="-12" y="-13" text-anchor="end" class="map-place label-cn">喀什</text>
-              <text x="-12" y="-13" text-anchor="end" class="map-place label-en">Kashgar</text>
-            </g>
-            <g class="map-node london-node" transform="translate(920 179)">
-              <circle r="4" />
-              <text x="-13" y="-14" text-anchor="end" class="map-place label-cn">伦敦</text>
-              <text x="-13" y="-14" text-anchor="end" class="map-place label-en">London</text>
-            </g>
-            <g class="crate-stack" transform="translate(553 487)"></g>
-            <text x="553" y="598" text-anchor="middle" class="crate-count">29</text>
-            <text x="553" y="620" text-anchor="middle" class="crate-label label-cn">只大木箱</text>
-            <text x="553" y="620" text-anchor="middle" class="crate-label label-en">wooden crates</text>
-            <text x="553" y="653" text-anchor="middle" class="archive-count label-cn">九千余经卷 · 五百余幅绘画</text>
-            <text x="553" y="653" text-anchor="middle" class="archive-count label-en">9,000+ scrolls · 500+ paintings</text>
-          </g>
-
-          <g class="level level-five grave-map" data-level="5" aria-hidden="true">
-            <path class="grave-connection" d="M219 455C346 343 460 305 614 300C731 296 784 331 862 388" />
-            <g class="grave-node" transform="translate(219 455)">
-              <circle class="grave-halo" r="57" />
-              <path d="M-27 32H27M-17 32V-3C-17-29 17-29 17-3V32" />
-              <text x="0" y="63" text-anchor="middle" class="grave-name label-cn">敦煌 · 王圆箓塔</text>
-              <text x="0" y="63" text-anchor="middle" class="grave-name label-en">Dunhuang · Wang’s stupa</text>
-            </g>
-            <g class="grave-node" transform="translate(614 300)">
-              <circle class="grave-halo" r="57" />
-              <path d="M0-25V25M-18-6H18M-26 31H26" />
-              <text x="0" y="63" text-anchor="middle" class="grave-name label-cn">喀布尔 · 斯坦因墓</text>
-              <text x="0" y="63" text-anchor="middle" class="grave-name label-en">Kabul · Stein’s grave</text>
-            </g>
-            <g class="grave-node unknown" transform="translate(862 388)">
-              <circle class="grave-halo" r="57" />
-              <circle class="unknown-ring" r="24" />
-              <text x="0" y="7" text-anchor="middle" class="unknown-mark">?</text>
-              <text x="0" y="63" text-anchor="middle" class="grave-name label-cn">蒋孝琬 · 墓址不详</text>
-              <text x="0" y="63" text-anchor="middle" class="grave-name label-en">Jiang Xiaowan · Location unknown</text>
-            </g>
-            <text x="498" y="151" text-anchor="middle" class="diagram-title label-cn">三个人，三处归宿</text>
-            <text x="498" y="151" text-anchor="middle" class="diagram-title label-en">Three men, three resting places</text>
-            <text x="498" y="635" text-anchor="middle" class="final-question label-cn">如果有人知道蒋孝琬的墓址，请告诉我。</text>
-            <text x="498" y="635" text-anchor="middle" class="final-question label-en">If anyone knows where Jiang Xiaowan is buried, please tell me.</text>
-          </g>
-
         </svg>
 
-        <button class="map-note-button" type="button" aria-expanded="false">
-          <span aria-hidden="true">◎</span>
-          <span data-copy="map-note">地图说明</span>
-        </button>
-
-        <aside class="map-note-panel" aria-hidden="true" aria-label="地图说明">
-          <button class="close-note" type="button" aria-label="关闭">×</button>
-          <p class="note-kicker">Narrative map / Chapter 05</p>
-          <h2 data-copy="note-title">文学路径与史实边界</h2>
-          <p data-copy="note-body">
-            敦煌、莫高窟、喀什、伦敦与喀布尔是原文明确提及的地点。连线表达文章的叙事流向，不代表精确运输路线。
-          </p>
-          <p data-copy="note-ethics">
-            本章用“离开后的空白”表现文物流散，不把历史人物简化成游戏角色，也不把经卷作为可收集物。
-          </p>
-        </aside>
-
-        <nav class="section-rail" aria-label="阅读档案">
-          <span class="rail-caption" data-copy="rail-caption">阅读档案</span>
-          <span class="rail-line" aria-hidden="true"><i></i></span>
-          <div class="section-buttons"></div>
-        </nav>
-
-        <div class="state-caption" aria-live="polite">
-          <span class="state-number">01</span>
-          <span class="state-name" data-copy="state-name">塔</span>
-        </div>
-
-        <div class="opening-curtain">
-          <p class="curtain-kicker">Chapter 05 · Land</p>
-          <p class="curtain-teaser" data-copy="map-teaser">一扇洞门打开</p>
-          <div class="curtain-title-line">
-            <span class="curtain-title-cn" lang="zh-CN">道士塔</span>
-            <span class="curtain-title-en" lang="en">The Taoist Priest’s Tower</span>
-          </div>
-          <p class="curtain-thesis" data-copy="thesis">一扇洞门打开，经卷被带离敦煌，散入帝国收藏。</p>
-          <button class="open-book" type="button">
-            <span data-copy="open">打开档案</span>
-            <svg viewBox="0 0 56 18" aria-hidden="true">
-              <path d="M1 9H51M44 2L52 9L44 16" />
-            </svg>
-          </button>
-          <div class="curtain-door" aria-hidden="true">
-            <span></span><span></span><span></span>
-          </div>
-        </div>
+        <p class="map-caption" aria-live="polite">人物地理 · 从湖北到河西走廊</p>
       </section>
 
-      <article class="reader-panel" aria-label="章节正文">
-        <div class="reader-note" data-copy="reader-note">
-          五份档案对应原文五个编号分节。
-        </div>
-        <div class="reading-copy"></div>
+      <article class="reader-panel" inert data-aria="reader-aria" aria-label="章节正文">
+        <div class="reader-scroll">
+          <div class="reading-copy"></div>
 
-        <footer class="reader-footer">
-          <span class="archive-seal" aria-hidden="true">藏</span>
-          <button class="finish-chapter" type="button">
-            <span data-copy="finish">完成本章 · 返回总图</span>
-            <svg viewBox="0 0 44 14" aria-hidden="true">
-              <path d="M1 7H39M34 2L40 7L34 12" />
-            </svg>
-          </button>
-        </footer>
+          <div class="reader-end">
+            <span class="seal seal-m" aria-hidden="true">空</span>
+            <button class="finish-chapter" type="button">
+              <span data-copy="finish">完成本章 · 返回总图</span>
+              <svg viewBox="0 0 44 14" aria-hidden="true">
+                <path d="M1 7H39M34 2L40 7L34 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <nav class="section-rail" data-aria="rail-aria" aria-label="阅读档案">
+          <span class="rail-caption" data-copy="rail-caption">阅读档案</span>
+          <div class="section-buttons"></div>
+          <span class="rail-line" aria-hidden="true"><i></i></span>
+        </nav>
       </article>
+
+      <div class="opening-curtain" role="dialog" aria-modal="false" aria-labelledby="curtain-title">
+        <p class="curtain-kicker" data-copy="curtain-kicker">第 05 章 · 山河</p>
+        <p class="curtain-teaser" data-copy="map-teaser">一扇洞门打开</p>
+        <h1 class="curtain-title" id="curtain-title" data-copy="chapter-title">道士塔</h1>
+        <p class="curtain-thesis" data-copy="thesis">一扇洞门打开，经卷被带离敦煌，散入帝国收藏。</p>
+        <button class="open-book" type="button">
+          <span data-copy="open">打开档案</span>
+          <svg viewBox="0 0 56 18" aria-hidden="true">
+            <path d="M1 9H51M44 2L52 9L44 16" />
+          </svg>
+        </button>
+      </div>
     </main>
 
+    <footer class="bottom-bar">
+      <div class="bar-left">
+        <span class="credit" data-copy="source">文本：余秋雨《文化苦旅》</span>
+        <button class="notes-button" type="button" aria-expanded="false" aria-controls="notes-drawer">
+          <span aria-hidden="true">ⓘ</span>
+          <span data-copy="notes-button">地图说明与数据来源</span>
+        </button>
+      </div>
+      <a class="back-atlas" href="../../index.html" data-atlas-link>
+        <span aria-hidden="true">←</span>
+        <span data-copy="back-atlas">总地图</span>
+      </a>
+    </footer>
+
+    <aside class="notes-drawer" id="notes-drawer" aria-hidden="true" aria-labelledby="notes-title">
+      <button class="close-notes" type="button" data-aria="close-aria" aria-label="关闭">×</button>
+      <h2 id="notes-title" data-copy="notes-title">地图说明与数据来源</h2>
+
+      <section>
+        <h3 data-copy="notes-map-title">如何阅读这幅地图</h3>
+        <p><b data-copy="data-solid-label">实线</b><span data-copy="data-solid"></span></p>
+        <p><b data-copy="data-dashed-label">虚线</b><span data-copy="data-dashed"></span></p>
+        <p><b data-copy="data-wudang-label">武当山</b><span data-copy="data-wudang"></span></p>
+        <p><b data-copy="data-unknown-label">空白</b><span data-copy="data-unknown"></span></p>
+      </section>
+
+      <section>
+        <h3 data-copy="notes-data-title">数据与投影</h3>
+        <p class="notes-datum">Albers 25°N / 47°N · 110°E</p>
+        <p><b data-copy="data-china-label">中国近景</b><span data-copy="data-china"></span></p>
+        <p><b data-copy="data-world-label">世界与欧亚</b><span data-copy="data-world"></span></p>
+      </section>
+
+      <section>
+        <h3 data-copy="notes-sources-title">数据来源</h3>
+        <ul>
+          <li data-copy="notes-source-1"></li>
+          <li data-copy="notes-source-2"></li>
+          <li data-copy="notes-source-3"></li>
+        </ul>
+      </section>
+
+      <section>
+        <h3 data-copy="notes-disclaimer-title">声明</h3>
+        <p data-copy="data-disclaimer"></p>
+      </section>
+
+      <section>
+        <h3 data-copy="notes-keyboard-title">键盘</h3>
+        <p data-copy="notes-keyboard"></p>
+      </section>
+    </aside>
+
     <div class="chapter-complete-overlay" role="status" aria-live="polite" aria-hidden="true">
-      <span class="complete-mark">空</span>
-      <p data-copy="complete-kicker">一条流散路径已经显影</p>
+      <span class="complete-ripple"></span>
+      <span class="seal seal-l" aria-hidden="true">空</span>
+      <p data-copy="complete-kicker">一处山河已经显影</p>
       <strong data-copy="complete-line">洞窟留在敦煌，文字走向世界。</strong>
     </div>
 
-    <footer class="footnote">
-      <span data-copy="source">文本：余秋雨《文化苦旅》</span>
-      <span data-copy="source-map">地图：原文地点 · 文学示意路径</span>
-    </footer>
-
     <script src="./geography-data.js"></script>
     <script src="./chapter-data.js"></script>
-    <script src="./app.js?v=20260917-2"></script>
+    <script src="../_shared/chapter-shell.js?v=20260919-5"></script>
+    <script src="./app.js?v=20260919-2"></script>
   </body>
 </html>
