@@ -13,7 +13,7 @@
     zh: {
       "site-title": "山河显影",
       "wordmark-aria": "山河显影，返回中国总地图",
-      "curtain-kicker": "第 {n} 章 · 山河",
+      "curtain-kicker": "第 {n} 章",
       "back-atlas": "总地图",
       source: "文本：余秋雨《文化苦旅》",
       "notes-button": "地图说明与数据来源",
@@ -38,7 +38,7 @@
     en: {
       "site-title": "Land, Made Visible",
       "wordmark-aria": "Land, Made Visible — back to the atlas",
-      "curtain-kicker": "Chapter {n} · Land",
+      "curtain-kicker": "Chapter {n}",
       "back-atlas": "Atlas",
       source: "Text: Yu Qiuyu, A Bittersweet Journey Through Culture",
       "notes-button": "Map notes & sources",
@@ -353,7 +353,9 @@
       body.classList.add("is-completing");
       els.overlay.setAttribute("aria-hidden", "false");
       window.setTimeout(() => {
-        window.location.href = `${ATLAS_URL}?revealed=${config.revealId || id}&lang=${state.language}`;
+        const destination = `${ATLAS_URL}?revealed=${config.revealId || id}&lang=${state.language}`;
+        if (window.LAND_TRANSITION) window.LAND_TRANSITION.navigate(destination);
+        else window.location.href = destination;
       }, COMPLETE_DELAY);
     }
 
@@ -411,6 +413,23 @@
     updateRail();
     config.onSection?.(state.active, state);
 
+    // Keep the local title leaf and paper turn on top of the shared reading shell.
+    if (window.CHAPTER_OPENING) {
+      window.CHAPTER_OPENING.mount({
+        copy: () => ({
+          language: state.language,
+          number: fill(text("curtain-kicker")),
+          title: text("chapter-title"),
+          line: text(id === "mountain-resort" ? "reader-note" : "map-teaser"),
+          action: text("open")
+        }),
+        language: changeLanguage,
+        enter: () => openBook({ immediate: true }),
+        sections: ".reading-copy .reading-section",
+        preview: params.get("open") === "1"
+      });
+    }
+
     if (params.get("open") === "1") {
       state.previewLock = true;
       openBook({ immediate: true });
@@ -420,7 +439,7 @@
       // Web fonts change line heights after first layout; realign once they are ready.
       if (document.fonts?.ready) document.fonts.ready.then(align);
       window.setTimeout(align, 450);
-    } else {
+    } else if (!window.CHAPTER_OPENING) {
       els.openButton.focus({ preventScroll: true });
     }
     if (params.get("notes") === "1") toggleNotes(true, { focus: false });

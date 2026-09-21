@@ -1,7 +1,30 @@
 (() => {
   "use strict";
 
+  // Original book numbers remain stable; this edition includes nine chapters.
+  const CHAPTER_PLAN = [
+    {"id": "my-hometown", "number": 3, "index": "Chapter 03", "title": {"zh": "我的山河", "en": "My Hometown"}},
+    {"id": "dujiangyan", "number": 4, "index": "Chapter 04", "title": {"zh": "都江堰", "en": "Dujiangyan Irrigation System"}},
+    {"id": "taoist-tower", "number": 5, "index": "Chapter 05", "title": {"zh": "道士塔", "en": "The Taoist Priest’s Tower"}},
+    {"id": "mogao-caves", "number": 6, "index": "Chapter 06", "title": {"zh": "莫高窟", "en": "Mogao Caves"}},
+    {"id": "secret-spring", "number": 7, "index": "Chapter 07", "title": {"zh": "沙原隐泉", "en": "A Secret Spring in the Sand"}},
+    {"id": "yangguan", "number": 8, "index": "Chapter 08", "title": {"zh": "阳关雪", "en": "Snow on the Southern Pass"}},
+    {"id": "kashgar", "number": 9, "index": "Chapter 09", "title": {"zh": "西域喀什", "en": "Kashgar in the Western Regions"}},
+    {"id": "chengde", "number": 10, "index": "Chapter 10", "title": {"zh": "山庄背影", "en": "The Villa from Behind"}},
+    {"id": "fish-tail-lodge", "number": 11, "index": "Chapter 11", "title": {"zh": "鱼尾山屋", "en": "Fish Tail Lodge"}}
+  ];
   const STORIES = {
+    kashgar: {
+      storageKey: "bittersweet-journey:kashgar:complete",
+      href: "./chapters/kashgar/index.html?from=atlas",
+      number: 9,
+      title: { zh: "西域喀什", en: "Kashgar in the Western Regions" },
+      clue: { zh: "有人把来世，选在这里。", en: "Where would you live again?" },
+      preview: { zh: "如果生命能够重来一次，你愿意生在何处？", en: "If you could live again, where would you choose to be born?" },
+      unrevealedEnter: { zh: "循着远方，开卷", en: "Follow the distance" },
+      enter: { zh: "进入西域喀什", en: "Enter Kashgar" },
+      receipt: { mark: "域", zh: "远方，在这里有了归宿。", en: "Here, the faraway finds a home." }
+    },
     dujiangyan: {
       storageKey: "bittersweet-journey:dujiangyan:complete",
       href: "./chapters/dujiangyan/index.html?from=atlas",
@@ -11,6 +34,7 @@
         zh: "一项两千多年前的工程，如何让一片平原成为“天府之国”？",
         en: "How did a two-thousand-year-old work of water turn a plain into the Land of Abundance?"
       },
+      unrevealedEnter: { zh: "循着水声进入", en: "Follow the water" },
       enter: { zh: "沿岷江进入", en: "Follow the Min River" },
       receipt: {
         mark: "水",
@@ -40,8 +64,8 @@
       number: 5,
       title: { zh: "道士塔", en: "The Taoist Priest’s Tower" },
       preview: {
-        zh: "藏经洞打开以后，经卷如何从敦煌走向世界？",
-        en: "After the Library Cave opens, how do its manuscripts travel from Dunhuang into the world?"
+        zh: "一扇洞门打开以后，里面的文字为什么走向世界？",
+        en: "Once a cave door opens, why do its words travel the world?"
       },
       enter: { zh: "沿档案进入", en: "Enter through the archive" },
       receipt: {
@@ -85,7 +109,11 @@
   const returning = pageParams.get("revealed");
   const requestedLanguage = pageParams.get("lang");
   let activeStory = STORIES[returning] ? returning : "dujiangyan";
-  const orderedStories = Object.entries(STORIES).sort(([, a], [, b]) => a.number - b.number);
+  const orderedStories = CHAPTER_PLAN.map(chapter => [chapter.id, {
+    ...STORIES[chapter.id],
+    ...chapter
+  }]);
+  const chapterTotal = CHAPTER_PLAN.length;
 
   function applyRealGeography() {
     const geography = window.REAL_GEOGRAPHY?.global;
@@ -120,13 +148,12 @@
       "taoist-tower": [314, 245],
       dujiangyan: [455, 476],
       chengde: [856, 252],
-      jiangnan: [938, 532],
-      shanghai: [1055, 525]
     };
     Object.entries(originalAnchors).forEach(([name, [x, y]]) => {
       const geographyName = ["secret-spring", "taoist-tower"].includes(name) ? "dunhuang" : name;
       const point = geography.places[geographyName];
       const group = document.querySelector(`[data-story="${name}"]`);
+      if (!group) return;
       const offset = name === "taoist-tower" ? { x: 65, y: -58 } : { x: 0, y: 0 };
       group.setAttribute(
         "transform",
@@ -137,8 +164,6 @@
     const labelOffsets = {
       yangguan: [-72, 34],
       "secret-spring": [14, -28],
-      jiangnan: [-92, 35],
-      shanghai: [22, -32]
     };
     Object.entries(labelOffsets).forEach(([name, [x, y]]) => {
       document.querySelectorAll(`[data-story="${name}"] text`).forEach((label) => {
@@ -149,6 +174,7 @@
     const silk = document.querySelector(".silk-road");
     const southwest = document.querySelector(".tea-road");
     const kashgar = geography.places.kashgar;
+    document.querySelector('.kashgar-memory').setAttribute('transform', `translate(${kashgar.x} ${kashgar.y})`);
     const dunhuang = geography.places.dunhuang;
     const dujiangyan = geography.places.dujiangyan;
     silk.setAttribute(
@@ -292,11 +318,24 @@
 
   function renderPreview() {
     const story = STORIES[activeStory];
-    preview.querySelector(".preview-index").textContent =
-      copy[state.language].kicker.replace("{n}", String(story.number).padStart(2, "0"));
-    preview.querySelector("[data-preview-title]").textContent = story.title[state.language];
     preview.querySelector('[data-copy="preview-text"]').textContent = story.preview[state.language];
-    enterButton.querySelector("span").textContent = story.enter[state.language];
+    const invitation = !state.complete[activeStory] && story.unrevealedEnter
+      ? story.unrevealedEnter : story.enter;
+    enterButton.querySelector("span").textContent = invitation[state.language];
+  }
+
+  function renderReceipt(name) {
+    const story = STORIES[name];
+    const mark = receipt.querySelector('.receipt-mark');
+    mark.replaceChildren();
+    mark.classList.toggle('has-seal', name === 'kashgar');
+    if (name === 'kashgar') {
+      const seal = document.createElement('img');
+      seal.src = './chapters/kashgar/assets/seal-kashgar.svg';
+      seal.alt = state.language === 'zh' ? '西域喀什章节印记' : 'Kashgar chapter seal';
+      mark.append(seal);
+    } else mark.textContent = story.receipt.mark;
+    receipt.querySelector('strong').textContent = story.receipt[state.language];
   }
 
   /* ---------- chapter callout: anchored next to the dot ---------- */
@@ -464,8 +503,7 @@
     if (anchorPoint && preview.classList.contains("is-visible")) positionPreview(anchorPoint);
     renderStampGrid();
     if (STORIES[returning]) {
-      receipt.querySelector(".receipt-mark").textContent = STORIES[returning].receipt.mark;
-      receipt.querySelector("strong").textContent = STORIES[returning].receipt[state.language];
+      renderReceipt(returning);
     }
   }
 
@@ -474,9 +512,16 @@
     body.classList.toggle("secret-spring-complete", state.complete["secret-spring"]);
     body.classList.toggle("taoist-tower-complete", state.complete["taoist-tower"]);
     body.classList.toggle("chengde-complete", state.complete.chengde);
+    body.classList.toggle("kashgar-complete", state.complete.kashgar);
+    document.querySelector('[data-story="kashgar"]').setAttribute('aria-label', state.complete.kashgar ? (state.language === 'zh' ? '进入西域喀什' : 'Enter Kashgar') : STORIES.kashgar.clue[state.language]);
+    availablePoints.forEach(point => {
+      const name = point.dataset.story;
+      const clue = point.querySelector(`.point-clue.unread.${state.language === 'zh' ? 'cn' : 'en'}`);
+      point.setAttribute('aria-label', state.complete[name] ? STORIES[name].enter[state.language] : (clue?.textContent || STORIES[name].preview[state.language]));
+    });
     const count = Object.values(state.complete).filter(Boolean).length;
     document.querySelector(".progress-count").textContent = String(count).padStart(2, "0");
-    body.classList.toggle("all-revealed", count === orderedStories.length);
+    body.classList.toggle("all-revealed", count === chapterTotal);
     renderStampGrid();
   }
 
@@ -489,10 +534,12 @@
         const unlocked = Boolean(state.complete[name]);
         const title = story.title[state.language];
         const line = unlocked ? story.receipt[state.language] : text.locked;
-        const mark = unlocked ? story.receipt.mark : "";
+        const mark = unlocked && name === 'kashgar'
+          ? '<img src="./chapters/kashgar/assets/seal-kashgar.svg" alt="" />'
+          : unlocked ? story.receipt.mark : "";
         return `
           <div class="stamp-card${unlocked ? " is-unlocked" : ""}">
-            <span class="stamp-mark">${mark}</span>
+            <span class="stamp-mark${unlocked && name === 'kashgar' ? ' has-seal' : ''}">${mark}</span>
             <span class="stamp-name">${title}</span>
             <span class="stamp-line">${line}</span>
           </div>
@@ -525,14 +572,10 @@
   }
 
   function enterStory(storyName = activeStory) {
-    if (body.classList.contains("is-entering")) return;
     activeStory = storyName;
-    body.classList.add("is-entering");
-    window.setTimeout(() => {
-      const href = STORIES[storyName].href;
-      const separator = href.includes("?") ? "&" : "?";
-      window.location.href = `${href}${separator}lang=${state.language}`;
-    }, 920);
+    const url = new URL(STORIES[storyName].href, window.location.href);
+    url.searchParams.set("lang", state.language);
+    window.LAND_TRANSITION.navigate(url.href);
   }
 
   function showUnavailable() {
@@ -555,6 +598,7 @@
       state.language = button.dataset.language;
       window.localStorage.setItem("bittersweet-journey:language", state.language);
       renderLanguage();
+      renderProgress();
     });
   });
 
@@ -626,17 +670,19 @@
       state.complete[name] = false;
     });
     body.classList.remove("is-returning");
+    ['started', 'scene'].forEach(key => window.localStorage.removeItem(`bittersweet-journey:kashgar:${key}`));
     renderProgress();
+    renderPreview();
   });
 
   applyRealGeography();
   renderLanguage();
   renderProgress();
+  if (pageParams.get("stamps") === "1") openStampModal();
 
   if (STORIES[returning] && state.complete[returning]) {
-    const returnedStory = STORIES[returning];
-    receipt.querySelector(".receipt-mark").textContent = returnedStory.receipt.mark;
-    receipt.querySelector("strong").textContent = returnedStory.receipt[state.language];
+    renderReceipt(returning);
+    body.dataset.returningStory = returning;
     body.classList.add("is-returning");
     window.history.replaceState({}, "", "./index.html");
   }

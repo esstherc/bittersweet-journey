@@ -1,0 +1,13 @@
+{
+  "generated": "2026-09-18",
+  "sha256": {
+    "ne_10m_rivers_lake_centerlines.geojson": "bb854a900ecbd3b408df46d5e16e3e0f974ba55993f9d8b5c26e855273c0905a",
+    "ne_110m_land.geojson": "9e0729ee253ca7d7a5c4ae9395fb1902264c5377c52e224d13dd85010e2835d9",
+    "ne_10m_geography_regions_points.geojson": "25821b530966e62756faebf53699f12bf73550f8228aa4bbdf3e4132dd7cf806",
+    "ne_10m_populated_places.geojson": "9b8e3de09048ef00dfc70357dbb9fa324493f214b5e0ae4daf1aa79a8d10116b",
+    "ne_10m_geography_regions_polys.geojson": "b7b26e50ea917d3696aec87f932def2bf5f890f5770e441d59c162c6f4c92a77",
+    "ne_10m_lakes.geojson": "2d036f53dedec578001c5c30c2959ee7d4eebc1306900fa4367c49929ec8f2d9",
+    "city-osm.json": "b42ee07f9722a77f48ec2014d9e157da68e7ebdf174eda2f41f95621be5de8ab",
+    "wikidata.json": "a20fca1765647596e3b47e8b2d30f82c69d251b518f662f8087d1ccdd92c6239"
+  }
+}

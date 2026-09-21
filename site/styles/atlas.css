@@ -52,95 +52,6 @@ button { font: inherit; }
   mix-blend-mode: multiply;
 }
 
-.atlas-masthead {
-  position: fixed;
-  inset: 0 0 auto;
-  z-index: 30;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  height: 72px;
-  padding: 0 38px;
-  border-bottom: 1px solid var(--line);
-  background: rgba(236, 231, 219, .84);
-  backdrop-filter: blur(9px);
-}
-
-.atlas-wordmark {
-  display: flex;
-  align-items: baseline;
-  gap: 14px;
-  width: max-content;
-  text-decoration: none;
-}
-
-.atlas-wordmark span {
-  font-size: 20px;
-  font-weight: 700;
-  letter-spacing: .18em;
-}
-
-body[data-language="en"] .atlas-wordmark span {
-  font-family: var(--label);
-  letter-spacing: .17em;
-}
-
-.atlas-progress {
-  appearance: none;
-  display: flex;
-  align-items: center;
-  gap: 13px;
-  padding: 6px 8px;
-  margin: 0 -8px;
-  border: 0;
-  border-radius: 3px;
-  background: none;
-  color: inherit;
-  font: 500 12px/1.35 var(--label);
-  letter-spacing: .1em;
-  cursor: pointer;
-  transition: background-color .25s ease;
-}
-
-.atlas-progress:hover,
-.atlas-progress:focus-visible {
-  background: rgba(157, 61, 49, .08);
-}
-
-.atlas-progress b {
-  padding-left: 13px;
-  border-left: 1px solid var(--line);
-  font-weight: 500;
-}
-
-.atlas-progress i {
-  color: var(--seal);
-  font-style: normal;
-}
-
-.atlas-actions {
-  justify-self: end;
-}
-
-.atlas-language {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font: 600 13px/1.35 var(--label);
-  letter-spacing: .08em;
-}
-
-.atlas-language button {
-  appearance: none;
-  padding: 0;
-  border: 0;
-  opacity: .4;
-  background: none;
-  cursor: pointer;
-}
-
-.atlas-language button[aria-pressed="true"] { opacity: 1; }
-
 .atlas-experience {
   position: relative;
   height: 100vh;
@@ -245,18 +156,6 @@ body[data-language="en"] .atlas-intro .question-accent::before {
   transition:
     transform 1.25s cubic-bezier(.72, 0, .25, 1),
     opacity .7s ease;
-}
-
-body.is-entering .china-map {
-  transform: translate(-6vw, -10vh) scale(4.2);
-}
-
-body.is-entering .atlas-intro,
-body.is-entering .atlas-masthead,
-body.is-entering .atlas-footer,
-body.is-entering .chapter-preview {
-  opacity: 0;
-  transition: opacity .55s ease;
 }
 
 .terrain-washes path { opacity: .13; }
@@ -1073,13 +972,6 @@ body.is-returning .reveal-receipt {
 @media (max-width: 900px) {
   body { overflow-y: auto; }
 
-  .atlas-masthead {
-    grid-template-columns: 1fr auto;
-    height: 64px;
-    padding: 0 18px;
-  }
-
-  .atlas-progress { display: none; }
 
   .atlas-experience {
     height: auto;
@@ -1144,7 +1036,6 @@ body.is-returning .reveal-receipt {
 }
 
 @media (max-width: 520px) {
-  .atlas-wordmark span { font-size: 17px; }
 
   .atlas-map-stage {
     height: 66vh;
@@ -1274,3 +1165,22 @@ body[data-language="en"] .chapter-preview > p:not(.preview-index) {
     font-size: 12px;
   }
 }
+
+/* Kashgar remains visible after reading. */
+body.kashgar-complete [data-story="kashgar"] .point-core { fill: var(--cinnabar, #944b39); r: 6px; }
+body.kashgar-complete [data-story="kashgar"] .point-glow { opacity: .3; }
+.kashgar-memory{opacity:0;pointer-events:none;transition:opacity 1.3s}
+body.kashgar-complete .kashgar-memory{opacity:.87}
+[data-story="kashgar"] .complete,body.kashgar-complete [data-story="kashgar"] .unread{display:none}
+body.kashgar-complete[data-language="zh"] [data-story="kashgar"] .complete.cn,body.kashgar-complete[data-language="en"] [data-story="kashgar"] .complete.en{display:block}
+body.is-returning[data-returning-story="kashgar"] .kashgar-memory image{transform-origin:14px 49px;animation:kashgar-imprint 2s .3s both}
+.receipt-mark.has-seal{border:0;background:none;flex-shrink:0}.receipt-mark.has-seal img{width:50px;height:50px;display:block}
+@keyframes kashgar-imprint{from{opacity:0;transform:scale(1.22);filter:blur(6px)}to{opacity:1;transform:scale(1);filter:blur(0)}}
+
+/* Homepage previews contain only a question and its invitation. */
+.chapter-preview > p[data-copy="preview-text"] { font-size: 17px; line-height: 1.75; letter-spacing: .025em; margin: 0 0 22px; }
+body[data-language="en"] .chapter-preview > p[data-copy="preview-text"] { font-size: 19px; line-height: 1.5; }
+.stamp-mark.has-seal { border: 0; background: none; }
+.stamp-mark.has-seal img { display: block; width: 52px; height: 52px; }
+
+.stamp-overlay[hidden] { display: none; }

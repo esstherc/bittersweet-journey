@@ -14,29 +14,33 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&family=Ysabeau:ital,wght@0,400..700;1,400..700&display=swap"
     />
-    <link rel="stylesheet" href="./styles/atlas.css?v=20260920-1" />
+    <link rel="stylesheet" href="./styles/atlas.css?v=34a2f2a25414" />
+    <link rel="stylesheet" href="./styles/page-transition.css?v=7016b8be6cfd">
+    <script src="./scripts/page-transition.js?v=d0c1e799755b"></script>
+    <link rel="stylesheet" href="./styles/site-header.css?v=fcfd21307539">
+    <script src="./scripts/site-header.js?v=81fc12668344"></script>
   </head>
   <body data-language="zh">
     <div class="paper-noise" aria-hidden="true"></div>
 
-    <header class="atlas-masthead">
-      <a class="atlas-wordmark" href="./index.html">
-        <span data-copy="site-title">山河显影</span>
+    <header class="atlas-masthead site-masthead">
+      <a class="atlas-wordmark site-wordmark" href="./index.html">
+        <span data-copy="site-title" data-site-title>山河显影</span>
       </a>
 
       <button
         type="button"
-        class="atlas-progress"
+        class="atlas-progress site-progress"
         aria-haspopup="dialog"
         data-aria="view-stamps-aria"
         aria-label="查看已显影的文字印"
       >
-        <span data-copy="progress-label">已显影</span>
-        <b><i class="progress-count">00</i> / 20</b>
+        <span data-copy="progress-label" data-site-progress-label>已显影</span>
+        <b><i class="progress-count" data-site-progress-count>00</i> / 9</b>
       </button>
 
-      <div class="atlas-actions">
-        <div class="atlas-language" role="group" aria-label="Language">
+      <div class="atlas-actions site-actions">
+        <div class="atlas-language site-language" role="group" aria-label="Language">
           <button type="button" data-language="zh" aria-pressed="true">中文</button>
           <span>／</span>
           <button type="button" data-language="en" aria-pressed="false">EN</button>
@@ -166,13 +170,18 @@
             <text x="61" y="21" class="memory-label en" lang="en">The Villa</text>
           </g>
 
+          <g class="kashgar-memory" aria-hidden="true">
+            <image href="./chapters/kashgar/assets/seal-kashgar.svg" x="-10" y="24" width="49" height="49" />
+          </g>
           <g class="story-points">
-            <g class="story-point quiet" role="button" tabindex="0" data-story="kashgar" data-aria="point-kashgar-aria" aria-label="西域喀什，尚未接入">
+            <g class="story-point available" role="button" tabindex="0" data-story="kashgar" aria-label="有人把来世，选在这里。">
               <circle class="point-glow" cx="118" cy="327" r="35" />
               <circle class="point-core" cx="118" cy="327" r="3" />
               <text x="128" y="313" class="point-number">09</text>
-              <text x="128" y="335" class="point-clue cn" lang="zh">西域</text>
-              <text x="128" y="335" class="point-clue en" lang="en">Western Regions</text>
+              <text x="108" y="335" text-anchor="end" class="point-clue unread cn" lang="zh">有人把来世，选在这里</text>
+              <text x="108" y="335" text-anchor="end" class="point-clue unread en" lang="en">Where would you live again?</text>
+              <text x="108" y="335" text-anchor="end" class="point-clue complete cn" lang="zh">西域喀什</text>
+              <text x="108" y="335" text-anchor="end" class="point-clue complete en" lang="en">Kashgar</text>
             </g>
 
             <g class="story-point quiet" role="button" tabindex="0" data-story="yangguan" data-aria="point-yangguan-aria" aria-label="阳关雪，尚未接入">
@@ -228,35 +237,17 @@
               <text x="869" y="260" class="point-clue complete cn" lang="zh">山庄背影</text>
               <text x="869" y="260" class="point-clue complete en" lang="en">The Villa from Behind</text>
             </g>
-
-            <g class="story-point quiet" role="button" tabindex="0" data-story="jiangnan" data-aria="point-jiangnan-aria" aria-label="江南故事，尚未接入">
-              <circle class="point-glow" cx="938" cy="532" r="31" />
-              <circle class="point-core" cx="938" cy="532" r="3" />
-              <text x="950" y="516" class="point-number">01—03</text>
-              <text x="950" y="539" class="point-clue cn" lang="zh">故乡 · 江南</text>
-              <text x="950" y="539" class="point-clue en" lang="en">Home · Jiangnan</text>
-            </g>
-
-            <g class="story-point quiet" role="button" tabindex="0" data-story="shanghai" data-aria="point-shanghai-aria" aria-label="人生故事群，尚未接入">
-              <circle class="point-glow" cx="1055" cy="525" r="36" />
-              <circle class="point-core" cx="1055" cy="525" r="3" />
-              <text x="1068" y="508" class="point-number">14—20</text>
-              <text x="1068" y="532" class="point-clue cn" lang="zh">人间</text>
-              <text x="1068" y="532" class="point-clue en" lang="en">Lives</text>
-            </g>
           </g>
         </svg>
 
       </section>
 
       <aside class="chapter-preview" aria-live="polite">
-        <p class="preview-index">第 04 章 · 山河</p>
-        <h2 data-preview-title>都江堰</h2>
         <p data-copy="preview-text">
           一项两千多年前的工程，如何让一片平原成为“天府之国”？
         </p>
         <button class="enter-story" type="button">
-          <span data-copy="enter">沿岷江进入</span>
+          <span data-copy="enter">循着水声进入</span>
           <svg viewBox="0 0 64 18" aria-hidden="true">
             <path d="M1 9H59M51 2L60 9L51 16" />
           </svg>
@@ -301,7 +292,7 @@
       </div>
     </div>
 
-    <script src="./data/real-geography.js"></script>
-    <script src="./scripts/atlas.js?v=20260920-1"></script>
+    <script src="./data/real-geography.js?v=6a084e1099a1"></script>
+    <script src="./scripts/atlas.js?v=dbc13a1f230d"></script>
   </body>
 </html>

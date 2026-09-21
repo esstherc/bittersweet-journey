@@ -1,0 +1,48 @@
+/* The ready destination replaces the old page in one continuous reveal. */
+@view-transition { navigation: auto; }
+::view-transition-group(root) { animation-duration: 420ms; }
+::view-transition-old(root) { animation: none; }
+::view-transition-new(root) {
+  animation: land-page-reveal 420ms cubic-bezier(.22, .61, .36, 1) both;
+  mix-blend-mode: normal;
+}
+@keyframes land-page-reveal {
+  from { clip-path: inset(0 0 0 100%); }
+  to { clip-path: inset(0); }
+}
+/* The same masthead stays in place while the page underneath changes. */
+::view-transition-group(site-header) { animation-duration: 0s; z-index: 1; }
+::view-transition-old(site-header) { animation: none; opacity: 0; }
+::view-transition-new(site-header) { animation: none; mix-blend-mode: normal; }
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+  ::view-transition-group(*) { animation-duration: 0s; }
+  ::view-transition-new(root) { animation: none; }
+}
+
+/* Paper fallback for browsers without cross-document transitions and for Begin. */
+html.land-arriving { background: #e6dfd0; }
+html.land-arriving body { visibility: hidden; }
+html.land-arriving #land-curtain { visibility: visible; }
+html.land-in-transit { overflow: hidden; }
+#land-curtain {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 28px;
+  border: 0;
+  box-shadow: none;
+  overflow: hidden;
+  background: #e6dfd0;
+  color: #28332e;
+  opacity: 1;
+  font-family: "Noto Serif SC", "Songti SC", "STSong", Georgia, serif;
+  text-align: center;
+  outline: none;
+}
+#land-curtain[open] { display: grid; place-items: center; }
+#land-curtain::backdrop { background: transparent; backdrop-filter: none; }
