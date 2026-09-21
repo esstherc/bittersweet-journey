@@ -4,6 +4,7 @@
   const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
   let options, dialog, sheet, turning = false, reading = false, sectionsObserver, contentObserver;
   let header, headerHome;
+  let motionButton;
   const seenSections = new Set();
   const root = document.documentElement;
   // Set before body parsing so a cold load cannot paint the reading spread first.
@@ -29,6 +30,12 @@
     const back = dialog.querySelector('.chapter-leaf-back');
     back.textContent = copy.language === 'en' ? '← Return to atlas' : '← 返回总图';
     back.href = `../../index.html?lang=${copy.language}`;
+    if (motionButton) {
+      const paused = dialog.classList.contains('is-motion-paused');
+      motionButton.textContent = copy.language === 'en'
+        ? (paused ? 'Resume scenery' : 'Pause scenery')
+        : (paused ? '继续风景' : '暂停风景');
+    }
     window.SITE_HEADER?.refresh();
   }
   function observeSections() {
@@ -112,6 +119,21 @@
     dialog.id = 'chapter-leaf';
     dialog.setAttribute('aria-labelledby', 'chapter-leaf-title');
     sheet = make('div', 'chapter-leaf-paper');
+    const background = config.background && document.querySelector(config.background);
+    if (background?.content) {
+      dialog.classList.add('has-landscape');
+      sheet.append(background.content.cloneNode(true));
+      motionButton = make('button', 'chapter-leaf-motion');
+      motionButton.type = 'button';
+      motionButton.addEventListener('click', () => {
+        dialog.classList.toggle('is-motion-paused');
+        refresh();
+      });
+      sheet.append(motionButton);
+      const visibility = () => dialog.classList.toggle('is-background-hidden', document.hidden);
+      document.addEventListener('visibilitychange', visibility);
+      visibility();
+    }
     // Reparent the real header so its styles, language handlers and focus state
     // remain identical on the atlas, title leaf and reading spread.
     header = document.querySelector('.site-masthead');

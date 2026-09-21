@@ -288,10 +288,12 @@
   renderLanguage();resizeMap(false);$('#map-loading').hidden=true;
   document.documentElement.classList.add('reader-ready');
   window.CHAPTER_OPENING.mount({
+    background: '#kashgar-opening-landscape',
     copy: () => ({language: state.lang, number: state.lang === 'zh' ? '第九章' : 'Chapter 09',
       title: t('fullTitle'), line: t('invitation'), action: t('openBook')}),
     language: changeLanguage, enter: () => enterReading(1), sections: '#reading .reading-section'
   });
+  window.KASHGAR_LANDSCAPE?.mount(document.querySelector('#chapter-leaf'));
   // Public read-only diagnostics for content and geometry verification.
   window.KASHGAR_READER={getState:()=>({...state}),getReferenceCounts:()=>Object.fromEntries([...refs].map(([id,list])=>[id,list.length]))};
 })();
