@@ -567,6 +567,18 @@ body[data-language="en"] .open-book {
 .seal-m { --seal-size: 72px; }
 .seal-l { --seal-size: 140px; }
 
+/* [S-3] image seal: a drawn chapter emblem (SVG) instead of a glyph; it brings its own frame */
+.seal-image {
+  border: 0;
+  background: none;
+}
+
+.seal-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
 /* ---------- [C] curtain ---------- */
 
 .opening-curtain {
@@ -849,6 +861,16 @@ body.is-completing .complete-ripple {
 
 body.is-completing .chapter-complete-overlay .seal {
   animation: complete-in 0.7s ease 0.5s forwards;
+}
+
+.chapter-complete-overlay .seal-image {
+  border: 0;
+  background: none;
+}
+
+/* on the accent-coloured screen the seal is drawn in paper colour, like the glyph seals */
+.chapter-complete-overlay .seal-image img {
+  filter: brightness(0) invert(0.93) sepia(0.12);
 }
 
 .chapter-complete-overlay p {

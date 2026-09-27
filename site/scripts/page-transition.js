@@ -9,7 +9,7 @@
   // our two curtain animations as well would produce a second visible refresh.
   const nativeNavigation = 'onpagereveal' in window &&
     typeof document.startViewTransition === 'function' && /^https?:$/.test(base.protocol);
-  const pages = new Set(['index.html', ...['dujiangyan', 'secret-spring', 'taoist-tower', 'mountain-resort', 'kashgar'].map(name => `chapters/${name}/index.html`)]);
+  const pages = new Set(['index.html', ...['dujiangyan', 'secret-spring', 'taoist-tower', 'mountain-resort', 'yangguan', 'kashgar'].map(name => `chapters/${name}/index.html`)]);
   let curtain, busy = false, incoming = false, animation, rescue;
   const removePending = () => { try { sessionStorage.removeItem(key); } catch {} };
   try {

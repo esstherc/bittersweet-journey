@@ -14,11 +14,11 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&family=Ysabeau:ital,wght@0,400..700;1,400..700&display=swap"
     />
-    <link rel="stylesheet" href="./styles/atlas.css?v=34a2f2a25414" />
-    <link rel="stylesheet" href="./styles/page-transition.css?v=7016b8be6cfd">
-    <script src="./scripts/page-transition.js?v=d0c1e799755b"></script>
-    <link rel="stylesheet" href="./styles/site-header.css?v=fcfd21307539">
-    <script src="./scripts/site-header.js?v=81fc12668344"></script>
+    <link rel="stylesheet" href="./styles/atlas.css?v=66282fb4ad14" />
+    <link rel="stylesheet" href="./styles/page-transition.css?v=7934fbdd1485">
+    <script src="./scripts/page-transition.js?v=ea544cac2ea9"></script>
+    <link rel="stylesheet" href="./styles/site-header.css?v=2ec6064a8b77">
+    <script src="./scripts/site-header.js?v=6923f2a93b3d"></script>
   </head>
   <body data-language="zh">
     <div class="paper-noise" aria-hidden="true"></div>
@@ -170,6 +170,9 @@
             <text x="61" y="21" class="memory-label en" lang="en">The Villa</text>
           </g>
 
+          <g class="yangguan-memory" aria-hidden="true">
+            <image href="./chapters/yangguan/assets/seal-yangguan.svg" x="-48" y="-44" width="40" height="40" />
+          </g>
           <g class="kashgar-memory" aria-hidden="true">
             <image href="./chapters/kashgar/assets/seal-kashgar.svg" x="-10" y="24" width="49" height="49" />
           </g>
@@ -184,12 +187,15 @@
               <text x="108" y="335" text-anchor="end" class="point-clue complete en" lang="en">Kashgar</text>
             </g>
 
-            <g class="story-point quiet" role="button" tabindex="0" data-story="yangguan" data-aria="point-yangguan-aria" aria-label="阳关雪，尚未接入">
+            <g class="story-point available" role="button" tabindex="0" data-story="yangguan" data-aria="point-yangguan-aria" aria-label="进入阳关雪">
               <circle class="point-glow" cx="235" cy="304" r="31" />
-              <circle class="point-core" cx="235" cy="304" r="3" />
+              <circle class="point-pulse" cx="235" cy="304" r="11" />
+              <circle class="point-core" cx="235" cy="304" r="3.5" />
               <text x="245" y="291" class="point-number">08</text>
-              <text x="245" y="314" class="point-clue cn" lang="zh">关</text>
-              <text x="245" y="314" class="point-clue en" lang="en">The Pass</text>
+              <text x="245" y="314" class="point-clue unread cn" lang="zh">雪中寻一座关</text>
+              <text x="245" y="314" class="point-clue unread en" lang="en">A pass sought through snow</text>
+              <text x="245" y="314" class="point-clue complete cn" lang="zh">阳关雪</text>
+              <text x="245" y="314" class="point-clue complete en" lang="en">Snow on the Southern Pass</text>
             </g>
 
             <g class="story-point available cluster" role="button" tabindex="0" data-story="secret-spring" data-aria="point-secret-spring-aria" aria-label="进入沙原隐泉">
@@ -292,7 +298,7 @@
       </div>
     </div>
 
-    <script src="./data/real-geography.js?v=6a084e1099a1"></script>
-    <script src="./scripts/atlas.js?v=dbc13a1f230d"></script>
+    <script src="./data/real-geography.js?v=49a9ddc8d22f"></script>
+    <script src="./scripts/atlas.js?v=d3e2208c402d"></script>
   </body>
 </html>

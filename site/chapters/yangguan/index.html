@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="《文化苦旅》双语阅读地图：阳关雪。沿真实的阳关一带地形，踏雪读到烽燧与渭城一杯酒。"
+    />
+    <title>山河显影 · 阳关雪</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&family=Ysabeau:ital,wght@0,400..700;1,400..700&display=swap"
+    />
+    <link rel="stylesheet" href="../_shared/chapter-shell.css?v=49da78409b1c" />
+    <link rel="stylesheet" href="./styles.css?v=b72d17559e39" />
+    <link rel="stylesheet" href="../../styles/page-transition.css?v=7934fbdd1485">
+    <script src="../../scripts/page-transition.js?v=ea544cac2ea9"></script>
+    <link rel="stylesheet" href="../../styles/chapter-opening.css?v=6b0a1b151acb">
+    <script src="../../scripts/chapter-opening.js?v=032d6e733c3a"></script>
+    <link rel="stylesheet" href="../../styles/site-header.css?v=2ec6064a8b77">
+    <script src="../../scripts/site-header.js?v=6923f2a93b3d"></script>
+  </head>
+  <body data-language="zh" data-reading-level="1">
+    <div class="paper-noise" aria-hidden="true"></div>
+
+    <header class="masthead site-masthead">
+      <a class="wordmark site-wordmark" href="../../index.html" aria-label="山河显影，返回中国总地图">
+        <span data-site-title>山河显影</span>
+      </a>
+      <a class="site-progress" href="../../index.html?stamps=1" aria-label="查看已显影的文字印">
+        <span data-site-progress-label>已显影</span>
+        <b><i data-site-progress-count>00</i> / 9</b>
+      </a>
+      <div class="language-switch site-language" role="group" aria-label="Language">
+        <button type="button" data-language="zh" aria-pressed="true">中文</button>
+        <span aria-hidden="true">／</span>
+        <button type="button" data-language="en" aria-pressed="false">EN</button>
+      </div>
+    </header>
+
+    <main class="chapter-frame">
+      <section class="map-stage" inert data-aria="map-aria" aria-label="阳关一带三维雪漠地形图">
+        <h1 class="sr-only" data-copy="chapter-title">阳关雪</h1>
+
+        <div class="terrain-viewport" aria-hidden="true">
+          <canvas class="terrain-canvas"></canvas>
+        </div>
+
+        <!-- Labels drawn on real terrain positions every frame (app.js). -->
+        <svg class="terrain-marks" aria-hidden="true"></svg>
+
+        <!-- Level 2: Dunhuang to Yangguan, over a hillshade made from the same DEM. -->
+        <svg class="regional-map" role="img" aria-labelledby="regional-title">
+          <title id="regional-title" data-copy="regional-svg-title">敦煌县城与阳关的区域关系</title>
+        </svg>
+
+        <canvas class="snowfall" aria-hidden="true"></canvas>
+
+        <svg class="compass" viewBox="-24 -24 48 48" role="img" aria-label="指北针">
+          <circle r="21" />
+          <g class="compass-needle">
+            <path class="north" d="M0-17L5 0H-5Z" />
+            <path class="south" d="M0 17L5 0H-5Z" />
+            <text x="0" y="-19" text-anchor="middle">北</text>
+          </g>
+        </svg>
+
+        <div class="camera-caption" aria-hidden="true">
+          <span class="camera-mode">纸上的阳关</span>
+          <span class="camera-tech">3D terrain · Copernicus DEM</span>
+        </div>
+      </section>
+
+      <article class="reader-panel" inert data-aria="reader-aria" aria-label="章节正文">
+        <div class="reader-scroll">
+          <p class="reader-note" data-copy="reader-note">五个段落用于交互节奏，不是原文编号分节。</p>
+          <div class="reading-copy"></div>
+
+          <div class="reader-end">
+            <span class="seal seal-m seal-image" aria-hidden="true"><img src="./assets/seal-yangguan.svg" alt="" /></span>
+            <button class="finish-chapter" type="button">
+              <span data-copy="finish">完成本章 · 返回总图</span>
+              <svg viewBox="0 0 44 14" aria-hidden="true">
+                <path d="M1 7H39M34 2L40 7L34 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <nav class="section-rail" data-aria="rail-aria" aria-label="阅读行程">
+          <span class="rail-caption" data-copy="rail-caption">阅读行程</span>
+          <div class="section-buttons"></div>
+          <span class="rail-line" aria-hidden="true"><i></i></span>
+        </nav>
+      </article>
+
+      <div class="opening-curtain" role="dialog" aria-modal="false" aria-labelledby="curtain-title">
+        <p class="curtain-kicker" data-copy="curtain-kicker">第 08 章</p>
+        <p class="curtain-teaser" data-copy="map-teaser">冲着一首诗，去寻一座关。</p>
+        <h1 class="curtain-title" id="curtain-title" data-copy="chapter-title">阳关雪</h1>
+        <p class="curtain-thesis" data-copy="thesis">诗句比关隘活得更久。</p>
+        <button class="open-book" type="button">
+          <span data-copy="open">踏雪出发</span>
+          <svg viewBox="0 0 56 18" aria-hidden="true">
+            <path d="M1 9H51M44 2L52 9L44 16" />
+          </svg>
+        </button>
+      </div>
+    </main>
+
+    <footer class="bottom-bar">
+      <div class="bar-left">
+        <span class="credit" data-copy="source">文本：余秋雨《文化苦旅》</span>
+        <button class="notes-button" type="button" aria-expanded="false" aria-controls="notes-drawer">
+          <span aria-hidden="true">ⓘ</span>
+          <span data-copy="notes-button">地图说明与数据来源</span>
+        </button>
+      </div>
+      <a class="back-atlas" href="../../index.html" data-atlas-link>
+        <span aria-hidden="true">←</span>
+        <span data-copy="back-atlas">总地图</span>
+      </a>
+    </footer>
+
+    <aside class="notes-drawer" id="notes-drawer" aria-hidden="true" aria-labelledby="notes-title">
+      <button class="close-notes" type="button" data-aria="close-aria" aria-label="关闭">×</button>
+      <h2 id="notes-title" data-copy="notes-title">地图说明与数据来源</h2>
+
+      <section>
+        <h3 data-copy="notes-map-title">如何阅读这幅地图</h3>
+        <p><b data-copy="data-3d-label">三维</b><span data-copy="data-3d"></span></p>
+        <p><b data-copy="data-real-label">真实地物</b><span data-copy="data-real"></span></p>
+        <p><b data-copy="data-literary-label">文学意象</b><span data-copy="data-literary"></span></p>
+        <p><b data-copy="data-far-label">诗境</b><span data-copy="data-far"></span></p>
+        <p><b data-copy="data-region-label">区域</b><span data-copy="data-region"></span></p>
+      </section>
+
+      <section>
+        <h3 data-copy="notes-data-title">数据与投影</h3>
+        <p class="notes-datum">WGS 84 · 2026.09.27</p>
+        <p><b data-copy="data-projection-label">投影</b><span data-copy="data-projection"></span></p>
+        <p><b data-copy="data-terrain-label">地形</b><span data-copy="data-terrain"></span></p>
+        <p><b data-copy="data-snow-label">雪</b><span data-copy="data-snow"></span></p>
+      </section>
+
+      <section>
+        <h3 data-copy="notes-sources-title">数据来源</h3>
+        <ul>
+          <li data-copy="notes-source-1"></li>
+          <li data-copy="notes-source-2"></li>
+          <li data-copy="notes-source-3"></li>
+          <li data-copy="notes-source-4"></li>
+        </ul>
+      </section>
+
+      <section>
+        <h3 data-copy="notes-disclaimer-title">声明</h3>
+        <p data-copy="data-disclaimer"></p>
+      </section>
+
+      <section>
+        <h3 data-copy="notes-keyboard-title">键盘</h3>
+        <p data-copy="notes-keyboard"></p>
+      </section>
+    </aside>
+
+    <div class="chapter-complete-overlay" role="status" aria-live="polite" aria-hidden="true">
+      <span class="complete-ripple"></span>
+      <span class="seal seal-l seal-image" aria-hidden="true"><img src="./assets/seal-yangguan.svg" alt="" /></span>
+      <p data-copy="complete-kicker">一处山河已经显影</p>
+      <strong data-copy="complete-line">风雪掩关，唐音犹在纸上。</strong>
+    </div>
+
+    <script src="./geography-data.js?v=2af07a57ec21"></script>
+    <script src="./terrain-data.js?v=196e1ecffbce"></script>
+    <script src="./chapter-data.js?v=d112b389427f"></script>
+    <script src="./terrain-3d.js?v=bc4fe7a880bf"></script>
+    <script src="../_shared/chapter-shell.js?v=475f95b59094"></script>
+    <script src="./app.js?v=18f24872049f"></script>
+  </body>
+</html>

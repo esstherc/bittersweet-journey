@@ -23,7 +23,26 @@
       preview: { zh: "如果生命能够重来一次，你愿意生在何处？", en: "If you could live again, where would you choose to be born?" },
       unrevealedEnter: { zh: "循着远方，开卷", en: "Follow the distance" },
       enter: { zh: "进入西域喀什", en: "Enter Kashgar" },
-      receipt: { mark: "域", zh: "远方，在这里有了归宿。", en: "Here, the faraway finds a home." }
+      receipt: { mark: "域", zh: "远方，在这里有了归宿。", en: "Here, the faraway finds a home." },
+      seal: "./chapters/kashgar/assets/seal-kashgar.svg"
+    },
+    yangguan: {
+      storageKey: "bittersweet-journey:yangguan:complete",
+      href: "./chapters/yangguan/index.html?from=atlas",
+      number: 8,
+      title: { zh: "阳关雪", en: "Snow on the Southern Pass" },
+      preview: {
+        zh: "一座早已坍弛的土墩，为什么仍值得冒雪去寻？",
+        en: "Why walk through snow to find a pass that crumbled long ago?"
+      },
+      unrevealedEnter: { zh: "循着诗句，踏雪出发", en: "Follow the poem into the snow" },
+      enter: { zh: "再上阳关", en: "Return to the pass" },
+      receipt: {
+        mark: "雪",
+        zh: "风雪掩关，唐音犹在纸上。",
+        en: "Snow covers the pass; its verses remain on the page."
+      },
+      seal: "./chapters/yangguan/assets/seal-yangguan.svg"
     },
     dujiangyan: {
       storageKey: "bittersweet-journey:dujiangyan:complete",
@@ -115,6 +134,11 @@
   }]);
   const chapterTotal = CHAPTER_PLAN.length;
 
+  const DISPLAY_OFFSETS = {
+    "taoist-tower": { x: 65, y: -58 },
+    yangguan: { x: -58, y: 52 }
+  };
+
   function applyRealGeography() {
     const geography = window.REAL_GEOGRAPHY?.global;
     if (!geography) return;
@@ -154,7 +178,9 @@
       const point = geography.places[geographyName];
       const group = document.querySelector(`[data-story="${name}"]`);
       if (!group) return;
-      const offset = name === "taoist-tower" ? { x: 65, y: -58 } : { x: 0, y: 0 };
+      // Dunhuang-area dots are drawn apart so each can be reached: Yangguan lies 57 km
+      // south-west of Dunhuang, a few pixels at this scale, so it is drawn toward the south-west.
+      const offset = DISPLAY_OFFSETS[name] || { x: 0, y: 0 };
       group.setAttribute(
         "transform",
         `translate(${point.x - x + offset.x} ${point.y - y + offset.y})`
@@ -162,7 +188,7 @@
     });
 
     const labelOffsets = {
-      yangguan: [-72, 34],
+      yangguan: [-8, 4],
       "secret-spring": [14, -28],
     };
     Object.entries(labelOffsets).forEach(([name, [x, y]]) => {
@@ -175,6 +201,8 @@
     const southwest = document.querySelector(".tea-road");
     const kashgar = geography.places.kashgar;
     document.querySelector('.kashgar-memory').setAttribute('transform', `translate(${kashgar.x} ${kashgar.y})`);
+    const yangguan = geography.places.yangguan;
+    document.querySelector('.yangguan-memory').setAttribute('transform', `translate(${yangguan.x + DISPLAY_OFFSETS.yangguan.x} ${yangguan.y + DISPLAY_OFFSETS.yangguan.y})`);
     const dunhuang = geography.places.dunhuang;
     const dujiangyan = geography.places.dujiangyan;
     silk.setAttribute(
@@ -239,7 +267,7 @@
       "stage-aria": "文化苦旅中国故事地图",
       "map-aria": "未完全显影的中国故事地图",
       "point-kashgar-aria": "西域喀什，尚未接入",
-      "point-yangguan-aria": "阳关雪，尚未接入",
+      "point-yangguan-aria": "进入阳关雪",
       "point-secret-spring-aria": "进入沙原隐泉",
       "point-taoist-tower-aria": "进入道士塔",
       "point-dujiangyan-aria": "进入都江堰",
@@ -270,7 +298,7 @@
       "stage-aria": "Story map of China for A Bittersweet Journey Through Culture",
       "map-aria": "A partly revealed story map of China",
       "point-kashgar-aria": "Western Regions, Kashgar — not yet available",
-      "point-yangguan-aria": "The Pass, Yangguan — not yet available",
+      "point-yangguan-aria": "Enter Snow on the Southern Pass",
       "point-secret-spring-aria": "Enter A Secret Spring in the Sand",
       "point-taoist-tower-aria": "Enter The Taoist Priest’s Tower",
       "point-dujiangyan-aria": "Enter Dujiangyan",
@@ -328,11 +356,12 @@
     const story = STORIES[name];
     const mark = receipt.querySelector('.receipt-mark');
     mark.replaceChildren();
-    mark.classList.toggle('has-seal', name === 'kashgar');
-    if (name === 'kashgar') {
+    // A chapter with a drawn seal shows the image; the others still show their glyph.
+    mark.classList.toggle('has-seal', Boolean(story.seal));
+    if (story.seal) {
       const seal = document.createElement('img');
-      seal.src = './chapters/kashgar/assets/seal-kashgar.svg';
-      seal.alt = state.language === 'zh' ? '西域喀什章节印记' : 'Kashgar chapter seal';
+      seal.src = story.seal;
+      seal.alt = state.language === 'zh' ? `${story.title.zh}章节印记` : `${story.title.en} chapter seal`;
       mark.append(seal);
     } else mark.textContent = story.receipt.mark;
     receipt.querySelector('strong').textContent = story.receipt[state.language];
@@ -513,6 +542,7 @@
     body.classList.toggle("taoist-tower-complete", state.complete["taoist-tower"]);
     body.classList.toggle("chengde-complete", state.complete.chengde);
     body.classList.toggle("kashgar-complete", state.complete.kashgar);
+    body.classList.toggle("yangguan-complete", state.complete.yangguan);
     document.querySelector('[data-story="kashgar"]').setAttribute('aria-label', state.complete.kashgar ? (state.language === 'zh' ? '进入西域喀什' : 'Enter Kashgar') : STORIES.kashgar.clue[state.language]);
     availablePoints.forEach(point => {
       const name = point.dataset.story;
@@ -534,12 +564,12 @@
         const unlocked = Boolean(state.complete[name]);
         const title = story.title[state.language];
         const line = unlocked ? story.receipt[state.language] : text.locked;
-        const mark = unlocked && name === 'kashgar'
-          ? '<img src="./chapters/kashgar/assets/seal-kashgar.svg" alt="" />'
+        const mark = unlocked && story.seal
+          ? `<img src="${story.seal}" alt="" />`
           : unlocked ? story.receipt.mark : "";
         return `
           <div class="stamp-card${unlocked ? " is-unlocked" : ""}">
-            <span class="stamp-mark${unlocked && name === 'kashgar' ? ' has-seal' : ''}">${mark}</span>
+            <span class="stamp-mark${unlocked && story.seal ? ' has-seal' : ''}">${mark}</span>
             <span class="stamp-name">${title}</span>
             <span class="stamp-line">${line}</span>
           </div>

@@ -368,6 +368,14 @@ body.chengde-complete .story-point[data-story="chengde"] .complete {
   display: block;
 }
 
+body.yangguan-complete .story-point[data-story="yangguan"] .unread {
+  display: none;
+}
+
+body.yangguan-complete .story-point[data-story="yangguan"] .complete {
+  display: block;
+}
+
 .dujiangyan-memory {
   opacity: 0;
   transition: opacity 1.3s ease .15s;
@@ -1043,8 +1051,8 @@ body.is-returning .reveal-receipt {
   }
 
   .china-map {
-    inset: 0 auto 0 -73%;
-    width: 180%;
+    inset: 0 auto 0 -30%;
+    width: 150%;
   }
 
   .chapter-preview {
@@ -1184,3 +1192,8 @@ body[data-language="en"] .chapter-preview > p[data-copy="preview-text"] { font-s
 .stamp-mark.has-seal img { display: block; width: 52px; height: 52px; }
 
 .stamp-overlay[hidden] { display: none; }
+
+/* 阳关雪: the drawn seal stays on the map after reading, as with Kashgar. */
+.yangguan-memory { opacity: 0; pointer-events: none; transition: opacity 1.3s; }
+body.yangguan-complete .yangguan-memory { opacity: .87; }
+body.is-returning[data-returning-story="yangguan"] .yangguan-memory image { transform-box: fill-box; transform-origin: center; animation: kashgar-imprint 2s .3s both; }
