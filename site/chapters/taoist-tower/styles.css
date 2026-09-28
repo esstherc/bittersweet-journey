@@ -532,7 +532,7 @@ body[data-reading-level="4"] .departure-route {
   body[data-language="zh"]:not([data-reading-level="1"]) .geo-place { font-size: 20px; }
   body[data-language="zh"]:not([data-reading-level="1"]) .grave-name { font-size: 17px; }
   body[data-language="en"]:not([data-reading-level="1"]) .geo-place { font-size: 16px; }
-  body[data-language="en"]:not([data-reading-level="1"]) .grave-name { font-size: 13px; }
+  body[data-language="en"]:not([data-reading-level="1"]) .grave-name { font-size: 14px; }
   .china-projection-label { display: none; }
   body:not([data-reading-level="1"]) :is(.geo-note, .person-mini) { font-size: 16px; }
   body:not([data-reading-level="1"]) :is(.geo-legend, .projection-label) { font-size: 16px; }

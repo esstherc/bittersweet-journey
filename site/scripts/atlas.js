@@ -44,6 +44,42 @@
       },
       seal: "./chapters/yangguan/assets/seal-yangguan.svg"
     },
+    "mogao-caves": {
+      storageKey: "bittersweet-journey:mogao-caves:complete",
+      href: "./chapters/mogao-caves/index.html?from=atlas",
+      number: 6,
+      title: { zh: "莫高窟", en: "Mogao Caves" },
+      preview: {
+        zh: "为什么打得你死我活的各方，都愿意为这里做一点好事？",
+        en: "Why would factions locked in life-and-death struggles all do a good deed for this place?"
+      },
+      unrevealedEnter: { zh: "走进洞窟", en: "Enter the caves" },
+      enter: { zh: "再进莫高窟", en: "Return to the caves" },
+      receipt: {
+        mark: "窟",
+        zh: "千年不枯的笑容，延伸到整个世界。",
+        en: "A smile that has not withered for a thousand years, reaching across the world."
+      },
+      seal: "./chapters/mogao-caves/assets/seal-mogao-caves.svg"
+    },
+    "fish-tail-lodge": {
+      storageKey: "bittersweet-journey:fish-tail-lodge:complete",
+      href: "./chapters/fish-tail-lodge/index.html?from=atlas",
+      number: 11,
+      title: { zh: "鱼尾山屋", en: "Fish Tail Lodge" },
+      preview: {
+        zh: "走遍古文明的遗址之后，为什么要在喜马拉雅山脚下回望中国？",
+        en: "After walking the ruins of the ancient civilizations, why look back at China from the foot of the Himalayas?"
+      },
+      unrevealedEnter: { zh: "推门看雪峰", en: "Open the door to the peaks" },
+      enter: { zh: "回到鱼尾山屋", en: "Return to the lodge" },
+      receipt: {
+        mark: "归",
+        zh: "离开之后，才读懂了它。",
+        en: "I did not comprehend it until I was separated from it."
+      },
+      seal: "./chapters/fish-tail-lodge/assets/seal-fish-tail-lodge.svg"
+    },
     dujiangyan: {
       storageKey: "bittersweet-journey:dujiangyan:complete",
       href: "./chapters/dujiangyan/index.html?from=atlas",
@@ -59,7 +95,8 @@
         mark: "水",
         zh: "岷江的水，在这里成为成都平原。",
         en: "Here, the Min River becomes the Chengdu Plain."
-      }
+      },
+      seal: "./chapters/dujiangyan/assets/seal-dujiangyan.svg"
     },
     "secret-spring": {
       storageKey: "bittersweet-journey:secret-spring:complete",
@@ -75,7 +112,8 @@
         mark: "泉",
         zh: "鸣沙山后，一弯清泉留在了地图上。",
         en: "Beyond Mingsha Mountain, a crescent of water remains on the map."
-      }
+      },
+      seal: "./chapters/secret-spring/assets/seal-secret-spring.svg"
     },
     "taoist-tower": {
       storageKey: "bittersweet-journey:taoist-tower:complete",
@@ -91,7 +129,8 @@
         mark: "空",
         zh: "洞窟留在敦煌，文字走向世界。",
         en: "The cave remains in Dunhuang. Its words travel the world."
-      }
+      },
+      seal: "./chapters/taoist-tower/assets/seal-taoist-tower.svg"
     },
     chengde: {
       storageKey: "bittersweet-journey:mountain-resort:complete",
@@ -107,7 +146,8 @@
         mark: "影",
         zh: "王朝退场后，山水仍坐在原处。",
         en: "After the dynasty recedes, the mountains and water remain seated."
-      }
+      },
+      seal: "./chapters/mountain-resort/assets/seal-mountain-resort.svg"
     }
   };
   const body = document.body;
@@ -135,8 +175,11 @@
   const chapterTotal = CHAPTER_PLAN.length;
 
   const DISPLAY_OFFSETS = {
-    "taoist-tower": { x: 65, y: -58 },
-    yangguan: { x: -58, y: 52 }
+    // spread far enough for 10pt labels (map-guidance M-2), each in its real direction from Dunhuang
+    "taoist-tower": { x: 88, y: -74 },
+    yangguan: { x: -80, y: 70 },
+    // the Mogao Caves lie 17 km south-east of Dunhuang: drawn toward the south-east
+    "mogao-caves": { x: 84, y: 74 }
   };
 
   function applyRealGeography() {
@@ -170,11 +213,12 @@
       yangguan: [235, 304],
       "secret-spring": [286, 272],
       "taoist-tower": [314, 245],
+      "mogao-caves": [300, 300],
       dujiangyan: [455, 476],
       chengde: [856, 252],
     };
     Object.entries(originalAnchors).forEach(([name, [x, y]]) => {
-      const geographyName = ["secret-spring", "taoist-tower"].includes(name) ? "dunhuang" : name;
+      const geographyName = ["secret-spring", "taoist-tower", "mogao-caves"].includes(name) ? "dunhuang" : name;
       const point = geography.places[geographyName];
       const group = document.querySelector(`[data-story="${name}"]`);
       if (!group) return;
@@ -187,22 +231,9 @@
       );
     });
 
-    const labelOffsets = {
-      yangguan: [-8, 4],
-      "secret-spring": [14, -28],
-    };
-    Object.entries(labelOffsets).forEach(([name, [x, y]]) => {
-      document.querySelectorAll(`[data-story="${name}"] text`).forEach((label) => {
-        label.setAttribute("transform", `translate(${x} ${y})`);
-      });
-    });
-
     const silk = document.querySelector(".silk-road");
     const southwest = document.querySelector(".tea-road");
     const kashgar = geography.places.kashgar;
-    document.querySelector('.kashgar-memory').setAttribute('transform', `translate(${kashgar.x} ${kashgar.y})`);
-    const yangguan = geography.places.yangguan;
-    document.querySelector('.yangguan-memory').setAttribute('transform', `translate(${yangguan.x + DISPLAY_OFFSETS.yangguan.x} ${yangguan.y + DISPLAY_OFFSETS.yangguan.y})`);
     const dunhuang = geography.places.dunhuang;
     const dujiangyan = geography.places.dujiangyan;
     silk.setAttribute(
@@ -213,49 +244,233 @@
       "d",
       `M${dujiangyan.x - 116},${dujiangyan.y + 96}C${dujiangyan.x - 78},${dujiangyan.y + 44} ${dujiangyan.x - 28},${dujiangyan.y + 28} ${dujiangyan.x},${dujiangyan.y}`
     );
+  }
 
-    const chengdu = geography.places.chengdu;
-    document.querySelector("#memory-source").setAttribute("d", geography.secondary.min);
-    document.querySelector("#memory-line-main").setAttribute(
-      "d",
-      `M${dujiangyan.x},${dujiangyan.y}C${dujiangyan.x + 1},${dujiangyan.y + 2} ${chengdu.x - 2},${chengdu.y - 1} ${chengdu.x},${chengdu.y}`
-    );
-    document.querySelector("#memory-line-a").setAttribute(
-      "d",
-      `M${dujiangyan.x + 2},${dujiangyan.y + 3}C${dujiangyan.x + 15},${dujiangyan.y - 3} ${dujiangyan.x + 30},${dujiangyan.y - 1} ${dujiangyan.x + 45},${dujiangyan.y + 4}`
-    );
-    document.querySelector("#memory-line-b").setAttribute(
-      "d",
-      `M${dujiangyan.x + 3},${dujiangyan.y + 5}C${dujiangyan.x + 18},${dujiangyan.y + 8} ${dujiangyan.x + 33},${dujiangyan.y + 14} ${dujiangyan.x + 50},${dujiangyan.y + 19}`
-    );
-    document.querySelector("#memory-line-c").setAttribute(
-      "d",
-      `M${dujiangyan.x + 2},${dujiangyan.y + 5}C${dujiangyan.x + 11},${dujiangyan.y + 15} ${dujiangyan.x + 22},${dujiangyan.y + 25} ${dujiangyan.x + 37},${dujiangyan.y + 32}`
-    );
-    document.querySelector("#plain-memory").setAttribute(
-      "d",
-      `M${chengdu.x - 15},${chengdu.y - 12}C${chengdu.x + 12},${chengdu.y - 18} ${chengdu.x + 48},${chengdu.y - 2} ${chengdu.x + 53},${chengdu.y + 21}C${chengdu.x + 23},${chengdu.y + 38} ${chengdu.x - 10},${chengdu.y + 23} ${chengdu.x - 15},${chengdu.y - 12}Z`
-    );
-    document.querySelector("#chengdu-dot").setAttribute("cx", chengdu.x);
-    document.querySelector("#chengdu-dot").setAttribute("cy", chengdu.y);
-    ["cn", "en"].forEach((language, index) => {
-      const label = document.querySelector(`#chengdu-label-${language}`);
-      label.setAttribute("x", chengdu.x + 11);
-      label.setAttribute("y", chengdu.y + 4 + index * 15);
+  /* ---------- labels and seals on the map (docs/map-guidance.md §5-6, homepage setup M-6, M-7) ---------- */
+
+  // Homepage type setup (M-6), in screen px: wider than 900 px / 900 px and below. Never below 10pt (13.5 px).
+  const HOME_TYPE = { clue: [22, 18], number: [16, 14], context: [16, 14], seal: [36, 30] };
+  const mapSvg = document.querySelector(".china-map");
+  const sealLayer = document.querySelector(".chapter-seals");
+  const svgNS = "http://www.w3.org/2000/svg";
+  // one image seal per chapter that has one, shown once the chapter is read
+  const seals = Object.fromEntries(Object.entries(STORIES).filter(([, story]) => story.seal).map(([name, story]) => {
+    const image = document.createElementNS(svgNS, "image");
+    image.setAttribute("href", story.seal);
+    image.setAttribute("class", "chapter-seal");
+    image.dataset.seal = name; // not data-story: that selects the chapter dots
+    sealLayer.appendChild(image);
+    return [name, image];
+  }));
+
+  const shownElement = (node) => Boolean(node) && window.getComputedStyle(node).display !== "none";
+  const boxOverlap = (a, b) =>
+    Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left)) * Math.max(0, Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top));
+  const distanceToBox = (x, y, b) => Math.hypot(Math.max(b.left - x, 0, x - b.right), Math.max(b.top - y, 0, y - b.bottom));
+  const translation = (node) => {
+    const match = /translate\(([-\d.]+)[ ,]+([-\d.]+)\)/.exec(node.getAttribute("transform") || "");
+    return match ? [Number(match[1]), Number(match[2])] : [0, 0];
+  };
+
+  function layoutAtlas() {
+    const ctm = mapSvg.getScreenCTM();
+    const frame = mapSvg.getBoundingClientRect();
+    if (!ctm || !frame.width) return;
+    const scale = Math.hypot(ctm.a, ctm.b);
+    const phone = window.innerWidth <= 900 ? 1 : 0; // the whole map fits a narrow screen, so its labels are smaller
+    const unit = (px) => Math.max(px, 13.5) / scale; // screen px to map units, never under 10pt
+    const size = { clue: unit(HOME_TYPE.clue[phone]), number: unit(HOME_TYPE.number[phone]), context: unit(HOME_TYPE.context[phone]) };
+    const toMap = (x, y) => ({ x: (x - ctm.e) / ctm.a, y: (y - ctm.f) / ctm.d });
+
+    // the part of the map a reader can see (the whole map when it scrolls sideways on a phone)
+    const stage = document.querySelector(".atlas-map-stage");
+    const stageBox = stage.getBoundingClientRect();
+    const scrolls = stage.scrollWidth > stage.clientWidth + 1;
+    const topLeft = toMap(scrolls ? frame.left : Math.max(frame.left, stageBox.left), Math.max(frame.top, stageBox.top));
+    const bottomRight = toMap(scrolls ? frame.right : Math.min(frame.right, stageBox.right), Math.min(frame.bottom, stageBox.bottom));
+    const margin = 6 / scale;
+    const area = { left: topLeft.x + margin, right: bottomRight.x - margin, top: topLeft.y + margin, bottom: bottomRight.y - margin };
+
+    // H0: the heading and call-out float over the map on wide screens (L-7)
+    const taken = [];
+    [".atlas-intro h1", ".cta-callout"].forEach((selector) => {
+      const node = document.querySelector(selector);
+      if (!shownElement(node)) return;
+      const b = node.getBoundingClientRect();
+      if (!b.width) return;
+      const a = toMap(b.left - 4, b.top - 4), c = toMap(b.right + 4, b.bottom + 4);
+      taken.push({ left: a.x, right: c.x, top: a.y, bottom: c.y });
     });
 
-    document.querySelector(".secret-spring-memory").setAttribute(
-      "transform",
-      `translate(${dunhuang.x} ${dunhuang.y})`
-    );
-    document.querySelector(".taoist-tower-memory").setAttribute(
-      "transform",
-      `translate(${dunhuang.x + 65} ${dunhuang.y - 58})`
-    );
-    document.querySelector(".chengde-memory").setAttribute(
-      "transform",
-      `translate(${geography.places.chengde.x} ${geography.places.chengde.y})`
-    );
+    // every dot takes its place before any label (L-10)
+    const points = [...document.querySelectorAll(".story-point")].map((group) => {
+      const [tx, ty] = translation(group);
+      const core = group.querySelector(".point-core").getBBox();
+      const extra = group.querySelector(".point-archive-mark");
+      let r = Math.max(core.width, core.height) / 2;
+      if (shownElement(extra)) {
+        // the symbol includes its mark (道士塔's cave door): labels sit clear of the whole symbol
+        const m = extra.getBBox(), ccx = core.x + core.width / 2, ccy = core.y + core.height / 2;
+        r = Math.max(r, ccx - m.x, m.x + m.width - ccx, ccy - m.y, m.y + m.height - ccy);
+      }
+      return {
+        group, name: group.dataset.story, tx, ty, r,
+        cx: core.x + core.width / 2 + tx, cy: core.y + core.height / 2 + ty,
+        clues: [...group.querySelectorAll(".point-clue")],
+        number: group.querySelector(".point-number"),
+        mark: group.querySelector(".point-archive-mark")
+      };
+    });
+    points.forEach((p) => {
+      const pad = 2 / scale;
+      taken.push({ left: p.cx - p.r - pad, right: p.cx + p.r + pad, top: p.cy - p.r - pad, bottom: p.cy + p.r + pad });
+      if (shownElement(p.mark)) {
+        const m = p.mark.getBBox();
+        taken.push({ left: m.x + p.tx, right: m.x + m.width + p.tx, top: m.y + p.ty, bottom: m.y + m.height + p.ty });
+      }
+    });
+
+    // L-3: a spot is not clear when it is nearer another dot than its own, or nearer a labelled dot than that dot's label
+    const ownershipPenalty = (p, box, gap) => {
+      const own = distanceToBox(p.cx, p.cy, box);
+      return points.reduce((sum, q) => {
+        if (q === p) return sum;
+        const d = distanceToBox(q.cx, q.cy, box);
+        if (d < own + gap) sum += 500;
+        if (q.labelBox && d < distanceToBox(q.cx, q.cy, q.labelBox)) sum += 500;
+        return sum;
+      }, 0);
+    };
+    const cost = (box) => {
+      const outside = Math.max(0, area.left - box.left) + Math.max(0, box.right - area.right) +
+        Math.max(0, area.top - box.top) + Math.max(0, box.bottom - area.bottom);
+      return outside * 1000 + taken.reduce((sum, other) => sum + boxOverlap(box, other), 0);
+    };
+
+    // The chapter labels (H1 on this map: they are the page's controls). Each tries #1-#5 (L-4); the positions are
+    // searched together, most crowded dots first (H-2), so one long label cannot shut a neighbour out. If no
+    // arrangement is fully clear, each label falls back to its least-crowded spot.
+    const crowding = (p) => points.filter((q) => q !== p && Math.hypot(q.cx - p.cx, q.cy - p.cy) < 90).length;
+    const labelled = [...points].sort((a, b) => crowding(b) - crowding(a)).filter((p) => p.clues.some(shownElement));
+    labelled.forEach((p) => {
+      const clue = p.clues.find(shownElement);
+      p.clues.forEach((node) => { node.style.fontSize = `${size.clue.toFixed(2)}px`; });
+      p.number.style.fontSize = `${size.number.toFixed(2)}px`;
+      const w = Math.max(clue.getComputedTextLength(), p.number.getComputedTextLength());
+      // line heights from the fonts themselves (the English face has taller line boxes)
+      const metrics = (node) => { node.setAttribute("y", "0"); const b = node.getBBox(); return { ascent: -b.y, height: b.height }; };
+      const numberLine = metrics(p.number), clueLine = metrics(clue);
+      const h = numberLine.height + clueLine.height;
+      const gap = size.clue * 0.25, lift = size.clue * 0.1;
+      const { cx, cy, r } = p;
+      // [text-anchor, block left, block top]: #1 右上, #2 右下, #2 左上, #3 左下, #4 正上, #5 正下
+      p.candidates = [
+        ["start", cx + r + gap, cy - lift - h], ["start", cx + r + gap, cy + lift],
+        ["end", cx - r - gap - w, cy - lift - h], ["end", cx - r - gap - w, cy + lift],
+        ["middle", cx - w / 2, cy - r - gap - h], ["middle", cx - w / 2, cy + r + gap]
+      ].map(([anchor, x, y]) => {
+        const box = { left: x, right: x + w, top: y, bottom: y + h };
+        return { anchor, x, y, w, box, fixed: cost(box) };
+      });
+      p.gap = gap;
+      p.lines = { number: numberLine, clue: clueLine };
+    });
+    const clash = (p, candidate) => labelled.reduce((sum, q) => (q.labelBox ? sum + boxOverlap(candidate.box, q.labelBox) : sum), 0) +
+      ownershipPenalty(p, candidate.box, p.gap);
+    let budget = 40000;
+    const search = (index) => {
+      if (index === labelled.length) return true;
+      const p = labelled[index];
+      for (const candidate of p.candidates) {
+        if (--budget < 0) return false;
+        if (candidate.fixed > 0 || clash(p, candidate) > 0) continue;
+        p.labelBox = candidate.box;
+        p.chosen = candidate;
+        if (search(index + 1)) return true;
+        p.labelBox = null;
+      }
+      return false;
+    };
+    labelled.forEach((p) => { p.labelBox = null; p.chosen = null; });
+    const clear = search(0);
+    // recorded for the map checks (docs/map-guidance.md §10): "clear", or the dots with no clear spot of their own
+    mapSvg.dataset.labelLayout = clear ? "clear" : "fallback: " + labelled.filter((p) => p.candidates.every((c) => c.fixed > 0)).map((p) => p.name).join(" ");
+    if (!clear) {
+      labelled.forEach((p) => { p.labelBox = null; p.chosen = null; });
+      labelled.forEach((p) => {
+        p.chosen = p.candidates.reduce((best, c) => {
+          const total = c.fixed + clash(p, c);
+          return !best || total < best.total ? { ...c, total } : best;
+        }, null);
+        p.labelBox = p.chosen.box;
+      });
+    }
+    labelled.forEach((p) => {
+      const best = p.chosen;
+      const textX = best.anchor === "start" ? best.x : best.anchor === "end" ? best.x + best.w : best.x + best.w / 2;
+      const put = (node, baseline) => {
+        node.removeAttribute("transform");
+        node.setAttribute("text-anchor", best.anchor);
+        node.setAttribute("x", (textX - p.tx).toFixed(1));
+        node.setAttribute("y", (baseline - p.ty).toFixed(1));
+      };
+      p.clues.forEach((node) => put(node, best.y + p.lines.number.height + p.lines.clue.ascent));
+      put(p.number, best.y + p.lines.number.ascent);
+      taken.push(best.box);
+    });
+
+    // M-7: each read chapter's seal next to its dot: #3 左下, #5 正下, #2 右下, #2 左上, #4 正上, #1 右上
+    const sealSize = HOME_TYPE.seal[phone] / scale;
+    points.forEach((p) => {
+      const seal = seals[p.name];
+      if (!seal) return;
+      if (!state.complete[p.name]) { seal.classList.remove("is-shown"); return; }
+      const gap = 4 / scale, { cx, cy, r } = p;
+      const spots = [
+        [cx - r - gap - sealSize, cy + gap], [cx - sealSize / 2, cy + r + gap], [cx + r + gap, cy + gap],
+        [cx - r - gap - sealSize, cy - gap - sealSize], [cx - sealSize / 2, cy - r - gap - sealSize], [cx + r + gap, cy - gap - sealSize]
+      ];
+      const found = spots.map(([x, y]) => ({ x, y, box: { left: x, right: x + sealSize, top: y, bottom: y + sealSize } }))
+        .find((spot) => cost(spot.box) === 0);
+      seal.classList.toggle("is-shown", Boolean(found));
+      if (!found) return;
+      ["x", "y"].forEach((key) => seal.setAttribute(key, found[key].toFixed(1)));
+      seal.setAttribute("width", sealSize.toFixed(1));
+      seal.setAttribute("height", sealSize.toFixed(1));
+      taken.push(found.box);
+    });
+
+    // H5: river and road names along their lines; a name with no clear spot is left out (L-8)
+    const routeLabels = [...document.querySelectorAll(".ancient-routes .route-label")];
+    [
+      { path: document.querySelector("#global-yellow"), labels: [...document.querySelectorAll(".yellow-river .map-text")] },
+      { path: document.querySelector("#global-yangtze"), labels: [...document.querySelectorAll(".yangtze-river .map-text")] },
+      { path: document.querySelector(".silk-road"), labels: routeLabels.slice(0, 2) },
+      { path: document.querySelector(".tea-road"), labels: routeLabels.slice(2, 4) }
+    ].forEach(({ path, labels }) => {
+      const label = labels.find(shownElement);
+      labels.forEach((node) => { node.style.fontSize = `${size.context.toFixed(2)}px`; node.setAttribute("text-anchor", "middle"); });
+      if (!label || !path || !path.getTotalLength) return;
+      const length = path.getTotalLength();
+      const width = label.getComputedTextLength();
+      const placed = [0.5, 0.6, 0.4, 0.7, 0.3, 0.8, 0.2, 0.9, 0.1].some((t) => {
+        const point = path.getPointAtLength(length * t);
+        const baseline = point.y - size.context * 0.4;
+        const box = { left: point.x - width / 2, right: point.x + width / 2, top: baseline - size.context * 0.9, bottom: baseline + size.context * 0.25 };
+        const nearDot = points.some((q) => distanceToBox(q.cx, q.cy, box) < Math.max(size.context, q.labelBox ? distanceToBox(q.cx, q.cy, q.labelBox) : 0));
+        if (cost(box) > 0 || nearDot) return false;
+        labels.forEach((node) => { node.setAttribute("x", point.x.toFixed(1)); node.setAttribute("y", baseline.toFixed(1)); });
+        taken.push(box);
+        return true;
+      });
+      labels.forEach((node) => { node.style.visibility = placed ? "" : "hidden"; });
+    });
+  }
+  let layoutQueued = false;
+  function scheduleLayout() {
+    if (layoutQueued) return;
+    layoutQueued = true;
+    window.requestAnimationFrame(() => { layoutQueued = false; layoutAtlas(); });
   }
 
   const copy = {
@@ -268,6 +483,8 @@
       "map-aria": "未完全显影的中国故事地图",
       "point-kashgar-aria": "西域喀什，尚未接入",
       "point-yangguan-aria": "进入阳关雪",
+      "point-fish-tail-lodge-aria": "进入鱼尾山屋",
+      "point-mogao-caves-aria": "进入莫高窟",
       "point-secret-spring-aria": "进入沙原隐泉",
       "point-taoist-tower-aria": "进入道士塔",
       "point-dujiangyan-aria": "进入都江堰",
@@ -299,6 +516,8 @@
       "map-aria": "A partly revealed story map of China",
       "point-kashgar-aria": "Western Regions, Kashgar — not yet available",
       "point-yangguan-aria": "Enter Snow on the Southern Pass",
+      "point-fish-tail-lodge-aria": "Enter Fish Tail Lodge",
+      "point-mogao-caves-aria": "Enter the Mogao Caves",
       "point-secret-spring-aria": "Enter A Secret Spring in the Sand",
       "point-taoist-tower-aria": "Enter The Taoist Priest’s Tower",
       "point-dujiangyan-aria": "Enter Dujiangyan",
@@ -543,6 +762,8 @@
     body.classList.toggle("chengde-complete", state.complete.chengde);
     body.classList.toggle("kashgar-complete", state.complete.kashgar);
     body.classList.toggle("yangguan-complete", state.complete.yangguan);
+    body.classList.toggle("fish-tail-lodge-complete", state.complete["fish-tail-lodge"]);
+    body.classList.toggle("mogao-caves-complete", state.complete["mogao-caves"]);
     document.querySelector('[data-story="kashgar"]').setAttribute('aria-label', state.complete.kashgar ? (state.language === 'zh' ? '进入西域喀什' : 'Enter Kashgar') : STORIES.kashgar.clue[state.language]);
     availablePoints.forEach(point => {
       const name = point.dataset.story;
@@ -553,6 +774,7 @@
     document.querySelector(".progress-count").textContent = String(count).padStart(2, "0");
     body.classList.toggle("all-revealed", count === chapterTotal);
     renderStampGrid();
+    scheduleLayout();
   }
 
   function renderStampGrid() {
@@ -671,7 +893,12 @@
   });
   window.addEventListener("resize", () => {
     if (anchorPoint && preview.classList.contains("is-visible")) positionPreview(anchorPoint);
+    scheduleLayout();
   });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(scheduleLayout);
+  // the map zooms in when the page opens: lay the labels out again once it has settled
+  mapSvg.addEventListener("transitionend", (event) => { if (event.target === mapSvg) scheduleLayout(); });
+  [800, 1600, 3000].forEach((delay) => window.setTimeout(scheduleLayout, delay));
 
   document.querySelectorAll(".story-point.quiet").forEach((point) => {
     point.addEventListener("click", showUnavailable);
@@ -705,13 +932,25 @@
     renderPreview();
   });
 
+  // On a phone the map is wider than the screen and scrolls sideways: start centred on the chapter dots.
+  function centreMapOnPoints() {
+    const stage = document.querySelector(".atlas-map-stage");
+    if (!stage || stage.scrollWidth <= stage.clientWidth) return;
+    const cores = [...document.querySelectorAll(".story-point .point-core")].map((core) => core.getBoundingClientRect());
+    const left = Math.min(...cores.map((r) => r.left)), right = Math.max(...cores.map((r) => r.right));
+    const frame = stage.getBoundingClientRect();
+    stage.scrollLeft += (left + right) / 2 - (frame.left + frame.width / 2);
+  }
+
   applyRealGeography();
+  window.requestAnimationFrame(centreMapOnPoints);
   renderLanguage();
   renderProgress();
   if (pageParams.get("stamps") === "1") openStampModal();
 
   if (STORIES[returning] && state.complete[returning]) {
     renderReceipt(returning);
+    seals[returning]?.classList.add("is-returning");
     body.dataset.returningStory = returning;
     body.classList.add("is-returning");
     window.history.replaceState({}, "", "./index.html");

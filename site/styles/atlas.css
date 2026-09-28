@@ -75,7 +75,7 @@ button { font: inherit; }
   margin: 22px 0 0;
   padding: 12px 16px;
   border: 1px solid rgba(157, 61, 49, .38);
-  background: rgba(157, 61, 49, .07);
+  background: rgba(250, 247, 240, .94);
   transition: opacity .4s ease, transform .4s ease;
 }
 
@@ -96,14 +96,14 @@ button { font: inherit; }
 
 .cta-text strong {
   color: var(--seal);
-  font: 700 11px var(--label);
+  font: 700 13.5px var(--label);
   font-style: normal;
   letter-spacing: .1em;
 }
 
 .cta-text em {
   color: var(--ink-soft);
-  font: 10px var(--label);
+  font: 13.5px var(--label);
   font-style: normal;
   letter-spacing: .07em;
 }
@@ -158,18 +158,6 @@ body[data-language="en"] .atlas-intro .question-accent::before {
     opacity .7s ease;
 }
 
-.terrain-washes path { opacity: .13; }
-.tibet-wash { fill: var(--moss); }
-.gobi-wash { fill: var(--sand); }
-.north-wash { fill: #7f8274; }
-.south-wash { fill: #688176; }
-
-.mountain-traces {
-  fill: none;
-  stroke: rgba(50, 56, 48, .18);
-  stroke-width: 1.2;
-}
-
 .river-skeleton path {
   fill: none;
   stroke: rgba(52, 93, 110, .44);
@@ -189,14 +177,8 @@ body.dujiangyan-complete .secondary-rivers path[data-river="min"] {
   opacity: .58;
 }
 
-.grand-canal path {
-  stroke-width: 1.8;
-  stroke-dasharray: 3 6;
-}
-
 .map-text,
-.route-label,
-.memory-label {
+.route-label {
   fill: var(--ink-soft);
   font-family: var(--cn);
   font-size: 16px;
@@ -208,8 +190,7 @@ body.dujiangyan-complete .secondary-rivers path[data-river="min"] {
 }
 
 .map-text.en,
-.route-label.en,
-.memory-label.en {
+.route-label.en {
   font-family: var(--label);
   font-size: 12px;
   letter-spacing: .16em;
@@ -326,14 +307,6 @@ body[data-language="en"] [lang="zh"] {
   opacity: .34;
 }
 
-.story-point.primary .point-clue.unread {
-  text-anchor: end;
-}
-
-.story-point.primary .complete-location {
-  text-anchor: end;
-}
-
 .story-point .complete { display: none; }
 
 body.dujiangyan-complete .story-point[data-story="dujiangyan"] .unread {
@@ -376,179 +349,20 @@ body.yangguan-complete .story-point[data-story="yangguan"] .complete {
   display: block;
 }
 
-.dujiangyan-memory {
-  opacity: 0;
-  transition: opacity 1.3s ease .15s;
+body.mogao-caves-complete .story-point[data-story="mogao-caves"] .unread {
+  display: none;
 }
 
-body.dujiangyan-complete .dujiangyan-memory { opacity: 1; }
-
-.memory-source,
-.memory-line {
-  fill: none;
-  stroke: var(--water);
-  stroke-width: 5;
-  stroke-linecap: round;
-  stroke-dasharray: 320;
-  stroke-dashoffset: 320;
+body.mogao-caves-complete .story-point[data-story="mogao-caves"] .complete {
+  display: block;
 }
 
-.memory-line { stroke-width: 3; }
-.memory-line.fine { stroke-width: 1.3; }
-
-body.dujiangyan-complete .memory-source,
-body.dujiangyan-complete .memory-line {
-  animation: memory-draw 2.1s ease forwards;
+body.fish-tail-lodge-complete .story-point[data-story="fish-tail-lodge"] .unread {
+  display: none;
 }
 
-@keyframes memory-draw { to { stroke-dashoffset: 0; } }
-
-.plain-memory {
-  fill: url("#plain-wash");
-  opacity: 0;
-}
-
-body.dujiangyan-complete .plain-memory {
-  animation: plain-bloom 1.6s ease 1s forwards;
-}
-
-@keyframes plain-bloom { to { opacity: 1; } }
-
-.chengdu-dot {
-  fill: var(--seal);
-}
-
-.memory-label {
-  fill: var(--water);
-  font-size: 14px;
-}
-
-.secret-spring-memory {
-  opacity: 0;
-  transition: opacity 1.3s ease .15s;
-}
-
-body.secret-spring-complete .secret-spring-memory {
-  opacity: 1;
-}
-
-.memory-dune {
-  fill: none;
-  stroke: rgba(117, 86, 49, .6);
-  stroke-width: 1.3;
-  stroke-dasharray: 140;
-  stroke-dashoffset: 140;
-}
-
-.memory-crescent {
-  fill: rgba(52, 93, 110, .26);
-  stroke: var(--water);
-  stroke-width: 1;
-  opacity: 0;
-}
-
-body.secret-spring-complete .memory-dune {
-  animation: memory-draw 1.8s ease forwards;
-}
-
-body.secret-spring-complete .memory-crescent {
-  animation: plain-bloom 1.1s ease .8s forwards;
-}
-
-.secret-spring-memory .memory-label {
-  opacity: 0;
-  font-size: 12px;
-  letter-spacing: .08em;
-}
-
-body.secret-spring-complete .secret-spring-memory .memory-label {
-  animation: plain-bloom .8s ease 1.1s forwards;
-}
-
-.taoist-tower-memory {
-  opacity: 0;
-  transition: opacity 1.3s ease .15s;
-}
-
-body.taoist-tower-complete .taoist-tower-memory {
-  opacity: 1;
-}
-
-.archive-thread,
-.memory-stupa {
-  fill: none;
-  stroke: var(--seal);
-  stroke-width: 1;
-}
-
-.archive-thread {
-  stroke-dasharray: 4 7;
-  stroke-dashoffset: 190;
-}
-
-.archive-absence {
-  fill: rgba(236, 231, 219, .75);
-  stroke: var(--seal);
-  stroke-width: 1;
-  stroke-dasharray: 3 4;
-}
-
-.taoist-tower-memory .memory-label {
-  opacity: 0;
-  fill: var(--water);
-  font-size: 12px;
-}
-
-body.taoist-tower-complete .archive-thread {
-  animation: memory-draw 1.9s ease forwards;
-}
-
-body.taoist-tower-complete .memory-stupa,
-body.taoist-tower-complete .archive-absence,
-body.taoist-tower-complete .taoist-tower-memory .memory-label {
-  animation: plain-bloom .9s ease .85s both;
-}
-
-.chengde-memory {
-  opacity: 0;
-  transition: opacity 1.3s ease .15s;
-}
-
-body.chengde-complete .chengde-memory {
-  opacity: 1;
-}
-
-.memory-chair,
-.memory-gate,
-.memory-reflection {
-  fill: none;
-  stroke: var(--seal);
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.memory-chair {
-  stroke-width: 1.4;
-  stroke-dasharray: 180;
-  stroke-dashoffset: 180;
-}
-
-.memory-gate { stroke-width: 1.1; }
-.memory-reflection { stroke-width: .9; opacity: .55; }
-.chengde-memory .memory-label {
-  fill: var(--water);
-  font-size: 12px;
-  opacity: 0;
-}
-
-body.chengde-complete .memory-chair {
-  animation: memory-draw 1.9s ease forwards;
-}
-
-body.chengde-complete .memory-gate,
-body.chengde-complete .memory-reflection,
-body.chengde-complete .chengde-memory .memory-label {
-  animation: plain-bloom .9s ease .8s both;
+body.fish-tail-lodge-complete .story-point[data-story="fish-tail-lodge"] .complete {
+  display: block;
 }
 
 /* Chapter callout: placed next to the hovered dot by atlas.js (left/top, data-side, --tip). It takes no layout space. */
@@ -672,7 +486,7 @@ body.chengde-complete .chengde-memory .memory-label {
 .preview-index {
   margin: 0;
   color: var(--seal);
-  font: 8px var(--label);
+  font: 13.5px var(--label);
   letter-spacing: .16em;
 }
 
@@ -691,13 +505,13 @@ body[data-language="en"] .chapter-preview h2 {
 .chapter-preview > p:not(.preview-index) {
   margin: 0 0 12px;
   color: var(--ink-soft);
-  font-size: 11px;
+  font-size: 13.5px;
   line-height: 1.8;
   letter-spacing: .08em;
 }
 
 body[data-language="en"] .chapter-preview > p:not(.preview-index) {
-  font: 13px/1.55 var(--en);
+  font: 14px/1.55 var(--en);
   letter-spacing: 0;
 }
 
@@ -710,7 +524,7 @@ body[data-language="en"] .chapter-preview > p:not(.preview-index) {
   border: 0;
   border-bottom: 1px solid var(--ink);
   background: none;
-  font-size: 11px;
+  font-size: 13.5px;
   letter-spacing: .15em;
   cursor: pointer;
 }
@@ -730,7 +544,7 @@ body[data-language="en"] .chapter-preview > p:not(.preview-index) {
   padding: 10px 16px;
   color: var(--paper);
   background: var(--ink);
-  font-size: 10px;
+  font-size: 13.5px;
   letter-spacing: .14em;
   opacity: 0;
   transform: translate(-50%, 8px);
@@ -782,12 +596,12 @@ body.is-returning .reveal-receipt {
 .reveal-receipt p {
   margin: 0 0 5px;
   color: var(--seal);
-  font-size: 12px;
+  font-size: 14px;
   letter-spacing: .15em;
 }
 
 .reveal-receipt strong {
-  font-size: 11px;
+  font-size: 13.5px;
   font-weight: 400;
   letter-spacing: .07em;
 }
@@ -859,7 +673,7 @@ body.is-returning .reveal-receipt {
 .stamp-kicker {
   margin: 0 0 10px;
   color: var(--seal);
-  font: 600 11px var(--label);
+  font: 600 13.5px var(--label);
   letter-spacing: .16em;
 }
 
@@ -874,7 +688,7 @@ body.is-returning .reveal-receipt {
   max-width: 40em;
   margin: 0 0 6px;
   color: var(--ink-soft);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.8;
   letter-spacing: .06em;
 }
@@ -882,7 +696,7 @@ body.is-returning .reveal-receipt {
 .stamp-count {
   margin: 0 0 22px;
   color: var(--ink-soft);
-  font: 600 11px var(--label);
+  font: 600 13.5px var(--label);
   letter-spacing: .12em;
 }
 
@@ -921,18 +735,17 @@ body.is-returning .reveal-receipt {
 }
 
 .stamp-name {
-  font-size: 13px;
+  font-size: 14px;
   letter-spacing: .1em;
   color: var(--ink);
 }
 
 .stamp-card:not(.is-unlocked) .stamp-name {
   color: var(--ink-soft);
-  opacity: .6;
 }
 
 .stamp-line {
-  font-size: 10px;
+  font-size: 13.5px;
   line-height: 1.6;
   letter-spacing: .05em;
   color: var(--ink-soft);
@@ -940,7 +753,7 @@ body.is-returning .reveal-receipt {
 
 .stamp-card:not(.is-unlocked) .stamp-line {
   font-style: italic;
-  opacity: .55;
+  opacity: .9;
 }
 
 .view-stamps {
@@ -960,7 +773,7 @@ body.is-returning .reveal-receipt {
   border-top: 1px solid var(--line);
   background: rgba(236, 231, 219, .9);
   color: var(--ink-soft);
-  font: 11px var(--label);
+  font: 13.5px var(--label);
   letter-spacing: .07em;
 }
 
@@ -979,7 +792,6 @@ body.is-returning .reveal-receipt {
 
 @media (max-width: 900px) {
   body { overflow-y: auto; }
-
 
   .atlas-experience {
     height: auto;
@@ -1004,8 +816,8 @@ body.is-returning .reveal-receipt {
   }
 
   .china-map {
-    inset: 0 auto 0 -27%;
-    width: 123%;
+    inset: 0;
+    width: 100%;
     height: 100%;
   }
 
@@ -1015,7 +827,7 @@ body.is-returning .reveal-receipt {
     gap: 16px;
     height: 40px;
     padding: 0 18px;
-    font-size: 9px;
+    font-size: 13.5px;
   }
 
   .atlas-citation {
@@ -1050,9 +862,20 @@ body.is-returning .reveal-receipt {
     min-height: 480px;
   }
 
+  /* A phone keeps the map near the desktop scale, so its labels stay at 10pt without crowding,
+     and the map scrolls sideways (atlas.js starts it centred on the chapters). */
+  .atlas-map-stage {
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .atlas-map-stage::-webkit-scrollbar { display: none; }
+
   .china-map {
-    inset: 0 auto 0 -30%;
-    width: 150%;
+    inset: 0 auto 0 0;
+    width: 880px;
   }
 
   .chapter-preview {
@@ -1068,7 +891,7 @@ body.is-returning .reveal-receipt {
   body[data-language="en"] .chapter-preview h2 { font-size: 19px; }
 
   .reset-progress,
-  .view-stamps { font-size: 6px; }
+  .view-stamps { font-size: 13.5px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1102,7 +925,6 @@ body[data-language="en"] :is(
   .atlas-language,
   .map-text.en,
   .route-label.en,
-  .memory-label.en,
   .point-number,
   .point-clue.en,
   .preview-index,
@@ -1129,7 +951,7 @@ body[data-language="en"] :is(
 
 .preview-index,
 .unavailable-note {
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.4;
 }
 
@@ -1149,12 +971,12 @@ body[data-language="en"] .chapter-preview > p:not(.preview-index) {
 
 .reveal-receipt p,
 .reveal-receipt strong {
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.4;
 }
 
 .atlas-footer {
-  font-size: 12px;
+  font-size: 14px;
 }
 
 @media (max-width: 900px) {
@@ -1163,27 +985,25 @@ body[data-language="en"] .chapter-preview > p:not(.preview-index) {
   }
 
   .atlas-footer {
-    font-size: 12px;
+    font-size: 14px;
   }
 }
 
 @media (max-width: 520px) {
   .reset-progress,
   .view-stamps {
-    font-size: 12px;
+    font-size: 14px;
   }
 }
 
 /* Kashgar remains visible after reading. */
 body.kashgar-complete [data-story="kashgar"] .point-core { fill: var(--cinnabar, #944b39); r: 6px; }
 body.kashgar-complete [data-story="kashgar"] .point-glow { opacity: .3; }
-.kashgar-memory{opacity:0;pointer-events:none;transition:opacity 1.3s}
-body.kashgar-complete .kashgar-memory{opacity:.87}
+
 [data-story="kashgar"] .complete,body.kashgar-complete [data-story="kashgar"] .unread{display:none}
 body.kashgar-complete[data-language="zh"] [data-story="kashgar"] .complete.cn,body.kashgar-complete[data-language="en"] [data-story="kashgar"] .complete.en{display:block}
-body.is-returning[data-returning-story="kashgar"] .kashgar-memory image{transform-origin:14px 49px;animation:kashgar-imprint 2s .3s both}
+
 .receipt-mark.has-seal{border:0;background:none;flex-shrink:0}.receipt-mark.has-seal img{width:50px;height:50px;display:block}
-@keyframes kashgar-imprint{from{opacity:0;transform:scale(1.22);filter:blur(6px)}to{opacity:1;transform:scale(1);filter:blur(0)}}
 
 /* Homepage previews contain only a question and its invitation. */
 .chapter-preview > p[data-copy="preview-text"] { font-size: 17px; line-height: 1.75; letter-spacing: .025em; margin: 0 0 22px; }
@@ -1194,6 +1014,59 @@ body[data-language="en"] .chapter-preview > p[data-copy="preview-text"] { font-s
 .stamp-overlay[hidden] { display: none; }
 
 /* 阳关雪: the drawn seal stays on the map after reading, as with Kashgar. */
-.yangguan-memory { opacity: 0; pointer-events: none; transition: opacity 1.3s; }
-body.yangguan-complete .yangguan-memory { opacity: .87; }
-body.is-returning[data-returning-story="yangguan"] .yangguan-memory image { transform-box: fill-box; transform-origin: center; animation: kashgar-imprint 2s .3s both; }
+
+/* A read chapter's dot settles like Kashgar's: a larger, still cinnabar dot, no pulse. */
+body.dujiangyan-complete [data-story="dujiangyan"] .point-core,
+body.secret-spring-complete [data-story="secret-spring"] .point-core,
+body.taoist-tower-complete [data-story="taoist-tower"] .point-core,
+body.chengde-complete [data-story="chengde"] .point-core,
+body.yangguan-complete [data-story="yangguan"] .point-core,
+body.fish-tail-lodge-complete [data-story="fish-tail-lodge"] .point-core,
+body.mogao-caves-complete [data-story="mogao-caves"] .point-core {
+  fill: var(--cinnabar, #944b39);
+  r: 6px;
+}
+body.dujiangyan-complete [data-story="dujiangyan"] .point-glow,
+body.secret-spring-complete [data-story="secret-spring"] .point-glow,
+body.taoist-tower-complete [data-story="taoist-tower"] .point-glow,
+body.chengde-complete [data-story="chengde"] .point-glow,
+body.yangguan-complete [data-story="yangguan"] .point-glow,
+body.fish-tail-lodge-complete [data-story="fish-tail-lodge"] .point-glow,
+body.mogao-caves-complete [data-story="mogao-caves"] .point-glow {
+  opacity: .3;
+}
+body.dujiangyan-complete [data-story="dujiangyan"] .point-pulse,
+body.secret-spring-complete [data-story="secret-spring"] .point-pulse,
+body.taoist-tower-complete [data-story="taoist-tower"] .point-pulse,
+body.chengde-complete [data-story="chengde"] .point-pulse,
+body.yangguan-complete [data-story="yangguan"] .point-pulse,
+body.fish-tail-lodge-complete [data-story="fish-tail-lodge"] .point-pulse,
+body.dujiangyan-complete [data-story="dujiangyan"] .point-orbit,
+body.secret-spring-complete [data-story="secret-spring"] .point-orbit,
+body.taoist-tower-complete [data-story="taoist-tower"] .point-orbit,
+body.chengde-complete [data-story="chengde"] .point-orbit,
+body.yangguan-complete [data-story="yangguan"] .point-orbit,
+body.fish-tail-lodge-complete [data-story="fish-tail-lodge"] .point-orbit,
+body.dujiangyan-complete [data-story="dujiangyan"] .point-archive-mark,
+body.secret-spring-complete [data-story="secret-spring"] .point-archive-mark,
+body.taoist-tower-complete [data-story="taoist-tower"] .point-archive-mark,
+body.chengde-complete [data-story="chengde"] .point-archive-mark,
+body.yangguan-complete [data-story="yangguan"] .point-archive-mark,
+body.fish-tail-lodge-complete [data-story="fish-tail-lodge"] .point-archive-mark,
+body.mogao-caves-complete [data-story="mogao-caves"] .point-pulse,
+body.mogao-caves-complete [data-story="mogao-caves"] .point-orbit {
+  display: none;
+  animation: none;
+}
+
+/* 莫高窟 */
+
+/* 鱼尾山屋 */
+
+
+/* One seal per read chapter (docs/map-guidance.md M-4, M-7): the same image seal the chapter uses, placed by
+   atlas.js next to its dot where it covers no label, dot or other seal; stamped in when the reader returns. */
+.chapter-seal { opacity: 0; pointer-events: none; transition: opacity 1.3s; }
+.chapter-seal.is-shown { opacity: .9; }
+body.is-returning .chapter-seal.is-returning { transform-box: fill-box; transform-origin: center; animation: seal-imprint 2s .3s both; }
+@keyframes seal-imprint { from { opacity: 0; transform: scale(1.22); filter: blur(6px); } to { opacity: .9; transform: scale(1); filter: blur(0); } }

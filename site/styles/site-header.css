@@ -51,7 +51,7 @@ body[data-language="en"] .site-masthead .site-wordmark span {
   border-radius: 3px;
   background: none;
   color: inherit;
-  font: 500 12px/1.35 "Ysabeau", sans-serif;
+  font: 500 14px/1.35 "Ysabeau", sans-serif;
   letter-spacing: .1em;
   text-decoration: none;
   cursor: pointer;
@@ -72,7 +72,7 @@ body[data-language="en"] .site-masthead .site-wordmark span {
   align-items: center;
   gap: 7px;
   color: inherit;
-  font: 600 13px/1.35 "Ysabeau", sans-serif;
+  font: 600 14px/1.35 "Ysabeau", sans-serif;
   letter-spacing: .08em;
 }
 .site-masthead .site-language button {
@@ -85,10 +85,10 @@ body[data-language="en"] .site-masthead .site-wordmark span {
   background: none;
   color: inherit;
   font: inherit;
-  opacity: .4;
+  opacity: .72;
   cursor: pointer;
 }
-.site-masthead .site-language button[aria-pressed="true"] { opacity: 1; color: inherit; }
+.site-masthead .site-language button[aria-pressed="true"] { opacity: 1; color: inherit; text-decoration: underline 1px; text-underline-offset: 5px; }
 body[data-language="en"] .site-masthead .site-progress { letter-spacing: .08em; }
 @media (max-width: 900px) {
   :root { --site-header-height: 64px; --site-header-pad: 18px; }

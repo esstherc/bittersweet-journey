@@ -1,0 +1,244 @@
+/*
+  莫高窟 - chapter-specific styling only: accent, the three terrains and the labels placed on them, the
+  arrows of part one, the moonlit valley of part two, the schematic cliff face and dynasties of part three,
+  the villagers' circle and the globe of part four, and the image seal.
+  Frame, title bar, curtain, reader, rails, bottom bar, notes drawer and completion screen live in
+  ../_shared/chapter-shell.css. Map text sizes follow 鱼尾山屋 (twice the first chapters').
+*/
+
+:root {
+  --ochre: #8a6a3f;
+  --river: #3f5d6c;
+  --moon: #f3e7c4;
+  --accent: var(--ochre);
+}
+
+/* ---------- map panel: a pale desert sky ---------- */
+
+.map-stage {
+  background: linear-gradient(180deg, #dcdfe0 0%, #e9e6de 48%, #efe8da 100%);
+  transition: background 1.2s ease;
+}
+
+body[data-reading-level="2"][data-stage="dusk"] .map-stage {
+  background: linear-gradient(180deg, #2f3647 0%, #474c5b 55%, #6b675f 100%);
+}
+
+.terrain-viewport,
+.terrain-marks,
+.world-globe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.terrain-viewport { z-index: 1; opacity: 0; transition: opacity 1s ease; }
+.terrain-canvas { display: block; width: 100%; height: 100%; }
+body.webgl-ready .terrain-viewport { opacity: 1; }
+
+.terrain-marks {
+  z-index: 3;
+  overflow: visible;
+  pointer-events: none;
+  font-family: var(--sans);
+}
+
+/* each layer belongs to one terrain */
+.terrain-marks > g { display: none; }
+.terrain-marks[data-terrain="wide"] .marks-wide,
+.terrain-marks[data-terrain="local"] .marks-local,
+.terrain-marks[data-terrain="cliff"] .marks-local { display: inline; }
+
+.terrain-marks text,
+.world-globe text {
+  paint-order: stroke;
+  stroke: rgba(240, 240, 238, 0.92);
+  stroke-width: 5px;
+  stroke-linejoin: round;
+}
+
+.dot { fill: rgba(240, 240, 238, 0.95); stroke: var(--ink); stroke-width: 1.4; }
+.dot.is-origin { fill: var(--seal); stroke: rgba(240, 240, 238, 0.95); stroke-width: 2; }
+.dot.is-town { fill: var(--ink-soft); stroke: rgba(240, 240, 238, 0.95); stroke-width: 1.2; }
+.dot.is-local { fill: var(--ochre); stroke: rgba(240, 240, 238, 0.95); stroke-width: 1.2; }
+
+.name { fill: var(--ink); font-family: var(--serif-cn); font-size: 32px; letter-spacing: 0.16em; }
+body[data-language="en"] .name { font-family: var(--serif-en); font-size: 29px; letter-spacing: 0.01em; }
+.name.is-origin { fill: var(--seal); font-weight: 600; }
+.note { fill: var(--ink-soft); font-size: 22px; letter-spacing: 0.06em; }
+
+.river { fill: none; stroke: rgba(63, 93, 108, 0.7); stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
+.river.is-daquan { stroke: var(--river); stroke-width: 2.2; }
+.river-label { fill: var(--river); font-family: var(--serif-cn); font-size: 24px; letter-spacing: 0.12em; }
+body[data-language="en"] .river-label { font-family: var(--serif-en); font-style: italic; letter-spacing: 0.02em; }
+
+.region-label { fill: var(--ochre); font-family: var(--serif-cn); font-size: 30px; letter-spacing: 0.3em; }
+body[data-language="en"] .region-label { font-family: var(--serif-en); font-style: italic; letter-spacing: 0.04em; }
+
+/* part one: the direction of an idea, not a road */
+.idea-arrow { fill: none; stroke: var(--seal); stroke-width: 2.4; stroke-linecap: round; }
+.idea-arrow.is-greek { stroke-width: 1.8; stroke-dasharray: 5 6; opacity: 0.85; }
+.arrow-head { fill: var(--seal); }
+
+/* parts two to four: the cliff, the valley, the moon */
+.cliff-line { fill: none; stroke: var(--seal); stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+.moon { fill: var(--moon); opacity: 0; filter: drop-shadow(0 0 14px rgba(243, 231, 196, 0.8)); transition: opacity 1s ease; }
+.terrain-marks.is-moonlit .river.is-daquan { stroke: #f4ead0; stroke-width: 3; filter: drop-shadow(0 0 6px rgba(244, 234, 208, 0.9)); }
+.terrain-marks.is-moonlit text { stroke: rgba(30, 34, 44, 0.85); }
+.terrain-marks.is-moonlit .name, .terrain-marks.is-moonlit .river-label { fill: #eef0f2; }
+.terrain-marks.is-moonlit .name.is-origin { fill: #f0c9b8; }
+.terrain-marks.is-moonlit .note { fill: #c9cfd6; }
+
+.villager-circle { fill: rgba(157, 61, 49, 0.05); stroke: var(--seal); stroke-width: 2; stroke-dasharray: 7 6; }
+.circle-label { fill: var(--seal); font-size: 24px; letter-spacing: 0.06em; }
+
+/* ---------- part three: the schematic cliff face and the dynasties ---------- */
+
+.cliff-panel {
+  position: absolute;
+  z-index: 6;
+  top: 18px;
+  left: var(--ctx-pad-x);
+  right: 96px;
+  display: none;
+  padding: 12px 14px 12px;
+  background: rgba(244, 240, 231, 0.92);
+  border: 1px solid rgba(138, 106, 63, 0.35);
+  pointer-events: none;
+}
+body[data-reading-level="3"] .cliff-panel { display: block; }
+
+.cliff-title {
+  margin: 0 0 6px;
+  color: var(--ochre);
+  font: 600 14px/1.3 var(--sans);
+  letter-spacing: 0.1em;
+}
+
+.cliff-elevation { display: block; width: 100%; height: 168px; overflow: visible; }
+.cliff-face { fill: rgba(203, 178, 136, 0.55); stroke: rgba(138, 106, 63, 0.6); stroke-width: 1; }
+.niche path { fill: rgba(244, 240, 231, 0.9); stroke: rgba(138, 106, 63, 0.7); stroke-width: 1; }
+.niche.is-past path { fill: rgba(157, 61, 49, 0.28); stroke: rgba(157, 61, 49, 0.55); }
+.niche.is-now path { fill: var(--seal); stroke: var(--seal); }
+.niche-number { fill: var(--seal); font: 600 14px var(--sans); }
+.cliff-caption { fill: var(--ink); font: 15px var(--serif-cn); letter-spacing: 0.04em; }
+body[data-language="en"] .cliff-caption { font-family: var(--serif-en); }
+
+.dynasty-track {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(var(--n, 8), 1fr);
+  margin-top: 10px;
+  padding-top: 12px;
+}
+.dynasty-track::before,
+.dynasty-track::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: calc(50% / var(--n, 8));
+  height: 2px;
+}
+.dynasty-track::before { right: calc(50% / var(--n, 8)); background: rgba(138, 106, 63, 0.3); }
+.dynasty-track::after {
+  width: calc((100% - 100% / var(--n, 8)) * var(--f, 0));
+  background: var(--seal);
+  transition: width 0.5s ease;
+}
+.dynasty-tick {
+  position: relative;
+  color: var(--ink-soft);
+  font: 14px/1.3 var(--sans);
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+.dynasty-tick::before {
+  content: "";
+  position: absolute;
+  top: -13px;
+  left: calc(50% - 4px);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #f4f0e7;
+  border: 1.5px solid rgba(138, 106, 63, 0.6);
+}
+.dynasty-tick.is-passed::before { background: rgba(157, 61, 49, 0.45); border-color: var(--seal); }
+.dynasty-tick.is-now { color: var(--seal); font-weight: 600; }
+.dynasty-tick.is-now::before { background: var(--seal); border-color: var(--seal); }
+
+/* ---------- part four: the world map (2D, as in 道士塔) ---------- */
+
+.world-globe {
+  z-index: 4;
+  overflow: visible;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.9s ease;
+}
+body.globe-shown .world-globe { opacity: 1; }
+body.is-open.globe-shown .compass { opacity: 0; }
+.world-sea { fill: rgba(223, 230, 232, 0.9); }
+.world-graticule { fill: none; stroke: rgba(63, 93, 108, 0.14); stroke-width: 0.8; }
+.world-land { fill: rgba(222, 209, 182, 0.95); stroke: rgba(138, 106, 63, 0.45); stroke-width: 0.8; }
+.world-arc { fill: none; stroke: var(--seal); stroke-width: 2.2; stroke-dasharray: 6 6; stroke-linecap: round; }
+
+/* ---------- north arrow (as in 阳关雪 and 鱼尾山屋) ---------- */
+
+.compass {
+  position: absolute;
+  z-index: 7;
+  top: 34px;
+  right: 18px;
+  width: 52px;
+  height: 52px;
+  overflow: visible;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+body.is-open .compass { opacity: 1; }
+.compass circle { fill: rgba(240, 240, 238, 0.82); stroke: rgba(32, 37, 31, 0.35); stroke-width: 1; }
+.compass-needle { transform: rotate(var(--north, 0deg)); }
+.compass .north { fill: var(--seal); }
+.compass .south { fill: rgba(32, 37, 31, 0.35); }
+.compass text { fill: var(--seal); font: 600 18px var(--sans); }
+
+/* ---------- on-map caption ---------- */
+
+.camera-caption {
+  position: absolute;
+  z-index: 7;
+  left: var(--ctx-pad-x);
+  bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: calc(100% - 2 * var(--ctx-pad-x) - 60px);
+  pointer-events: none;
+  color: var(--ink-soft);
+  font-family: var(--sans);
+}
+.camera-mode { color: var(--ink); font-size: 30px; line-height: 1.15; letter-spacing: 0.1em; }
+.camera-tech { font-size: 22px; letter-spacing: 0.06em; }
+body[data-reading-level="2"][data-stage="dusk"] .camera-mode { color: #eef0f2; }
+body[data-reading-level="2"][data-stage="dusk"] .camera-tech { color: #c9cfd6; }
+
+@media (max-width: 900px) {
+  .camera-caption { left: 20px; bottom: 12px; max-width: calc(100% - 40px); }
+  .cliff-panel { left: 12px; right: 70px; top: 12px; }
+}
+
+@media (max-width: 540px) {
+  .camera-mode { font-size: 26px; }
+  .camera-tech { font-size: 20px; }
+  .name { font-size: 28px; }
+  body[data-language="en"] .name { font-size: 25px; }
+  .region-label { font-size: 26px; }
+  .compass { top: 26px; right: 10px; width: 40px; height: 40px; }
+  .cliff-panel { right: 58px; padding: 8px 10px; }
+  .cliff-elevation { height: 130px; }
+  /* on a phone the track keeps only its dots: the current dynasty is named in the caption below */
+  .dynasty-tick { font-size: 0; height: 0; }
+}

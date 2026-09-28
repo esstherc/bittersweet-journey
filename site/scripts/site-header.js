@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const atlas = new URL('../index.html', document.currentScript.src);
-  const chapterIds = ['dujiangyan', 'secret-spring', 'taoist-tower', 'mountain-resort', 'yangguan', 'kashgar'];
+  const chapterIds = ['dujiangyan', 'secret-spring', 'taoist-tower', 'mountain-resort', 'yangguan', 'kashgar', 'fish-tail-lodge', 'mogao-caves'];
   function refresh() {
     const header = document.querySelector('.site-masthead');
     if (!header) return;

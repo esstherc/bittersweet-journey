@@ -1,0 +1,147 @@
+/*
+  鱼尾山屋 - chapter-specific styling only: accent, the three terrains, the labels placed on them,
+  the lamp at night, the road to the border and the image seal.
+  Frame, title bar, curtain, reader, preface, rails, bottom bar, notes drawer and completion screen live in
+  ../_shared/chapter-shell.css.
+*/
+
+:root {
+  --glacier: #4a6878;
+  --river: #3f5d6c;
+  --lamp: #e9a64b;
+  --accent: var(--glacier);
+}
+
+/* ---------- map panel: a pale mountain sky ---------- */
+
+.map-stage {
+  background: linear-gradient(180deg, #d8dee3 0%, #e6e8e6 45%, #ece7db 100%);
+  transition: background 1.2s ease;
+}
+
+.terrain-viewport,
+.terrain-marks {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.terrain-viewport { z-index: 1; opacity: 0; transition: opacity 1s ease; }
+.terrain-canvas { display: block; width: 100%; height: 100%; }
+body.webgl-ready .terrain-viewport { opacity: 1; }
+
+.terrain-marks {
+  z-index: 3;
+  overflow: visible;
+  pointer-events: none;
+  font-family: var(--sans);
+}
+
+/* each layer belongs to one terrain */
+.terrain-marks > g { display: none; }
+.terrain-marks[data-terrain="pokhara"] .marks-pokhara,
+.terrain-marks[data-terrain="wide"] .marks-wide,
+.terrain-marks[data-terrain="border"] .marks-border { display: inline; }
+
+.terrain-marks text {
+  paint-order: stroke;
+  stroke: rgba(240, 240, 238, 0.92);
+  stroke-width: 5px;
+  stroke-linejoin: round;
+}
+
+.dot { fill: rgba(240, 240, 238, 0.95); stroke: var(--ink); stroke-width: 1.4; }
+.dot.is-origin { fill: var(--seal); stroke: rgba(240, 240, 238, 0.95); stroke-width: 2; }
+.dot.is-peak { fill: var(--glacier); stroke: rgba(240, 240, 238, 0.95); stroke-width: 1.5; }
+.dot.is-town { fill: var(--ink-soft); stroke: rgba(240, 240, 238, 0.95); stroke-width: 1.2; }
+.dot.is-passed { fill: rgba(240, 240, 238, 0.6); stroke: rgba(32, 37, 31, 0.45); stroke-dasharray: 2 2; }
+
+.name { fill: var(--ink); font-family: var(--serif-cn); font-size: 32px; letter-spacing: 0.16em; }
+body[data-language="en"] .name { font-family: var(--serif-en); font-size: 29px; letter-spacing: 0.01em; }
+.name.is-origin { fill: var(--seal); font-weight: 600; }
+.name.is-peak { fill: var(--glacier); }
+.name.is-passed { fill: var(--ink-soft); }
+.note { fill: var(--ink-soft); font-size: 22px; letter-spacing: 0.06em; }
+
+.river { fill: none; stroke: rgba(63, 93, 108, 0.55); stroke-width: 1; stroke-linejoin: round; stroke-linecap: round; }
+.marks-wide .river { stroke: var(--river); stroke-width: 1.6; }
+.lake { fill: rgba(111, 150, 168, 0.55); stroke: var(--river); stroke-width: 1; }
+.water-label { fill: var(--river); font-size: 24px; letter-spacing: 0.2em; text-anchor: middle; }
+.water-label.sea { font-size: 26px; letter-spacing: 0.3em; }
+
+.ray { fill: none; stroke: var(--seal); stroke-width: 1.1; stroke-dasharray: 2 6; stroke-linecap: round; opacity: 0.8; }
+
+.region { fill: rgba(74, 104, 120, 0.06); stroke: rgba(74, 104, 120, 0.55); stroke-width: 1; stroke-dasharray: 4 3; }
+.region-desert { fill: rgba(183, 149, 95, 0.1); stroke: rgba(128, 97, 59, 0.55); }
+.region-label { fill: var(--glacier); font-family: var(--serif-cn); font-size: 30px; letter-spacing: 0.3em; text-anchor: middle; }
+body[data-language="en"] .region-label { font-family: var(--serif-en); letter-spacing: 0.04em; }
+.region-label.region-desert { fill: #80613b; }
+
+/* night in part one: the lamp in the lodge */
+.lamp-glow { fill: var(--lamp); opacity: 0; filter: blur(4px); transition: opacity 0.6s ease; }
+.terrain-marks.is-night text { stroke: rgba(30, 34, 44, 0.85); }
+.terrain-marks.is-night .name, .terrain-marks.is-night .water-label { fill: #eef0f2; }
+.terrain-marks.is-night .name.is-origin { fill: var(--lamp); }
+.terrain-marks.is-night .note { fill: #c9cfd6; }
+
+.river-label { fill: var(--river); font-family: var(--serif-cn); font-size: 24px; letter-spacing: 0.12em; }
+body[data-language="en"] .river-label { font-family: var(--serif-en); font-style: italic; letter-spacing: 0.02em; }
+
+/* the road to the border */
+.road-trace { fill: none; stroke: rgba(157, 61, 49, 0.3); stroke-width: 1.2; stroke-dasharray: 3 5; }
+.road { fill: none; stroke: var(--seal); stroke-width: 2.4; stroke-linejoin: round; stroke-linecap: round; }
+.motorcade { fill: var(--seal); stroke: rgba(240, 240, 238, 0.95); stroke-width: 2; }
+.gate { fill: rgba(245, 244, 238, 0.95); stroke: var(--seal); stroke-width: 1.4; stroke-linejoin: round; }
+
+/* ---------- north arrow (as in 阳关雪) ---------- */
+
+.compass {
+  position: absolute;
+  z-index: 7;
+  top: 34px;
+  right: 18px;
+  width: 52px;
+  height: 52px;
+  overflow: visible;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+body.is-open .compass { opacity: 1; }
+.compass circle { fill: rgba(240, 240, 238, 0.82); stroke: rgba(32, 37, 31, 0.35); stroke-width: 1; }
+.compass-needle { transform: rotate(var(--north, 0deg)); }
+.compass .north { fill: var(--seal); }
+.compass .south { fill: rgba(32, 37, 31, 0.35); }
+.compass text { fill: var(--seal); font: 600 18px var(--sans); }
+
+/* ---------- on-map caption ---------- */
+
+.camera-caption {
+  position: absolute;
+  z-index: 7;
+  left: var(--ctx-pad-x);
+  bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: calc(100% - 2 * var(--ctx-pad-x) - 60px);
+  pointer-events: none;
+  color: var(--ink-soft);
+  font-family: var(--sans);
+}
+.camera-mode { color: var(--ink); font-size: 30px; line-height: 1.15; letter-spacing: 0.1em; }
+.camera-tech { font-size: 22px; letter-spacing: 0.06em; }
+
+@media (max-width: 900px) {
+  .camera-caption { left: 20px; bottom: 12px; max-width: calc(100% - 40px); }
+}
+
+@media (max-width: 540px) {
+  .camera-mode { font-size: 26px; }
+  .camera-tech { font-size: 20px; }
+  .name { font-size: 28px; }
+  body[data-language="en"] .name { font-size: 25px; }
+  .region-label { font-size: 26px; }
+  .compass { top: 26px; right: 10px; width: 40px; height: 40px; }
+}

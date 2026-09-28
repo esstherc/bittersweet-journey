@@ -188,6 +188,43 @@
     wall: make("text", { class: "regional-note", x: px + 150, y: py - 44 }, regional)
   };
 
+  // The regional map is scaled to cover the panel, so its edges are cut off at some sizes. Each label tries a few
+  // spots around its place and takes the first one fully in view and clear of the others (units are map units).
+  function layoutRegional() {
+    const frame = regional.getBoundingClientRect();
+    if (!frame.width || !frame.height) return;
+    const [, , vw, vh] = region.viewBox;
+    const s = Math.max(frame.width / vw, frame.height / vh);
+    const view = { left: (vw - frame.width / s) / 2, top: (vh - frame.height / s) / 2 };
+    view.right = vw - view.left;
+    view.bottom = vh - view.top;
+    const margin = 10 / s;
+    const taken = [[dx, dy], [px, py]].map(([x, y]) => ({ left: x - 13, right: x + 13, top: y - 13, bottom: y + 13 }));
+    const fit = (node, [ox, oy], candidates) => {
+      const n = typeSize(node);
+      let last = null;
+      for (const [cx, cy, anchor] of candidates(n)) {
+        node.setAttribute("text-anchor", anchor);
+        node.setAttribute("x", cx.toFixed(1));
+        node.setAttribute("y", cy.toFixed(1));
+        let b = node.getBBox();
+        const shift = Math.max(0, view.left + margin - (b.x + ox)) - Math.max(0, b.x + ox + b.width - (view.right - margin));
+        if (shift) { node.setAttribute("x", (cx + shift).toFixed(1)); b = node.getBBox(); }
+        const box = { left: b.x + ox, right: b.x + ox + b.width, top: b.y + oy, bottom: b.y + oy + b.height };
+        last = box;
+        const inside = box.top >= view.top + margin && box.bottom <= view.bottom - margin;
+        if (inside && !taken.some((other) => overlapArea(box, other) > 0)) { taken.push(box); return; }
+      }
+      taken.push(last);
+    };
+    fit(regionalText.dunhuang, [dx, dy], (n) => [[0, -22, "middle"], [-n * 0.6, -n * 0.4, "end"], [0, n * 1.5, "middle"], [n * 0.6, n * 1.3, "start"]]);
+    fit(regionalText.yangguan, [px, py], (n) => [[0, -22, "middle"], [0, n * 1.5, "middle"], [n * 0.7, n * 0.35, "start"], [n * 0.7, -n * 0.6, "start"]]);
+    const mx = (dx + px) / 2, my = (dy + py) / 2;
+    fit(regionalText.distance, [0, 0], (n) => [[mx, my - 14, "middle"], [mx + n * 0.5, my + n * 1.3, "start"], [mx, my + n * 1.5, "middle"]]);
+    fit(regionalText.wall, [0, 0], (n) => [[px + 150, py - 44, "start"], [px + n, py + n * 2.6, "start"], [px + 150, py + n * 2.2, "start"], [px + n * 4, py + n * 4, "start"]]);
+  }
+  window.addEventListener("resize", () => window.requestAnimationFrame(layoutRegional));
+
   /* ---------- labels on the 3D terrain ---------- */
 
   const local = geography.local;
@@ -249,7 +286,8 @@
   const originName = make("text", { class: "far-origin-name" }, farLayer);
   const originNote = make("text", { class: "far-note" }, farLayer);
   const poemLayer = layer("poem");
-  const poemLines = [make("text", {}, poemLayer), make("text", {}, poemLayer)];
+  const poemLines = Array.from({ length: 4 }, () => make("text", {}, poemLayer));
+  let poemText = [];
 
   // Points behind the camera cannot be projected: a line breaks there, a polygon is skipped.
   const polyline = (points, project, lift = 0, close = false) => {
@@ -267,11 +305,24 @@
     }
     return d && close ? d + "Z" : d;
   };
+  // Offsets follow the rendered type size, so labels keep their spacing at any size.
+  const typeSize = (node) => parseFloat(window.getComputedStyle(node).fontSize) || 16;
   const place = (node, p, dx = 0, dy = 0) => {
     // hidden behind the camera, or pushed above the panel's top edge
     node.style.visibility = p.visible && p.y + dy > 14 ? "" : "hidden";
     node.setAttribute("x", (p.x + dx).toFixed(1));
     node.setAttribute("y", (p.y + dy).toFixed(1));
+  };
+  // Slide a label sideways so it stays inside the panel; returns its box.
+  const keepInside = (node, width) => {
+    if (node.style.visibility === "hidden") return null;
+    let b = node.getBBox();
+    const shift = Math.max(0, 6 - b.x) - Math.max(0, b.x + b.width - (width - 6));
+    if (shift) {
+      node.setAttribute("x", (parseFloat(node.getAttribute("x")) + shift).toFixed(1));
+      b = node.getBBox();
+    }
+    return { left: b.x, right: b.x + b.width, top: b.y, bottom: b.y + b.height };
   };
   const centre = (points) => {
     const sum = points.reduce((acc, [lon, lat]) => [acc[0] + lon, acc[1] + lat], [0, 0]);
@@ -298,14 +349,15 @@
     const origin = project(geography.points.pass.lon, geography.points.pass.lat, 400);
     farOrigin.setAttribute("cx", origin.x.toFixed(1));
     farOrigin.setAttribute("cy", origin.y.toFixed(1));
-    place(originName, origin, 12, 0);
-    place(originNote, origin, 12, 16);
+    const originSize = typeSize(originName);
+    place(originName, origin, originSize * 0.6, 0);
+    place(originNote, origin, originSize * 0.6, originSize * 0.35 + typeSize(originNote));
     // Labels: each tries above-right, below-right, above-left, below-left and takes the first spot
     // that stays in the panel and clears the labels already placed (the sites run roughly east-west).
     const panelWidth = marks.clientWidth, panelHeight = marks.clientHeight;
     // On narrow panels the sites sit close together: show names only (distances stay in the notes).
     const compact = panelWidth < 520;
-    const taken = [boxOf(originName, originNote, origin, 12, -12, "start")];
+    const taken = [boxOf(originName, originNote, origin, originSize * 0.6, -originSize * 0.9, "start", compact)];
     farMarks
       .map((mark) => ({ ...mark, p: project(mark.site.lon, mark.site.lat, 400) }))
       .sort((a, b) => b.p.x - a.p.x) // the right side is the most crowded: place from there
@@ -320,9 +372,10 @@
         dot.style.visibility = "";
         dot.setAttribute("cx", p.x.toFixed(1));
         dot.setAttribute("cy", p.y.toFixed(1));
+        const n = typeSize(name), gap = n * 0.5;
         const spots = [
-          [8, -24, "start"], [8, 16, "start"], [-8, -24, "end"], [-8, 16, "end"],
-          [8, -46, "start"], [-8, -46, "end"], [8, 38, "start"], [-8, 38, "end"]
+          [gap, -1.5 * n, "start"], [gap, 0.95 * n, "start"], [-gap, -1.5 * n, "end"], [-gap, 0.95 * n, "end"],
+          [gap, -2.8 * n, "start"], [-gap, -2.8 * n, "end"], [gap, 2.25 * n, "start"], [-gap, 2.25 * n, "end"]
         ];
         // first spot that is inside the panel and clear; otherwise the inside spot that overlaps least
         let best = null;
@@ -334,18 +387,34 @@
           if (!best || cost < best.cost) best = { cost, dx, dy, anchor, box };
           if (cost === 0) break;
         }
+        if (best.cost > 0 && !compact) {
+          // crowded: try the name alone before giving up the name as well
+          const bare = spots.map(([sx, sy, sa]) => {
+            const box = boxOf(name, note, p, sx, sy, sa, true);
+            const outside = Math.max(0, 6 - box.left) + Math.max(0, box.right - (panelWidth - 6)) +
+              Math.max(0, 6 - box.top) + Math.max(0, box.bottom - (panelHeight - 6));
+            return { cost: outside * 1000 + taken.reduce((sum, other) => sum + overlapArea(box, other), 0), dx: sx, dy: sy, anchor: sa, box, bare: true };
+          }).sort((a, b) => a.cost - b.cost)[0];
+          if (bare.cost < best.cost) best = bare;
+        }
+        if (best.cost > 0) {
+          [name, note].forEach((node) => { node.style.visibility = "hidden"; });
+          return;
+        }
         const { dx, dy, anchor, box } = best;
-        note.style.display = compact ? "none" : "";
+        const noteShown = !compact && !best.bare;
+        note.style.display = noteShown ? "" : "none";
         taken.push(box);
         [name, note].forEach((node) => node.setAttribute("text-anchor", anchor));
-        place(name, p, dx, dy + 12);
-        place(note, p, dx, dy + 27);
-        if (compact) note.style.visibility = "hidden";
+        place(name, p, dx, dy + n * 0.9);
+        place(note, p, dx, dy + n * 1.35 + typeSize(note));
+        if (!noteShown) note.style.visibility = "hidden";
       });
 
     // River names are secondary: drawn last, and dropped where they would cover a place name.
     Object.entries(riverLabels).forEach(([name, node]) => {
-      place(node, project(riverAnchors[name][0], riverAnchors[name][1], 400), 8, name === "yangtze" ? 16 : -8);
+      const r = typeSize(node);
+      place(node, project(riverAnchors[name][0], riverAnchors[name][1], 400), r * 0.7, name === "yangtze" ? r * 1.35 : -r * 0.7);
       if (node.style.visibility === "hidden") return;
       const b = node.getBBox();
       const box = { left: b.x, right: b.x + b.width, top: b.y, bottom: b.y + b.height };
@@ -357,7 +426,8 @@
   function boxOf(name, note, p, dx, dy, anchor, nameOnly = false) {
     const width = nameOnly ? name.getComputedTextLength() : Math.max(name.getComputedTextLength(), note.getComputedTextLength());
     const left = anchor === "end" ? p.x + dx - width : p.x + dx;
-    return { left, right: left + width, top: p.y + dy, bottom: p.y + dy + (nameOnly ? 17 : 32) };
+    const n = typeSize(name);
+    return { left, right: left + width, top: p.y + dy, bottom: p.y + dy + (nameOnly ? n * 1.15 : n * 1.35 + typeSize(note) * 1.3) };
   }
   const overlapArea = (a, b) =>
     Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left)) * Math.max(0, Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top));
@@ -376,6 +446,7 @@
     northAngle = view.north;
     drawCompass();
     // Each layer is drawn only on the terrain it belongs to (the terrains swap between parts).
+    if (level === 2) layoutRegional();
     if (view.terrain === "wide") {
       if (level === 1) drawFar(project);
       return;
@@ -433,15 +504,46 @@
       const flip = pass.x > width * 0.5;
       [passLabel, passCoord].forEach((node) => node.setAttribute("text-anchor", flip ? "end" : "start"));
       place(passLabel, pass, flip ? -14 : 14, -s * 2.4);
-      place(passCoord, pass, flip ? -14 : 14, -s * 2.4 + 17);
-    } else passGlyph.setAttribute("d", "");
+      place(passCoord, pass, flip ? -14 : 14, -s * 2.4 + typeSize(passLabel) * 0.35 + typeSize(passCoord));
+    } else {
+      passGlyph.setAttribute("d", "");
+      [passLabel, passCoord].forEach((node) => { node.style.visibility = "hidden"; });
+    }
+    const passBoxes = [keepInside(passLabel, width), keepInside(passCoord, width)].filter(Boolean);
 
-    place(tags.wall, project(wallCentre[0], wallCentre[1], 40), 8, -8);
-    place(tags.oasis, project(oasisCentre[0], oasisCentre[1], 10), -6, 22);
-    place(peakLabel, project(geography.points.peak.lon, geography.points.peak.lat, 80), 0, -10);
+    const tagSize = typeSize(tags.wall);
+    place(tags.wall, project(wallCentre[0], wallCentre[1], 40), tagSize * 0.67, -tagSize * 0.67);
+    place(tags.oasis, project(oasisCentre[0], oasisCentre[1], 10), -tagSize * 0.5, tagSize * 1.8);
+    place(peakLabel, project(geography.points.peak.lon, geography.points.peak.lat, 80), 0, -typeSize(peakLabel) * 0.7);
+    // the wall and oasis tags are secondary: they give way to the pass label
+    [tags.wall, tags.oasis, peakLabel].forEach((node) => {
+      const box = keepInside(node, width);
+      if (box && passBoxes.some((other) => overlapArea(box, other) > 0)) node.style.visibility = "hidden";
+    });
+    // The two lines of the poem, shrunk only if a line would be wider than the panel; on a narrow panel
+    // where even the smallest size (10pt) would not fit, each line breaks in two at its middle space.
+    const setPoem = (lines) => poemLines.forEach((line, index) => { line.textContent = lines[index] || ""; line.style.fontSize = ""; });
+    const widestOf = () => Math.max(...poemLines.map((line) => (line.textContent ? line.getComputedTextLength() : 0)));
+    setPoem(poemText);
+    const poemSize = typeSize(poemLines[0]);
+    const room = width - 24;
+    let widest = widestOf();
+    if (poemSize * room / widest < 13.4) {
+      setPoem(poemText.flatMap((line) => {
+        const middle = line.length / 2;
+        let cut = -1;
+        for (let index = 0; index < line.length; index += 1) {
+          if (line[index] === " " && (cut < 0 || Math.abs(index - middle) < Math.abs(cut - middle))) cut = index;
+        }
+        return cut < 0 ? [line] : [line.slice(0, cut), line.slice(cut + 1)];
+      }));
+      widest = widestOf();
+    }
+    const fitted = widest > room ? Math.max(13.4, poemSize * room / widest) : poemSize;
     poemLines.forEach((line, index) => {
+      if (fitted !== poemSize) line.style.fontSize = `${fitted.toFixed(1)}px`;
       line.setAttribute("x", (width / 2).toFixed(1));
-      line.setAttribute("y", (height * 0.2 + index * (language === "en" ? 24 : 34)).toFixed(1));
+      line.setAttribute("y", (height * 0.2 + index * fitted * (language === "en" ? 1.6 : 1.8)).toFixed(1));
     });
   }
 
@@ -528,7 +630,8 @@
     tags.wall.textContent = text.wall;
     tags.oasis.textContent = text.oasis;
     peakLabel.textContent = text.peak;
-    poemLines.forEach((line, index) => { line.textContent = text.poem[index]; });
+    poemText = text.poem;
+    poemLines.forEach((line, index) => { line.textContent = text.poem[index] || ""; });
     farMarks.forEach(({ site, name, note }) => {
       name.textContent = site[language];
       note.textContent = `${site.distanceKm.toLocaleString("en")} km`;
@@ -543,6 +646,7 @@
     regionalText.yangguan.textContent = text.yangguan;
     regionalText.distance.textContent = text.distance;
     regionalText.wall.textContent = text.regionalWall;
+    window.requestAnimationFrame(layoutRegional);
     level = state.active + 1;
     setCaption();
   }

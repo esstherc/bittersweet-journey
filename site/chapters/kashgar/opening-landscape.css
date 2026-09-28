@@ -18,9 +18,9 @@
   position: absolute; right: 36px; bottom: 23px; z-index: 3;
   display: inline-flex; align-items: center; gap: 9px; padding: 8px 0;
   border: 0; background: none; color: #f8f0df; text-shadow: 0 1px 5px #332e22;
-  font: 11px/1.4 "Ysabeau", "Songti SC", serif; letter-spacing: .04em; cursor: pointer;
+  font: 13.5px/1.4 "Ysabeau", "Songti SC", serif; letter-spacing: .04em; cursor: pointer;
 }
-#chapter-leaf .chapter-leaf-motion::before { content: "Ⅱ"; font: 12px Georgia, serif; }
+#chapter-leaf .chapter-leaf-motion::before { content: "Ⅱ"; font: 14px Georgia, serif; }
 #chapter-leaf.is-motion-paused .chapter-leaf-motion::before { content: "▷"; }
 #chapter-leaf.has-static-landscape .chapter-leaf-motion { display: none; }
 @media (max-width: 760px) {

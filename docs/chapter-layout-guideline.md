@@ -152,6 +152,8 @@ I had to interpret a few points. Each has a **default** that the rest of the doc
 
 ### 4.4 Map panel — left (M)
 
+> Everything drawn **on** the map (content, views, symbols, map type sizes, label placement, visual hierarchy, contrast) is specified in [map-guidance.md](map-guidance.md), which takes precedence over this document for map content.
+
 - **M-1 Canvas (free zone).** Map and images fill the panel. SVG uses `viewBox` + `preserveAspectRatio`; canvas/WebGL redraws on resize (`ResizeObserver`). The panel background may be tinted by the chapter but keeps `--paper` as its base.
 - **M-2 Top: nothing.** No eyebrow, no chapter title, no subtitle, no buttons. On-map labels, legends, insets, scale bars and compass are part of the map and allowed. Provide a **visually-hidden `h1`** (`.sr-only`) with the chapter title and `aria-label` on the section (today's `aria-labelledby="map-title"` points at the heading being removed).
 - **M-3 Safe area.** 24 px clear of the panel edges; nothing overlaps the timeline row.
@@ -192,6 +194,8 @@ I had to interpret a few points. Each has a **default** that the rest of the doc
 
 ### 4.7 Seal glyphs (S)
 
+> **Superseded (2026-09):** every chapter now uses a pictorial image seal (`.seal-image`), not a text glyph; see map-guidance.md §8 (K-1 to K-3). S-1 to S-3 below are kept for history.
+
 - **S-1 One glyph per chapter, from a single registry.** Canonical set today: 水 都江堰 · 泉 沙原隐泉 · 空 道士塔 · 影 山庄背影. It is a **single Chinese character**, unique across chapters, renderable in the zh serif stack.
 - **S-2 The same glyph appears in three places:** (a) homepage stamp collection and receipt, (b) the context panel end block (size M), (c) the completion screen (size L).
 - **S-3 One component.** A shared `.seal`: square, 2 px seal-red border, glyph in the zh serif, subtle red tint, sizes S 44 px (homepage) / M 72 px / L 140 px. On the coloured completion screen the seal switches to a paper-coloured outline (red on the accent colour has too little contrast). The hand-drawn `seal-water.svg` is retired unless you want it as an optional "skin" for every chapter.
@@ -224,7 +228,7 @@ Fonts must be loaded on **every** page (Google Fonts `Caudex` + `Ysabeau`). No A
 | Reading text | see R-4 | 18px | 400 | .04em zh | `--ink` |
 | Notes drawer title / body | serif | 26px / 14px (1.8) | 400 | .12em / .04em | `--ink` / `--ink-soft` |
 
-Minimum sizes: 12 px for UI text, 16 px for reading text. The `body[data-language="en"]` switch changes the serif stack and tracking only; sizes stay as above.
+Minimum sizes: ~~12 px for UI text~~ **13.5 px (10 pt) for any text, including UI and map text** (2026-09, see map-guidance.md T-1), 16 px for reading text. The `body[data-language="en"]` switch changes the serif stack and tracking only; sizes stay as above.
 
 ### 4.9 Language (G)
 
@@ -260,7 +264,7 @@ Minimum sizes: 12 px for UI text, 16 px for reading text. The `body[data-languag
 - **X-1** Landmarks: `<header>` title bar, `<main>`, map `<section aria-label>`, context `<article aria-label>`, `<nav aria-label>` for each rail, `<footer>` bottom bar. Exactly one `h1`.
 - **X-2** All interactive controls ≥ 32 px (44 px on touch), visible `:focus-visible` outline in `--seal` (no chapter has one today).
 - **X-3** Curtain and notes drawer: dialog semantics, focus placement and return as specified in C-11 / B-4.
-- **X-4** Contrast: `--ink-soft` on `--paper` for text ≥ 12 px only; never for critical information.
+- **X-4** Contrast: ≥ 4.5 : 1 for normal text, ≥ 3 : 1 for large text, measured against the pixels actually behind the text; fix by adjusting the background first (map-guidance.md A-1, A-2). `--ink-soft` on `--paper` is never used for critical information.
 
 ### 4.14 URLs, storage, keyboard (U)
 

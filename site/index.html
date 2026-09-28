@@ -14,11 +14,12 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&family=Ysabeau:ital,wght@0,400..700;1,400..700&display=swap"
     />
-    <link rel="stylesheet" href="./styles/atlas.css?v=66282fb4ad14" />
+    <link rel="stylesheet" href="./styles/atlas.css?v=bc93ea20a201" />
     <link rel="stylesheet" href="./styles/page-transition.css?v=7934fbdd1485">
-    <script src="./scripts/page-transition.js?v=ea544cac2ea9"></script>
-    <link rel="stylesheet" href="./styles/site-header.css?v=2ec6064a8b77">
-    <script src="./scripts/site-header.js?v=6923f2a93b3d"></script>
+    <script src="./scripts/page-transition.js?v=091ff79e91f6"></script>
+    <link rel="stylesheet" href="./styles/site-header.css?v=d3328a0c63b4">
+    <script src="./scripts/site-header.js?v=97511d03f87c"></script>
+    <script src="./scripts/min-type.js?v=880bda1eac59"></script>
   </head>
   <body data-language="zh">
     <div class="paper-noise" aria-hidden="true"></div>
@@ -67,6 +68,7 @@
       <section class="atlas-map-stage" data-aria="stage-aria" aria-label="文化苦旅中国故事地图">
         <svg
           class="china-map"
+          data-min-type="off"
           viewBox="46 98 944 590"
           role="img"
           data-aria="map-aria"
@@ -86,25 +88,7 @@
               <stop offset="38%" stop-color="#a44735" stop-opacity=".18" />
               <stop offset="100%" stop-color="#a44735" stop-opacity="0" />
             </radialGradient>
-            <linearGradient id="plain-wash" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#668994" stop-opacity=".38" />
-              <stop offset="100%" stop-color="#668994" stop-opacity="0" />
-            </linearGradient>
           </defs>
-
-          <g class="terrain-washes" aria-hidden="true" filter="url(#atlas-soft)">
-            <path class="tibet-wash" d="M92 435C135 328 261 333 335 382C405 429 357 545 276 574C184 607 52 536 92 435Z" />
-            <path class="gobi-wash" d="M197 205C314 148 451 184 477 238C504 296 403 328 284 304C181 283 121 242 197 205Z" />
-            <path class="north-wash" d="M641 130C777 82 956 151 967 221C974 267 854 270 721 241C629 221 571 170 641 130Z" />
-            <path class="south-wash" d="M480 558C649 500 843 537 941 636C849 696 620 697 480 558Z" />
-          </g>
-
-          <g class="mountain-traces" aria-hidden="true">
-            <path d="M76 456Q117 389 151 453Q193 368 236 455Q270 397 315 460" />
-            <path d="M184 344Q227 287 265 347Q303 267 351 351Q386 301 426 355" />
-            <path d="M698 197Q735 149 773 203Q811 141 855 207Q889 168 928 211" />
-            <path d="M424 513Q453 469 481 516Q508 459 539 520" />
-          </g>
 
           <g class="river-skeleton" filter="url(#atlas-bleed)">
             <g class="yellow-river">
@@ -118,11 +102,6 @@
               <text id="global-yangtze-label-en" x="697" y="554" class="map-text en" lang="en">Yangtze</text>
             </g>
             <g id="global-secondary-rivers" class="secondary-rivers" aria-hidden="true"></g>
-            <g class="grand-canal">
-              <path d="M954 350C943 407 950 453 971 526" />
-              <text x="967" y="419" class="map-text cn vertical" lang="zh">运河</text>
-            <text x="967" y="419" class="map-text en vertical" lang="en">Grand Canal</text>
-            </g>
           </g>
 
           <g class="ancient-routes" aria-hidden="true">
@@ -133,49 +112,8 @@
             <text x="275" y="575" class="route-label cn" lang="zh">西南古道</text>
             <text x="276" y="589" class="route-label en" lang="en">Southwestern Road</text>
           </g>
-
-          <g class="dujiangyan-memory" aria-hidden="true">
-            <path id="memory-source" class="memory-source" d="M424 397C437 424 444 446 455 476" />
-            <path id="memory-line-main" class="memory-line" d="M455 476C478 487 493 500 510 519" />
-            <path id="memory-line-a" class="memory-line fine" d="M472 489C515 478 552 475 600 485" />
-            <path id="memory-line-b" class="memory-line fine" d="M481 497C532 510 570 527 622 552" />
-            <path id="memory-line-c" class="memory-line fine" d="M495 505C536 545 559 571 601 603" />
-            <path id="plain-memory" class="plain-memory" d="M467 474C522 452 616 474 678 542C612 610 521 610 482 544Z" />
-            <circle id="chengdu-dot" class="chengdu-dot" cx="563" cy="530" r="4" />
-            <text id="chengdu-label-cn" x="573" y="525" class="memory-label cn" lang="zh">成都平原</text>
-            <text id="chengdu-label-en" x="573" y="541" class="memory-label en" lang="en">Chengdu Plain</text>
-          </g>
-
-          <g class="secret-spring-memory" aria-hidden="true" transform="translate(286 272)">
-            <path class="memory-dune" d="M-37 17C-23-5-4-12 10 1C24-15 42-8 52 10" />
-            <path class="memory-crescent" d="M7 7C17-2 31-1 38 8C28 5 20 9 15 17C11 15 8 11 7 7Z" />
-            <text x="16" y="25" class="memory-label cn" lang="zh">月牙泉</text>
-            <text x="16" y="25" class="memory-label en" lang="en">Crescent Spring</text>
-          </g>
-
-          <g class="taoist-tower-memory" aria-hidden="true" transform="translate(314 245)">
-            <path class="archive-thread west" d="M0 0C-45-31-94-20-144 19" />
-            <path class="archive-thread east" d="M0 0C82-46 174-50 270-21" />
-            <path class="memory-stupa" d="M-9 14H9M-7 8H7M-6 8C-8 1-4-5 0-8C4-5 8 1 6 8M0-8V-14" />
-            <circle class="archive-absence" r="18" />
-            <text x="30" y="-21" class="memory-label cn" lang="zh">藏经洞</text>
-            <text x="30" y="-21" class="memory-label en" lang="en">Library Cave</text>
-          </g>
-
-          <g class="chengde-memory" aria-hidden="true" transform="translate(856 252)">
-            <path class="memory-chair" d="M-43 20C-37-18-12-39 14-31C38-48 69-29 77 3" />
-            <path class="memory-gate" d="M5 22V-1H27V22M27-1H49V22M5-1L27-17L49-1" />
-            <path class="memory-reflection" d="M2 29C17 25 37 25 52 29M10 36C22 33 34 33 45 36" />
-            <text x="61" y="21" class="memory-label cn" lang="zh">山庄背影</text>
-            <text x="61" y="21" class="memory-label en" lang="en">The Villa</text>
-          </g>
-
-          <g class="yangguan-memory" aria-hidden="true">
-            <image href="./chapters/yangguan/assets/seal-yangguan.svg" x="-48" y="-44" width="40" height="40" />
-          </g>
-          <g class="kashgar-memory" aria-hidden="true">
-            <image href="./chapters/kashgar/assets/seal-kashgar.svg" x="-10" y="24" width="49" height="49" />
-          </g>
+          <!-- One image seal per read chapter, placed next to its dot by atlas.js (layoutAtlas). -->
+          <g class="chapter-seals" aria-hidden="true"></g>
           <g class="story-points">
             <g class="story-point available" role="button" tabindex="0" data-story="kashgar" aria-label="有人把来世，选在这里。">
               <circle class="point-glow" cx="118" cy="327" r="35" />
@@ -243,6 +181,30 @@
               <text x="869" y="260" class="point-clue complete cn" lang="zh">山庄背影</text>
               <text x="869" y="260" class="point-clue complete en" lang="en">The Villa from Behind</text>
             </g>
+
+            <!-- Mogao Caves: placed from Dunhuang by atlas.js (DISPLAY_OFFSETS), like the other Dunhuang-area dots. -->
+            <g class="story-point available" role="button" tabindex="0" data-story="mogao-caves" data-aria="point-mogao-caves-aria" aria-label="进入莫高窟">
+              <circle class="point-glow" cx="300" cy="300" r="31" />
+              <circle class="point-pulse" cx="300" cy="300" r="11" />
+              <circle class="point-core" cx="300" cy="300" r="3.5" />
+              <text x="310" y="287" class="point-number">06</text>
+              <text x="310" y="310" class="point-clue unread cn" lang="zh">一座沉默的小山包</text>
+              <text x="310" y="310" class="point-clue unread en" lang="en">A quiet hill of caves</text>
+              <text x="310" y="310" class="point-clue complete cn" lang="zh">莫高窟</text>
+              <text x="310" y="310" class="point-clue complete en" lang="en">Mogao Caves</text>
+            </g>
+
+            <!-- Pokhara, Nepal: Albers position fitted to the projected places in real-geography.js. -->
+            <g class="story-point available" role="button" tabindex="0" data-story="fish-tail-lodge" data-aria="point-fish-tail-lodge-aria" aria-label="进入鱼尾山屋">
+              <circle class="point-glow" cx="351.5" cy="496.8" r="31" />
+              <circle class="point-pulse" cx="351.5" cy="496.8" r="11" />
+              <circle class="point-core" cx="351.5" cy="496.8" r="3.5" />
+              <text x="361" y="484" class="point-number">11</text>
+              <text x="361" y="507" class="point-clue unread cn" lang="zh">雪峰下的一间小屋</text>
+              <text x="361" y="507" class="point-clue unread en" lang="en">A lodge beneath the snow peaks</text>
+              <text x="361" y="507" class="point-clue complete cn" lang="zh">鱼尾山屋</text>
+              <text x="361" y="507" class="point-clue complete en" lang="en">Fish Tail Lodge</text>
+            </g>
           </g>
         </svg>
 
@@ -299,6 +261,6 @@
     </div>
 
     <script src="./data/real-geography.js?v=49a9ddc8d22f"></script>
-    <script src="./scripts/atlas.js?v=d3e2208c402d"></script>
+    <script src="./scripts/atlas.js?v=1edb00a1e529"></script>
   </body>
 </html>

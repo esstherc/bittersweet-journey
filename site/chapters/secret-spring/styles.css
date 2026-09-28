@@ -434,7 +434,7 @@ body[data-reading-level="4"] .oasis-ring {
 }
 
 .camera-tech {
-  font-size: 11px;
+  font-size: 13.5px;
   letter-spacing: 0.09em;
 }
 
@@ -468,6 +468,6 @@ body[data-reading-level="2"] .story-map {
   .coordinate-label { font-size: 13px; }
   .distance-label { font-size: 14px; }
   .regional-subtitle { display: none; }
-  .camera-mode { font-size: 13px; }
-  .camera-tech { font-size: 10px; }
+  .camera-mode { font-size: 14px; }
+  .camera-tech { font-size: 13.5px; }
 }

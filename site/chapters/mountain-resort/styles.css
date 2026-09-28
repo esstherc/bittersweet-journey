@@ -465,7 +465,7 @@ body[data-reading-level="1"] .status-number {
   .regional-point .coordinate { font-size: 17px; }
   .regional-line-label { font-size: 20px; }
   .status-number { font-size: 22px; }
-  .status-label { font-size: 12px; }
+  .status-label { font-size: 14px; }
 }
 
 /* README rule for this chapter: regular letterforms only, no italics. */

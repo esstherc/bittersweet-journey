@@ -126,7 +126,7 @@ body[data-language="en"] .wordmark {
 
 .chapter-index {
   color: var(--ink-soft);
-  font: 500 13px var(--sans);
+  font: 500 14px var(--sans);
   letter-spacing: 0.1em;
 }
 
@@ -141,7 +141,7 @@ body[data-language="en"] .wordmark {
   align-items: center;
   gap: 7px;
   color: var(--ink-soft);
-  font: 500 13px/1.4 var(--sans);
+  font: 500 14px/1.4 var(--sans);
   letter-spacing: 0.08em;
 }
 
@@ -257,7 +257,7 @@ body[data-language="en"] .reading-copy {
 .reader-progress {
   color: var(--ink-soft);
   font-family: var(--sans);
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.4;
 }
 
@@ -268,7 +268,7 @@ body[data-language="en"] .reading-copy {
 
 .reader-progress {
   margin-top: 6px;
-  font-size: 12px;
+  font-size: 14px;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0.12em;
   white-space: nowrap;
@@ -329,6 +329,40 @@ body[data-language="en"] .reading-section-body p {
 
 body[data-language="en"] .reader-note {
   letter-spacing: 0.01em;
+}
+
+/* [R-2b] optional author's note before section one (data[language].preface) */
+.reader-preface {
+  max-width: 34em;
+  margin: 0 0 56px;
+  padding: 20px 22px 6px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  background: rgba(157, 61, 49, 0.035);
+  color: var(--ink-soft);
+}
+
+.reader-preface-title {
+  margin: 0 0 12px;
+  color: var(--seal);
+  font: 600 14px/1.4 var(--sans);
+  letter-spacing: 0.2em;
+}
+
+.reader-preface p:not(.reader-preface-title) {
+  margin: 0 0 1.1em;
+  font-size: 15px;
+  line-height: 1.85;
+  letter-spacing: 0.04em;
+  text-align: justify;
+}
+
+body[data-language="en"] .reader-preface p:not(.reader-preface-title) {
+  font-family: var(--serif-en);
+  font-size: 15.5px;
+  line-height: 1.65;
+  letter-spacing: 0.005em;
+  text-align: left;
 }
 
 /* [R-6] end block: seal + finish */
@@ -396,7 +430,7 @@ body[data-language="en"] .open-book {
 
 .rail-caption {
   color: var(--ink-soft);
-  font: 500 12px/1.4 var(--sans);
+  font: 500 14px/1.4 var(--sans);
   letter-spacing: 0.1em;
   white-space: nowrap;
 }
@@ -415,7 +449,7 @@ body[data-language="en"] .open-book {
   border: 0;
   color: var(--ink-soft);
   background: none;
-  font: 500 12px var(--sans);
+  font: 500 14px var(--sans);
   letter-spacing: 0.12em;
   cursor: pointer;
 }
@@ -473,7 +507,7 @@ body[data-language="en"] .open-book {
 
 .timeline-caption {
   color: var(--ink-soft);
-  font: 500 12px/1.4 var(--sans);
+  font: 500 14px/1.4 var(--sans);
   letter-spacing: 0.1em;
   white-space: nowrap;
 }
@@ -512,7 +546,7 @@ body[data-language="en"] .open-book {
   position: relative;
   padding-top: 30px;
   color: var(--ink-soft);
-  font: 500 12px/1.2 var(--sans);
+  font: 500 14px/1.2 var(--sans);
   letter-spacing: 0.08em;
   text-align: center;
   white-space: nowrap;
@@ -609,7 +643,7 @@ body.is-open .opening-curtain {
 .curtain-kicker {
   margin: 0 0 10px;
   color: var(--accent);
-  font: 600 12px/1.4 var(--sans);
+  font: 600 14px/1.4 var(--sans);
   letter-spacing: 0.16em;
 }
 
@@ -666,7 +700,7 @@ body[data-language="en"] .curtain-thesis {
   border-top: 1px solid var(--line);
   background: rgba(236, 231, 219, 0.92);
   color: var(--ink-soft);
-  font: 12px var(--sans);
+  font: 14px var(--sans);
   letter-spacing: 0.07em;
 }
 
@@ -743,7 +777,7 @@ body.notes-open .notes-drawer {
 .notes-drawer h3 {
   margin: 20px 0 6px;
   color: var(--seal);
-  font: 600 12px/1.4 var(--sans);
+  font: 600 14px/1.4 var(--sans);
   letter-spacing: 0.14em;
 }
 

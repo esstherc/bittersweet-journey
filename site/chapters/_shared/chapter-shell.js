@@ -33,7 +33,8 @@
       "timeline-aria": "历史时间线",
       finish: "完成本章 · 返回总图",
       "rail-caption": "阅读章节",
-      "complete-kicker": "一处山河已经显影"
+      "complete-kicker": "一处山河已经显影",
+      "preface-title": "说明"
     },
     en: {
       "site-title": "Land, Made Visible",
@@ -58,7 +59,8 @@
       "timeline-aria": "Historical timeline",
       finish: "Complete chapter · Return to atlas",
       "rail-caption": "Sections",
-      "complete-kicker": "One landscape brought to light"
+      "complete-kicker": "One landscape brought to light",
+      "preface-title": "Author’s note"
     }
   };
 
@@ -122,6 +124,24 @@
       const meta = config.sections?.[state.language] || [];
       const total = sections.length;
       els.copyRoot.innerHTML = "";
+
+      // Optional author's note before the first section (data[language].preface). It is not a section:
+      // the rail and the active-section tracking ignore it.
+      const preface = data[state.language].preface || [];
+      if (preface.length) {
+        const aside = document.createElement("aside");
+        aside.className = "reader-preface";
+        const title = document.createElement("p");
+        title.className = "reader-preface-title";
+        title.textContent = text("preface-title");
+        aside.appendChild(title);
+        preface.forEach((paragraph) => {
+          const p = document.createElement("p");
+          p.textContent = config.formatParagraph ? config.formatParagraph(paragraph, state.language) : paragraph;
+          aside.appendChild(p);
+        });
+        els.copyRoot.appendChild(aside);
+      }
 
       sections.forEach((section, index) => {
         const element = document.createElement("section");

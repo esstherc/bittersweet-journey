@@ -118,26 +118,26 @@ body[data-reading-level="3"] .wall-tag { opacity: 0.8; }
 .terrain-marks text {
   paint-order: stroke;
   stroke: rgba(240, 240, 238, 0.92);
-  stroke-width: 3px;
+  stroke-width: 5px;
   stroke-linejoin: round;
 }
 
 .marks-pass .label {
   fill: var(--ink);
-  font-size: 15px;
+  font-size: 30px;
   font-weight: 600;
   letter-spacing: 0.08em;
 }
 
 .marks-pass .coord {
   fill: var(--ink-soft);
-  font-size: 11px;
+  font-size: 22px;
   letter-spacing: 0.06em;
 }
 
 .tag {
   fill: var(--ink-soft);
-  font-size: 12px;
+  font-size: 24px;
   letter-spacing: 0.08em;
 }
 
@@ -145,7 +145,7 @@ body[data-reading-level="3"] .wall-tag { opacity: 0.8; }
 
 .peak-label {
   fill: var(--frost);
-  font-size: 14px;
+  font-size: 28px;
   letter-spacing: 0.3em;
   text-anchor: middle;
 }
@@ -153,36 +153,36 @@ body[data-reading-level="3"] .wall-tag { opacity: 0.8; }
 .marks-poem text {
   fill: var(--ink);
   font-family: var(--serif-cn);
-  font-size: 19px;
+  font-size: 38px;
   letter-spacing: 0.3em;
   text-anchor: middle;
 }
 
 body[data-language="en"] .marks-poem text {
   font-family: var(--serif-en);
-  font-size: 15px;
+  font-size: 30px;
   font-style: italic;
   letter-spacing: 0.01em;
 }
 
 /* part one: the pass and the poetic sites on the wide terrain */
 .far-origin { fill: var(--seal); stroke: rgba(240, 240, 238, 0.95); stroke-width: 2; }
-.far-origin-name { fill: var(--seal); font-family: var(--serif-cn); font-size: 17px; font-weight: 600; letter-spacing: 0.2em; }
-body[data-language="en"] .far-origin-name { font-family: var(--serif-en); font-size: 15px; letter-spacing: 0.01em; }
+.far-origin-name { fill: var(--seal); font-family: var(--serif-cn); font-size: 34px; font-weight: 600; letter-spacing: 0.2em; }
+body[data-language="en"] .far-origin-name { font-family: var(--serif-en); font-size: 30px; letter-spacing: 0.01em; }
 .far-dot { fill: rgba(240, 240, 238, 0.95); stroke: var(--ink); stroke-width: 1.4; }
 .far-ray { fill: none; stroke: var(--seal); stroke-width: 1.3; stroke-dasharray: 2 6; stroke-linecap: round; }
 .far-river { fill: none; stroke: #3f5d6c; stroke-width: 1.7; stroke-linejoin: round; stroke-linecap: round; }
-.far-river-label { fill: var(--frost); font-size: 12px; letter-spacing: 0.2em; }
-.far-name { fill: var(--ink); font-family: var(--serif-cn); font-size: 17px; letter-spacing: 0.2em; }
-body[data-language="en"] .far-name { font-family: var(--serif-en); font-size: 15px; letter-spacing: 0.01em; }
-.far-note { fill: var(--ink-soft); font-size: 11px; letter-spacing: 0.08em; }
+.far-river-label { fill: var(--frost); font-size: 24px; letter-spacing: 0.2em; }
+.far-name { fill: var(--ink); font-family: var(--serif-cn); font-size: 34px; letter-spacing: 0.2em; }
+body[data-language="en"] .far-name { font-family: var(--serif-en); font-size: 30px; letter-spacing: 0.01em; }
+.far-note { fill: var(--ink-soft); font-size: 22px; letter-spacing: 0.08em; }
 
 /* ---------- north arrow: turns with the camera (--north set by app.js) ---------- */
 
 .compass {
   position: absolute;
   z-index: 7;
-  top: 18px;
+  top: 34px;
   right: 18px;
   width: 52px;
   height: 52px;
@@ -197,7 +197,7 @@ body.is-open .compass { opacity: 1; }
 .compass-needle { transform: rotate(var(--north, 0deg)); }
 .compass .north { fill: var(--seal); }
 .compass .south { fill: rgba(32, 37, 31, 0.35); }
-.compass text { fill: var(--seal); font: 600 9px var(--sans); }
+.compass text { fill: var(--seal); font: 600 18px var(--sans); }
 
 /* ---------- regional map (part two) ---------- */
 
@@ -279,6 +279,7 @@ body.webgl-fallback :is(.terrain-marks, .terrain-viewport) { display: none; }
   display: flex;
   flex-direction: column;
   gap: 4px;
+  max-width: calc(100% - 2 * var(--ctx-pad-x) - 60px);
   pointer-events: none;
   color: var(--ink-soft);
   font-family: var(--sans);
@@ -286,33 +287,34 @@ body.webgl-fallback :is(.terrain-marks, .terrain-viewport) { display: none; }
 
 .camera-mode {
   color: var(--ink);
-  font-size: 15px;
+  font-size: 30px;
+  line-height: 1.15;
   letter-spacing: 0.1em;
 }
 
 .camera-tech {
-  font-size: 11px;
+  font-size: 22px;
   letter-spacing: 0.09em;
 }
 
 /* ---------- responsive ---------- */
 
 @media (max-width: 900px) {
-  .camera-caption { left: 20px; bottom: 12px; }
+  .camera-caption { left: 20px; bottom: 12px; max-width: calc(100% - 40px); }
   .regional-point text { font-size: 26px; }
   .regional-distance { font-size: 20px; }
 }
 
 @media (max-width: 540px) {
-  .camera-mode { font-size: 13px; }
-  .camera-tech { font-size: 10px; }
-  .marks-poem text { font-size: 14px; }
-  body[data-language="en"] .marks-poem text { font-size: 12px; }
-  .marks-pass .label { font-size: 13px; }
+  .camera-mode { font-size: 26px; }
+  .camera-tech { font-size: 20px; }
+  .marks-poem text { font-size: 28px; }
+  body[data-language="en"] .marks-poem text { font-size: 24px; }
+  .marks-pass .label { font-size: 26px; }
   .marks-pass .coord { display: none; }
-  .far-name, .far-origin-name { font-size: 14px; }
-  .compass { top: 10px; right: 10px; width: 36px; height: 36px; }
-  body[data-language="en"] .far-name { font-size: 12px; }
-  .far-note { font-size: 10px; }
-  .tag { font-size: 11px; }
+  .far-name, .far-origin-name { font-size: 28px; }
+  .compass { top: 26px; right: 10px; width: 36px; height: 36px; }
+  body[data-language="en"] .far-name { font-size: 24px; }
+  .far-note { font-size: 20px; }
+  .tag { font-size: 22px; }
 }
