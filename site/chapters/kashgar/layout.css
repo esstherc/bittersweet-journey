@@ -1,0 +1,72 @@
+/* Kashgar uses the common reading frame while keeping its geographic renderer. */
+:root { --paper: #ece7db; --page: #f3efe5; --ink: #20251f; --muted: #5b5d53; --line: rgba(32,37,31,.22); --rail: var(--rail-h); --accent: #596b5d; }
+body { overflow: hidden; font-family: var(--serif-cn); }
+body[data-language="en"] { font-family: var(--serif-en); }
+.chapter-layout { position: fixed; inset: var(--site-header-height) 0 var(--bar-bottom); padding: 0; display: grid; grid-template-columns: minmax(0,3fr) minmax(var(--ctx-min),2fr); }
+.map-stage { position: relative; top: auto; height: auto; min-height: 0; border: 0; }
+.map-heading { top: 24px; left: 32px; right: 70px; }
+.map-heading .map-toolbar { margin-top: 0; font-family: var(--sans); }
+.reader-panel { padding: 0; border-left: 1px solid var(--line); background: rgba(242,238,228,.52); }
+.reader-scroll { scroll-padding-top: 12px; }
+body.is-unopened .reader-scroll { overflow: hidden; }
+body:not(.is-unopened) .reader-scroll { overflow-y: auto; }
+:root:not(.reader-ready) .reader-scroll { overflow-y: auto; }
+.reading-section { margin-bottom: 0; scroll-margin-top: 0; }
+.reading-section p { font-size: inherit; line-height: 1.95; letter-spacing: .04em; margin-bottom: 1.45em; scroll-margin-top: 0; }
+body[data-language="en"] .reading-section p { font-family: var(--serif-en); font-size: inherit; line-height: 1.78; letter-spacing: .005em; }
+.section-heading { justify-content: space-between; margin: 0 0 30px; padding-bottom: 24px; border-bottom: 1px solid var(--line); color: var(--seal); font-size: 20px; letter-spacing: .12em; }
+.section-heading::after { content: none; }
+.section-heading span { font: 14px var(--sans); }
+.reading-rail { position: relative; inset: auto; height: var(--rail-h); z-index: 20; padding: 0 20px; gap: 12px; min-width: 0; font-family: var(--sans); }
+#section-nav { gap: 3px; flex-shrink: 0; }
+#section-nav button { width: 32px; height: 40px; font: 14px var(--sans); }
+.progress-track { min-width: 15px; }
+#anchor-count { display: none; }
+#return-reading { font: 13.5px var(--sans); max-width: 95px; line-height: 1.25; }
+.reader-end .chapter-seal { width: 56px; height: 56px; margin: 0; flex-shrink: 0; }
+.reader-end .finish-chapter { text-align: left; line-height: 1.6; }
+.map-footer { height: auto; bottom: 12px; padding: 0 32px; border: 0; background: none; pointer-events: none; }
+.map-status { left: 32px; bottom: 40px; font-family: var(--sans); }
+.map-controls { bottom: 70px; }
+.bottom-bar .credit { font-family: var(--sans); }
+#data-dialog { margin: 0; top: auto; right: auto; width: min(480px,calc(100vw - 48px)); max-height: calc(100dvh - var(--site-header-height) - var(--bar-bottom) - 40px); color: var(--ink); text-align: left; }
+#data-dialog:not([open]) { display: none; }
+.place-card { bottom: 78px; }
+@media (max-width: 1079px) and (min-width: 901px) {
+  .chapter-layout { grid-template-columns: minmax(0,56fr) minmax(var(--ctx-min),44fr); }
+  .reading-rail { gap: 8px; padding: 0 14px; }
+  .reading-rail .rail-caption { display: none; }
+}
+@media (max-width: 900px) {
+  .chapter-layout { grid-template-columns: minmax(0,1fr); grid-template-rows: minmax(0,min(46dvh,480px)) minmax(0,1fr); }
+  .map-stage { min-height: 0; height: auto; top: auto; border-bottom: 1px solid var(--line); z-index: 1; }
+  .reader-panel { padding: 0; border-left: 0; }
+  .map-heading { top: 16px; left: 20px; right: 20px; }
+  .map-heading .map-toolbar { gap: 5px 12px; }
+  .context-label { display: none; }
+  .north-arrow { display: none; }
+  .mobile-only { display: block; }
+  .map-expanded .chapter-layout { grid-template-rows: minmax(0,56dvh) minmax(0,1fr); }
+  .map-expanded .map-stage { min-height: 0; }
+  .map-status { left: 20px; bottom: 30px; }
+  .map-footer { padding: 0 20px; bottom: 7px; }
+  #place-directory { position: fixed; top: calc(var(--site-header-height) + 64px); left: 20px; right: 20px; max-height: 30dvh; }
+  .place-card { position: fixed; bottom: calc(var(--bar-bottom) + var(--rail-h) + 8px); left: 13px; right: 13px; width: auto; max-height: 32dvh; z-index: 40; }
+  .reading-section, .reading-section p { scroll-margin-top: 0; }
+  .reading-rail { padding: 0 20px; gap: 10px; }
+  #section-nav button { width: 36px; min-height: 40px; }
+}
+@media (max-height: 550px) and (max-width: 900px) {
+  .chapter-layout { grid-template-rows: minmax(0,36dvh) minmax(0,1fr); }
+  .map-status, .map-footer { display: none; }
+  .map-controls { bottom: 10px; }
+}
+@media (max-width: 540px) {
+  #data-dialog { left: 0; right: 0; width: 100%; max-height: 70dvh; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .chapter-complete-overlay .seal,
+  .chapter-complete-overlay p,
+  .chapter-complete-overlay strong { opacity: 1; transform: none; }
+  .complete-ripple { display: none; }
+}

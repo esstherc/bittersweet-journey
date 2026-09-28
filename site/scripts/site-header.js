@@ -14,7 +14,7 @@
     brand.setAttribute('aria-label', english ? 'Land, Made Visible — back to the atlas' : '山河显影，返回中国总地图');
     header.querySelector('[data-site-title]').textContent = english ? 'Land, Made Visible' : '山河显影';
     const progress = header.querySelector('.site-progress');
-    progress.setAttribute('aria-label', english ? 'View the collected word seals' : '查看已显影的文字印');
+    progress.setAttribute('aria-label', english ? 'View the collected seals' : '查看已显影的圖章');
     header.querySelector('[data-site-progress-label]').textContent = english ? 'Revealed' : '已显影';
     let count = 0;
     try { count = chapterIds.filter(id => localStorage.getItem(`bittersweet-journey:${id}:complete`) === 'true').length; } catch {}

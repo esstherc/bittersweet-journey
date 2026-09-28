@@ -20,7 +20,7 @@
 
 ## 印记
 
-本章印记是图像，不是文字（仿西域喀什）：`site/chapters/yangguan/assets/seal-yangguan.svg`，半坍的烽燧土墩立于坡上，苇草迎风飘出，雪落，地如冻浪。用在阅读区末尾、完成画面、总图回执、文字印面板，以及总图上的阳关光点旁。
+本章印记是图像，不是文字（仿西域喀什）：`site/chapters/yangguan/assets/seal-yangguan.svg`，半坍的烽燧土墩立于坡上，苇草迎风飘出，雪落，地如冻浪。用在阅读区末尾、完成画面、总图回执、圖章面板，以及总图上的阳关光点旁。
 
 共享外壳新增 `.seal-image`（`chapter-shell.css`），总图 `atlas.js` 的 `STORIES` 条目新增 `seal` 字段：有 `seal` 的章节显示图像，没有的继续显示文字。现有的 水／泉／空／影 以后改成图章时，只需各画一张 SVG、加上 `seal` 字段，并把章节页的 `.seal` 换成 `.seal-image`。
 

@@ -8,7 +8,5 @@
 <path d="M22 53C28 49 40 49 46 53" stroke="#944b39" stroke-width="2.3" stroke-linecap="round"/>
 <path d="M26 53V62M42 53V62M34 53V62M22 62H46M31 49.5L34 46.5L37 49.5" stroke="#944b39" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M16 66H84" stroke="#944b39" stroke-width="2.2" stroke-linecap="round"/>
-<path d="M26 70V78M42 70V78M34 70V78M22 70H46M22 79C28 83 40 83 46 79" stroke="#944b39" stroke-width="1.2" stroke-dasharray="2 2.2" stroke-linecap="round"/>
-<path d="M62 70C60 75 60 79 62.5 83M68 70C68.5 75 68 79 65.5 83" stroke="#944b39" stroke-width="1.2" stroke-dasharray="2 2.2" stroke-linecap="round"/>
-<path d="M52 73H58M72 76H80M50 81H56" stroke="#944b39" stroke-width="1" stroke-linecap="round"/>
+<path d="M24 72H44M28 72V77M40 72V77M24 80Q34 85 44 80M62 72L63 82H66L68 72" stroke="#944b39" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>

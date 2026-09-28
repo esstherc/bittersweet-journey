@@ -24,7 +24,7 @@
       unrevealedEnter: { zh: "循着远方，开卷", en: "Follow the distance" },
       enter: { zh: "进入西域喀什", en: "Enter Kashgar" },
       receipt: { mark: "域", zh: "远方，在这里有了归宿。", en: "Here, the faraway finds a home." },
-      seal: "./chapters/kashgar/assets/seal-kashgar.svg"
+      seal: "./chapters/kashgar/assets/seal-kashgar.svg?v=81b3b06a7520"
     },
     yangguan: {
       storageKey: "bittersweet-journey:yangguan:complete",
@@ -42,7 +42,7 @@
         zh: "风雪掩关，唐音犹在纸上。",
         en: "Snow covers the pass; its verses remain on the page."
       },
-      seal: "./chapters/yangguan/assets/seal-yangguan.svg"
+      seal: "./chapters/yangguan/assets/seal-yangguan.svg?v=08a8a94e3ec9"
     },
     "mogao-caves": {
       storageKey: "bittersweet-journey:mogao-caves:complete",
@@ -60,7 +60,7 @@
         zh: "千年不枯的笑容，延伸到整个世界。",
         en: "A smile that has not withered for a thousand years, reaching across the world."
       },
-      seal: "./chapters/mogao-caves/assets/seal-mogao-caves.svg"
+      seal: "./chapters/mogao-caves/assets/seal-mogao-caves.svg?v=6560349c3186"
     },
     "fish-tail-lodge": {
       storageKey: "bittersweet-journey:fish-tail-lodge:complete",
@@ -78,7 +78,7 @@
         zh: "离开之后，才读懂了它。",
         en: "I did not comprehend it until I was separated from it."
       },
-      seal: "./chapters/fish-tail-lodge/assets/seal-fish-tail-lodge.svg"
+      seal: "./chapters/fish-tail-lodge/assets/seal-fish-tail-lodge.svg?v=f19fcbe77db2"
     },
     dujiangyan: {
       storageKey: "bittersweet-journey:dujiangyan:complete",
@@ -96,7 +96,7 @@
         zh: "岷江的水，在这里成为成都平原。",
         en: "Here, the Min River becomes the Chengdu Plain."
       },
-      seal: "./chapters/dujiangyan/assets/seal-dujiangyan.svg"
+      seal: "./chapters/dujiangyan/assets/seal-dujiangyan.svg?v=9051ca9b8108"
     },
     "secret-spring": {
       storageKey: "bittersweet-journey:secret-spring:complete",
@@ -113,7 +113,7 @@
         zh: "鸣沙山后，一弯清泉留在了地图上。",
         en: "Beyond Mingsha Mountain, a crescent of water remains on the map."
       },
-      seal: "./chapters/secret-spring/assets/seal-secret-spring.svg"
+      seal: "./chapters/secret-spring/assets/seal-secret-spring.svg?v=3ce3b913eaf8"
     },
     "taoist-tower": {
       storageKey: "bittersweet-journey:taoist-tower:complete",
@@ -130,7 +130,7 @@
         zh: "洞窟留在敦煌，文字走向世界。",
         en: "The cave remains in Dunhuang. Its words travel the world."
       },
-      seal: "./chapters/taoist-tower/assets/seal-taoist-tower.svg"
+      seal: "./chapters/taoist-tower/assets/seal-taoist-tower.svg?v=c63c6a0345d0"
     },
     chengde: {
       storageKey: "bittersweet-journey:mountain-resort:complete",
@@ -147,13 +147,21 @@
         zh: "王朝退场后，山水仍坐在原处。",
         en: "After the dynasty recedes, the mountains and water remain seated."
       },
-      seal: "./chapters/mountain-resort/assets/seal-mountain-resort.svg"
+      seal: "./chapters/mountain-resort/assets/seal-mountain-resort.svg?v=0cc4b2079257"
     }
   };
   const body = document.body;
   const languageButtons = [...document.querySelectorAll("[data-language]")];
   const availablePoints = [...document.querySelectorAll(".story-point.available, .story-point.primary")];
   const preview = document.querySelector(".chapter-preview");
+  const thoughtTrail = document.createElementNS('http://www.w3.org/2000/svg','svg');
+  thoughtTrail.setAttribute('class','thought-trail');
+  thoughtTrail.setAttribute('aria-hidden','true');
+  [6,4,2.4].forEach(radius => {
+    const circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    circle.setAttribute('r',radius);thoughtTrail.append(circle);
+  });
+  preview.append(thoughtTrail);
   const experience = document.querySelector(".atlas-experience");
   const enterButton = document.querySelector(".enter-story");
   const unavailable = document.querySelector(".unavailable-note");
@@ -249,7 +257,7 @@
   /* ---------- labels and seals on the map (docs/map-guidance.md §5-6, homepage setup M-6, M-7) ---------- */
 
   // Homepage type setup (M-6), in screen px: wider than 900 px / 900 px and below. Never below 10pt (13.5 px).
-  const HOME_TYPE = { clue: [22, 18], number: [16, 14], context: [16, 14], seal: [36, 30] };
+  const HOME_TYPE = { clue: [22, 16], number: [16, 14], context: [16, 14], seal: [36, 30] };
   const mapSvg = document.querySelector(".china-map");
   const sealLayer = document.querySelector(".chapter-seals");
   const svgNS = "http://www.w3.org/2000/svg";
@@ -293,7 +301,7 @@
 
     // H0: the heading and call-out float over the map on wide screens (L-7)
     const taken = [];
-    [".atlas-intro h1", ".cta-callout"].forEach((selector) => {
+    [".atlas-intro h1", ".cta-callout", ".atlas-navigation", ".atlas-geography-notes"].forEach((selector) => {
       const node = document.querySelector(selector);
       if (!shownElement(node)) return;
       const b = node.getBoundingClientRect();
@@ -310,8 +318,9 @@
       let r = Math.max(core.width, core.height) / 2;
       if (shownElement(extra)) {
         // the symbol includes its mark (道士塔's cave door): labels sit clear of the whole symbol
-        const m = extra.getBBox(), ccx = core.x + core.width / 2, ccy = core.y + core.height / 2;
-        r = Math.max(r, ccx - m.x, m.x + m.width - ccx, ccy - m.y, m.y + m.height - ccy);
+        const rect = extra.getBoundingClientRect(), a = toMap(rect.left,rect.top), b = toMap(rect.right,rect.bottom);
+        const ccx = core.x + core.width / 2 + tx, ccy = core.y + core.height / 2 + ty;
+        r = Math.max(r, ccx-a.x, b.x-ccx, ccy-a.y, b.y-ccy);
       }
       return {
         group, name: group.dataset.story, tx, ty, r,
@@ -325,8 +334,8 @@
       const pad = 2 / scale;
       taken.push({ left: p.cx - p.r - pad, right: p.cx + p.r + pad, top: p.cy - p.r - pad, bottom: p.cy + p.r + pad });
       if (shownElement(p.mark)) {
-        const m = p.mark.getBBox();
-        taken.push({ left: m.x + p.tx, right: m.x + m.width + p.tx, top: m.y + p.ty, bottom: m.y + m.height + p.ty });
+        const b = p.mark.getBoundingClientRect(), a = toMap(b.left,b.top), c = toMap(b.right,b.bottom);
+        taken.push({ left:a.x, right:c.x, top:a.y, bottom:c.y });
       }
     });
 
@@ -351,7 +360,11 @@
     // searched together, most crowded dots first (H-2), so one long label cannot shut a neighbour out. If no
     // arrangement is fully clear, each label falls back to its least-crowded spot.
     const crowding = (p) => points.filter((q) => q !== p && Math.hypot(q.cx - p.cx, q.cy - p.cy) < 90).length;
-    const labelled = [...points].sort((a, b) => crowding(b) - crowding(a)).filter((p) => p.clues.some(shownElement));
+    points.forEach(p => {
+      p.inView = p.cx > area.left && p.cx < area.right && p.cy > area.top && p.cy < area.bottom;
+      [...p.clues,p.number].forEach(node => { node.style.visibility = p.inView ? '' : 'hidden'; });
+    });
+    const labelled = [...points].sort((a, b) => crowding(b) - crowding(a)).filter((p) => p.inView && p.clues.some(shownElement));
     labelled.forEach((p) => {
       const clue = p.clues.find(shownElement);
       p.clues.forEach((node) => { node.style.fontSize = `${size.clue.toFixed(2)}px`; });
@@ -398,15 +411,21 @@
     if (!clear) {
       labelled.forEach((p) => { p.labelBox = null; p.chosen = null; });
       labelled.forEach((p) => {
-        p.chosen = p.candidates.reduce((best, c) => {
+        // Even a crowded overview must leave every chapter dot tappable.
+        const safe = p.candidates.filter(c => points.every(q => distanceToBox(q.cx,q.cy,c.box) > q.r + 2 / scale));
+        p.chosen = safe.reduce((best, c) => {
           const total = c.fixed + clash(p, c);
           return !best || total < best.total ? { ...c, total } : best;
         }, null);
-        p.labelBox = p.chosen.box;
+        p.labelBox = p.chosen?.box || null;
       });
     }
     labelled.forEach((p) => {
       const best = p.chosen;
+      if (!best) {
+        [...p.clues,p.number].forEach(node => { node.style.visibility = 'hidden'; });
+        return;
+      }
       const textX = best.anchor === "start" ? best.x : best.anchor === "end" ? best.x + best.w : best.x + best.w / 2;
       const put = (node, baseline) => {
         node.removeAttribute("transform");
@@ -424,7 +443,7 @@
     points.forEach((p) => {
       const seal = seals[p.name];
       if (!seal) return;
-      if (!state.complete[p.name]) { seal.classList.remove("is-shown"); return; }
+      if (!state.complete[p.name] || !p.inView) { seal.classList.remove("is-shown"); return; }
       const gap = 4 / scale, { cx, cy, r } = p;
       const spots = [
         [cx - r - gap - sealSize, cy + gap], [cx - sealSize / 2, cy + r + gap], [cx + r + gap, cy + gap],
@@ -465,6 +484,7 @@
       });
       labels.forEach((node) => { node.style.visibility = placed ? "" : "hidden"; });
     });
+    window.ATLAS_CAMERA?.layoutLabels(taken, area, scale);
   }
   let layoutQueued = false;
   function scheduleLayout() {
@@ -477,7 +497,7 @@
     zh: {
       "site-title": "山河显影",
       "document-title": "山河显影 · 文化苦旅阅读地图",
-      "view-stamps-aria": "查看已显影的文字印",
+      "view-stamps-aria": "查看已显影的圖章",
       "close-aria": "关闭",
       "stage-aria": "文化苦旅中国故事地图",
       "map-aria": "未完全显影的中国故事地图",
@@ -498,19 +518,19 @@
       unavailable: "这处故事仍在等待显影",
       "receipt-title": "一处山河已经显影",
       "receipt-body": "岷江的水，在这里成为成都平原。",
-      "cta-message": "地图尚未全部显影，请继续阅读",
-      "cta-hint": "滚动／悬停／点击以显影",
+      "cta-message": "循着光点，走进文字里的山河",
+      "cta-hint": "拖动探索 · 滚轮／双指缩放 · 点击光点开卷",
       reset: "重置阅读痕迹",
       source: "文本：余秋雨《文化苦旅》",
-      "view-stamps": "文字印",
-      "stamp-kicker": "已显影文字",
-      "stamp-title": "文字印",
-      "stamp-desc": "每完成一段旅程，就会留下一枚字的印记。"
+      "view-stamps": "圖章",
+      "stamp-kicker": "已收藏圖章",
+      "stamp-title": "圖章",
+      "stamp-desc": "每完成一段旅程，就会留下一枚山河圖章。"
     },
     en: {
       "site-title": "Land, Made Visible",
       "document-title": "Land, Made Visible · A Reading Atlas of A Bittersweet Journey",
-      "view-stamps-aria": "View the collected word seals",
+      "view-stamps-aria": "View the collected seals",
       "close-aria": "Close",
       "stage-aria": "Story map of China for A Bittersweet Journey Through Culture",
       "map-aria": "A partly revealed story map of China",
@@ -531,14 +551,14 @@
       unavailable: "This story is still waiting to be revealed",
       "receipt-title": "One landscape brought to light",
       "receipt-body": "Here, the Min River becomes the Chengdu Plain.",
-      "cta-message": "The map is not fully revealed yet, keep reading",
-      "cta-hint": "Scroll / hover / click to reveal",
+      "cta-message": "Follow a story point into the landscape",
+      "cta-hint": "Drag to explore · Scroll or pinch to zoom · Tap a story point to begin",
       reset: "Reset reading trace",
       source: "Text: Yu Qiuyu, A Bittersweet Journey Through Culture",
-      "view-stamps": "Word Seals",
-      "stamp-kicker": "Characters Revealed",
-      "stamp-title": "Word Seals",
-      "stamp-desc": "Each finished journey leaves behind a single character."
+      "view-stamps": "Seals",
+      "stamp-kicker": "Collected seals",
+      "stamp-title": "Seals",
+      "stamp-desc": "Each finished journey leaves a seal of its landscape."
     }
   };
 
@@ -627,7 +647,7 @@
     const cy = core.top + core.height / 2 - host.top;
     const width = preview.offsetWidth;
     const height = preview.offsetHeight;
-    const near = 28;
+    const near = 76;
     const gaps = [near, near + 44, near + 88, near + 132];
     const shift = 44;
     const margin = 12;
@@ -709,15 +729,34 @@
     preview.style.top = `${Math.round(best.top)}px`;
     preview.style.setProperty("--tip", `${Math.round(Math.min(Math.max(tip, 18), limit - 18))}px`);
     preview.style.setProperty("--lead", `${Math.max(0, best.gap - near)}px`);
+    const edgeTip = Math.min(Math.max(tip,32),limit-32);
+    const start = vertical ? [edgeTip,best.side==='below'?0:height] : [best.side==='right'?0:width,edgeTip];
+    const end = [cx-best.left,cy-best.top];
+    [...thoughtTrail.children].forEach((circle,i) => {
+      const t=[.28,.56,.8][i];
+      circle.setAttribute('cx',start[0]+(end[0]-start[0])*t);
+      circle.setAttribute('cy',start[1]+(end[1]-start[1])*t);
+    });
   }
 
   function showPreview(point) {
     window.clearTimeout(hideTimer);
+    const newThought = anchorPoint !== point || !preview.classList.contains('is-visible');
     anchorPoint = point;
     activeStory = point.dataset.story;
     renderPreview();
     positionPreview(point);
     preview.classList.add("is-visible");
+    if (newThought) {
+      [...thoughtTrail.children].reverse().forEach((circle, i) => {
+        circle.getAnimations().forEach(animation => animation.cancel());
+        if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          circle.animate([{opacity: 0}, {opacity: 1}], {
+            duration: 90, delay: i * 45, easing: 'ease-out', fill: 'backwards'
+          });
+        }
+      });
+    }
   }
 
   function hidePreview() {
@@ -729,6 +768,8 @@
   // A short grace period lets the pointer travel from the dot into the card.
   function scheduleHide() {
     window.clearTimeout(hideTimer);
+    // Touch previews stay open until a second tap, an outside tap or a map gesture.
+    if (window.matchMedia('(hover: none)').matches) return;
     hideTimer = window.setTimeout(hidePreview, 260);
   }
 
@@ -855,8 +896,8 @@
   });
 
   availablePoints.forEach((point) => {
-    point.addEventListener("mouseenter", () => showPreview(point));
-    point.addEventListener("mouseleave", scheduleHide);
+    point.addEventListener("pointerenter", event => { if (event.pointerType === 'mouse' && !window.ATLAS_CAMERA?.moving) showPreview(point); });
+    point.addEventListener("pointerleave", event => { if (event.pointerType === 'mouse') scheduleHide(); });
     point.addEventListener("focus", () => showPreview(point));
     point.addEventListener("blur", scheduleHide);
     // A touch tap fires an emulated mouseenter before click, so what the callout looked like
@@ -881,8 +922,8 @@
   });
   enterButton.addEventListener("click", () => enterStory(activeStory));
 
-  preview.addEventListener("mouseenter", () => window.clearTimeout(hideTimer));
-  preview.addEventListener("mouseleave", scheduleHide);
+  preview.addEventListener("pointerenter", () => window.clearTimeout(hideTimer));
+  preview.addEventListener("pointerleave", event => { if (event.pointerType === 'mouse') scheduleHide(); });
   preview.addEventListener("focusin", () => window.clearTimeout(hideTimer));
   preview.addEventListener("focusout", scheduleHide);
   document.addEventListener("pointerdown", (event) => {
@@ -943,6 +984,47 @@
   }
 
   applyRealGeography();
+  new ResizeObserver(entries => {
+    body.style.setProperty('--atlas-intro-height',`${entries[0].contentRect.height}px`);
+    scheduleLayout();
+  }).observe(document.querySelector('.atlas-intro'));
+  const leaderLayer = document.createElementNS(svgNS, 'g');
+  leaderLayer.setAttribute('class', 'atlas-location-leaders');
+  leaderLayer.setAttribute('aria-hidden', 'true');
+  document.querySelector('.story-points').before(leaderLayer);
+  const crowded = { 'taoist-tower': [314,245,'dunhuang'], 'mogao-caves': [300,300,'dunhuang'], yangguan: [235,304,'yangguan'] };
+  const leaders = Object.fromEntries(Object.keys(crowded).map(name => {
+    const line = document.createElementNS(svgNS, 'path');leaderLayer.append(line);return [name,line];
+  }));
+  window.addEventListener('atlas-camera-change', () => {
+    const k = window.ATLAS_CAMERA?.state.k || 1;
+    Object.entries(crowded).forEach(([name,[x,y,place]]) => {
+      const anchor = window.REAL_GEOGRAPHY.global.places[place];
+      const offset = DISPLAY_OFFSETS[name];
+      const dx = offset.x / k, dy = offset.y / k;
+      document.querySelector(`[data-story="${name}"]`).setAttribute('transform', `translate(${anchor.x-x+dx} ${anchor.y-y+dy})`);
+      leaders[name].setAttribute('d',`M${anchor.x},${anchor.y}L${anchor.x+dx},${anchor.y+dy}`);
+    });
+    // Keep chapter symbols comfortably sized at every scale, like their labels.
+    const scale = Math.hypot(mapSvg.getScreenCTM().a,mapSvg.getScreenCTM().b);
+    document.querySelectorAll('.story-point').forEach(group => {
+      const complete = state.complete[group.dataset.story];
+      const core = group.querySelector('.point-core');
+      core.style.r = `${(complete ? 6 : 4) / scale}px`;
+      core.style.strokeWidth = `${1.5 / scale}px`;
+      const mark = group.querySelector('.point-archive-mark');
+      if (mark) {
+        const cx = core.getAttribute('cx'), cy = core.getAttribute('cy');
+        mark.setAttribute('transform', `translate(${cx} ${cy}) scale(${1/scale}) translate(${-cx} ${-cy})`);
+      }
+      group.querySelectorAll('.point-glow,.point-pulse,.point-orbit').forEach(node => {
+        node.style.r = `${(node.classList.contains('point-glow') ? 23 : 10) / scale}px`;
+      });
+    });
+    if (window.ATLAS_CAMERA?.moving) hidePreview();
+    else if (anchorPoint && preview.classList.contains('is-visible')) positionPreview(anchorPoint);
+    scheduleLayout();
+  });
   window.requestAnimationFrame(centreMapOnPoints);
   renderLanguage();
   renderProgress();
@@ -954,5 +1036,63 @@
     body.dataset.returningStory = returning;
     body.classList.add("is-returning");
     window.history.replaceState({}, "", "./index.html");
+    // Run after the return-page curtain opens and the physical map camera is mounted.
+    let started = false;
+    const arrivalDeadline = performance.now() + 8000;
+    const collect = () => {
+      if (started) return;
+      if (!window.ATLAS_CAMERA || document.documentElement.matches('.land-arriving, .land-in-transit')) {
+        if (performance.now() > arrivalDeadline) return;
+        window.requestAnimationFrame(collect);return;
+      }
+      started = true;collectReturningSeal(returning);
+    };
+    if (document.readyState === 'complete') requestAnimationFrame(collect);
+    else window.addEventListener('load',()=>requestAnimationFrame(collect),{once:true});
+  }
+
+  async function collectReturningSeal(name) {
+    const target=document.querySelector('.site-progress');
+    const source=document.querySelector(`[data-story="${name}"] .point-core`);
+    if(!target||!source)return;
+    body.dataset.sealCollection='preparing';
+    const announcement=document.createElement('span');
+    announcement.className='seal-collection-status';announcement.setAttribute('role','status');
+    document.body.append(announcement);
+    const received=()=>{
+      announcement.textContent=state.language==='en'?`${STORIES[name].title.en} seal added to your collection.`:`《${STORIES[name].title.zh}》印章已收入蒐集盒。`;
+      body.dataset.sealCollection='collected';
+    };
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches){received();return;}
+    const image=document.createElement('img');
+    image.className='flying-collection-seal';image.alt='';image.setAttribute('aria-hidden','true');
+    image.src=STORIES[name].seal;
+    try{await image.decode();}catch{received();return;}
+    // A remembered zoom may put this chapter offscreen. Fit the story points before takeoff.
+    const bounds=source.getBoundingClientRect(),frame=mapSvg.getBoundingClientRect();
+    if(bounds.left<frame.left+10||bounds.right>frame.right-10||bounds.top<frame.top+10||bounds.bottom>frame.bottom-10)window.ATLAS_CAMERA.reset();
+    await new Promise(requestAnimationFrame);
+    const a=source.getBoundingClientRect(),b=target.getBoundingClientRect();
+    const sx=a.left+a.width/2-24,sy=a.top+a.height/2-24;
+    const ex=b.left+b.width/2-24,ey=b.top+b.height/2-24;
+    const transform=(x,y,scale,rotation)=>`translate(${x}px,${y}px) scale(${scale}) rotate(${rotation}deg)`;
+    image.style.transform=transform(sx,sy,.3,-14);document.body.append(image);
+    body.dataset.sealCollection='flying';
+    let flight;
+    const cancel=()=>flight?.cancel();
+    window.addEventListener('resize',cancel,{once:true});window.addEventListener('pagehide',cancel,{once:true});
+    try {
+      flight=image.animate([
+        {transform:transform(sx,sy,.3,-14),opacity:0,offset:0},
+        {transform:transform(sx,sy-18,1.1,-7),opacity:1,offset:.16},
+        {transform:transform(sx+(ex-sx)*.45,Math.min(sy,ey)+70,.85,7),opacity:1,offset:.58},
+        {transform:transform(ex,ey,.28,0),opacity:0,offset:1}
+      ],{duration:950,easing:'cubic-bezier(.3,.05,.3,1)',fill:'forwards'});
+      await flight.finished;
+    } catch {} finally {
+      image.remove();window.removeEventListener('resize',cancel);window.removeEventListener('pagehide',cancel);
+      received();target.classList.add('is-receiving');
+      window.setTimeout(()=>target.classList.remove('is-receiving'),300);
+    }
   }
 })();

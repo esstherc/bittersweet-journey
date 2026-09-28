@@ -92,8 +92,11 @@ body[data-language="en"] .site-masthead .site-wordmark span {
 body[data-language="en"] .site-masthead .site-progress { letter-spacing: .08em; }
 @media (max-width: 900px) {
   :root { --site-header-height: 64px; --site-header-pad: 18px; }
-  .site-masthead { grid-template-columns: 1fr auto; }
-  .site-masthead .site-progress { display: none; }
+  .site-masthead { grid-template-columns: 1fr auto auto; column-gap: 12px; }
+  .site-masthead .site-progress { display: flex; gap: 0; margin: 0; padding: 6px; font-size: 13.5px; }
+  .site-masthead .site-progress > [data-site-progress-label] { display: none; }
+  .site-masthead .site-progress b { padding-left: 0; border-left: 0; white-space: nowrap; }
+  body[data-language="en"] .site-masthead .site-wordmark span { max-width: 40vw; overflow: hidden; text-overflow: ellipsis; font-size: 15px; letter-spacing: .03em; }
 }
 @media (max-width: 520px) {
   .site-masthead .site-wordmark span { font-size: 17px; }

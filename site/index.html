@@ -14,11 +14,12 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&family=Ysabeau:ital,wght@0,400..700;1,400..700&display=swap"
     />
-    <link rel="stylesheet" href="./styles/atlas.css?v=bc93ea20a201" />
+    <link rel="stylesheet" href="./styles/atlas.css?v=503a53f09c58" />
+    <link rel="stylesheet" href="./styles/atlas-physical.css?v=434fc0f7f120" />
     <link rel="stylesheet" href="./styles/page-transition.css?v=7934fbdd1485">
     <script src="./scripts/page-transition.js?v=091ff79e91f6"></script>
-    <link rel="stylesheet" href="./styles/site-header.css?v=d3328a0c63b4">
-    <script src="./scripts/site-header.js?v=97511d03f87c"></script>
+    <link rel="stylesheet" href="./styles/site-header.css?v=56c98c9f6f41">
+    <script src="./scripts/site-header.js?v=2d143aa9f433"></script>
     <script src="./scripts/min-type.js?v=880bda1eac59"></script>
   </head>
   <body data-language="zh">
@@ -34,7 +35,7 @@
         class="atlas-progress site-progress"
         aria-haspopup="dialog"
         data-aria="view-stamps-aria"
-        aria-label="查看已显影的文字印"
+        aria-label="查看已显影的圖章"
       >
         <span data-copy="progress-label" data-site-progress-label>已显影</span>
         <b><i class="progress-count" data-site-progress-count>00</i> / 9</b>
@@ -59,8 +60,8 @@
             <path d="M1 7H35M28 1L38 7L28 13" />
           </svg>
           <span class="cta-text">
-            <strong data-copy="cta-message">地图尚未全部显影，请继续阅读</strong>
-            <em data-copy="cta-hint">滚动／悬停／点击以显影</em>
+            <strong data-copy="cta-message">循着光点，走进文字里的山河</strong>
+            <em data-copy="cta-hint">拖动探索 · 滚轮／双指缩放 · 点击光点开卷</em>
           </span>
         </div>
       </section>
@@ -117,6 +118,7 @@
           <g class="story-points">
             <g class="story-point available" role="button" tabindex="0" data-story="kashgar" aria-label="有人把来世，选在这里。">
               <circle class="point-glow" cx="118" cy="327" r="35" />
+              <circle class="point-pulse" cx="118" cy="327" r="11" />
               <circle class="point-core" cx="118" cy="327" r="3" />
               <text x="128" y="313" class="point-number">09</text>
               <text x="108" y="335" text-anchor="end" class="point-clue unread cn" lang="zh">有人把来世，选在这里</text>
@@ -140,7 +142,6 @@
               <circle class="point-glow" cx="286" cy="272" r="42" />
               <circle class="point-pulse" cx="286" cy="272" r="14" />
               <circle class="point-core" cx="286" cy="272" r="4" />
-              <circle class="point-orbit" cx="286" cy="272" r="12" />
               <text x="275" y="260" class="point-number">07</text>
               <text x="275" y="280" class="point-clue unread cn" lang="zh">沙山后有一弯水</text>
               <text x="275" y="280" class="point-clue unread en" lang="en">Water beyond the dune</text>
@@ -152,7 +153,6 @@
               <circle class="point-glow" cx="314" cy="245" r="39" />
               <circle class="point-pulse" cx="314" cy="245" r="13" />
               <circle class="point-core" cx="314" cy="245" r="4" />
-              <path class="point-archive-mark" d="M308 252V238C308 232 320 232 320 238V252M304 252H324" />
               <text x="325" y="218" class="point-number">05</text>
               <text x="325" y="242" class="point-clue unread cn" lang="zh">一扇洞门打开</text>
               <text x="325" y="242" class="point-clue unread en" lang="en">A cave opens</text>
@@ -237,8 +237,13 @@
     </main>
 
     <footer class="atlas-footer">
-      <span class="atlas-citation" data-copy="source">文本：余秋雨《文化苦旅》</span>
-      <button class="view-stamps" type="button" data-copy="view-stamps">文字印</button>
+      <div class="atlas-footer-source">
+        <span class="atlas-citation" data-copy="source">文本：余秋雨《文化苦旅》</span>
+        <button class="atlas-notes-toggle" type="button" aria-expanded="false" aria-controls="atlas-geography-notes">
+          <span aria-hidden="true">ⓘ</span><span class="atlas-notes-label">地图说明与数据来源</span>
+        </button>
+      </div>
+      <button class="view-stamps" type="button" data-copy="view-stamps">圖章</button>
       <button class="reset-progress" type="button" data-copy="reset">重置阅读痕迹</button>
     </footer>
 
@@ -251,9 +256,9 @@
         aria-describedby="stamp-modal-desc"
       >
         <button type="button" class="stamp-close" data-aria="close-aria" aria-label="关闭">×</button>
-        <h2 id="stamp-modal-title" data-copy="stamp-title">文字印</h2>
+        <h2 id="stamp-modal-title" data-copy="stamp-title">圖章</h2>
         <p id="stamp-modal-desc" class="stamp-desc" data-copy="stamp-desc">
-          每完成一段旅程，就会留下一枚字的印记。
+          每完成一段旅程，就会留下一枚山河圖章。
         </p>
         <p class="stamp-count"></p>
         <div class="stamp-grid"></div>
@@ -261,6 +266,8 @@
     </div>
 
     <script src="./data/real-geography.js?v=49a9ddc8d22f"></script>
-    <script src="./scripts/atlas.js?v=1edb00a1e529"></script>
+    <script src="./scripts/atlas.js?v=2dff84bfc471"></script>
+    <script src="./data/atlas-physical.js?v=0a7abe3264ab"></script>
+    <script src="./scripts/atlas-camera.js?v=7b44739cd585"></script>
   </body>
 </html>

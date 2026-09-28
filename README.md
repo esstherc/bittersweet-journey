@@ -86,4 +86,4 @@ python3 tools/build_taoist_world_geography.py \
 
 ## 版本合并与交互
 
-2026-09-19 合并喀什章节及共享纸色转场，保留文字印收藏、开场与语言同步更新。九篇计划及合并记录见 [合并说明](docs/merge-2026-09-19.md)。总图预览仅呈现问题和进入按钮；具体地名按显影状态显示。共享转场位于 `site/scripts/page-transition.js` 与 `site/styles/page-transition.css`。
+2026-09-19 合并喀什章节及共享纸色转场，保留圖章收藏、开场与语言同步更新。九篇计划及合并记录见 [合并说明](docs/merge-2026-09-19.md)。总图预览仅呈现问题和进入按钮；具体地名按显影状态显示。共享转场位于 `site/scripts/page-transition.js` 与 `site/styles/page-transition.css`。

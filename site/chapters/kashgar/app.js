@@ -4,7 +4,8 @@
   const source = window.KASHGAR_GEOGRAPHY;
   const $ = s => document.querySelector(s);
   const svgNS = 'http://www.w3.org/2000/svg';
-  const mobile = () => matchMedia('(max-width:760px)').matches;
+  const mobile = () => matchMedia('(max-width:900px)').matches;
+  const readerScroll = $('.reader-scroll');
   const reduced = () => matchMedia('(prefers-reduced-motion:reduce)').matches;
   const saved = key => { try { return localStorage.getItem(key); } catch { return null; } };
   const save = (key, value) => { try { localStorage.setItem(key, value); } catch {} };
@@ -22,6 +23,8 @@
   Object.assign(copy.zh,{inPassage:'本段地点',allPlaces:'全部地点',exploring:'临时查看 · 滚动正文继续',resume:'回到本段 ↗',instruction:'点击地名查看地图，继续滚动即可回到随文浏览。'});
   Object.assign(copy.en,{inPassage:'In this passage',allPlaces:'All places',exploring:'Preview · scroll text to resume',resume:'Back to this passage ↗',instruction:'Select a place to look closer. Keep scrolling the text to return to the story.'});
   const t = k => copy[state.lang][k] || k;
+  Object.assign(copy.zh, {data:'地图说明与数据来源', dataTitle:'地图说明与数据来源', source:'文本：余秋雨《文化苦旅》', backAtlas:'← 总地图', finish:'完成本章 · 返回总图'});
+  Object.assign(copy.en, {data:'Map notes & sources', dataTitle:'Map notes & sources', backAtlas:'← Atlas', finish:'Complete chapter · Return to atlas'});
   const places = new Map((source?.places || []).map(p => [p.id, p]));
   let refs = new Map(), anchors = [], paragraphs = [], scrollFrame = 0, animation = 0, mapSize = {w:900,h:760}, cameraFrame = 0;
   const mercator = ([lon,lat]) => [lon * Math.PI / 180, Math.log(Math.tan(Math.PI / 4 + Math.max(-80, Math.min(80,lat)) * Math.PI / 360))];
@@ -117,7 +120,7 @@
   }
   function setFollow(value){
     state.follow=value;
-    if(!value)state.explorationScrollY=window.scrollY;
+    if(!value)state.explorationScrollY=readerScroll.scrollTop;
     $('#resume').hidden=value;$('#mode-status').textContent=t(value?'following':'exploring');
   }
   function resumeReading(animate=true){
@@ -158,8 +161,18 @@
     $('#cross-chapter').hidden=p.id!=='kashgar';$('#cross-chapter').textContent=t('cross');$('#place-card').hidden=false;$('#place-card').scrollTop=0;
   }
   function excerpt(text,p){const terms=p.aliases[state.lang]||[];const hits=terms.map(x=>text.indexOf(x)).filter(x=>x>=0);const i=hits.length?Math.min(...hits):0;const start=Math.max(0,i-(state.lang==='zh'?12:30)),length=state.lang==='zh'?52:115;return `${start?'…':''}${text.slice(start,start+length)}${text.length>start+length?'…':''}`;}
-  function currentReading(){const threshold=readingTop()+45;let p=paragraphs[0];paragraphs.forEach(el=>{if(el.getBoundingClientRect().top<=threshold)p=el;});return p?{section:+p.dataset.section,paragraph:+p.dataset.paragraph,scene:+p.querySelector('[data-scene]').dataset.scene,offset:p.getBoundingClientRect().top-readingTop()}:null;}
-  function readingTop(){return parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header'))+(mobile()&&innerHeight>550?$('.map-stage').getBoundingClientRect().height:0);}
+  function readingAnchorAt(threshold){
+    let anchor=anchors[0];
+    anchors.forEach(el=>{if(el.getBoundingClientRect().top<=threshold)anchor=el;});
+    // A section begins at its heading, even when its first paragraph is below the reading line.
+    document.querySelectorAll('#reading .reading-section').forEach(section=>{
+      const first=section.querySelector('[data-scene]');
+      if(first&&section.getBoundingClientRect().top<=threshold&&first.getBoundingClientRect().top>threshold)anchor=first;
+    });
+    return anchor;
+  }
+  function currentReading(){const anchor=readingAnchorAt(readingTop()+45),p=anchor?.closest('p');return p?{section:+p.dataset.section,paragraph:+p.dataset.paragraph,scene:+anchor.dataset.scene,offset:p.getBoundingClientRect().top-readingTop()}:null;}
+  function readingTop(){return readerScroll.getBoundingClientRect().top;}
   function scrollToParagraph(ref,highlight=true){const el=$(`#p-${ref.section}-${ref.paragraph}`);if(!el)return;el.scrollIntoView({block:'start',behavior:reduced()?'auto':'smooth'});if(highlight){document.querySelectorAll('.is-target').forEach(x=>x.classList.remove('is-target'));el.classList.add('is-target');el.setAttribute('tabindex','-1');el.focus({preventScroll:true});} }
   function jumpTo(ref){if(!state.returnTo)state.returnTo=state.selectionOrigin||currentReading();$('#return-reading').hidden=!state.returnTo;resumeReading(false);collapseMap();requestAnimationFrame(()=>scrollToParagraph(ref));}
   function collapseMap(){document.body.classList.remove('map-expanded');updateExpand();resizeMap(false);}
@@ -188,16 +201,16 @@
     const nav=$('#section-nav');nav.replaceChildren();chapter[state.lang].sections.forEach((s,i)=>{const b=safeText('button',s.label);b.setAttribute('aria-label',`${state.lang==='zh'?'原文第':'Section '}${s.label}${state.lang==='zh'?'节':''}`);b.addEventListener('click',()=>{resumeReading(false);collapseMap();requestAnimationFrame(()=>$('#section-'+(i+1)).scrollIntoView({block:'start',behavior:reduced()?'auto':'smooth'}));});nav.append(b);});
     $('#place-directory').replaceChildren(...[...places.keys()].filter(id=>refs.has(id)).map(makePlaceButton));renderContextPlaces();
   }
-  function renderLanguage(){document.documentElement.lang=state.lang==='zh'?'zh-CN':'en';document.body.dataset.language=state.lang;document.querySelectorAll('[data-copy]').forEach(el=>el.textContent=t(el.dataset.copy));document.querySelectorAll('[data-language]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.language===state.lang)));renderReading();document.title=state.opened?'山河显影 · '+t('fullTitle'):'山河显影 · '+t('invitation');updateExpand();setFollow(state.follow);renderProgress();renderSources();}
+  function renderLanguage(){document.documentElement.lang=state.lang==='zh'?'zh-CN':'en';document.body.dataset.language=state.lang;document.querySelectorAll('[data-copy]').forEach(el=>el.textContent=t(el.dataset.copy));document.querySelectorAll('[data-language]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.language===state.lang)));renderReading();document.querySelectorAll('.back-atlas').forEach(link=>{const url=new URL(link.href);url.searchParams.set('lang',state.lang);link.href=url.href;});document.title=state.opened?'山河显影 · '+t('fullTitle'):'山河显影 · '+t('invitation');updateExpand();setFollow(state.follow);renderProgress();renderSources();}
   function renderProgress(){const scene=chapter.scenes[state.scene-1];[...$('#section-nav').children].forEach((b,i)=>b.setAttribute('aria-current',String(i===scene.section-1)));$('#anchor-count').textContent=`${String(state.scene).padStart(2,'0')} / 16`;$('#progress').style.width=`${state.scene/16*100}%`;renderContextPlaces();}
   function updateScroll(){
-    scrollFrame=0;if(!state.opened||$('#completion').open)return;
-    const threshold=readingTop()+(mobile()?55:window.innerHeight*.22);let scene=1;
-    anchors.forEach(el=>{if(el.getBoundingClientRect().top<=threshold)scene=+el.dataset.scene;});
+    scrollFrame=0;if(!state.opened||document.body.classList.contains('is-completing'))return;
+    const threshold=readingTop()+Math.min(150,readerScroll.clientHeight*.22);
+    const scene=+(readingAnchorAt(threshold)?.dataset.scene||1);
     const changed=scene!==state.scene;
     if(changed){state.scene=scene;state.maxScene=Math.max(state.maxScene,scene);save('bittersweet-journey:kashgar:scene',String(scene));renderProgress();}
     // Looking at a place is temporary: text scrolling always regains the narrative camera.
-    if(!state.follow&&(changed||Math.abs(window.scrollY-state.explorationScrollY)>48))resumeReading();
+    if(!state.follow&&(changed||Math.abs(readerScroll.scrollTop-state.explorationScrollY)>48))resumeReading();
     else if(changed&&state.follow)moveCamera(sceneCamera());
   }
 
@@ -207,7 +220,7 @@
       // I–III are manually checked one-to-one; IV and V contain merged paragraphs.
       let pi=reading.paragraph;if(reading.section===3&&pi>=9)pi=lang==='en'?9:9;
       if(reading.section===4&&pi>=6){if(lang==='en')pi=pi===6||pi===7?6:pi-1;else pi=pi===6?6:pi+1;}
-      pi=Math.min(pi,newCount-1);const el=$(`#p-${reading.section}-${pi}`)||sceneAnchors[0];requestAnimationFrame(()=>{const absolute=window.scrollY+el.getBoundingClientRect().top;window.scrollTo({top:absolute-readingTop()-(reading.offset||0),behavior:'instant'});});
+      pi=Math.min(pi,newCount-1);const el=$(`#p-${reading.section}-${pi}`)||sceneAnchors[0];requestAnimationFrame(()=>{const absolute=readerScroll.scrollTop+el.getBoundingClientRect().top;readerScroll.scrollTo({top:absolute-readingTop()-(reading.offset||0),behavior:'instant'});});
     }}
     if(selected){document.querySelectorAll('.text-place').forEach(el=>el.classList.toggle('is-selected',el.dataset.place===selected));if(!$('#place-card').hidden)renderCard();}
     // Return anchors use semantic scene IDs across languages, never raw indices.
@@ -229,51 +242,58 @@
     `Retrieved ${source?.generated||'2026-09-18'}. The downloadable GeoJSON and offline bundle share the same build. Features retain source identifiers.`
   ];$('#data-description').replaceChildren(...content.map(x=>safeText('p',x)));}
 
-  // Opening and completion share the same real geographic backdrop and chapter seal.
-  function renderCeremonyGeography(){
-    const b=boundsOf([[69,30],[98,47]]),scale=Math.min(1120/(b[2]-b[0]),620/(b[3]-b[1]));
-    const projected=c=>{const [x,y]=mercator(c);return [(x-(b[0]+b[2])/2)*scale+600,((b[1]+b[3])/2-y)*scale+455];};
-    const line=c=>c.map((p,i)=>`${i?'L':'M'}${projected(p).map(n=>n.toFixed(2)).join(',')}`).join('');
-    document.querySelectorAll('.ceremony-landforms').forEach(group=>{
-      group.replaceChildren();features.filter(f=>['tian-shan','kunlun','pamir','taklamakan','tarim','yarkand-river'].includes(f.properties.place)).forEach(f=>{
-        const g=f.geometry;let d='';
-        if(g.type==='Polygon')d=g.coordinates.map(c=>line(c)+'Z').join('');
-        if(g.type==='MultiPolygon')d=g.coordinates.map(p=>p.map(c=>line(c)+'Z').join('')).join('');
-        if(g.type==='LineString')d=line(g.coordinates);
-        if(g.type==='MultiLineString')d=g.coordinates.map(line).join('');
-        group.append(node('path',{d,class:'ceremony-'+f.properties.kind,'fill-rule':'evenodd','data-source-place':f.properties.place}));
-      });
-    });
-  }
   function enterReading(scene=1){
     document.body.classList.remove('is-unopened');
+    document.body.classList.add('is-open');
     state.opened=true;state.scene=scene;state.maxScene=Math.max(state.maxScene,scene);state.selected=null;setFollow(true);
     save('bittersweet-journey:kashgar:started','true');document.title='山河显影 · '+t('fullTitle');renderProgress();resizeMap(false);
     requestAnimationFrame(()=>{
       if(scene>1){const anchor=anchors.find(a=>+a.dataset.scene===scene);anchor?.closest('p').scrollIntoView({block:'start',behavior:'instant'});}
-      else window.scrollTo({top:0,behavior:'instant'});
+      else readerScroll.scrollTo({top:0,behavior:'instant'});
       $('#reading').setAttribute('tabindex','-1');$('#reading').focus({preventScroll:true});
     });
   }
+  let completionTimer=null;
   function completeChapter(){
-    if($('#completion').open)return;
+    if(document.body.classList.contains('is-completing'))return;
     save('bittersweet-journey:kashgar:complete','true');state.maxScene=16;
-    hideCard();drawMap();$('#completion').showModal();announce(t('revealed')+' · '+t('fullTitle'));
+    hideCard();closeNotes();
+    document.body.classList.add('is-completing');
+    $('#completion').setAttribute('aria-hidden','false');
+    document.querySelectorAll('.chapter-layout, .site-masthead, .bottom-bar').forEach(el=>el.inert=true);
+    completionTimer=setTimeout(()=>{
+      const destination=`../../index.html?revealed=kashgar&lang=${state.lang}`;
+      if(window.LAND_TRANSITION)window.LAND_TRANSITION.navigate(destination);
+      else location.href=destination;
+    },3000);
   }
-  $('#stay-reading').addEventListener('click',()=>$('#completion').close());
-  renderCeremonyGeography();
+  window.addEventListener('pagehide',()=>clearTimeout(completionTimer));
+  window.addEventListener('pageshow',event=>{
+    if(!event.persisted)return;
+    clearTimeout(completionTimer);
+    document.body.classList.remove('is-completing');
+    $('#completion').setAttribute('aria-hidden','true');
+    document.querySelectorAll('.chapter-layout, .site-masthead, .bottom-bar').forEach(el=>el.inert=false);
+  });
 
   $('#close-card').addEventListener('click',()=>{resumeReading();$('.place-index summary').focus({preventScroll:true});});
   $('#resume').addEventListener('click',()=>{resumeReading();$('.place-index summary').focus({preventScroll:true});});
   $('#reset-map').addEventListener('click',()=>{state.selected=null;hideCard();setFollow(false);moveCamera(cameraFor(region));});
   $('#toggle-map').addEventListener('click',()=>{document.body.classList.toggle('map-expanded');updateExpand();});
-  $('#return-reading').addEventListener('click',()=>{const ref=state.returnTo;if(!ref)return;state.returnTo=null;$('#return-reading').hidden=true;resumeReading(false);collapseMap();requestAnimationFrame(()=>{const el=$(`#p-${ref.section}-${ref.paragraph}`);if(el){window.scrollTo({top:window.scrollY+el.getBoundingClientRect().top-readingTop()-(ref.offset||0),behavior:reduced()?'instant':'smooth'});}});});
+  $('#return-reading').addEventListener('click',()=>{const ref=state.returnTo;if(!ref)return;state.returnTo=null;$('#return-reading').hidden=true;resumeReading(false);collapseMap();requestAnimationFrame(()=>{const el=$(`#p-${ref.section}-${ref.paragraph}`);if(el){readerScroll.scrollTo({top:readerScroll.scrollTop+el.getBoundingClientRect().top-readingTop()-(ref.offset||0),behavior:reduced()?'instant':'smooth'});}});});
   $('#zoom-in').addEventListener('click',()=>zoom(1.55));$('#zoom-out').addEventListener('click',()=>zoom(1/1.55));
   function zoom(factor){setFollow(false);const scale=Math.max(250,Math.min(1800000,state.camera.scale*factor));moveCamera({...state.camera,scale});}
   document.querySelectorAll('[data-language]').forEach(b=>b.addEventListener('click',()=>changeLanguage(b.dataset.language)));
-  $('#data-button').addEventListener('click',()=>$('#data-dialog').showModal());$('#close-data').addEventListener('click',()=>$('#data-dialog').close());
+  function closeNotes(){ $('#data-dialog').close(); document.body.classList.remove('notes-open'); $('#data-button').setAttribute('aria-expanded','false'); }
+  $('#data-button').addEventListener('click',()=>{
+    if($('#data-dialog').open){closeNotes();return;}
+    $('#data-dialog').show();document.body.classList.add('notes-open');$('#data-button').setAttribute('aria-expanded','true');
+  });
+  $('#close-data').addEventListener('click',()=>{closeNotes();$('#data-button').focus();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#data-dialog').open){closeNotes();$('#data-button').focus();}});
+  document.addEventListener('click',e=>{if($('#data-dialog').open&&!e.target.closest('#data-dialog, #data-button'))closeNotes();});
   $('#finish').addEventListener('click',completeChapter);
-  window.addEventListener('scroll',()=>{if(!scrollFrame)scrollFrame=requestAnimationFrame(updateScroll);},{passive:true});
+  readerScroll.addEventListener('scroll',()=>{if(!scrollFrame)scrollFrame=requestAnimationFrame(updateScroll);},{passive:true});
   const mapObserver=new ResizeObserver(()=>{cancelAnimationFrame(cameraFrame);cameraFrame=requestAnimationFrame(()=>resizeMap(false));});
   mapObserver.observe($('#map'));mapObserver.observe($('.map-heading'));
   let pointer=null,dragged=false;
