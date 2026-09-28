@@ -133,6 +133,23 @@
       const visibility = () => dialog.classList.toggle('is-background-hidden', document.hidden);
       document.addEventListener('visibilitychange', visibility);
       visibility();
+    } else {
+      const landscape = document.querySelector('meta[name="chapter-landscape"]');
+      if (landscape) {
+        dialog.classList.add('has-painted-landscape');
+        if (landscape.dataset.position) {
+          dialog.style.setProperty('--chapter-landscape-position', landscape.dataset.position);
+        }
+        const scene = make('div', 'chapter-painted-scene');
+        scene.setAttribute('aria-hidden', 'true');
+        const painting = make('img', 'chapter-painted-image');
+        painting.alt = '';
+        painting.decoding = 'async';
+        painting.fetchPriority = 'high';
+        painting.src = landscape.content;
+        scene.append(painting);
+        sheet.append(scene);
+      }
     }
     // Reparent the real header so its styles, language handlers and focus state
     // remain identical on the atlas, title leaf and reading spread.

@@ -79,6 +79,43 @@ html.has-chapter-opening .reader-panel:focus { outline: none; }
 
 #chapter-leaf .chapter-leaf-title:focus { outline: none; }
 
+/* Chapter-specific paintings retain a quiet paper sky behind the title. */
+#chapter-leaf .chapter-painted-scene {
+  position: absolute; inset: 0; overflow: hidden;
+  pointer-events: none; user-select: none; background: #f5ead5;
+}
+#chapter-leaf .chapter-painted-image {
+  width: 100%; height: 100%; object-fit: cover; object-position: center;
+}
+#chapter-leaf.has-painted-landscape .chapter-leaf-paper::before { display: none; }
+#chapter-leaf.has-painted-landscape .chapter-leaf-content {
+  z-index: 2; padding-bottom: clamp(200px, 35vh, 390px);
+}
+#chapter-leaf.has-painted-landscape .chapter-leaf-title,
+#chapter-leaf.has-painted-landscape .chapter-leaf-line {
+  text-shadow: 0 1px 18px #fff4de;
+}
+#chapter-leaf.has-painted-landscape .chapter-leaf-back {
+  z-index: 3; padding: 7px 12px; border-radius: 2px;
+  background: #f6f1e6e8; color: #414b40;
+}
+@media (max-width: 760px) {
+  #chapter-leaf .chapter-painted-image {
+    position: absolute; bottom: 0; left: 0; height: 58%;
+    object-position: var(--chapter-landscape-position, center) bottom;
+    mask-image: linear-gradient(to bottom, transparent, #000 25%);
+  }
+  #chapter-leaf.has-painted-landscape .chapter-leaf-content {
+    padding-top: 100px; padding-bottom: 34vh;
+  }
+}
+@media (max-height: 560px) {
+  #chapter-leaf.has-painted-landscape .chapter-leaf-content { padding: 75px 24px 85px; }
+  #chapter-leaf.has-painted-landscape .chapter-painted-scene::after {
+    content: ''; position: absolute; inset: 0; background: #f6f1e685;
+  }
+}
+
 /* Original paragraphs are never held at zero opacity by legacy entrance effects. */
 html.has-chapter-opening .reading-section-body p {
   animation: none;
