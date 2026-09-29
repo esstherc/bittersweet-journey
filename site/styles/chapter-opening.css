@@ -1,7 +1,6 @@
 /* Keep a cold load covered until its title dialog is mounted. */
-html.chapter-entry-pending:not(.land-arriving) { background: #f6f1e6; }
+html.chapter-entry-pending { background: #f6f1e6; }
 html.chapter-entry-pending body { visibility: hidden; }
-html.chapter-entry-pending #land-curtain { visibility: visible; }
 /* An opaque, centered title leaf. The reading spread is revealed only on entry. */
 html.chapter-gate-open { overflow: hidden; }
 html.has-chapter-opening .opening-curtain,

@@ -145,7 +145,7 @@ const server=http.createServer((req,res)=>{
     await mobile.locator('.finish-chapter').tap();
     await mobile.waitForURL('**/site/index.html**');
     await mobile.waitForFunction(()=>document.body.dataset.sealCollection==='flying');
-    assert.equal(await mobile.locator('html').evaluate(el=>el.matches('.land-arriving, .land-in-transit')),false,'collection waits until the return curtain clears');
+    assert.equal(await mobile.locator('html').evaluate(el=>el.matches('.land-in-transit')),false,'collection waits until the return curtain clears');
     await mobile.screenshot({path:path.join(output,'mobile-seal-flight.png'),fullPage:true});
     await mobile.waitForFunction(()=>document.body.dataset.sealCollection==='collected');
     await page.emulateMedia({reducedMotion:'reduce'});

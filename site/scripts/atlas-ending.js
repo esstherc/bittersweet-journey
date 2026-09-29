@@ -31,7 +31,7 @@
     }
     if(seen()||animating||dialog.open)return;
     const returning=document.body.dataset.returningStory;
-    if(document.readyState!=='complete'||document.hidden||document.documentElement.matches('.land-arriving, .land-in-transit')||document.querySelector('.stamp-overlay.is-visible')||(returning&&document.body.dataset.sealCollection!=='collected')){
+    if(document.readyState!=='complete'||document.hidden||document.documentElement.matches('.land-in-transit')||document.querySelector('.stamp-overlay.is-visible')||(returning&&document.body.dataset.sealCollection!=='collected')){
       timer=setTimeout(attempt,150);return;
     }
     animating=true;window.ATLAS_CAMERA.reset();
@@ -39,7 +39,7 @@
   }
   window.addEventListener('atlas-map-illuminated',()=>{
     if(!animating||!complete())return;
-    animating=false;previousFocus=document.activeElement;localize();dialog.showModal();
+    animating=false;previousFocus=document.activeElement;window.SITE_HEADER?.refresh();localize();dialog.showModal();
     try{localStorage.setItem(key,signature);}catch{}
     dialog.querySelector('button').focus({preventScroll:true});
   });

@@ -19,7 +19,6 @@
   background: rgba(236, 231, 219, .84);
   color: #20251f;
   backdrop-filter: blur(9px);
-  view-transition-name: site-header;
 }
 .site-masthead .site-wordmark {
   display: flex;

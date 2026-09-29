@@ -1052,7 +1052,7 @@
     const arrivalDeadline = performance.now() + 8000;
     const collect = () => {
       if (started) return;
-      if (!window.ATLAS_CAMERA || document.documentElement.matches('.land-arriving, .land-in-transit')) {
+      if (!window.ATLAS_CAMERA || document.documentElement.matches('.land-in-transit')) {
         if (performance.now() > arrivalDeadline) return;
         window.requestAnimationFrame(collect);return;
       }

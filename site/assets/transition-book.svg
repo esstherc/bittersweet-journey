@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="400">
+  <defs>
+    <linearGradient id="paper"><stop stop-color="#eee2c9"/><stop offset=".45" stop-color="#f0e5ce"/><stop offset=".5" stop-color="#b49a72"/><stop offset=".55" stop-color="#eee2c9"/><stop offset="1" stop-color="#f0e5ce"/></linearGradient>
+    <linearGradient id="spine"><stop stop-color="#6b5132" stop-opacity="0"/><stop offset="1" stop-color="#6b5132" stop-opacity=".32"/></linearGradient>
+  </defs>
+  <rect x="1%" y="4.3%" width="98%" height="94.2%" rx="9" fill="#24180f" opacity=".4"/>
+  <rect x=".7%" y="1.3%" width="98.6%" height="95.7%" rx="8" fill="#634636"/>
+  <rect x="1.7%" y="3.7%" width="96.6%" height="91%" rx="3" fill="#beab88"/>
+  <rect x="2%" y="92.7%" width="96%" height=".3%" fill="#e4d3b3"/>
+  <rect x="2%" y="93.5%" width="96%" height=".3%" fill="#e4d3b3"/>
+  <rect x="1.7%" y="2.3%" width="96.6%" height="89.7%" fill="url(#paper)"/>
+  <rect x="46%" y="2.3%" width="4%" height="89.7%" fill="url(#spine)"/>
+  <rect x="49.95%" y="2.3%" width=".1%" height="89.7%" fill="#8a7254"/>
+</svg>
