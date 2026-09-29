@@ -60,7 +60,7 @@
         zh: "千年不枯的笑容，延伸到整个世界。",
         en: "A smile that has not withered for a thousand years, reaching across the world."
       },
-      seal: "./chapters/mogao-caves/assets/seal-mogao-caves.svg?v=6560349c3186"
+      seal: "./chapters/mogao-caves/assets/seal-mogao-caves.svg?v=c44eb9e1e8f9"
     },
     "fish-tail-lodge": {
       storageKey: "bittersweet-journey:fish-tail-lodge:complete",
@@ -176,11 +176,12 @@
   const returning = pageParams.get("revealed");
   const requestedLanguage = pageParams.get("lang");
   let activeStory = STORIES[returning] ? returning : "dujiangyan";
-  const orderedStories = CHAPTER_PLAN.map(chapter => [chapter.id, {
+  const orderedStories = CHAPTER_PLAN.filter(chapter => STORIES[chapter.id]).map(chapter => [chapter.id, {
     ...STORIES[chapter.id],
     ...chapter
   }]);
-  const chapterTotal = CHAPTER_PLAN.length;
+  const chapterTotal = orderedStories.length;
+  window.ATLAS_STORIES = Object.freeze(orderedStories.map(([id,story]) => Object.freeze({id,storageKey:story.storageKey,title:story.title,seal:story.seal})));
 
   const DISPLAY_OFFSETS = {
     // spread far enough for 10pt labels (map-guidance M-2), each in its real direction from Dunhuang
@@ -518,8 +519,8 @@
       unavailable: "这处故事仍在等待显影",
       "receipt-title": "一处山河已经显影",
       "receipt-body": "岷江的水，在这里成为成都平原。",
-      "cta-message": "循着光点，走进文字里的山河",
-      "cta-hint": "拖动探索 · 滚轮／双指缩放 · 点击光点开卷",
+      "cta-message": "提灯寻路，让山河慢慢亮起",
+      "cta-hint": "移动游标／触碰提灯 · 拖动或双指缩放 · 完成章节留下光圈",
       reset: "重置阅读痕迹",
       source: "文本：余秋雨《文化苦旅》",
       "view-stamps": "圖章",
@@ -551,8 +552,8 @@
       unavailable: "This story is still waiting to be revealed",
       "receipt-title": "One landscape brought to light",
       "receipt-body": "Here, the Min River becomes the Chengdu Plain.",
-      "cta-message": "Follow a story point into the landscape",
-      "cta-hint": "Drag to explore · Scroll or pinch to zoom · Tap a story point to begin",
+      "cta-message": "Carry a light into the landscape",
+      "cta-hint": "Move or touch to light the way · Drag, scroll or pinch to explore · Finish a chapter to keep its light",
       reset: "Reset reading trace",
       source: "Text: Yu Qiuyu, A Bittersweet Journey Through Culture",
       "view-stamps": "Seals",
@@ -816,6 +817,7 @@
     body.classList.toggle("all-revealed", count === chapterTotal);
     renderStampGrid();
     scheduleLayout();
+    window.dispatchEvent(new CustomEvent('atlas-progress-change'));
   }
 
   function renderStampGrid() {
@@ -864,11 +866,20 @@
     if (event.key === "Escape") closeStampModal();
   }
 
-  function enterStory(storyName = activeStory) {
+  let journeyPending=false;
+  async function enterStory(storyName = activeStory) {
+    if(journeyPending)return;
+    journeyPending=true;
     activeStory = storyName;
-    const url = new URL(STORIES[storyName].href, window.location.href);
-    url.searchParams.set("lang", state.language);
-    window.LAND_TRANSITION.navigate(url.href);
+    hidePreview();
+    try {
+      const point=availablePoints.find(point=>point.dataset.story===storyName);
+      const arrived=window.ATLAS_JOURNEY?await window.ATLAS_JOURNEY.travelTo(point):true;
+      if(!arrived)return;
+      const url = new URL(STORIES[storyName].href, window.location.href);
+      url.searchParams.set("lang", state.language);
+      window.LAND_TRANSITION.navigate(url.href);
+    } finally {journeyPending=false;}
   }
 
   function showUnavailable() {

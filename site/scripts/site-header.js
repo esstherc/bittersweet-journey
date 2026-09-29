@@ -19,6 +19,8 @@
     let count = 0;
     try { count = chapterIds.filter(id => localStorage.getItem(`bittersweet-journey:${id}:complete`) === 'true').length; } catch {}
     header.querySelector('[data-site-progress-count]').textContent = String(count).padStart(2, '0');
+    const total=header.querySelector('[data-site-progress-total]');
+    if(total)total.textContent=String(chapterIds.length);
     if (progress.tagName === 'A') {
       url.searchParams.set('stamps', '1');
       progress.href = url.href;

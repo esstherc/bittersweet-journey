@@ -42,7 +42,7 @@
 
 ## 印记与文案
 
-- **印记**：`assets/seal-mogao-caves.svg`，飞天衣带飘飘，飞过开着窟龛的断崖。文字后备“窟”只存在 `atlas.js` 的资料里。
+- **圖章**：`assets/seal-mogao-caves.svg`，以崖壁、拱形窟龛和层叠屋檐表现莫高窟；依辨识度反馈移除飞天人物。文字后备“窟”只存在 `atlas.js` 的资料里。
 - **揭题页**：第 06 章 · 莫高窟 · “一座小山包，半部中国艺术史。” · 论点“看活了一千年的生命。” · 按钮“走进洞窟”。
 - **完成语**：“千年不枯的笑容，延伸到整个世界。”／*A smile that has not withered for a thousand years, reaching across the world.*（出自原文最后一句；英文依英译本同一句缩写）。
 - **总图**：

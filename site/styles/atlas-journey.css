@@ -1,0 +1,68 @@
+/* The interface stays readable above a dark, explorable map. */
+body.journey-ready { background: #302219; }
+.journey-ready:not(.journey-mounted) .china-map { visibility: hidden; }
+.journey-ready .paper-noise { opacity: .035; }
+.journey-ready .site-masthead,
+.journey-ready .atlas-footer { background: #32251eed; color: #dfd8c8; border-color: #b69a6633; }
+.journey-ready .site-wordmark,
+.journey-ready .site-language,
+.journey-ready .site-language button,
+.journey-ready .site-progress { color: #dfd8c8; }
+.journey-ready .site-progress b,
+.journey-ready .site-progress i,
+.journey-ready .site-language button[aria-pressed="true"] { color: #e8bd7b; }
+.journey-ready .atlas-intro h1 { color: #e3dccd; text-shadow: 0 2px 16px #302219; }
+.journey-ready .atlas-intro .question-accent { color: #d9b57c; }
+.journey-ready .cta-callout { max-width: 450px; background: #38291fe8; border-color: #b69a6640; }
+.journey-ready .cta-text strong { color: #e2bd82; }
+.journey-ready .cta-text em { color: #b6b9aa; line-height: 1.6; }
+.journey-ready .cta-arrow { stroke: #d9b57c; }
+.journey-ready .atlas-zoom-controls { background: #382b22eb; border-color: #b69a6650; }
+.journey-ready .atlas-zoom-controls button { color: #ddd4c2; border-color: #b69a6633; }
+.journey-ready .atlas-zoom-controls button:hover { background: #514032; }
+.journey-ready .atlas-scale { background: #382b22dc; color: #aab3a2; }
+.journey-ready .china-map:focus-visible { outline-color: #e2bd82; }
+.journey-fog { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 3; pointer-events: none; }
+.journey-traveler { position: absolute; left: 0; top: 0; width: 80px; height: 64px; z-index: 4; pointer-events: none; overflow: visible; filter: drop-shadow(0 3px 3px #0008); }
+.journey-facing { transform-origin: 60px 85px; }
+.journey-leg { transform-box: fill-box; transform-origin: 50% 0; }
+.journey-traveler.is-walking .journey-leg { animation: horse-stride 1.1s ease-in-out infinite alternate; }
+.journey-traveler.is-walking .journey-leg:nth-child(even) { animation-direction: alternate-reverse; }
+.journey-traveler.is-walking .journey-rider { animation: poet-ride 1.1s ease-in-out infinite alternate; }
+.journey-traveler.is-running .journey-leg,
+.journey-traveler.is-running .journey-rider { animation-duration: .3s; }
+.journey-status { position: absolute; top: calc(100% + 6px); left: 0; padding: 3px 6px; background: #38291fe8; color: #ead2a7; font: 13.5px/1.5 var(--label); }
+.journey-status:empty { display: none; }
+.is-journey-running .china-map { pointer-events: none; }
+.journey-dust { display: none; }
+.journey-traveler.is-walking .journey-dust { display: block; animation: road-dust 1.8s ease-out infinite; }
+.journey-traveler.is-walking .journey-robe { transform-origin: 48px 28px; animation: robe-sway 1.5s ease-in-out infinite alternate; }
+@keyframes road-dust { from { opacity: .3; transform: translateX(0); } to { opacity: 0; transform: translateX(-8px); } }
+@keyframes robe-sway { to { transform: rotate(3deg); } }
+body.journey-illuminated { background: #ece7db; }
+.journey-illuminated .atlas-intro h1 { color: #423529; text-shadow: 0 1px 12px #f4ecdb; }
+.journey-illuminated .atlas-intro .question-accent { color: #944b39; }
+.atlas-finale { width: min(760px,calc(100vw - 32px)); max-height: calc(100dvh - 40px); overflow: auto; padding: 42px 36px; border: 1px solid #aa8a5955; color: #493c2e; background: #f1e8d7; box-shadow: 0 24px 100px #36231755; text-align: center; }
+.atlas-finale::backdrop { background: #37261933; backdrop-filter: blur(2px); }
+.finale-kicker { margin: 0 0 16px; color: #927348; font: 14px var(--label); letter-spacing: .22em; }
+.atlas-finale h2 { margin: 0; font-weight: 400; font-size: clamp(25px,3vw,38px); line-height: 1.5; letter-spacing: .08em; }
+.finale-message { font-size: 16px; line-height: 1.8; margin: 20px auto 26px; max-width: 34em; }
+.finale-seals { display: grid; grid-template-columns: repeat(4,1fr); gap: 22px 18px; }
+.finale-seals figure { margin: 0; }
+.finale-seals img { width: 70px; height: 70px; }
+.finale-seals figcaption { margin-top: 7px; font-size: 13.5px; line-height: 1.5; }
+.finale-return { margin-top: 28px; padding: 12px 6px; background: none; border: 0; border-bottom: 1px solid #967142; font: inherit; color: inherit; cursor: pointer; }
+.finale-return:focus-visible { outline: 2px solid #944b39; outline-offset: 5px; }
+@keyframes horse-stride { from { transform: rotate(-13deg); } to { transform: rotate(13deg); } }
+@keyframes poet-ride { from { transform: translateY(0); } to { transform: translateY(-1.5px); } }
+@media (max-width: 900px) {
+  .journey-ready .atlas-intro { background: linear-gradient(#302219 75%,#30221900); padding-bottom: 12px; }
+  .journey-ready .cta-callout { margin-top: 10px; padding: 10px 12px; }
+  .journey-illuminated .atlas-intro { background: linear-gradient(#ece7db 75%,#ece7db00); }
+  .atlas-finale { padding: 28px 20px; }
+  .finale-seals { gap: 20px 10px; }
+  .finale-seals img { width: 54px; height: 54px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .journey-traveler * { animation: none !important; }
+}

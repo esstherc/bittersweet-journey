@@ -131,7 +131,7 @@ const server=http.createServer((req,res)=>{
     await mobile.waitForURL('**/chapters/dujiangyan/**');
     // Every completion return sends that chapter's seal from its point to the collector.
     const chapters=['dujiangyan','secret-spring','taoist-tower','mountain-resort','yangguan','kashgar','fish-tail-lodge','mogao-caves'];
-    await page.evaluate(ids=>ids.forEach(id=>localStorage.setItem(`bittersweet-journey:${id}:complete`,'true')),chapters);
+    await page.evaluate(ids=>{ids.forEach(id=>localStorage.setItem(`bittersweet-journey:${id}:complete`,'true'));localStorage.setItem('bittersweet-journey:atlas-finale:v1',window.ATLAS_STORIES.map(s=>s.id).sort().join('|'));},chapters);
     for(const id of chapters){
       const reveal=id==='mountain-resort'?'chengde':id;
       await page.goto(url+'?revealed='+reveal,{waitUntil:'domcontentloaded'});

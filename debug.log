@@ -97,3 +97,54 @@
 [0928/144624.030:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
 [0928/144624.030:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
 [0928/144624.030:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0928/212727.726:ERROR:gpu\command_buffer\service\gl_utils.cc:430] [.WebGL-0x6ec001bfe00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[0928/212728.121:ERROR:gpu\command_buffer\service\gl_utils.cc:430] [.WebGL-0x6ec001bfe00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[0928/212728.191:ERROR:gpu\command_buffer\service\gl_utils.cc:430] [.WebGL-0x6ec001bfe00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[0928/212728.260:ERROR:gpu\command_buffer\service\gl_utils.cc:430] [.WebGL-0x6ec001bfe00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
+[0928/212742.211:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0928/213221.419:ERROR:components\viz\service\frame_sinks\frame_sink_manager_impl.cc:1285] SurfaceAnimationManager missing for |transition_token| : (D4E622930E0AEE6B5D8C394781A60CDE)
+[0928/213221.420:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : D4E622930E0AEE6B5D8C394781A60CDE
+[0928/213221.420:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : D4E622930E0AEE6B5D8C394781A60CDE
+[0928/213221.521:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : D4E622930E0AEE6B5D8C394781A60CDE
+[0928/213221.521:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : D4E622930E0AEE6B5D8C394781A60CDE
+[0928/213221.521:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : D4E622930E0AEE6B5D8C394781A60CDE
+[0928/213221.566:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : D4E622930E0AEE6B5D8C394781A60CDE
+[0928/213221.566:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : D4E622930E0AEE6B5D8C394781A60CDE
+[0928/213221.566:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : D4E622930E0AEE6B5D8C394781A60CDE
+[0928/213221.698:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : D4E622930E0AEE6B5D8C394781A60CDE
+[0928/213221.698:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : D4E622930E0AEE6B5D8C394781A60CDE
+[0928/213221.698:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : D4E622930E0AEE6B5D8C394781A60CDE
+[0928/213221.807:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : D4E622930E0AEE6B5D8C394781A60CDE
+[0928/213221.807:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : D4E622930E0AEE6B5D8C394781A60CDE
+[0928/213221.807:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : D4E622930E0AEE6B5D8C394781A60CDE
+[0928/213221.925:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : D4E622930E0AEE6B5D8C394781A60CDE
+[0928/213221.925:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : D4E622930E0AEE6B5D8C394781A60CDE
+[0928/213221.925:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : D4E622930E0AEE6B5D8C394781A60CDE
+[0928/213222.045:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : D4E622930E0AEE6B5D8C394781A60CDE
+[0928/213222.045:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : D4E622930E0AEE6B5D8C394781A60CDE
+[0928/213222.045:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : D4E622930E0AEE6B5D8C394781A60CDE
+[0928/213242.666:ERROR:components\viz\service\frame_sinks\frame_sink_manager_impl.cc:1285] SurfaceAnimationManager missing for |transition_token| : (8FCF3C61175F158004F5046CC759A2D8)
+[0928/213242.666:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 8FCF3C61175F158004F5046CC759A2D8
+[0928/213242.666:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 8FCF3C61175F158004F5046CC759A2D8
+[0928/213242.723:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 8FCF3C61175F158004F5046CC759A2D8
+[0928/213242.723:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 8FCF3C61175F158004F5046CC759A2D8
+[0928/213242.860:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 8FCF3C61175F158004F5046CC759A2D8
+[0928/213242.860:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 8FCF3C61175F158004F5046CC759A2D8
+[0928/213242.860:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 8FCF3C61175F158004F5046CC759A2D8
+[0928/213242.971:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 8FCF3C61175F158004F5046CC759A2D8
+[0928/213242.971:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 8FCF3C61175F158004F5046CC759A2D8
+[0928/213242.971:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 8FCF3C61175F158004F5046CC759A2D8
+[0928/213243.147:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 8FCF3C61175F158004F5046CC759A2D8
+[0928/213243.147:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 8FCF3C61175F158004F5046CC759A2D8
+[0928/213243.147:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 8FCF3C61175F158004F5046CC759A2D8
+[0928/213243.174:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 8FCF3C61175F158004F5046CC759A2D8
+[0928/213243.174:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 8FCF3C61175F158004F5046CC759A2D8
+[0928/213243.174:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 8FCF3C61175F158004F5046CC759A2D8
+[0928/213431.432:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0928/213431.432:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0928/214934.456:ERROR:gpu\command_buffer\service\gl_utils.cc:430] [.WebGL-0x7834001b7a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[0928/214934.873:ERROR:gpu\command_buffer\service\gl_utils.cc:430] [.WebGL-0x7834001b7a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[0928/214934.941:ERROR:gpu\command_buffer\service\gl_utils.cc:430] [.WebGL-0x7834001b7a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[0928/214935.019:ERROR:gpu\command_buffer\service\gl_utils.cc:430] [.WebGL-0x7834001b7a00]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
+[0928/214946.856:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.
+[0928/214949.429:ERROR:gpu\command_buffer\service\shared_image\shared_image_manager.cc:395] SharedImageManager::ProduceMemory: Trying to Produce a Memory representation from a non-existent mailbox.

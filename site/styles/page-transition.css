@@ -1,15 +1,31 @@
-/* The ready destination replaces the old page in one continuous reveal. */
+/* The old page turns around a book spine; the next page stays beneath it. */
 @view-transition { navigation: auto; }
-::view-transition-group(root) { animation-duration: 420ms; }
-::view-transition-old(root) { animation: none; }
+::view-transition-group(root) { animation-duration: 900ms; perspective: 1800px; }
+::view-transition-image-pair(root) { isolation: isolate; perspective: 1800px; }
+::view-transition-old(root) {
+  z-index: 2; transform-origin: 0% 50%; backface-visibility: visible;
+  animation: book-leaf-forward 900ms cubic-bezier(.32,.08,.24,1) both;
+  mix-blend-mode: normal; background: #eee0c5; border-right: 2px solid #d6c29d;
+}
 ::view-transition-new(root) {
-  animation: land-page-reveal 420ms cubic-bezier(.22, .61, .36, 1) both;
-  mix-blend-mode: normal;
+  z-index: 1; animation: book-underlight 900ms ease both; mix-blend-mode: normal;
 }
-@keyframes land-page-reveal {
-  from { clip-path: inset(0 0 0 100%); }
-  to { clip-path: inset(0); }
+html[data-turn-direction="back"]::view-transition-old(root) {
+  transform-origin: 100% 50%; animation-name: book-leaf-back; border-left: 2px solid #d6c29d; border-right: 0;
 }
+@keyframes book-leaf-forward {
+  0% { transform: perspective(1800px) rotateY(0deg); filter: brightness(1); box-shadow: 0 0 0 #38281700; opacity: 1; }
+  45% { filter: brightness(.86) sepia(.12); box-shadow: 24px 4px 55px #38281766; }
+  80% { filter: brightness(1.25) sepia(.3); opacity: 1; }
+  100% { transform: perspective(1800px) rotateY(-105deg); filter: contrast(.15) brightness(1.8) sepia(.4); box-shadow: 4px 0 12px #38281722; opacity: 0; }
+}
+@keyframes book-leaf-back {
+  0% { transform: perspective(1800px) rotateY(0deg); filter: brightness(1); box-shadow: 0 0 0 #38281700; opacity: 1; }
+  45% { filter: brightness(.86) sepia(.12); box-shadow: -24px 4px 55px #38281766; }
+  80% { filter: brightness(1.25) sepia(.3); opacity: 1; }
+  100% { transform: perspective(1800px) rotateY(105deg); filter: contrast(.15) brightness(1.8) sepia(.4); box-shadow: -4px 0 12px #38281722; opacity: 0; }
+}
+@keyframes book-underlight { from { filter: brightness(.76); } to { filter: brightness(1); } }
 /* The same masthead stays in place while the page underneath changes. */
 ::view-transition-group(site-header) { animation-duration: 0s; z-index: 1; }
 ::view-transition-old(site-header) { animation: none; opacity: 0; }
@@ -46,3 +62,11 @@ html.land-in-transit { overflow: hidden; }
 }
 #land-curtain[open] { display: grid; place-items: center; }
 #land-curtain::backdrop { background: transparent; backdrop-filter: none; }
+
+/* Physical front and reverse faces for browsers without snapshot transitions. */
+#land-curtain::before, #land-curtain::after {
+  content: ''; position: absolute; inset: 0; backface-visibility: hidden;
+  background: linear-gradient(90deg,#cdbb99 0%,#eee0c5 3%,#f4ead5 45%,#e0cfaa 98%,#c0a980);
+  border: 1px solid #cfbc97; box-shadow: inset 10px 0 22px #8a704522;
+}
+#land-curtain::after { transform: rotateY(180deg); background: linear-gradient(90deg,#d6c4a2,#ede0c4 20%,#f2e5cc 85%,#c3aa7e); }

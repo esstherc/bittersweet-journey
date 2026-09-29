@@ -13,11 +13,11 @@ function setup({incoming=false, reduced=false, native=false}={}) {
   let paper;
   const document = {
     currentScript:{src:'http://localhost/site/scripts/page-transition.js'},
-    documentElement:{classList},
+    documentElement:{classList,dataset:{}},
     body:{dataset:{language:'en'},append(node){paper=node;}},
     createElement(){return {style:{},open:false,setAttribute(){},addEventListener(){},
-      showModal(){this.open=true;roots.push({event:'show',clip:this.style.clipPath});},
-      close(){this.open=false;roots.push({event:'close',active:active.size,clip:this.style.clipPath});},
+      showModal(){this.open=true;roots.push({event:'show',clip:this.style.transform});},
+      close(){this.open=false;roots.push({event:'close',active:active.size,clip:this.style.transform});},
       animate(keyframes){let finish,reject;const finished=new Promise((resolve,no)=>{finish=resolve;reject=no;});
         const a={finished,keyframes,finish,cancel(){active.delete(a);reject(new Error('cancelled'));}};
         animations.push(a);active.add(a);return a;
@@ -38,9 +38,9 @@ function setup({incoming=false, reduced=false, native=false}={}) {
 async function paint(env) { env.frames.splice(0).forEach(f=>f());await flush(); }
 (async()=>{
   const env=setup();let reveals=0;
-  const operation=env.window.LAND_TRANSITION.turnPage(()=>{assert.equal(env.paper.style.clipPath,'inset(0% 0% 0% 0%)');reveals++;});
+  const operation=env.window.LAND_TRANSITION.turnPage(()=>{assert.equal(env.paper.style.transform,'perspective(1800px) rotateY(0deg)');reveals++;});
   assert.equal(reveals,0,'Reading must stay behind the title until fully covered');
-  assert.equal(env.roots[0].clip,'inset(0% 0% 0% 100%)','First cover frame must be set before showing');
+  assert.equal(env.roots[0].clip,'perspective(1800px) rotateY(90deg)','First cover frame must be set before showing');
   env.animations[0].finish();await flush();
   assert.equal(reveals,1);
   assert.equal(env.active.size,0,'No filled cover may remain under the next animation');
@@ -49,7 +49,7 @@ async function paint(env) { env.frames.splice(0).forEach(f=>f());await flush(); 
   assert.equal(env.active.size,1,'Only one paper animation may be active');
   env.animations[1].finish();await operation;
   assert.equal(env.paper.open,false);assert.equal(env.active.size,0);
-  assert.equal(env.paper.style.clipPath,'inset(0% 100% 0% 0%)');
+  assert.equal(env.paper.style.transform,'perspective(1800px) rotateY(-100deg)');
   assert.equal(env.classes.has('land-in-transit'),false);
   // Reusing the same sheet must not revive any filled animation from the previous turn.
   const again=env.window.LAND_TRANSITION.turnPage(()=>{});
@@ -62,7 +62,7 @@ async function paint(env) { env.frames.splice(0).forEach(f=>f());await flush(); 
   assert.equal(incoming.classes.has('land-arriving'),true);
   assert.equal(incoming.timers.length,0,'Slow resources must not trigger premature reveal');
   const arrival=incoming.events.get('DOMContentLoaded')();
-  assert.equal(incoming.paper.style.clipPath,'inset(0% 0% 0% 0%)');
+  assert.equal(incoming.paper.style.transform,'perspective(1800px) rotateY(0deg)');
   assert.equal(incoming.animations.length,0);
   await paint(incoming);await paint(incoming);
   incoming.animations[0].finish();await arrival;
