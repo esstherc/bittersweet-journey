@@ -79,6 +79,44 @@ button { font: inherit; }
   transition: opacity .4s ease, transform .4s ease;
 }
 
+.hometown-entry {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 2px 20px;
+  width: min(325px, 82vw);
+  margin-top: 12px;
+  padding: 12px 16px 13px;
+  border: 1px solid rgba(116, 105, 82, .34);
+  background: rgba(243, 238, 225, .92);
+  box-shadow: 0 8px 24px rgba(65, 56, 41, .08);
+  text-align: left;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: border-color .24s, transform .24s, box-shadow .24s;
+}
+.hometown-entry:hover {
+  border-color: var(--seal);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(65, 56, 41, .13);
+}
+.hometown-entry small {
+  grid-column: 1 / -1;
+  color: #8b6955;
+  font: 10px var(--label);
+  letter-spacing: .16em;
+}
+.hometown-entry span {
+  color: var(--ink);
+  font: 17px var(--cn);
+  letter-spacing: .08em;
+}
+body[data-language="en"] .hometown-entry span {
+  font: 17px var(--en);
+  letter-spacing: 0;
+}
+.hometown-entry i { color: var(--seal); font: normal 21px var(--label); }
+
 .cta-arrow {
   width: 26px;
   flex-shrink: 0;
@@ -554,29 +592,70 @@ body[data-language="en"] .chapter-preview > p:not(.preview-index) {
 }
 
 .reveal-receipt {
-  position: absolute;
-  z-index: 18;
-  right: 38px;
-  bottom: 61px;
+  position: fixed;
+  z-index: 55;
+  top: calc(var(--site-header-height, 72px) + 22px);
+  right: 30px;
   display: grid;
-  grid-template-columns: 48px 1fr 24px;
-  gap: 16px;
+  grid-template-columns: 54px minmax(190px, 1fr);
+  gap: 14px;
   align-items: center;
-  width: min(430px, calc(100vw - 40px));
-  padding: 18px;
-  border: 1px solid rgba(157, 61, 49, .32);
-  background: rgba(243, 239, 229, .94);
-  box-shadow: 0 16px 50px rgba(41, 38, 29, .08);
+  width: min(390px, calc(100vw - 40px));
+  min-height: 86px;
+  padding: 14px 20px 14px 16px;
+  border: 1px solid rgba(118, 75, 53, .72);
+  border-radius: 3px 12px 12px 3px;
+  background:
+    radial-gradient(circle at 16% 22%, rgba(255,255,255,.38), transparent 24%),
+    repeating-linear-gradient(0deg, rgba(114,76,53,.045) 0 1px, transparent 1px 4px),
+    #e8ddc5;
+  box-shadow: 0 18px 32px rgba(25, 28, 25, .22), inset 0 0 0 2px rgba(255,255,255,.18), inset 0 0 22px rgba(105, 70, 44, .17);
   opacity: 0;
-  transform: translateY(18px);
+  transform: translateX(0) scaleX(1);
+  transform-origin: right center;
   pointer-events: none;
-  transition: opacity .5s ease 1.5s, transform .5s ease 1.5s;
+  overflow: visible;
+  will-change: transform, opacity;
+  transition: opacity .35s ease;
+}
+
+.reveal-receipt::before,
+.reveal-receipt::after {
+  content: "";
+  position: absolute;
+  top: -7px;
+  bottom: -7px;
+  width: 17px;
+  border: 1px solid rgba(104, 65, 43, .65);
+  background: linear-gradient(90deg, #b78a62, #ead9ba 48%, #9a6848);
+  box-shadow: 0 5px 9px rgba(45, 34, 27, .2);
+  z-index: -1;
+}
+
+.reveal-receipt::before {
+  left: -9px;
+  border-radius: 50% 4px 4px 50%;
+  transform: rotate(-1deg);
+}
+
+.reveal-receipt::after {
+  right: -9px;
+  border-radius: 4px 50% 50% 4px;
+  transform: rotate(1deg);
 }
 
 body.is-returning .reveal-receipt {
   opacity: 1;
   transform: translateY(0);
   pointer-events: auto;
+  animation: scroll-unfurl 1s cubic-bezier(.2,.78,.22,1) both;
+}
+
+@keyframes scroll-unfurl {
+  0% { opacity: 0; transform: translateX(115%) scaleX(.18); }
+  58% { opacity: 1; transform: translateX(-3%) scaleX(1.035); }
+  78% { transform: translateX(1%) scaleX(.985); }
+  100% { opacity: 1; transform: translateX(0) scaleX(1); }
 }
 
 .receipt-mark {
@@ -602,13 +681,13 @@ body.is-returning .reveal-receipt {
   letter-spacing: .07em;
 }
 
-.reveal-receipt button {
-  appearance: none;
-  align-self: start;
-  padding: 0;
-  border: 0;
-  background: none;
-  cursor: pointer;
+body[data-seal-collection="flying"] .site-progress {
+  animation: seal-target-pulse .45s ease-in-out infinite alternate;
+}
+
+@keyframes seal-target-pulse {
+  from { transform: translateX(0); }
+  to { transform: translateX(3px); }
 }
 
 .stamp-overlay {
@@ -809,6 +888,11 @@ body.is-returning .reveal-receipt {
     height: 76vh;
     min-height: 560px;
     margin-top: -10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scrollbar-color: var(--ink-soft) transparent;
+    scrollbar-width: thin;
   }
 
   .china-map {
@@ -842,8 +926,12 @@ body.is-returning .reveal-receipt {
 
   .reveal-receipt {
     position: fixed;
+    top: calc(var(--site-header-height, 64px) + 16px);
     right: 14px;
-    bottom: 48px;
+    bottom: auto;
+    width: min(360px, calc(100vw - 28px));
+    grid-template-columns: 44px minmax(0, 1fr);
+    padding: 12px 15px 12px 12px;
   }
 
   .stamp-modal {
@@ -995,6 +1083,9 @@ body[data-language="en"] .chapter-preview > p:not(.preview-index) {
 /* Kashgar remains visible after reading. */
 body.kashgar-complete [data-story="kashgar"] .point-core { fill: var(--cinnabar, #944b39); r: 6px; }
 body.kashgar-complete [data-story="kashgar"] .point-glow { opacity: .3; }
+.kashgar-memory { opacity: 0; pointer-events: none; transition: opacity .8s ease; }
+body.kashgar-complete.kashgar-terrain-ready .kashgar-memory { opacity: .52; }
+@media (prefers-reduced-motion: reduce) { .kashgar-memory { transition: none; } }
 
 [data-story="kashgar"] .complete,body.kashgar-complete [data-story="kashgar"] .unread{display:none}
 body.kashgar-complete[data-language="zh"] [data-story="kashgar"] .complete.cn,body.kashgar-complete[data-language="en"] [data-story="kashgar"] .complete.en{display:block}

@@ -1,0 +1,234 @@
+<!doctype html>
+<!--
+  CHAPTER TEMPLATE - copy to site/chapters/<id>/index.html and replace every __PLACEHOLDER__.
+  Rules: docs/chapter-layout-guideline.md. Behavior: ../_shared/chapter-shell.js. Frame CSS: ../_shared/chapter-shell.css.
+  Also needed in the chapter folder: chapter-data.js (CHAPTER_DATA), app.js (ChapterShell.init), styles.css (--accent + map canvas).
+  Bump every ?v= whenever a referenced file changes.
+-->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="《文化苦旅》双语阅读地图：我的山河。循黄河、长江与降水量线读懂中国地理。"
+    />
+    <title>山河显影 · 我的山河</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&family=Ysabeau:ital,wght@0,400..700;1,400..700&display=swap"
+    />
+    <link rel="stylesheet" href="../_shared/chapter-shell.css?v=20260919-2" />
+    <link rel="stylesheet" href="./styles.css?v=10" />
+    <link rel="stylesheet" href="../../styles/page-transition.css?v=7016b8be6cfd" />
+    <script src="../../scripts/page-transition.js?v=d0c1e799755b"></script>
+    <link rel="stylesheet" href="../../styles/site-header.css?v=fcfd21307539" />
+    <script src="../../scripts/site-header.js?v=20260930-nine-chapters"></script>
+  </head>
+  <body data-language="en">
+    <div class="paper-noise" aria-hidden="true"></div>
+
+    <header class="masthead site-masthead">
+      <a class="wordmark site-wordmark" href="../../index.html" data-atlas-link data-aria="wordmark-aria" aria-label="山河显影，返回中国总地图">
+        <span data-copy="site-title" data-site-title>山河显影</span>
+      </a>
+
+      <a class="site-progress" href="../../index.html?stamps=1" aria-label="查看已显影的文字印">
+        <span data-site-progress-label>已显影</span>
+        <b><i data-site-progress-count>00</i> / 09</b>
+      </a>
+      <div class="language-switch site-language" role="group" aria-label="Language">
+        <button type="button" data-language="zh" aria-pressed="false">中文</button>
+        <span aria-hidden="true">／</span>
+        <button type="button" data-language="en" aria-pressed="true">EN</button>
+      </div>
+    </header>
+
+    <main class="chapter-frame">
+      <section class="map-stage" inert data-aria="map-aria" aria-label="我的山河文学地图">
+        <h1 class="sr-only" data-copy="chapter-title">我的山河</h1>
+
+        <svg class="story-map hometown-map" viewBox="120 65 960 608" role="img" aria-labelledby="svg-title svg-desc" data-map="reader">
+          <title id="svg-title" data-copy="map-svg-title">我的山河 · 三条天地之线</title>
+          <desc id="svg-desc" data-copy="map-svg-desc">黄河、长江和约四百毫米年降水量分界的文学地理示意。</desc>
+          <g class="map-art">
+            <path class="land-wash west" d="M156 168C289 88 456 144 554 220C560 295 535 381 451 432C343 421 245 387 176 318Z" />
+            <path class="land-wash north" d="M540 121C697 81 874 139 1002 219C951 277 848 307 693 291C624 248 581 188 540 121Z" />
+            <path class="land-wash south" d="M425 440C556 378 768 398 929 465C1020 522 1008 599 906 652C753 656 539 606 425 440Z" />
+            <path class="mountain-ink" d="M152 490Q202 391 249 470Q290 372 340 452Q384 362 434 437" />
+            <path class="mountain-ink fine" d="M230 295Q260 240 293 291Q325 224 363 294Q405 245 448 309" />
+            <path class="rain-wash" d="M430 304C520 315 592 301 671 258C741 231 827 211 913 163" />
+            <path class="rain-line" d="M430 304C520 315 592 301 671 258C741 231 827 211 913 163" />
+            <path class="wall-line" d="M561 327C626 324 681 305 729 280C791 273 839 245 883 220" />
+            <path class="river river-yellow" data-river="yellow" pathLength="100" />
+            <path class="river river-yangtze" data-river="yangtze" pathLength="100" />
+            <text class="map-label yellow-label" x="687" y="380">黄河</text>
+            <text class="map-label yangtze-label" x="702" y="524">长江</text>
+            <text class="map-label rain-label" x="861" y="171">约 400 mm</text>
+            <circle class="story-seal" cx="643" cy="430" r="18" />
+            <text class="story-seal-text" x="643" y="437" text-anchor="middle">03</text>
+          </g>
+        </svg>
+        <div class="map-tools" role="group" aria-label="地图控制">
+          <button type="button" class="map-zoom-in" aria-label="放大地图">＋</button>
+          <button type="button" class="map-zoom-out" aria-label="缩小地图">－</button>
+          <button type="button" class="map-home" data-map-home>全图</button>
+        </div>
+        <div class="map-layer-switch">
+          <button type="button" class="rain-toggle" aria-pressed="false"><span class="layer-swatch"></span><span data-rain-toggle>降水图层</span></button>
+          <p data-map-caption aria-live="polite">地形，是故事的第一层底色。</p>
+          <button type="button" class="replay-tour" data-replay-tour>重看开场 ↗</button>
+        </div>
+      </section>
+
+      <article class="reader-panel" inert data-aria="reader-aria" aria-label="章节正文">
+        <div class="reader-scroll">
+          <!-- OPTIONAL reader note (guideline R-2): <p class="reader-note" data-copy="reader-note">…</p> -->
+          <div class="reading-copy"></div>
+
+          <div class="reader-end">
+            <span class="seal seal-m" aria-hidden="true">河</span>
+            <button class="finish-chapter" type="button">
+              <span data-copy="finish">完成本章 · 返回总图</span>
+              <svg viewBox="0 0 44 14" aria-hidden="true">
+                <path d="M1 7H39M34 2L40 7L34 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <nav class="section-rail" data-aria="rail-aria" aria-label="章节段落">
+          <span class="rail-caption" data-copy="rail-caption">阅读章节</span>
+          <div class="section-buttons"></div>
+          <span class="rail-line" aria-hidden="true"><i></i></span>
+        </nav>
+        <aside class="reader-coach" role="status" hidden>
+          <p data-reader-coach>滚动正文，地图随节次显影。点下方数字跳节；右上角切换中英。</p>
+          <button type="button" data-dismiss-coach>知道了</button>
+        </aside>
+      </article>
+
+      <div class="opening-curtain" role="dialog" aria-modal="false" aria-labelledby="curtain-title">
+        <p class="curtain-kicker" data-copy="curtain-kicker">第 03 章 · 山河</p>
+        <p class="curtain-teaser" data-copy="map-teaser">沿三条线，走进山河。</p>
+        <h1 class="curtain-title" id="curtain-title" data-copy="chapter-title">我的山河</h1>
+        <p class="curtain-thesis" data-copy="thesis">从地形与降水开始，让一张地图在你手中显影。</p>
+        <button class="open-book" type="button">
+          <span data-copy="open">开始阅读</span>
+          <svg viewBox="0 0 56 18" aria-hidden="true">
+            <path d="M1 9H51M44 2L52 9L44 16" />
+          </svg>
+        </button>
+      </div>
+      <section class="journey" aria-labelledby="journey-title" data-step="0">
+        <div class="journey-map-wrap">
+          <svg class="tour-map" viewBox="120 65 960 608" role="img" aria-labelledby="tour-svg-title tour-svg-desc" data-map="tour">
+          <title id="tour-svg-title" data-copy="map-svg-title">我的山河 · 三条天地之线</title>
+          <desc id="tour-svg-desc" data-copy="map-svg-desc">黄河、长江和约四百毫米年降水量分界的文学地理示意。</desc>
+          <g class="map-art">
+            <path class="land-wash west" d="M156 168C289 88 456 144 554 220C560 295 535 381 451 432C343 421 245 387 176 318Z" />
+            <path class="land-wash north" d="M540 121C697 81 874 139 1002 219C951 277 848 307 693 291C624 248 581 188 540 121Z" />
+            <path class="land-wash south" d="M425 440C556 378 768 398 929 465C1020 522 1008 599 906 652C753 656 539 606 425 440Z" />
+            <path class="mountain-ink" d="M152 490Q202 391 249 470Q290 372 340 452Q384 362 434 437" />
+            <path class="mountain-ink fine" d="M230 295Q260 240 293 291Q325 224 363 294Q405 245 448 309" />
+            <path class="rain-wash" d="M430 304C520 315 592 301 671 258C741 231 827 211 913 163" />
+            <path class="rain-line" d="M430 304C520 315 592 301 671 258C741 231 827 211 913 163" />
+            <path class="wall-line" d="M561 327C626 324 681 305 729 280C791 273 839 245 883 220" />
+            <path class="river river-yellow" data-river="yellow" pathLength="100" />
+            <path class="river river-yangtze" data-river="yangtze" pathLength="100" />
+            <text class="map-label yellow-label" x="687" y="380">黄河</text>
+            <text class="map-label yangtze-label" x="702" y="524">长江</text>
+            <text class="map-label rain-label" x="861" y="171">约 400 mm</text>
+            <circle class="story-seal" cx="643" cy="430" r="18" />
+            <text class="story-seal-text" x="643" y="437" text-anchor="middle">03</text>
+          </g>
+        </svg>
+          <button class="tour-map-target target-yellow" type="button" data-target="yellow" aria-label="点亮黄河">黄河 <span>↗</span></button>
+          <button class="tour-map-target target-story" type="button" data-target="story" aria-label="查看我的山河故事">03 <span>↗</span></button>
+          <div class="journey-map-tools" role="group" aria-label="开场地图控制">
+            <button type="button" data-tour-zoom="in" aria-label="放大地图">＋</button>
+            <button type="button" data-tour-zoom="out" aria-label="缩小地图">－</button>
+            <button type="button" data-tour-home aria-label="恢复全图">⌖</button>
+          </div>
+          <div class="journey-rain-control">
+            <button type="button" class="tour-rain-toggle" aria-pressed="false"><span class="layer-swatch"></span><span data-tour-rain>打开降水图层</span></button>
+          </div>
+          <span class="journey-map-coordinate">中国 · 文学地理示意</span>
+        </div>
+        <div class="journey-panel">
+          <div class="journey-topline"><span data-tour-kicker>第 03 章 · 我的山河</span><button type="button" class="journey-skip" data-skip-tour>跳过引导 ↗</button></div>
+          <p class="journey-count" data-tour-count></p>
+          <h2 id="journey-title" data-tour-title>Where do you begin to know a land?</h2>
+          <p class="journey-description" data-tour-description></p>
+          <p class="journey-instruction" data-tour-instruction></p>
+          <button type="button" class="journey-action" data-tour-action>Enter China's landscape <span>→</span></button>
+          <div class="journey-preview" hidden>
+            <span>CHAPTER 03 / LAND</span>
+            <strong data-preview-title>我的山河</strong>
+            <p data-preview-copy>沿三条线，走进山河。</p>
+            <button type="button" data-enter-reader>开卷阅读 <span>→</span></button>
+          </div>
+          <div class="journey-progress" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bottom-bar">
+      <div class="bar-left">
+        <span class="credit" data-copy="source">文本：余秋雨《文化苦旅》</span>
+        <button class="notes-button" type="button" aria-expanded="false" aria-controls="notes-drawer">
+          <span aria-hidden="true">ⓘ</span>
+          <span data-copy="notes-button">地图说明与数据来源</span>
+        </button>
+      </div>
+      <a class="back-atlas" href="../../index.html" data-atlas-link>
+        <span aria-hidden="true">←</span>
+        <span data-copy="back-atlas">总地图</span>
+      </a>
+    </footer>
+
+    <aside class="notes-drawer" id="notes-drawer" aria-hidden="true" aria-labelledby="notes-title">
+      <button class="close-notes" type="button" data-aria="close-aria" aria-label="关闭">×</button>
+      <h2 id="notes-title" data-copy="notes-title">地图说明与数据来源</h2>
+      <section>
+        <h3 data-copy="notes-map-title">如何阅读这幅地图</h3>
+        <p data-copy="notes-map"></p>
+      </section>
+      <section>
+        <h3 data-copy="notes-data-title">数据与投影</h3>
+        <p data-copy="notes-data"></p>
+      </section>
+      <section>
+        <h3 data-copy="notes-sources-title">数据来源</h3>
+        <ul>
+          <li data-copy="notes-source-1"></li>
+          <li data-copy="notes-source-2"></li>
+          <li data-copy="notes-source-3"></li>
+          <li data-copy="notes-source-4"></li>
+        </ul>
+      </section>
+      <section>
+        <h3 data-copy="notes-disclaimer-title">声明</h3>
+        <p data-copy="notes-disclaimer"></p>
+      </section>
+      <section>
+        <h3 data-copy="notes-keyboard-title">键盘</h3>
+        <p data-copy="notes-keyboard"></p>
+      </section>
+    </aside>
+
+    <div class="chapter-complete-overlay" role="status" aria-live="polite" aria-hidden="true">
+      <span class="complete-ripple"></span>
+      <span class="seal seal-l" aria-hidden="true">河</span>
+      <p data-copy="complete-kicker">一处山河已经显影</p>
+      <strong data-copy="complete-line">三条线留下了山河的底色。</strong>
+    </div>
+
+    <script src="../../data/real-geography.js"></script>
+    <script src="./chapter-data.js"></script>
+    <script src="../_shared/chapter-shell.js?v=20260930-no-completion-scroll"></script>
+    <script src="./app.js?v=8"></script>
+  </body>
+</html>

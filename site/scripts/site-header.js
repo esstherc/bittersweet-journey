@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const atlas = new URL('../index.html', document.currentScript.src);
-  const chapterIds = ['dujiangyan', 'secret-spring', 'taoist-tower', 'mountain-resort', 'yangguan', 'kashgar', 'fish-tail-lodge', 'mogao-caves'];
+  const chapterIds = ['my-hometown', 'dujiangyan', 'secret-spring', 'taoist-tower', 'mountain-resort', 'yangguan', 'kashgar', 'fish-tail-lodge', 'mogao-caves'];
   function refresh() {
     const header = document.querySelector('.site-masthead');
     if (!header) return;
@@ -15,10 +15,10 @@
     header.querySelector('[data-site-title]').textContent = english ? 'Land, Made Visible' : '山河显影';
     const progress = header.querySelector('.site-progress');
     progress.setAttribute('aria-label', english ? 'View the collected seals' : '查看已显影的圖章');
-    header.querySelector('[data-site-progress-label]').textContent = english ? 'Revealed' : '已显影';
+    header.querySelector('[data-site-progress-label]').textContent = english ? 'My Seals' : '我的印章';
     let count = 0;
     try { count = chapterIds.filter(id => localStorage.getItem(`bittersweet-journey:${id}:complete`) === 'true').length; } catch {}
-    header.querySelector('[data-site-progress-count]').textContent = String(count).padStart(2, '0');
+    header.querySelector('[data-site-progress-count]').textContent = String(count);
     const total=header.querySelector('[data-site-progress-total]');
     if(total)total.textContent=String(chapterIds.length);
     if (progress.tagName === 'A') {

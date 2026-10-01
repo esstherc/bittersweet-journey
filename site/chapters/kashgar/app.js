@@ -13,7 +13,7 @@
   if (['zh','en'].includes(requestedLanguage)) save('bittersweet-journey:language', requestedLanguage);
   const wasCompleted = saved('bittersweet-journey:kashgar:complete') === 'true';
   const lastScene = Math.max(1, Math.min(16, Number(saved('bittersweet-journey:kashgar:scene')) || 1));
-  const state = { opened:false, maxScene:wasCompleted?16:1, lang: saved('bittersweet-journey:language') === 'en' ? 'en' : 'zh', scene: 1, selected: null, follow: true, returnTo: null, camera: null };
+  const state = { opened:false, maxScene:wasCompleted?16:1, lang: saved('bittersweet-journey:language') === 'zh' ? 'zh' : 'en', scene: 1, cameraParagraph: null, selected: null, follow: true, returnTo: null, camera: null };
   const copy = {
     zh: {chapter:'西域喀什',places:'本文地名',expand:'展开地图',collapse:'收起地图',following:'地图随文浏览',exploring:'正在探索地图',resume:'继续随文浏览 ↗',data:'地图来源与精度 ↗',dataTitle:'地图来源与精度',loading:'正在展开西域地理…',instruction:'点击文中地名，在地图上找到它；点击地图，回到相关原文。',start:'开始阅读 ↓',source:'余秋雨《文化苦旅》',finish:'完成本章 · 返回总图 ↗',sections:'原文',return:'返回刚才阅读处 ↩',choose:'选择地点',section:'原文第',paragraph:'段',references:'相关原文',none:'本篇通过相关地名提及此处。',cross:'在《道士塔》中继续阅读喀什 ↗',point:'地点',river:'河流',mountain:'山地',desert:'沙漠',basin:'盆地',lake:'水域',unlocated:'位置待核实',introNote:'点击下方片段，返回原文。'},
     en: {chapter:'Kashgar',places:'Places',expand:'Expand map',collapse:'Collapse map',following:'Following the text',exploring:'Exploring the map',resume:'Follow the text ↗',data:'Sources & accuracy ↗',dataTitle:'Sources & accuracy',loading:'Unfolding the geography…',instruction:'Select a place in the text to find it on the map. Select the map to return to its passages.',start:'Begin reading ↓',source:'Yu Qiuyu · A Bittersweet Journey Through Culture',finish:'Complete chapter · Return to atlas ↗',sections:'Sections',return:'Back to reading ↩',choose:'Choose a place',section:'Section ',paragraph:'paragraph',references:'Passages',none:'This location appears through related place names.',cross:'Read about Kashgar in The Taoist Priest’s Tower ↗',point:'Place',river:'River',mountain:'Mountains',desert:'Desert',basin:'Basin',lake:'Water',unlocated:'Location unverified',introNote:'Select a passage to return to the original text.'}
@@ -123,10 +123,10 @@
     if(!value)state.explorationScrollY=readerScroll.scrollTop;
     $('#resume').hidden=value;$('#mode-status').textContent=t(value?'following':'exploring');
   }
-  function resumeReading(animate=true){
+  function resumeReading(animate=true,move=true){
     state.selected=null;hideCard();setFollow(true);$('.place-index').open=false;
     document.querySelectorAll('.text-place.is-selected').forEach(el=>el.classList.remove('is-selected'));
-    renderContextPlaces();moveCamera(sceneCamera(),animate);
+    renderContextPlaces();if(move)moveCamera(sceneCamera(),animate);
   }
   function makePlaceButton(id){
     const p=places.get(id),button=safeText('button',p[state.lang],'place-link');
@@ -206,12 +206,17 @@
   function updateScroll(){
     scrollFrame=0;if(!state.opened||document.body.classList.contains('is-completing'))return;
     const threshold=readingTop()+Math.min(150,readerScroll.clientHeight*.22);
-    const scene=+(readingAnchorAt(threshold)?.dataset.scene||1);
+    const anchor=readingAnchorAt(threshold);
+    const scene=+(anchor?.dataset.scene||1);
+    const paragraph=anchor?.closest('p');
+    const paragraphKey=paragraph?`${paragraph.dataset.section}:${paragraph.dataset.paragraph}`:`scene:${scene}`;
+    const paragraphChanged=paragraphKey!==state.cameraParagraph;
+    state.cameraParagraph=paragraphKey;
     const changed=scene!==state.scene;
     if(changed){state.scene=scene;state.maxScene=Math.max(state.maxScene,scene);save('bittersweet-journey:kashgar:scene',String(scene));renderProgress();}
     // Looking at a place is temporary: text scrolling always regains the narrative camera.
-    if(!state.follow&&(changed||Math.abs(readerScroll.scrollTop-state.explorationScrollY)>48))resumeReading();
-    else if(changed&&state.follow)moveCamera(sceneCamera());
+    if(!state.follow&&(paragraphChanged||Math.abs(readerScroll.scrollTop-state.explorationScrollY)>48))resumeReading(true,paragraphChanged);
+    else if(changed&&paragraphChanged&&state.follow)moveCamera(sceneCamera());
   }
 
   function resizeMap(animate=false){const rect=$('#map').getBoundingClientRect();mapSize={w:rect.width,h:rect.height};$('#map').setAttribute('viewBox',`0 0 ${mapSize.w} ${mapSize.h}`);if(state.follow||!state.camera)moveCamera(sceneCamera(),animate);else drawMap();}
@@ -245,7 +250,7 @@
   function enterReading(scene=1){
     document.body.classList.remove('is-unopened');
     document.body.classList.add('is-open');
-    state.opened=true;state.scene=scene;state.maxScene=Math.max(state.maxScene,scene);state.selected=null;setFollow(true);
+    state.opened=true;state.scene=scene;state.cameraParagraph=null;state.maxScene=Math.max(state.maxScene,scene);state.selected=null;setFollow(true);
     save('bittersweet-journey:kashgar:started','true');document.title='山河显影 · '+t('fullTitle');renderProgress();resizeMap(false);
     requestAnimationFrame(()=>{
       if(scene>1){const anchor=anchors.find(a=>+a.dataset.scene===scene);anchor?.closest('p').scrollIntoView({block:'start',behavior:'instant'});}

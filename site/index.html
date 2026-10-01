@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -14,18 +14,18 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&family=Ysabeau:ital,wght@0,400..700;1,400..700&display=swap"
     />
-    <link rel="stylesheet" href="./styles/atlas.css?v=503a53f09c58" />
+    <link rel="stylesheet" href="./styles/atlas.css?v=20260930-scroll-seal-no-recoil" />
     <link rel="stylesheet" href="./styles/atlas-physical.css?v=5b3a7fbeaad5" />
     <link rel="stylesheet" href="./styles/page-transition.css?v=899e8641905a">
     <script src="./scripts/page-transition.js?v=b6d201aba663"></script>
     <link rel="stylesheet" href="./styles/site-header.css?v=700abd29d250">
-    <script src="./scripts/site-header.js?v=d5fbf9752309"></script>
+    <script src="./scripts/site-header.js?v=20260930-nine-chapters-count"></script>
     <script src="./scripts/min-type.js?v=880bda1eac59"></script>
     <link rel="stylesheet" href="./styles/atlas-journey.css?v=67e0db520a06">
     <noscript><style>.journey-ready:not(.journey-mounted) .china-map { visibility: visible; }</style></noscript>
     <link rel="preload" as="image" href="./assets/transition-book.svg?v=759a1f4c6555">
 </head>
-  <body data-language="zh" class="journey-ready">
+  <body data-language="en" class="journey-ready">
     <script>setTimeout(() => { if (!window.ATLAS_JOURNEY) document.body.classList.remove('journey-ready'); }, 5000);</script>
     <div class="paper-noise" aria-hidden="true"></div>
 
@@ -41,15 +41,15 @@
         data-aria="view-stamps-aria"
         aria-label="查看已显影的圖章"
       >
-        <span data-copy="progress-label" data-site-progress-label>已显影</span>
-        <b><i class="progress-count" data-site-progress-count>00</i> / <span data-site-progress-total>8</span></b>
+        <span data-copy="progress-label" data-site-progress-label>My Seals</span>
+        <b><i class="progress-count" data-site-progress-count>0</i> / <span data-site-progress-total>9</span></b>
       </button>
 
       <div class="atlas-actions site-actions">
         <div class="atlas-language site-language" role="group" aria-label="Language">
-          <button type="button" data-language="zh" aria-pressed="true">中文</button>
+          <button type="button" data-language="zh" aria-pressed="false">中文</button>
           <span>／</span>
-          <button type="button" data-language="en" aria-pressed="false">EN</button>
+          <button type="button" data-language="en" aria-pressed="true">EN</button>
         </div>
       </div>
     </header>
@@ -68,6 +68,11 @@
             <em data-copy="cta-hint">移动游标／触碰提灯 · 拖动或双指缩放 · 完成章节留下光圈</em>
           </span>
         </div>
+        <button class="hometown-entry" type="button">
+          <small data-copy="hometown-entry-kicker">03 · 全图入口</small>
+          <span data-copy="hometown-entry">先从《我的山河》出发</span>
+          <i aria-hidden="true">↗</i>
+        </button>
       </section>
 
       <section class="atlas-map-stage" data-aria="stage-aria" aria-label="文化苦旅中国故事地图">
@@ -112,10 +117,13 @@
           <g class="ancient-routes" aria-hidden="true">
             <path class="silk-road" d="M127 315C226 270 298 286 363 274C457 256 523 233 635 216" />
             <path class="tea-road" d="M171 505C241 552 338 561 430 503C456 487 462 473 474 458" />
-            <text x="337" y="246" class="route-label cn" lang="zh">古丝路</text>
-            <text x="337" y="260" class="route-label en" lang="en">Silk Road</text>
+            <text x="337" y="246" class="route-label silk-road-label cn" lang="zh">古丝路</text>
+            <text x="337" y="260" class="route-label silk-road-label en" lang="en">Silk Road</text>
             <text x="275" y="575" class="route-label cn" lang="zh">西南古道</text>
             <text x="276" y="589" class="route-label en" lang="en">Southwestern Road</text>
+          </g>
+          <g class="kashgar-memory" aria-hidden="true">
+            <image class="terrain-picture" data-src="./assets/atlas/kashgar-terrain.webp" x="-182" y="-106" width="142" height="92" preserveAspectRatio="xMidYMid meet" />
           </g>
           <!-- One image seal per read chapter, placed next to its dot by atlas.js (layoutAtlas). -->
           <g class="chapter-seals" aria-hidden="true"></g>
@@ -236,7 +244,6 @@
           <p data-copy="receipt-title">一处山河已经显影</p>
           <strong data-copy="receipt-body">岷江的水，在这里成为成都平原。</strong>
         </div>
-        <button type="button" data-aria="close-aria" aria-label="关闭">×</button>
       </aside>
     </main>
 
@@ -270,10 +277,10 @@
     </div>
 
     <script src="./data/real-geography.js?v=49a9ddc8d22f"></script>
-    <script src="./scripts/atlas.js?v=676a8e0ece5d"></script>
+    <script src="./scripts/atlas.js?v=20260930-scroll-seal-3s-count"></script>
     <script src="./data/atlas-physical.js?v=0a7abe3264ab"></script>
     <script src="./scripts/atlas-camera.js?v=7b44739cd585"></script>
-    <script src="./scripts/atlas-journey.js?v=78bf71287281"></script>
+    <script src="./scripts/atlas-journey.js?v=20260930-nine-chapters"></script>
     <script src="./scripts/atlas-ending.js?v=b52cdbfca13c"></script>
   </body>
 </html>

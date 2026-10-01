@@ -23,7 +23,7 @@
       if (!['zh', 'en'].includes(language)) {
         try { language = localStorage.getItem('bittersweet-journey:language'); } catch {}
       }
-      language = language === 'en' ? 'en' : 'zh';
+      language = language === 'zh' ? 'zh' : 'en';
       document.documentElement.lang = language === 'en' ? 'en' : 'zh-CN';
       document.addEventListener('DOMContentLoaded', () => {
         if (document.documentElement.classList.contains('reader-ready')) return;
@@ -60,9 +60,9 @@
   <link rel="stylesheet" href="../../styles/chapter-opening.css?v=e5443a7dfdb4">
   <script src="../../scripts/chapter-opening.js?v=f308455a9696"></script>
   <link rel="stylesheet" href="../../styles/site-header.css?v=700abd29d250">
-  <script src="../../scripts/site-header.js?v=d5fbf9752309"></script>
+  <script src="../../scripts/site-header.js?v=20260930-nine-chapters"></script>
   <script src="../../scripts/min-type.js?v=880bda1eac59"></script>
-  <link rel="stylesheet" href="./opening-landscape.css?v=900ac7f75e0e">
+  <link rel="stylesheet" href="./opening-landscape.css?v=20260930-local-motion">
   <link rel="stylesheet" href="./layout.css?v=d8407c47a144">
   <link rel="preload" as="image" href="../../assets/transition-book.svg?v=759a1f4c6555">
 </head>
@@ -145,7 +145,7 @@
     </div>
   </div>
 </template>
-  <script src="./opening-landscape.js?v=3c7a28c96de5"></script>
-  <script src="./chapter-data.js?v=74b58b324946"></script><script src="./geography-data.js?v=8c6042f94edd"></script><script src="./app.js?v=1e23e6403456"></script>
+  <script src="./opening-landscape.js?v=20260930-local-motion"></script>
+  <script src="./chapter-data.js?v=74b58b324946"></script><script src="./geography-data.js?v=8c6042f94edd"></script><script src="./app.js?v=20260930-paragraph-camera"></script>
 </body>
 </html>

@@ -7,7 +7,7 @@
 
   const LANGUAGE_KEY = "bittersweet-journey:language";
   const ATLAS_URL = "../../index.html";
-  const COMPLETE_DELAY = 3000; // [S-5]
+  const COMPLETE_DELAY = 350;
 
   const SHELL_COPY = {
     zh: {
@@ -95,7 +95,7 @@
     const state = {
       language: ["zh", "en"].includes(requested)
         ? requested
-        : window.localStorage.getItem(LANGUAGE_KEY) || "zh",
+        : window.localStorage.getItem(LANGUAGE_KEY) || "en",
       active: 0,
       open: false,
       notesOpen: false,
@@ -367,11 +367,10 @@
     /* ---------- completion ---------- */
 
     function finishChapter() {
-      if (body.classList.contains("is-completing")) return;
+      if (body.dataset.chapterCompleted === "true") return;
+      body.dataset.chapterCompleted = "true";
       window.localStorage.setItem(`bittersweet-journey:${id}:complete`, "true");
       window.localStorage.setItem(LANGUAGE_KEY, state.language);
-      body.classList.add("is-completing");
-      els.overlay.setAttribute("aria-hidden", "false");
       window.setTimeout(() => {
         const destination = `${ATLAS_URL}?revealed=${config.revealId || id}&lang=${state.language}`;
         if (window.LAND_TRANSITION) window.LAND_TRANSITION.navigate(destination);

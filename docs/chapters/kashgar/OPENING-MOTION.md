@@ -9,7 +9,7 @@ The opening uses an original generated mineral-pigment/watercolor landscape and 
 - Renderer: `site/chapters/kashgar/opening-landscape.js`.
 - Responsive composition: `site/chapters/kashgar/opening-landscape.css`.
 - Uses native WebGL, not Three.js. One full-screen plane and a fragment shader are sufficient; no CDN/runtime dependency.
-- Three-octave procedural noise creates two drifting fog layers and elongated sand veils. Restrained foliage displacement and smoothed pointer parallax add depth. The sky and typography remain still.
+- Three-octave procedural noise creates moving valley fog, a separate snowline fog bank and elongated sand veils. Foliage displacement and smoothed pointer parallax add depth. Sparse golden poplar leaves tumble at the sides, drawn on a small 2D overlay using the same animation clock (8 leaves on desktop, 5 on mobile). The sky and typography remain still. The approved painting and composition are unchanged.
 - Cap rendering at 30 fps, with pixel ratio capped at 1.5 on desktop and 1 on mobile.
 - Stop rendering when paused, hidden or the opening dialog closes. Preserve elapsed time on resume.
 - Reduced-motion users see the original still image, with no GPU initialization on a cold load.
@@ -30,3 +30,11 @@ Create a finished museum-quality cinematic painted landscape background for a li
 - Simulated context loss displays the still image; context restoration resumes rendering.
 - Dujiangyan retains its plain title leaf and has no landscape controls.
 - `node tools/test_page_transition.cjs` and `python3 tools/verify_kashgar.py` pass; both complete original texts and all geographic source/geometry checks are preserved.
+
+### Motion refinement verification
+
+The leaf canvas changes between frames while running and stays pixel-identical when paused. Reduced motion hides the leaf layer and stops the shared clock. Entering the reading view stops both layers. Verified with ego-browser after real animation frames; shader reports WebGL error 0.
+
+### Visible fog and wind revision
+
+The earlier effect mostly modulated pale colors and was difficult to perceive over the painting. Replaced it with three spatially translating fog banks that cross darker ridges, and four elongated sand gusts with a narrow moving head and soft trailing plume. The fog banks move at 3.4–4.5% of image width per second; the faster sand gusts move at 8.3–10.4% per second. Their centers wrap outside the visible artwork, avoiding a visible reset. Noise softens the edges; the original painting, title, foliage and layout are preserved. Verified directly in the user's Codex in-app preview: renderer present, no console warnings/errors, visibly different positions across captured frames, and pause/resume works.

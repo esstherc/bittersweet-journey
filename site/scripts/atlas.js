@@ -14,6 +14,16 @@
     {"id": "fish-tail-lodge", "number": 11, "index": "Chapter 11", "title": {"zh": "鱼尾山屋", "en": "Fish Tail Lodge"}}
   ];
   const STORIES = {
+    "my-hometown": {
+      storageKey: "bittersweet-journey:my-hometown:complete",
+      href: "./chapters/my-hometown/index.html?from=atlas",
+      number: 3,
+      title: { zh: "我的山河", en: "My Hometown" },
+      preview: { zh: "沿黄河、长江与雨的痕迹，认识这片土地。", en: "Follow the rivers and the trace of rain across the land." },
+      enter: { zh: "沿三条线进入", en: "Follow the three lines" },
+      receipt: { mark: "河", zh: "三条线留下了山河的底色。", en: "Three lines leave their trace upon the land." },
+      seal: "./chapters/my-hometown/assets/seal-my-hometown.svg?v=20260930"
+    },
     kashgar: {
       storageKey: "bittersweet-journey:kashgar:complete",
       href: "./chapters/kashgar/index.html?from=atlas",
@@ -176,12 +186,29 @@
   const returning = pageParams.get("revealed");
   const requestedLanguage = pageParams.get("lang");
   let activeStory = STORIES[returning] ? returning : "dujiangyan";
+  let receiptTimer = null;
   const orderedStories = CHAPTER_PLAN.filter(chapter => STORIES[chapter.id]).map(chapter => [chapter.id, {
     ...STORIES[chapter.id],
     ...chapter
   }]);
   const chapterTotal = orderedStories.length;
   window.ATLAS_STORIES = Object.freeze(orderedStories.map(([id,story]) => Object.freeze({id,storageKey:story.storageKey,title:story.title,seal:story.seal})));
+  let terrainLoading = false;
+
+  function loadExploredTerrain() {
+    if (!state.complete.kashgar || terrainLoading || body.classList.contains("kashgar-terrain-ready")) return;
+    const terrain = document.querySelector(".terrain-picture");
+    if (!terrain) return;
+    terrainLoading = true;
+    const image = new Image();
+    image.onload = () => {
+      terrain.setAttribute("href", image.src);
+      body.classList.add("kashgar-terrain-ready");
+      terrainLoading = false;
+    };
+    image.onerror = () => { terrainLoading = false; };
+    image.src = terrain.dataset.src;
+  }
 
   const DISPLAY_OFFSETS = {
     // spread far enough for 10pt labels (map-guidance M-2), each in its real direction from Dunhuang
@@ -245,6 +272,7 @@
     const kashgar = geography.places.kashgar;
     const dunhuang = geography.places.dunhuang;
     const dujiangyan = geography.places.dujiangyan;
+    document.querySelector(".kashgar-memory")?.setAttribute("transform", `translate(${kashgar.x} ${kashgar.y})`);
     silk.setAttribute(
       "d",
       `M${kashgar.x},${kashgar.y}C${kashgar.x + 64},${kashgar.y - 32} ${dunhuang.x - 65},${dunhuang.y + 10} ${dunhuang.x},${dunhuang.y}`
@@ -302,7 +330,7 @@
 
     // H0: the heading and call-out float over the map on wide screens (L-7)
     const taken = [];
-    [".atlas-intro h1", ".cta-callout", ".atlas-navigation", ".atlas-geography-notes"].forEach((selector) => {
+    [".atlas-intro h1", ".cta-callout", ".hometown-entry", ".atlas-navigation", ".atlas-geography-notes"].forEach((selector) => {
       const node = document.querySelector(selector);
       if (!shownElement(node)) return;
       const b = node.getBoundingClientRect();
@@ -513,9 +541,11 @@
       "point-jiangnan-aria": "江南故事，尚未接入",
       "point-shanghai-aria": "人生故事群，尚未接入",
       kicker: "第 {n} 章 · 山河",
-      "progress-label": "已显影",
+      "progress-label": "我的印章",
       "question-line-1": "一部书能够",
       "question-line-2": "照亮多少中国？",
+      "hometown-entry": "先从《我的山河》出发",
+      "hometown-entry-kicker": "03 · 全图入口",
       unavailable: "这处故事仍在等待显影",
       "receipt-title": "一处山河已经显影",
       "receipt-body": "岷江的水，在这里成为成都平原。",
@@ -546,9 +576,11 @@
       "point-jiangnan-aria": "Home stories in Jiangnan — not yet available",
       "point-shanghai-aria": "Later life stories — not yet available",
       kicker: "Chapter {n} · Land",
-      "progress-label": "Revealed",
+      "progress-label": "My Seals",
       "question-line-1": "How much of China",
       "question-line-2": "can one book illuminate?",
+      "hometown-entry": "Begin with My Hometown",
+      "hometown-entry-kicker": "03 · ATLAS ENTRANCE",
       unavailable: "This story is still waiting to be revealed",
       "receipt-title": "One landscape brought to light",
       "receipt-body": "Here, the Min River becomes the Chengdu Plain.",
@@ -574,7 +606,7 @@
   const state = {
     language: ["zh", "en"].includes(requestedLanguage)
       ? requestedLanguage
-      : window.localStorage.getItem("bittersweet-journey:language") || "zh",
+      : window.localStorage.getItem("bittersweet-journey:language") || "en",
     complete: Object.fromEntries(
       Object.entries(STORIES).map(([name, story]) => [
         name,
@@ -806,6 +838,7 @@
     body.classList.toggle("yangguan-complete", state.complete.yangguan);
     body.classList.toggle("fish-tail-lodge-complete", state.complete["fish-tail-lodge"]);
     body.classList.toggle("mogao-caves-complete", state.complete["mogao-caves"]);
+    loadExploredTerrain();
     document.querySelector('[data-story="kashgar"]').setAttribute('aria-label', state.complete.kashgar ? (state.language === 'zh' ? '进入西域喀什' : 'Enter Kashgar') : STORIES.kashgar.clue[state.language]);
     availablePoints.forEach(point => {
       const name = point.dataset.story;
@@ -813,7 +846,7 @@
       point.setAttribute('aria-label', state.complete[name] ? STORIES[name].enter[state.language] : (clue?.textContent || STORIES[name].preview[state.language]));
     });
     const count = Object.values(state.complete).filter(Boolean).length;
-    document.querySelector(".progress-count").textContent = String(count).padStart(2, "0");
+    document.querySelector(".progress-count").textContent = String(count);
     body.classList.toggle("all-revealed", count === chapterTotal);
     renderStampGrid();
     scheduleLayout();
@@ -874,13 +907,15 @@
     hidePreview();
     try {
       const point=availablePoints.find(point=>point.dataset.story===storyName);
-      const arrived=window.ATLAS_JOURNEY?await window.ATLAS_JOURNEY.travelTo(point):true;
+      const arrived=point&&window.ATLAS_JOURNEY?await window.ATLAS_JOURNEY.travelTo(point):true;
       if(!arrived)return;
       const url = new URL(STORIES[storyName].href, window.location.href);
       url.searchParams.set("lang", state.language);
       window.LAND_TRANSITION.navigate(url.href);
     } finally {journeyPending=false;}
   }
+
+  document.querySelector(".hometown-entry")?.addEventListener("click", () => enterStory("my-hometown"));
 
   function showUnavailable() {
     unavailable.classList.add("is-visible");
@@ -957,12 +992,15 @@
     point.addEventListener("keydown", (event) => onKeyboardActivate(event, showUnavailable));
   });
 
-  receipt.querySelector("button").addEventListener("click", () => {
+  function dismissReceipt() {
+    window.clearTimeout(receiptTimer);
+    receiptTimer = null;
     body.classList.remove("is-returning");
-  });
+  }
 
   window.addEventListener("pageshow", () => {
     body.classList.remove("is-entering");
+    if (!body.classList.contains("is-returning")) window.clearTimeout(receiptTimer);
     hidePreview();
   });
 
@@ -976,10 +1014,12 @@
   document.querySelector(".reset-progress").addEventListener("click", () => {
     Object.entries(STORIES).forEach(([name, story]) => {
       window.localStorage.removeItem(story.storageKey);
+      window.localStorage.removeItem(`bittersweet-journey:${name}:seal-reveal-seen`);
       state.complete[name] = false;
     });
     body.classList.remove("is-returning");
     ['started', 'scene'].forEach(key => window.localStorage.removeItem(`bittersweet-journey:kashgar:${key}`));
+    window.localStorage.removeItem("bittersweet-journey:my-hometown:intro-seen");
     renderProgress();
     renderPreview();
   });
@@ -1041,12 +1081,23 @@
   renderProgress();
   if (pageParams.get("stamps") === "1") openStampModal();
 
+  let firstReturnReveal = false;
   if (STORIES[returning] && state.complete[returning]) {
+    const revealSeenKey = `bittersweet-journey:${returning}:seal-reveal-seen`;
+    try {
+      firstReturnReveal = localStorage.getItem(revealSeenKey) !== "true";
+      if (firstReturnReveal) localStorage.setItem(revealSeenKey, "true");
+    } catch { firstReturnReveal = true; }
+  }
+  if (STORIES[returning]) window.history.replaceState({}, "", "./index.html");
+
+  if (firstReturnReveal) {
     renderReceipt(returning);
     seals[returning]?.classList.add("is-returning");
     body.dataset.returningStory = returning;
     body.classList.add("is-returning");
-    window.history.replaceState({}, "", "./index.html");
+    window.clearTimeout(receiptTimer);
+    receiptTimer = window.setTimeout(dismissReceipt, 3000);
     // Run after the return-page curtain opens and the physical map camera is mounted.
     let started = false;
     const arrivalDeadline = performance.now() + 8000;
@@ -1064,8 +1115,29 @@
 
   async function collectReturningSeal(name) {
     const target=document.querySelector('.site-progress');
-    const source=document.querySelector(`[data-story="${name}"] .point-core`);
+    const source=document.querySelector(`[data-story="${name}"] .point-core`) || receipt.querySelector('.receipt-mark');
     if(!target||!source)return;
+    const countNode=target.querySelector('[data-site-progress-count]');
+    const finalCount=Object.values(state.complete).filter(Boolean).length;
+    const previousCount=Math.max(0, finalCount - 1);
+    if (countNode) countNode.textContent=String(previousCount);
+    const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reducedMotion) await new Promise(resolve => window.setTimeout(resolve, 1000));
+    const animateCount=()=>{
+      if (!countNode) return;
+      if (reducedMotion) {
+        countNode.textContent=String(finalCount);
+        return;
+      }
+      const started=performance.now();
+      const tick=(now)=>{
+        const progress=Math.min(1,(now-started)/520);
+        const eased=1-Math.pow(1-progress,3);
+        countNode.textContent=String(Math.round(previousCount+(finalCount-previousCount)*eased));
+        if(progress<1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
     body.dataset.sealCollection='preparing';
     const announcement=document.createElement('span');
     announcement.className='seal-collection-status';announcement.setAttribute('role','status');
@@ -1073,8 +1145,9 @@
     const received=()=>{
       announcement.textContent=state.language==='en'?`${STORIES[name].title.en} seal added to your collection.`:`《${STORIES[name].title.zh}》印章已收入蒐集盒。`;
       body.dataset.sealCollection='collected';
+      animateCount();
     };
-    if(matchMedia('(prefers-reduced-motion: reduce)').matches){received();return;}
+    if(reducedMotion){received();return;}
     const image=document.createElement('img');
     image.className='flying-collection-seal';image.alt='';image.setAttribute('aria-hidden','true');
     image.src=STORIES[name].seal;
