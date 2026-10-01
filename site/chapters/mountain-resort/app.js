@@ -46,7 +46,7 @@
 
   const copy = {
     zh: {
-      "map-teaser": "椅背之外的王朝",
+      "map-teaser": "王朝退场",
       thesis: "在椅背之外，先看见山。",
       open: "绕到山庄背后",
       "reader-note": "园林没有移动。移动的是看它的时代。",
@@ -91,10 +91,10 @@
       "legend-area": "区域或简化分区",
       "legend-route": "历史空间关系",
       "legend-literary": "文学意象",
-      "complete-line": "一个王朝离开后，山水仍坐在原处。"
+      "complete-line": "王朝变更，山水依旧。"
     },
     en: {
-      "map-teaser": "A dynasty behind the chair",
+      "map-teaser": "A dynasty exits",
       thesis: "Beyond the chair back, the mountain appears first.",
       open: "Walk behind the villa",
       "reader-note": "The garden does not move. The age looking at it does.",
@@ -148,7 +148,7 @@
       "legend-area": "Region or simplified zone",
       "legend-route": "Historical spatial relation",
       "legend-literary": "Literary image",
-      "complete-line": "After a dynasty leaves, the mountains and water remain seated."
+      "complete-line": "The mountains and waters remain."
     }
   };
 

@@ -67,17 +67,17 @@ const pixel=(page,x,y)=>page.locator('.journey-fog').evaluate((c,p)=>{const rect
     assert.equal(await mobile.locator('.chapter-preview').isVisible(),true,'first touch keeps the thought preview');
     await mobile.screenshot({path:path.join(output,'mobile.png')});
     await mobile.locator('.enter-story').tap();await mobile.waitForURL('**/chapters/dujiangyan/**');
-    // All eight available readings count; the unpublished ninth slot is not required.
+    // The atlas introduction and all eight mapped readings count toward the finale.
     await page.reload();await page.waitForFunction(()=>window.ATLAS_JOURNEY);
     await page.evaluate(()=>{window.ATLAS_STORIES.slice(0,-1).forEach(s=>localStorage.setItem(s.storageKey,'true'));window.dispatchEvent(new Event('atlas-progress-change'));});
     await page.waitForTimeout(200);
-    assert.equal(await page.locator('.atlas-finale').isVisible(),false,'seven chapters do not finish the journey');
+    assert.equal(await page.locator('.atlas-finale').isVisible(),false,'one unfinished chapter keeps the journey open');
     await page.evaluate(()=>{localStorage.setItem(window.ATLAS_STORIES.at(-1).storageKey,'true');document.body.dataset.returningStory='last';document.body.dataset.sealCollection='flying';window.dispatchEvent(new Event('atlas-progress-change'));});
     await page.waitForTimeout(400);
     assert.equal(await page.locator('.atlas-finale').isVisible(),false,'ending waits for the last seal to reach the collection');
     await page.evaluate(()=>document.body.dataset.sealCollection='collected');
     await page.locator('.atlas-finale').waitFor({state:'visible'});
-    assert.equal(await page.locator('.finale-seals img').count(),8);
+    assert.equal(await page.locator('.finale-seals img').count(),await page.evaluate(()=>window.ATLAS_STORIES.length));
     assert.equal(await pixel(page,20,20),0,'the whole map is illuminated');
     await page.screenshot({path:path.join(output,'finale.png')});
     await page.locator('.finale-return').click();

@@ -71,7 +71,7 @@
     zh: {
       "map-aria": "阳关一带三维雪漠地形图",
       "regional-svg-title": "敦煌县城与阳关的区域关系",
-      "map-teaser": "冲着一首诗，去寻一座关。",
+      "map-teaser": "冒雪，寻阳关。",
       thesis: "诗句比关隘活得更久。",
       open: "踏雪出发",
       "rail-caption": "阅读行程",
@@ -100,12 +100,12 @@
       "notes-source-3": "阳关长城、绿洲、公路：OpenStreetMap contributors（ODbL 1.0），经 Overpass API 于 2026 年 9 月 27 日取得",
       "notes-source-4": "敦煌县城坐标：与《沙原隐泉》章节所用数据相同；白帝城、黄鹤楼、寒山寺：Wikidata Q803709、Q462372、Q1146619",
       "data-disclaimer": "文学阅读地图，不替代测绘、导航、文物保护或景区安全信息。王维诗中的渭城不在这次行程范围内，未上图。",
-      "complete-line": "风雪掩关，唐音犹在纸上。"
+      "complete-line": "风雪掩故关，唐音犹在纸。"
     },
     en: {
       "map-aria": "3D snow-desert terrain around Yangguan, the Southern Pass",
       "regional-svg-title": "Dunhuang and the Southern Pass",
-      "map-teaser": "Setting out through snow, for a pass in a poem.",
+      "map-teaser": "Through snow, seeking Yangguan",
       thesis: "Verses outlive the pass.",
       open: "Set out into the snow",
       "rail-caption": "The walk",
@@ -134,7 +134,7 @@
       "notes-source-3": "Wall line, oasis and roads: OpenStreetMap contributors (ODbL 1.0), via the Overpass API, 27 September 2026",
       "notes-source-4": "Dunhuang: the same coordinate as in A Secret Spring in the Sand; White Emperor City, Yellow Crane Tower, Cold Mountain Temple: Wikidata Q803709, Q462372, Q1146619",
       "data-disclaimer": "A literary reading map, not a substitute for survey, navigation, heritage or visitor-safety information. Weicheng in Wang Wei’s poem lies outside this walk and is not mapped.",
-      "complete-line": "Snow covers the pass; its verses remain on the page."
+      "complete-line": "Snow buries the ancient pass, yet the echoes of the Tang Dynasty linger on the page."
     }
   };
 

@@ -21,7 +21,7 @@
       href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&family=Ysabeau:ital,wght@0,400..700;1,400..700&display=swap"
     />
     <link rel="stylesheet" href="../_shared/chapter-shell.css?v=20260919-2" />
-    <link rel="stylesheet" href="./styles.css?v=10" />
+    <link rel="stylesheet" href="./styles.css?v=20261001-main-map-rivers" />
     <link rel="stylesheet" href="../../styles/page-transition.css?v=7016b8be6cfd" />
     <script src="../../scripts/page-transition.js?v=d0c1e799755b"></script>
     <link rel="stylesheet" href="../../styles/site-header.css?v=fcfd21307539" />
@@ -124,54 +124,95 @@
       </div>
       <section class="journey" aria-labelledby="journey-title" data-step="0">
         <div class="journey-map-wrap">
-          <svg class="tour-map" viewBox="120 65 960 608" role="img" aria-labelledby="tour-svg-title tour-svg-desc" data-map="tour">
-          <title id="tour-svg-title" data-copy="map-svg-title">我的山河 · 三条天地之线</title>
-          <desc id="tour-svg-desc" data-copy="map-svg-desc">黄河、长江和约四百毫米年降水量分界的文学地理示意。</desc>
-          <g class="map-art">
-            <path class="land-wash west" d="M156 168C289 88 456 144 554 220C560 295 535 381 451 432C343 421 245 387 176 318Z" />
-            <path class="land-wash north" d="M540 121C697 81 874 139 1002 219C951 277 848 307 693 291C624 248 581 188 540 121Z" />
-            <path class="land-wash south" d="M425 440C556 378 768 398 929 465C1020 522 1008 599 906 652C753 656 539 606 425 440Z" />
-            <path class="mountain-ink" d="M152 490Q202 391 249 470Q290 372 340 452Q384 362 434 437" />
-            <path class="mountain-ink fine" d="M230 295Q260 240 293 291Q325 224 363 294Q405 245 448 309" />
-            <path class="rain-wash" d="M430 304C520 315 592 301 671 258C741 231 827 211 913 163" />
-            <path class="rain-line" d="M430 304C520 315 592 301 671 258C741 231 827 211 913 163" />
-            <path class="wall-line" d="M561 327C626 324 681 305 729 280C791 273 839 245 883 220" />
-            <path class="river river-yellow" data-river="yellow" pathLength="100" />
-            <path class="river river-yangtze" data-river="yangtze" pathLength="100" />
-            <text class="map-label yellow-label" x="687" y="380">黄河</text>
-            <text class="map-label yangtze-label" x="702" y="524">长江</text>
-            <text class="map-label rain-label" x="861" y="171">约 400 mm</text>
-            <circle class="story-seal" cx="643" cy="430" r="18" />
-            <text class="story-seal-text" x="643" y="437" text-anchor="middle">03</text>
-          </g>
-        </svg>
-          <button class="tour-map-target target-yellow" type="button" data-target="yellow" aria-label="点亮黄河">黄河 <span>↗</span></button>
-          <button class="tour-map-target target-story" type="button" data-target="story" aria-label="查看我的山河故事">03 <span>↗</span></button>
-          <div class="journey-map-tools" role="group" aria-label="开场地图控制">
-            <button type="button" data-tour-zoom="in" aria-label="放大地图">＋</button>
-            <button type="button" data-tour-zoom="out" aria-label="缩小地图">－</button>
-            <button type="button" data-tour-home aria-label="恢复全图">⌖</button>
-          </div>
-          <div class="journey-rain-control">
-            <button type="button" class="tour-rain-toggle" aria-pressed="false"><span class="layer-swatch"></span><span data-tour-rain>打开降水图层</span></button>
-          </div>
+          <svg class="tour-map atlas-prologue-map" viewBox="46 98 944 590" role="img" aria-labelledby="tour-svg-title tour-svg-desc" data-map="tour">
+            <title id="tour-svg-title">China · a literary atlas</title>
+            <desc id="tour-svg-desc">The atlas basemap appears before the Yellow River is illuminated.</desc>
+            <defs>
+              <filter id="prologue-wash" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="1.4" /></filter>
+              <pattern id="prologue-sand" width="7" height="9" patternUnits="userSpaceOnUse"><path d="M1 3q1.5-1 3 0M4 7h.3" fill="none" stroke="#a88b57" stroke-width=".4" opacity=".45" /></pattern>
+              <radialGradient id="prologue-story-glow"><stop offset="0%" stop-color="#a44735" stop-opacity=".55" /><stop offset="100%" stop-color="#a44735" stop-opacity="0" /></radialGradient>
+            </defs>
+            <g class="atlas-prologue-physical" aria-hidden="true"></g>
+            <g class="atlas-prologue-rivers" aria-hidden="true">
+              <g class="prologue-river prologue-yellow" data-tour-river="yellow"></g>
+              <g class="prologue-river prologue-yangtze" data-tour-river="yangtze"></g>
+              <text class="prologue-river-label prologue-yellow-label" x="711" y="400" data-atlas-zh="黄河" data-atlas-en="Yellow River">Yellow River</text>
+              <text class="prologue-river-label prologue-yangtze-label" x="726" y="480" data-atlas-zh="长江" data-atlas-en="Yangtze">Yangtze</text>
+            </g>
+          </svg>
           <span class="journey-map-coordinate">中国 · 文学地理示意</span>
         </div>
-        <div class="journey-panel">
-          <div class="journey-topline"><span data-tour-kicker>第 03 章 · 我的山河</span><button type="button" class="journey-skip" data-skip-tour>跳过引导 ↗</button></div>
-          <p class="journey-count" data-tour-count></p>
-          <h2 id="journey-title" data-tour-title>Where do you begin to know a land?</h2>
-          <p class="journey-description" data-tour-description></p>
-          <p class="journey-instruction" data-tour-instruction></p>
-          <button type="button" class="journey-action" data-tour-action>Enter China's landscape <span>→</span></button>
-          <div class="journey-preview" hidden>
-            <span>CHAPTER 03 / LAND</span>
-            <strong data-preview-title>我的山河</strong>
-            <p data-preview-copy>沿三条线，走进山河。</p>
-            <button type="button" data-enter-reader>开卷阅读 <span>→</span></button>
+        <div class="journey-topline"><button type="button" class="journey-skip" data-skip-tour>Skip prologue ↗</button></div>
+
+        <div class="opening-scene scene-question">
+          <h2 id="journey-title">Where do you begin to know a land?</h2>
+          <div class="question-answers" aria-hidden="true">
+            <span>From a photograph?</span>
+            <span>From social media?</span>
+            <span>From a journey?</span>
+            <span>From someone else’s memory?</span>
           </div>
-          <div class="journey-progress" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+          <button class="opening-link" type="button" data-next="books">
+            <span class="opening-link-label">Or, from a book…</span>
+            <span class="arrow-trail" aria-hidden="true"><i>›</i><i>›</i><i>›</i></span>
+          </button>
         </div>
+
+        <div class="opening-scene scene-books" aria-hidden="true">
+          <p class="author-intro">Yu Qiuyu journeys through China’s rivers, mountains, and ancient sites, tracing the memories they have carried through time.</p>
+          <div class="book-choices" role="group" aria-label="Choose reading language">
+            <button class="book-choice book-en" type="button" data-book-language="en" aria-label="Read A Bittersweet Journey Through Culture in English">
+              <span class="book-shadow" aria-hidden="true"></span>
+              <span class="book-pages" aria-hidden="true"></span>
+              <span class="book-cover">
+                <small>YU QIUYU</small>
+                <strong>A Bittersweet<br />Journey Through<br />Culture</strong>
+              </span>
+              <span class="book-caption">English</span>
+            </button>
+            <button class="book-choice book-zh" type="button" data-book-language="zh" aria-label="阅读中文版文化苦旅">
+              <span class="book-shadow" aria-hidden="true"></span>
+              <span class="book-pages" aria-hidden="true"></span>
+              <span class="book-cover">
+                <small>余秋雨</small>
+                <strong>文化<br />苦旅</strong>
+              </span>
+              <span class="book-caption">中文</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="opening-scene scene-lines" aria-hidden="true">
+          <div class="three-lines-quote">
+            <p data-lines-quote>在严严实实的封闭结构中，中华文化拥有三条最大的天地之线，那也可以说是中华文化的基本经纬。</p>
+            <p data-lines-second>按照重要程度排列，第一条线是黄河；第二条线是长江；</p>
+            <p data-lines-third>第三条线比较复杂，在前两条的北方，是四百毫米降雨量的分界线，也就是区分农耕文明和游牧文明的天地之线。</p>
+          </div>
+        </div>
+
+        <div class="opening-scene scene-yellow" aria-hidden="true">
+          <p class="scene-index" data-yellow-index>第一条线 · 黄河</p>
+          <blockquote data-yellow-quote>“……黄河，我几乎从源头一步步走到了入海口。现在的入海口是山东东营……”</blockquote>
+        </div>
+
+        <div class="opening-scene scene-yellow-stories" aria-hidden="true">
+          <p class="scene-index" data-yellow-stories-index>沿黄河 · 行走与寻根</p>
+          <div class="quote-stack">
+            <blockquote data-yellow-birth>“正是在黄河流域，我找到了黄帝轩辕氏的出生地。”</blockquote>
+            <blockquote data-yellow-thinkers>“我用最多时间，在黄河流域寻找先秦诸子的足迹，并把他们与同龄的印度、希腊、波斯的哲人们进行对比。”</blockquote>
+          </div>
+        </div>
+
+        <div class="opening-scene scene-yangtze" aria-hidden="true">
+          <p class="scene-index" data-yangtze-index>第二条线 · 长江</p>
+          <div class="quote-stack yangtze-quote-stack">
+            <blockquote data-migration-quote>“由于气候变化，从那个寒冷的西晋时期开始，中华文化随着仓皇的人群一起向南方迁移，向长江迁移。”</blockquote>
+            <blockquote data-yangtze-quote>“自宋代之后，中国的文化、经济中心已从黄河流域转到了长江流域。中心难免人多，因此又有不少人南行。到近代，南方气象渐成，一批推进历史的人物便从珠江边站起。”</blockquote>
+          </div>
+          <button class="opening-action primary" type="button" data-enter-reader><span data-enter-copy>阅读原文</span><i>→</i></button>
+        </div>
+
+        <div class="journey-progress" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
       </section>
     </main>
 
@@ -227,8 +268,9 @@
     </div>
 
     <script src="../../data/real-geography.js"></script>
+    <script src="../../data/atlas-physical.js?v=0a7abe3264ab"></script>
     <script src="./chapter-data.js"></script>
     <script src="../_shared/chapter-shell.js?v=20260930-no-completion-scroll"></script>
-    <script src="./app.js?v=8"></script>
+    <script src="./app.js?v=20261001-main-map-rivers"></script>
   </body>
 </html>

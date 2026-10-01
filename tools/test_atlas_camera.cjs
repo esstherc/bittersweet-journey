@@ -52,7 +52,8 @@ const server=http.createServer((req,res)=>{
     await page.locator('[data-camera="home"]').click();
     await page.locator('.china-map').focus();await page.keyboard.press('+');assert((await page.evaluate(()=>window.ATLAS_CAMERA.state.k))>1);
     await page.keyboard.press('Home');
-    await page.locator('[data-language="en"]').click();await page.waitForTimeout(100);
+    await page.locator('button[data-language="zh"]').click();
+    await page.locator('button[data-language="en"]').click();await page.waitForTimeout(100);
     assert.equal(await page.locator('[data-camera="home"]').textContent(),'All');
     assert.equal(await page.locator('.atlas-zoom-controls button').count(),3);
     assert.equal(await page.locator('.atlas-gesture-hint').count(),0);

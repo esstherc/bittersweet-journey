@@ -36,7 +36,7 @@
       "map-aria": "鸣沙山与月牙泉三维地形图",
       "map-svg-title": "鸣沙山与月牙泉文学地图",
       "map-svg-desc": "三维地形和月牙泉轮廓随阅读逐层显影；虚线脚印为文学叙事路径，不是实测路线。",
-      "map-teaser": "沙山后有一弯水",
+      "map-teaser": "沙山后的一弯泉",
       thesis: "先有脚印，然后才有泉。",
       open: "开始攀登",
       "rail-caption": "阅读路标",
@@ -62,13 +62,13 @@
       "notes-source-3": "莫高窟坐标：甘肃省文化和旅游主管部门公开资料",
       "notes-source-4": "榆林窟坐标：开放地理数据，并与敦煌研究院的位置说明交叉核对",
       "data-disclaimer": "文学阅读地图，不替代测绘、导航或景区安全信息。",
-      "complete-line": "荒漠记住了一弯清泉。"
+      "complete-line": "鸣沙山深处，一弯清泉永驻于大漠版图。"
     },
     en: {
       "map-aria": "Terrain map of Mingsha Mountain and Crescent Spring",
       "map-svg-title": "Literary map of Mingsha Mountain and Crescent Spring",
       "map-svg-desc": "The 3D terrain and the outline of the spring appear layer by layer as you read; the dotted footsteps are a literary path, not a surveyed route.",
-      "map-teaser": "Water beyond the dune",
+      "map-teaser": "A crescent spring beyond the dunes",
       thesis: "First the footprints. Then the spring.",
       open: "Begin the climb",
       "rail-caption": "Waypoints",
@@ -94,7 +94,7 @@
       "notes-source-3": "Mogao coordinates: public material from Gansu's culture and tourism authority",
       "notes-source-4": "Yulin coordinates: open geographic data, cross-checked against the Dunhuang Academy's location description",
       "data-disclaimer": "A literary reading map, not a substitute for survey, navigation or visitor-safety information.",
-      "complete-line": "The desert remembers a crescent of water."
+      "complete-line": "A crescent spring etches itself upon the desert."
     }
   };
 

@@ -62,7 +62,8 @@
       const id=point.dataset.story==='chengde'?'mountain-resort':point.dataset.story;
       try{return localStorage.getItem(`bittersweet-journey:${id}:complete`)==='true';}catch{return false;}
     });
-    if(completed.length!==points.length){illumination=0;revealStart=null;document.body.classList.remove('journey-illuminated');}
+    const allChaptersRead=window.ATLAS_STORIES.every(story=>{try{return localStorage.getItem(story.storageKey)==='true';}catch{return false;}});
+    if(!allChaptersRead){illumination=0;revealStart=null;document.body.classList.remove('journey-illuminated');}
     else {try{if(localStorage.getItem('bittersweet-journey:atlas-finale:v1')===window.ATLAS_STORIES.map(s=>s.id).sort().join('|')){illumination=1;document.body.classList.add('journey-illuminated');}}catch{}}
     canvas.dataset.completed=String(completed.length);dirty=true;wake();
   }

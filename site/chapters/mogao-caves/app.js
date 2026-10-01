@@ -73,7 +73,7 @@
   const copy = {
     zh: {
       "map-aria": "莫高窟与佛教艺术来路的三维地形图",
-      "map-teaser": "一座小山包，半部中国艺术史。",
+      "map-teaser": "一座山包，半部艺术史。",
       thesis: "看活了一千年的生命。",
       open: "走进洞窟",
       "rail-caption": "原文章节",
@@ -103,7 +103,7 @@
     },
     en: {
       "map-aria": "Terrain maps of the Mogao Caves and the road their art travelled",
-      "map-teaser": "A small hill of caves, half of China’s art history.",
+      "map-teaser": "A hill holding half an art history",
       thesis: "A life that has flourished for a millennium.",
       open: "Enter the caves",
       "rail-caption": "Sections",

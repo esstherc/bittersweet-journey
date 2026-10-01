@@ -17,7 +17,7 @@ const server=http.createServer((req,res)=>{
     for(const [name,width,height] of [['desktop',1440,900],['tablet',850,1000],['mobile',390,844],['landscape',740,430]]){
       const page=await browser.newPage({viewport:{width,height},reducedMotion:name==='desktop'?'no-preference':'reduce'});
       page.on('pageerror',e=>errors.push(e.message));
-      await page.goto(base+'/chapters/kashgar/index.html');
+      await page.goto(base+'/chapters/kashgar/index.html?lang=zh');
       await page.locator('.chapter-leaf-enter').click();
       await page.waitForFunction(()=>window.KASHGAR_READER?.getState().opened);
       const bounds=await page.evaluate(()=>{
@@ -34,7 +34,7 @@ const server=http.createServer((req,res)=>{
       assert.equal(await page.evaluate(()=>window.scrollY),0,'window never scrolls');
       assert(await page.locator('.reader-scroll').evaluate(el=>el.scrollTop)>100,'reader scrolls independently');
       const section=await page.locator('#section-nav [aria-current=true]').textContent();
-      await page.locator('[data-language=en]').click();
+      await page.locator('button[data-language=en]').click();
       await page.waitForTimeout(80);
       assert.equal(await page.locator('#section-nav [aria-current=true]').textContent(),'IV','language keeps the fourth section');
       assert(section,'active section exists');

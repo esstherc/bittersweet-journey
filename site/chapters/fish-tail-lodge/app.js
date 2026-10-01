@@ -47,7 +47,7 @@
   const copy = {
     zh: {
       "map-aria": "喜马拉雅山南麓与古文明遗址的三维地形图",
-      "map-teaser": "在世界屋脊下，整理一路的古文明。",
+      "map-teaser": "雪峰下，回望中国。",
       thesis: "离开之后，才读懂了它。",
       open: "推门看雪峰",
       "rail-caption": "原文章节",
@@ -71,11 +71,11 @@
       "notes-source-3": "费瓦湖、河流、阿尼哥公路：OpenStreetMap contributors（ODbL 1.0），经 Overpass API 于 2026 年 9 月 27 日取得",
       "notes-source-4": "山系、沙漠、海域与大河：Natural Earth（公有领域）",
       "data-disclaimer": "文学阅读地图，不替代测绘、导航或边境通行信息。地图不画国界。",
-      "complete-line": "离开之后，才读懂了它。"
+      "complete-line": "惟告别，方领悟。"
     },
     en: {
       "map-aria": "Terrain maps of the southern Himalayas and the ancient sites named in the essay",
-      "map-teaser": "Beneath the roof of the world, sorting through the ancient civilizations.",
+      "map-teaser": "Beneath snow peaks",
       thesis: "I did not comprehend it until I was separated from it.",
       open: "Open the door to the peaks",
       "rail-caption": "Sections",
@@ -99,7 +99,7 @@
       "notes-source-3": "Phewa Lake, rivers, Araniko Highway: OpenStreetMap contributors (ODbL 1.0), via the Overpass API, 27 September 2026",
       "notes-source-4": "Ranges, deserts, seas and great rivers: Natural Earth (public domain)",
       "data-disclaimer": "A literary reading map, not a substitute for survey, navigation or border-crossing information. No borders are drawn.",
-      "complete-line": "I did not comprehend it until I was separated from it."
+      "complete-line": "Only in departure do we truly begin to comprehend it."
     }
   };
 

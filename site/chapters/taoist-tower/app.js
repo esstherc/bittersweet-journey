@@ -48,8 +48,8 @@
   const copy = {
     zh: {
       "map-aria": "藏经洞与文物流散文学地图",
-      "map-teaser": "一扇洞门打开",
-      thesis: "一扇洞门打开，经卷被带离敦煌，散入帝国收藏。",
+      "map-teaser": "洞门开，经卷散",
+      thesis: "洞门打开，经卷离开敦煌，流散世界。",
       open: "打开档案",
       "rail-caption": "阅读档案",
       "rail-aria": "阅读档案",
@@ -71,23 +71,23 @@
       "notes-source-2": "世界与欧亚底图：Natural Earth 1:110m Admin 0 Countries",
       "notes-source-3": "世界视图中的中国高亮：Natural Earth 1:10m Admin 0 Countries",
       "data-disclaimer": "文学阅读地图：连线表达文章的叙事流向，不代表精确运输路线，也不替代测绘或导航信息。本章不把经卷设计成可收集物；主要视觉隐喻是“离开后的空白”。",
-      "complete-line": "洞窟留在敦煌，文字走向世界。"
+      "complete-line": "洞窟仍在敦煌，经卷散落世界。"
     },
     en: {
-      "map-aria": "A literary map of the Library Cave and the dispersal of its artefacts",
-      "map-teaser": "A cave opens",
-      thesis: "A cave opens. Its manuscripts are taken from Dunhuang and dispersed among imperial collections.",
-      open: "Open the archive",
-      "rail-caption": "Reading files",
-      "rail-aria": "Reading files",
-      "section-aria": "File {n}",
+      "map-aria": "A literary map of the Library Cave and the dispersal of its artifacts",
+      "map-teaser": "The door opens; the scrolls scatter",
+      thesis: "A cave door opens. The manuscripts leave Dunhuang and scatter across the world.",
+      open: "Enter the archive",
+      "rail-caption": "Reading the Archive",
+      "rail-aria": "Reading the Archive",
+      "section-aria": "Record {n}",
       "notes-keyboard": "↑ ↓ ← → switch files · L language · Esc closes this panel",
       "data-solid-label": "Solid",
       "data-solid": "Solid red lines mark relationships stated in the essay.",
       "data-dashed-label": "Dashed",
       "data-dashed": "Ochre dashes add later French and Russian collection context; they do not describe a single transport route.",
       "data-wudang-label": "Wudang",
-      "data-wudang": "Shown only as Hubei Daoist context, not a documented journey by Wang.",
+      "data-wudang": "Shown only as Hubei Taoist context, not a documented journey by Wang.",
       "data-unknown-label": "Gap",
       "data-unknown": "Jiang Xiaowan’s burial place has no verifiable coordinate; the “?” is not an arbitrary point but a question the map cannot answer.",
       "data-china-label": "China close-up",
@@ -98,7 +98,7 @@
       "notes-source-2": "World and Eurasia base: Natural Earth 1:110m Admin 0 Countries",
       "notes-source-3": "China highlight in world views: Natural Earth 1:10m Admin 0 Countries",
       "data-disclaimer": "A literary reading map: connections show the essay’s narrative flow, not exact transport routes, and do not replace survey or navigation information. The chapter does not treat the manuscripts as collectibles; its main image is the blank left behind.",
-      "complete-line": "The cave remains in Dunhuang. Its words travel the world."
+      "complete-line": "The manuscripts are scattered across the globe."
     }
   };
 

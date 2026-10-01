@@ -26,14 +26,14 @@
   // Chapter copy. Shared strings (site title, bar, drawer headings, finish…) come from the shell.
   const copy = {
     zh: {
-      "map-teaser": "水在这里被分开",
+      "map-teaser": "水，在这里被分开",
       thesis: "水，被读出来的形状",
       open: "开卷",
       "map-aria": "都江堰文学地图",
       "map-svg-title": "都江堰文学地图",
       "map-svg-desc": "随着阅读章节推进，岷江、鱼嘴、飞沙堰、宝瓶口与青城山逐层显影。",
       "map-quote": "拜水都江堰，问道青城山",
-      "complete-line": "岷江的水，正在回到中国。",
+      "complete-line": "岷江的水，由此化作丰饶的成都平原。",
       "notes-map":
         "这是一幅文学阅读地图：岷江、鱼嘴、飞沙堰、宝瓶口与青城山随阅读逐层显影。区域图保持都江堰与成都的真实相对方位；水利工程核心区使用真实坐标的局部放大图。不显示国界、省界或普通道路。",
       "notes-data":
@@ -45,7 +45,7 @@
       "notes-disclaimer": "地图用于文学阅读与地理关系解释，不替代工程图、行政地图或导航地图。"
     },
     en: {
-      "map-teaser": "Where water divides",
+      "map-teaser": "Here, the water divides",
       thesis: "The shape of water, read into view",
       open: "Begin",
       "map-aria": "A literary map of Dujiangyan",
@@ -53,7 +53,7 @@
       "map-svg-desc":
         "As the reading advances, the Min River, Yuzui, Feishayan, Baopingkou and Mount Qingcheng appear layer by layer.",
       "map-quote": "Pay homage to the water; seek the Way in Qingcheng",
-      "complete-line": "The Min River is returning to the map.",
+      "complete-line": "The Min River transforms into the fertile Chengdu Plain.",
       "notes-map":
         "This is a literary reading map: the Min River, Yuzui, Feishayan, Baopingkou and Mount Qingcheng appear layer by layer as you read. The regional view keeps the true relative bearing of Dujiangyan and Chengdu; the waterworks inset uses real coordinates at a larger scale. National and provincial borders and ordinary roads are not shown.",
       "notes-data":

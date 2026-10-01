@@ -4,7 +4,7 @@
   // Original book numbers remain stable; this edition includes nine chapters.
   const CHAPTER_PLAN = [
     {"id": "my-hometown", "number": 3, "index": "Chapter 03", "title": {"zh": "我的山河", "en": "My Hometown"}},
-    {"id": "dujiangyan", "number": 4, "index": "Chapter 04", "title": {"zh": "都江堰", "en": "Dujiangyan Irrigation System"}},
+    {"id": "dujiangyan", "number": 4, "index": "Chapter 04", "title": {"zh": "都江堰", "en": "Dujiangyan"}},
     {"id": "taoist-tower", "number": 5, "index": "Chapter 05", "title": {"zh": "道士塔", "en": "The Taoist Priest’s Tower"}},
     {"id": "mogao-caves", "number": 6, "index": "Chapter 06", "title": {"zh": "莫高窟", "en": "Mogao Caves"}},
     {"id": "secret-spring", "number": 7, "index": "Chapter 07", "title": {"zh": "沙原隐泉", "en": "A Secret Spring in the Sand"}},
@@ -19,7 +19,7 @@
       href: "./chapters/my-hometown/index.html?from=atlas",
       number: 3,
       title: { zh: "我的山河", en: "My Hometown" },
-      preview: { zh: "沿黄河、长江与雨的痕迹，认识这片土地。", en: "Follow the rivers and the trace of rain across the land." },
+      preview: { zh: "沿黄河、长江与雨的痕迹，重新认识这片土地。", en: "Follow the Yellow River, the Yangtze, and the traces of rain to see this land anew." },
       enter: { zh: "沿三条线进入", en: "Follow the three lines" },
       receipt: { mark: "河", zh: "三条线留下了山河的底色。", en: "Three lines leave their trace upon the land." },
       seal: "./chapters/my-hometown/assets/seal-my-hometown.svg?v=20260930"
@@ -29,11 +29,11 @@
       href: "./chapters/kashgar/index.html?from=atlas",
       number: 9,
       title: { zh: "西域喀什", en: "Kashgar in the Western Regions" },
-      clue: { zh: "有人把来世，选在这里。", en: "Where would you live again?" },
-      preview: { zh: "如果生命能够重来一次，你愿意生在何处？", en: "If you could live again, where would you choose to be born?" },
-      unrevealedEnter: { zh: "循着远方，开卷", en: "Follow the distance" },
+      clue: { zh: "有人把来世，选在这里。", en: "Someone chose to be reborn here." },
+      preview: { zh: "如果生命能够重来一次，你愿意生在何处？", en: "If life could begin again, where would you choose to be born?" },
+      unrevealedEnter: { zh: "循着远方，开卷", en: "Follow the far horizon" },
       enter: { zh: "进入西域喀什", en: "Enter Kashgar" },
-      receipt: { mark: "域", zh: "远方，在这里有了归宿。", en: "Here, the faraway finds a home." },
+      receipt: { mark: "域", zh: "远方，在这里有了归宿。", en: "Here, the faraway comes home." },
       seal: "./chapters/kashgar/assets/seal-kashgar.svg?v=81b3b06a7520"
     },
     yangguan: {
@@ -42,15 +42,15 @@
       number: 8,
       title: { zh: "阳关雪", en: "Snow on the Southern Pass" },
       preview: {
-        zh: "一座早已坍弛的土墩，为什么仍值得冒雪去寻？",
-        en: "Why walk through snow to find a pass that crumbled long ago?"
+        zh: "不只是一座关。",
+        en: "The search is for more than a pass."
       },
       unrevealedEnter: { zh: "循着诗句，踏雪出发", en: "Follow the poem into the snow" },
       enter: { zh: "再上阳关", en: "Return to the pass" },
       receipt: {
         mark: "雪",
-        zh: "风雪掩关，唐音犹在纸上。",
-        en: "Snow covers the pass; its verses remain on the page."
+        zh: "风雪掩故关，唐音犹在纸。",
+        en: "Snow buries the ancient pass, yet the echoes of the Tang Dynasty linger on the page."
       },
       seal: "./chapters/yangguan/assets/seal-yangguan.svg?v=08a8a94e3ec9"
     },
@@ -60,8 +60,8 @@
       number: 6,
       title: { zh: "莫高窟", en: "Mogao Caves" },
       preview: {
-        zh: "为什么打得你死我活的各方，都愿意为这里做一点好事？",
-        en: "Why would factions locked in life-and-death struggles all do a good deed for this place?"
+        zh: "争战之外，仍有人在这里留下善意。",
+        en: "Beyond war, people still left acts of devotion here."
       },
       unrevealedEnter: { zh: "走进洞窟", en: "Enter the caves" },
       enter: { zh: "再进莫高窟", en: "Return to the caves" },
@@ -78,15 +78,15 @@
       number: 11,
       title: { zh: "鱼尾山屋", en: "Fish Tail Lodge" },
       preview: {
-        zh: "走遍古文明的遗址之后，为什么要在喜马拉雅山脚下回望中国？",
-        en: "After walking the ruins of the ancient civilizations, why look back at China from the foot of the Himalayas?"
+        zh: "走遍古文明遗址之后，在雪峰下回望中国。",
+        en: "After walking among ancient ruins, look back toward China beneath snow peaks."
       },
       unrevealedEnter: { zh: "推门看雪峰", en: "Open the door to the peaks" },
       enter: { zh: "回到鱼尾山屋", en: "Return to the lodge" },
       receipt: {
         mark: "归",
-        zh: "离开之后，才读懂了它。",
-        en: "I did not comprehend it until I was separated from it."
+        zh: "惟告别，方领悟。",
+        en: "Only in departure do we truly begin to comprehend it."
       },
       seal: "./chapters/fish-tail-lodge/assets/seal-fish-tail-lodge.svg?v=f19fcbe77db2"
     },
@@ -97,14 +97,14 @@
       title: { zh: "都江堰", en: "Dujiangyan" },
       preview: {
         zh: "一项两千多年前的工程，如何让一片平原成为“天府之国”？",
-        en: "How did a two-thousand-year-old work of water turn a plain into the Land of Abundance?"
+        en: "How did a two-thousand-year-old waterworks turn a plain into the Land of Abundance?"
       },
       unrevealedEnter: { zh: "循着水声进入", en: "Follow the water" },
       enter: { zh: "沿岷江进入", en: "Follow the Min River" },
       receipt: {
         mark: "水",
-        zh: "岷江的水，在这里成为成都平原。",
-        en: "Here, the Min River becomes the Chengdu Plain."
+        zh: "岷江的水，由此化作丰饶的成都平原。",
+        en: "The Min River transforms into the fertile Chengdu Plain."
       },
       seal: "./chapters/dujiangyan/assets/seal-dujiangyan.svg?v=9051ca9b8108"
     },
@@ -114,14 +114,14 @@
       number: 7,
       title: { zh: "沙原隐泉", en: "A Secret Spring in the Sand" },
       preview: {
-        zh: "翻过一座真实的沙山，水为什么会藏在最不该有水的地方？",
-        en: "Beyond a measured dune, why does water hide where water should not exist?"
+        zh: "沙漠中的蓝意。",
+        en: "A spring hides where water should not exist."
       },
       enter: { zh: "沿脚印进入", en: "Follow the footprints" },
       receipt: {
         mark: "泉",
-        zh: "鸣沙山后，一弯清泉留在了地图上。",
-        en: "Beyond Mingsha Mountain, a crescent of water remains on the map."
+        zh: "鸣沙山深处，一弯清泉永驻于大漠版图。",
+        en: "A crescent spring etches itself upon the desert."
       },
       seal: "./chapters/secret-spring/assets/seal-secret-spring.svg?v=3ce3b913eaf8"
     },
@@ -131,14 +131,14 @@
       number: 5,
       title: { zh: "道士塔", en: "The Taoist Priest’s Tower" },
       preview: {
-        zh: "一扇洞门打开以后，里面的文字为什么走向世界？",
-        en: "Once a cave door opens, why do its words travel the world?"
+        zh: "经卷如何离开敦煌，流散世界？",
+        en: "How do the manuscripts leave Dunhuang and scatter across the world?"
       },
-      enter: { zh: "沿档案进入", en: "Enter through the archive" },
+      enter: { zh: "沿档案进入", en: "Enter the archive" },
       receipt: {
         mark: "空",
-        zh: "洞窟留在敦煌，文字走向世界。",
-        en: "The cave remains in Dunhuang. Its words travel the world."
+        zh: "洞窟仍在敦煌，经卷散落世界。",
+        en: "The manuscripts are scattered across the globe."
       },
       seal: "./chapters/taoist-tower/assets/seal-taoist-tower.svg?v=c63c6a0345d0"
     },
@@ -148,14 +148,14 @@
       number: 10,
       title: { zh: "山庄背影", en: "The Villa from Behind" },
       preview: {
-        zh: "一座塞外园林，如何成为一个王朝由盛转衰的椅背与背影？",
-        en: "How does a garden beyond the Wall become both chair back and afterimage of a dynasty?"
+        zh: "王朝变更，山水常在。",
+        en: "Dynasties come and go; the mountains and waters remain."
       },
       enter: { zh: "绕到山庄背后", en: "Walk behind the villa" },
       receipt: {
         mark: "影",
-        zh: "王朝退场后，山水仍坐在原处。",
-        en: "After the dynasty recedes, the mountains and water remain seated."
+        zh: "王朝变更，山水依旧。",
+        en: "The mountains and waters remain."
       },
       seal: "./chapters/mountain-resort/assets/seal-mountain-resort.svg?v=0cc4b2079257"
     }
@@ -548,7 +548,7 @@
       "hometown-entry-kicker": "03 · 全图入口",
       unavailable: "这处故事仍在等待显影",
       "receipt-title": "一处山河已经显影",
-      "receipt-body": "岷江的水，在这里成为成都平原。",
+      "receipt-body": "岷江的水，由此化作丰饶的成都平原。",
       "cta-message": "提灯寻路，让山河慢慢亮起",
       "cta-hint": "移动游标／触碰提灯 · 拖动或双指缩放 · 完成章节留下光圈",
       reset: "重置阅读痕迹",
@@ -583,7 +583,7 @@
       "hometown-entry-kicker": "03 · ATLAS ENTRANCE",
       unavailable: "This story is still waiting to be revealed",
       "receipt-title": "One landscape brought to light",
-      "receipt-body": "Here, the Min River becomes the Chengdu Plain.",
+      "receipt-body": "The Min River transforms into the fertile Chengdu Plain.",
       "cta-message": "Carry a light into the landscape",
       "cta-hint": "Move or touch to light the way · Drag, scroll or pinch to explore · Finish a chapter to keep its light",
       reset: "Reset reading trace",
