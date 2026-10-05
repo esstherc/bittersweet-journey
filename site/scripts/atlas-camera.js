@@ -48,6 +48,22 @@
     const raw=[rho*Math.sin(t),-rho*Math.cos(t),1];
     return coeff.map(c=>c.reduce((s,v,i)=>s+v*raw[i],0));
   }
+  // WGS84 anchors from the chapter geodata builders; project once, never offset on zoom.
+  const chapterCoordinates = {
+    kashgar: [75.9898, 39.4704], yangguan: [94.05904, 39.92725],
+    'secret-spring': [94.675, 40.084], 'taoist-tower': [94.809, 40.043],
+    'mogao-caves': [94.80417, 40.03722], dujiangyan: [103.617, 30.988],
+    chengde: [117.962, 40.954], 'fish-tail-lodge': [83.96404, 28.20095]
+  };
+  Object.entries(chapterCoordinates).forEach(([name, [lon, lat]]) => {
+    const group = svg.querySelector('[data-story="' + name + '"]');
+    const core = group?.querySelector('.point-core');
+    if (!core) return;
+    const [x, y] = project(lon, lat);
+    group.dataset.longitude = lon;
+    group.dataset.latitude = lat;
+    group.setAttribute('transform', 'translate(' + (x - core.cx.baseVal.value) + ' ' + (y - core.cy.baseVal.value) + ')');
+  });
   [ ['黄海','Yellow Sea',123,35,1],['东海','East China Sea',125,28,1],['南海','South China Sea',115,19,1],
     ['岷江','Min River',103.7,31.7,3],['塔里木河','Tarim River',84,41,2],
     ['敦煌','Dunhuang',94.662,40.142,3],['鸣沙山','Mingsha Dunes',94.67,40.05,3],

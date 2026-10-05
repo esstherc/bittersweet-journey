@@ -23,7 +23,8 @@ const pixel=(page,x,y)=>page.locator('.journey-fog').evaluate((c,p)=>{const rect
     await page.mouse.move(box.x+box.width*.72,box.y+box.height*.55);
     await page.waitForTimeout(50);
     const lit=await page.evaluate(()=>window.ATLAS_JOURNEY.state.light);
-    assert.equal(await pixel(page,lit.x,lit.y),0,'cursor center reveals the paper');
+    const hoverAlpha=await pixel(page,lit.x,lit.y);
+    assert(hoverAlpha>=55&&hoverAlpha<=70,'cursor keeps a light brown tint, dimmer than completed ground');
     assert.equal(await pixel(page,20,20),191,'distant unexplored map retains a 75% veil');
     await page.waitForTimeout(850);
     const after=await page.evaluate(()=>window.ATLAS_JOURNEY.state.position);
@@ -85,6 +86,7 @@ const pixel=(page,x,y)=>page.locator('.journey-fog').evaluate((c,p)=>{const rect
     assert.equal(await page.locator('.atlas-finale').isVisible(),false,'ending does not repeat on reload');
     assert.equal(await pixel(page,20,20),0,'complete map stays illuminated');
     await page.locator('.reset-progress').click();await page.waitForTimeout(50);
+    await page.waitForFunction(()=>{const c=document.querySelector('.journey-fog'),b=c.getBoundingClientRect();return c.getContext('2d').getImageData(Math.floor(20*c.width/b.width),Math.floor(20*c.height/b.height),1,1).data[3]===191;});
     assert.equal(await pixel(page,20,20),191,'reset restores the brown veil');
     assert.equal(await page.evaluate(()=>localStorage.getItem('bittersweet-journey:atlas-finale:v1')),null);
     assert.deepEqual(errors,[]);

@@ -14,12 +14,12 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&family=Ysabeau:ital,wght@0,400..700;1,400..700&display=swap"
     />
-    <link rel="stylesheet" href="./styles/atlas.css?v=20260930-scroll-seal-no-recoil" />
-    <link rel="stylesheet" href="./styles/atlas-physical.css?v=5b3a7fbeaad5" />
+    <link rel="stylesheet" href="./styles/atlas.css?v=0ef91d4e3d28" />
+    <link rel="stylesheet" href="./styles/atlas-physical.css?v=56607b469ef7" />
     <link rel="stylesheet" href="./styles/page-transition.css?v=899e8641905a">
     <script src="./scripts/page-transition.js?v=b6d201aba663"></script>
     <link rel="stylesheet" href="./styles/site-header.css?v=700abd29d250">
-    <script src="./scripts/site-header.js?v=20260930-nine-chapters-count"></script>
+    <script src="./scripts/site-header.js?v=cf83fccaa9b7"></script>
     <script src="./scripts/min-type.js?v=880bda1eac59"></script>
     <link rel="stylesheet" href="./styles/atlas-journey.css?v=67e0db520a06">
     <noscript><style>.journey-ready:not(.journey-mounted) .china-map { visibility: visible; }</style></noscript>
@@ -57,7 +57,7 @@
     <main class="atlas-experience">
       <section class="atlas-intro">
         <h1>
-          <span data-copy="question-line-1">一部书能够</span><span class="question-accent" data-copy="question-line-2">照亮多少中国？</span>
+          <span data-copy="question-line-1">一部书能够</span><span class="question-tail" data-copy="question-line-2">照亮多少中国？</span>
         </h1>
         <div class="cta-callout" role="status">
           <svg class="cta-arrow" viewBox="0 0 40 14" aria-hidden="true">
@@ -121,9 +121,6 @@
             <text x="337" y="260" class="route-label silk-road-label en" lang="en">Silk Road</text>
             <text x="275" y="575" class="route-label cn" lang="zh">西南古道</text>
             <text x="276" y="589" class="route-label en" lang="en">Southwestern Road</text>
-          </g>
-          <g class="kashgar-memory" aria-hidden="true">
-            <image class="terrain-picture" data-src="./assets/atlas/kashgar-terrain.webp" x="-182" y="-106" width="142" height="92" preserveAspectRatio="xMidYMid meet" />
           </g>
           <!-- One image seal per read chapter, placed next to its dot by atlas.js (layoutAtlas). -->
           <g class="chapter-seals" aria-hidden="true"></g>
@@ -194,7 +191,7 @@
               <text x="869" y="260" class="point-clue complete en" lang="en">The Villa from Behind</text>
             </g>
 
-            <!-- Mogao Caves: placed from Dunhuang by atlas.js (DISPLAY_OFFSETS), like the other Dunhuang-area dots. -->
+            <!-- Mogao Caves: anchored geographically by atlas-camera.js. -->
             <g class="story-point available" role="button" tabindex="0" data-story="mogao-caves" data-aria="point-mogao-caves-aria" aria-label="进入莫高窟">
               <circle class="point-glow" cx="300" cy="300" r="31" />
               <circle class="point-pulse" cx="300" cy="300" r="11" />
@@ -277,10 +274,10 @@
     </div>
 
     <script src="./data/real-geography.js?v=49a9ddc8d22f"></script>
-    <script src="./scripts/atlas.js?v=20260930-scroll-seal-3s-count"></script>
+    <script src="./scripts/atlas.js?v=50102c9599df"></script>
     <script src="./data/atlas-physical.js?v=0a7abe3264ab"></script>
-    <script src="./scripts/atlas-camera.js?v=7b44739cd585"></script>
-    <script src="./scripts/atlas-journey.js?v=20260930-nine-chapters"></script>
+    <script src="./scripts/atlas-camera.js?v=293eb07c8e8d"></script>
+    <script src="./scripts/atlas-journey.js?v=c06387b7878d"></script>
     <script src="./scripts/atlas-ending.js?v=b52cdbfca13c"></script>
   </body>
 </html>

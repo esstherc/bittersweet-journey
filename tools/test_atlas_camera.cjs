@@ -20,6 +20,15 @@ const server=http.createServer((req,res)=>{
     await page.goto(url);await page.waitForFunction(()=>window.ATLAS_CAMERA);await page.waitForTimeout(500);
     await page.screenshot({path:path.join(output,'desktop.png')});
     assert.equal(await page.locator('.physical-atlas .atlas-land').count(),1);
+    const anchors = () => page.locator('.story-point .point-core').evaluateAll(nodes => nodes.map(core => {
+      const svg = core.ownerSVGElement, group = core.parentElement;
+      const world = new DOMPoint(core.cx.baseVal.value, core.cy.baseVal.value).matrixTransform(core.getCTM()).matrixTransform(svg.getCTM().inverse());
+      const projected = window.ATLAS_CAMERA.project(Number(group.dataset.longitude), Number(group.dataset.latitude));
+      return {id:group.dataset.story, x:world.x, y:world.y, expected:projected};
+    }));
+    const fixedAnchors = await anchors();
+    fixedAnchors.forEach(p => assert(Math.hypot(p.x-p.expected[0],p.y-p.expected[1])<.001, p.id+' uses geographic projection'));
+    assert.equal(await page.locator('.question-accent').innerText(), 'illuminate');
     const before=await page.evaluate(()=>window.ATLAS_CAMERA.state);
     const originalSize=await page.locator('[data-story="dujiangyan"] .point-core').boundingBox();
     const initialFrame=await page.locator('.china-map').evaluate(svg=>({width:svg.viewBox.baseVal.width,scale:svg.getScreenCTM().a}));
@@ -39,6 +48,7 @@ const server=http.createServer((req,res)=>{
     await page.evaluate(()=>document.body.classList.remove('all-revealed'));
     assert.equal(await page.locator('.atlas-stream[data-level="3"]').first().isVisible(),true);
     await page.screenshot({path:path.join(output,'detail.png')});
+    (await anchors()).forEach((p,i) => assert(Math.hypot(p.x-fixedAnchors[i].x,p.y-fixedAnchors[i].y)<.001,p.id+' remains fixed through zoom'));
     const k=await page.evaluate(()=>window.ATLAS_CAMERA.state.k);assert(k>before.k);
     const enlargedSize=await page.locator('[data-story="dujiangyan"] .point-core').boundingBox();
     assert(Math.abs(originalSize.width-enlargedSize.width)<.2,'chapter dots retain screen size');
@@ -53,7 +63,9 @@ const server=http.createServer((req,res)=>{
     await page.locator('.china-map').focus();await page.keyboard.press('+');assert((await page.evaluate(()=>window.ATLAS_CAMERA.state.k))>1);
     await page.keyboard.press('Home');
     await page.locator('button[data-language="zh"]').click();
+    assert.equal(await page.locator('.question-accent').innerText(), '\u7167\u4eae');
     await page.locator('button[data-language="en"]').click();await page.waitForTimeout(100);
+    assert.equal(await page.locator('.question-accent').innerText(),'illuminate');
     assert.equal(await page.locator('[data-camera="home"]').textContent(),'All');
     assert.equal(await page.locator('.atlas-zoom-controls button').count(),3);
     assert.equal(await page.locator('.atlas-gesture-hint').count(),0);
@@ -150,6 +162,7 @@ const server=http.createServer((req,res)=>{
     await mobile.screenshot({path:path.join(output,'mobile-seal-flight.png'),fullPage:true});
     await mobile.waitForFunction(()=>document.body.dataset.sealCollection==='collected');
     await page.emulateMedia({reducedMotion:'reduce'});
+    await page.evaluate(()=>localStorage.removeItem('bittersweet-journey:dujiangyan:seal-reveal-seen'));
     await page.goto(url+'?revealed=dujiangyan');
     await page.waitForFunction(()=>document.body.dataset.sealCollection==='collected');
     assert.equal(await page.locator('.flying-collection-seal').count(),0,'reduced motion skips flight');

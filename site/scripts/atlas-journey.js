@@ -41,6 +41,8 @@
   document.body.classList.add('journey-ready');
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
   const points=[...map.querySelectorAll('.story-point.available, .story-point.primary')];
+  let pendingLight=points.find(point=>point.dataset.story===document.body.dataset.returningStory)||null;
+  let lightReveal=null;
   const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
   let box, matrix, inverse, width=1,height=1,dpr=1,dirty=true,frame=0,previous=0;
   let light=null,follow=null,position=null,roam=null,lastPointer=0,nextRoam=0,trip=null,completed=[];
@@ -62,21 +64,25 @@
       const id=point.dataset.story==='chengde'?'mountain-resort':point.dataset.story;
       try{return localStorage.getItem(`bittersweet-journey:${id}:complete`)==='true';}catch{return false;}
     });
+    if(pendingLight&&!completed.includes(pendingLight)){pendingLight=null;lightReveal?.resolve();lightReveal=null;}
     const allChaptersRead=window.ATLAS_STORIES.every(story=>{try{return localStorage.getItem(story.storageKey)==='true';}catch{return false;}});
     if(!allChaptersRead){illumination=0;revealStart=null;document.body.classList.remove('journey-illuminated');}
     else {try{if(localStorage.getItem('bittersweet-journey:atlas-finale:v1')===window.ATLAS_STORIES.map(s=>s.id).sort().join('|')){illumination=1;document.body.classList.add('journey-illuminated');}}catch{}}
     canvas.dataset.completed=String(completed.length);dirty=true;wake();
   }
-  function hole(x,y,r){
+  function hole(x,y,r,strength=1){
+    if(r<=0)return;
+    ctx.globalAlpha=strength;
     const gradient=ctx.createRadialGradient(x,y,r*.48,x,y,r);
     gradient.addColorStop(0,'rgba(0,0,0,1)');gradient.addColorStop(.5,'rgba(0,0,0,.8)');gradient.addColorStop(1,'rgba(0,0,0,0)');
     ctx.fillStyle=gradient;ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
+    ctx.globalAlpha=1;
   }
   function paintFog(){
     ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,width,height);ctx.globalCompositeOperation='source-over';ctx.fillStyle=`rgba(54,35,23,${.75*(1-illumination)})`;ctx.fillRect(0,0,width,height);
     ctx.globalCompositeOperation='destination-out';
-    completed.forEach(point=>{const p=screen(pointWorld(point));hole(p.x,p.y,Math.min(76*matrix.a+illumination*Math.hypot(width,height),Math.hypot(width,height)*2));});
-    if(light)hole(light.x,light.y,width<600?125:170);
+    completed.forEach(point=>{const p=screen(pointWorld(point));const growth=point===pendingLight?(lightReveal?.progress||0):1;hole(p.x,p.y,Math.min(76*matrix.a*growth+illumination*Math.hypot(width,height),Math.hypot(width,height)*2));});
+    if(light)hole(light.x,light.y,width<600?125:170,.68);
     ctx.globalCompositeOperation='source-over';dirty=false;
   }
   function paintTraveler(moving){
@@ -98,6 +104,11 @@
   function tick(now){
     frame=0;if(paused||document.hidden)return;
     const dt=Math.min((now-(previous||now))/1000,.05);previous=now;let moving=false;
+    if(lightReveal){
+      const t=reduced.matches?1:clamp((now-lightReveal.start)/1100,0,1);
+      lightReveal.progress=1-Math.pow(1-t,2);dirty=true;
+      if(t===1){const done=lightReveal.resolve;lightReveal=null;pendingLight=null;done();}
+    }
     if(revealStart!==null){
       const t=reduced.matches?1:clamp((now-revealStart)/2400,0,1);illumination=t*t*(3-2*t);dirty=true;
       if(t===1){revealStart=null;document.body.classList.add('journey-illuminated');window.dispatchEvent(new Event('atlas-map-illuminated'));}
@@ -118,7 +129,7 @@
       }
     }
     if(dirty)paintFog();paintTraveler(moving);
-    if(!reduced.matches||trip||revealStart!==null)wake();
+    if(!reduced.matches||trip||revealStart!==null||lightReveal)wake();
   }
   function wake(){if(!frame&&!paused&&!document.hidden)frame=requestAnimationFrame(tick);}
   function pointer(e){
@@ -159,5 +170,13 @@
   window.addEventListener('pageshow',()=>{paused=false;previous=0;dimensions();refresh();});
   dimensions();refresh();
   paintFog();paintTraveler(false);document.body.classList.add('journey-mounted');
-  window.ATLAS_JOURNEY=Object.freeze({travelTo,get state(){return {position:{...position},light:light?{...light}:null,running:Boolean(trip),completed:completed.map(p=>p.dataset.story)};}});
+  function revealChapter(name){
+    const point=points.find(p=>p.dataset.story===name);
+    if(!point||!completed.includes(point))return Promise.resolve();
+    lightReveal?.resolve();
+    if(reduced.matches){pendingLight=null;lightReveal=null;dirty=true;wake();return Promise.resolve();}
+    pendingLight=point;
+    return new Promise(resolve=>{lightReveal={start:performance.now(),progress:0,resolve};dirty=true;wake();});
+  }
+  window.ATLAS_JOURNEY=Object.freeze({travelTo,revealChapter,get state(){return {position:{...position},light:light?{...light}:null,running:Boolean(trip),completed:completed.map(p=>p.dataset.story)};}});
 })();

@@ -1405,3 +1405,70 @@
 [0929/094304.995:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 4CF5479C6DF8F5442B954DCF6E747753
 [0929/094305.047:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 4CF5479C6DF8F5442B954DCF6E747753
 [0929/094305.096:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 4CF5479C6DF8F5442B954DCF6E747753
+[1004/230908.791:ERROR:gpu\command_buffer\service\gl_utils.cc:430] [.WebGL-0x48bc064d9000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[1004/230909.007:ERROR:gpu\command_buffer\service\gl_utils.cc:430] [.WebGL-0x48bc064d9000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[1004/230909.094:ERROR:gpu\command_buffer\service\gl_utils.cc:430] [.WebGL-0x48bc064d9000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[1004/230909.161:ERROR:gpu\command_buffer\service\gl_utils.cc:430] [.WebGL-0x48bc064d9000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
+[1004/231114.061:ERROR:gpu\command_buffer\service\gl_utils.cc:430] [.WebGL-0x344c022c2000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[1004/231114.243:ERROR:gpu\command_buffer\service\gl_utils.cc:430] [.WebGL-0x344c022c2000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[1004/231114.324:ERROR:gpu\command_buffer\service\gl_utils.cc:430] [.WebGL-0x344c022c2000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels
+[1004/231114.381:ERROR:gpu\command_buffer\service\gl_utils.cc:430] [.WebGL-0x344c022c2000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)
+[1004/232630.285:ERROR:components\viz\service\frame_sinks\frame_sink_manager_impl.cc:1285] SurfaceAnimationManager missing for |transition_token| : (4A70C3BE9DF523E4275283213BEB6EA0)
+[1004/232630.286:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 4A70C3BE9DF523E4275283213BEB6EA0
+[1004/232630.286:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 4A70C3BE9DF523E4275283213BEB6EA0
+[1004/232630.355:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 4A70C3BE9DF523E4275283213BEB6EA0
+[1004/232630.355:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 4A70C3BE9DF523E4275283213BEB6EA0
+[1004/232630.471:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 4A70C3BE9DF523E4275283213BEB6EA0
+[1004/232630.471:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 4A70C3BE9DF523E4275283213BEB6EA0
+[1004/232630.569:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 4A70C3BE9DF523E4275283213BEB6EA0
+[1004/232630.569:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 4A70C3BE9DF523E4275283213BEB6EA0
+[1004/232630.671:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 4A70C3BE9DF523E4275283213BEB6EA0
+[1004/232630.794:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 4A70C3BE9DF523E4275283213BEB6EA0
+[1004/232630.912:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 4A70C3BE9DF523E4275283213BEB6EA0
+[1004/232636.407:ERROR:components\viz\service\frame_sinks\frame_sink_manager_impl.cc:1285] SurfaceAnimationManager missing for |transition_token| : (1BDFBE9D88B5F20F8C34FA419593ED85)
+[1004/232636.407:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 1BDFBE9D88B5F20F8C34FA419593ED85
+[1004/232636.408:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 1BDFBE9D88B5F20F8C34FA419593ED85
+[1004/232636.645:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 1BDFBE9D88B5F20F8C34FA419593ED85
+[1004/232636.645:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 1BDFBE9D88B5F20F8C34FA419593ED85
+[1004/232636.752:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 1BDFBE9D88B5F20F8C34FA419593ED85
+[1004/232636.752:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 1BDFBE9D88B5F20F8C34FA419593ED85
+[1004/232636.764:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 1BDFBE9D88B5F20F8C34FA419593ED85
+[1004/232636.764:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 1BDFBE9D88B5F20F8C34FA419593ED85
+[1004/232636.850:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 1BDFBE9D88B5F20F8C34FA419593ED85
+[1004/232636.850:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 1BDFBE9D88B5F20F8C34FA419593ED85
+[1004/232636.946:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 1BDFBE9D88B5F20F8C34FA419593ED85
+[1004/232636.946:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 1BDFBE9D88B5F20F8C34FA419593ED85
+[1004/232637.055:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 1BDFBE9D88B5F20F8C34FA419593ED85
+[1004/232637.055:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 1BDFBE9D88B5F20F8C34FA419593ED85
+[1004/232637.159:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 1BDFBE9D88B5F20F8C34FA419593ED85
+[1004/232637.159:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 1BDFBE9D88B5F20F8C34FA419593ED85
+[1004/232637.275:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 1BDFBE9D88B5F20F8C34FA419593ED85
+[1004/232637.275:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 1BDFBE9D88B5F20F8C34FA419593ED85
+[1004/232637.296:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 1BDFBE9D88B5F20F8C34FA419593ED85
+[1004/232637.296:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 1BDFBE9D88B5F20F8C34FA419593ED85
+[1004/232637.411:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 1BDFBE9D88B5F20F8C34FA419593ED85
+[1004/232637.501:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 1BDFBE9D88B5F20F8C34FA419593ED85
+[1004/232637.507:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 1BDFBE9D88B5F20F8C34FA419593ED85
+[1004/232637.604:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 1BDFBE9D88B5F20F8C34FA419593ED85
+[1004/232637.712:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 1BDFBE9D88B5F20F8C34FA419593ED85
+[1004/232637.836:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 1BDFBE9D88B5F20F8C34FA419593ED85
+[1004/232638.036:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 1BDFBE9D88B5F20F8C34FA419593ED85
+[1004/232704.394:ERROR:components\viz\service\frame_sinks\frame_sink_manager_impl.cc:1285] SurfaceAnimationManager missing for |transition_token| : (37A42093FBCBE1CB10E6B3B1629C1DD9)
+[1004/232704.394:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 37A42093FBCBE1CB10E6B3B1629C1DD9
+[1004/232704.394:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 37A42093FBCBE1CB10E6B3B1629C1DD9
+[1004/232704.438:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 37A42093FBCBE1CB10E6B3B1629C1DD9
+[1004/232704.438:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 37A42093FBCBE1CB10E6B3B1629C1DD9
+[1004/232704.547:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 37A42093FBCBE1CB10E6B3B1629C1DD9
+[1004/232704.547:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 37A42093FBCBE1CB10E6B3B1629C1DD9
+[1004/232704.728:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 37A42093FBCBE1CB10E6B3B1629C1DD9
+[1004/232704.845:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : 37A42093FBCBE1CB10E6B3B1629C1DD9
+[1004/232827.048:ERROR:components\viz\service\frame_sinks\frame_sink_manager_impl.cc:1285] SurfaceAnimationManager missing for |transition_token| : (AA19E0569332D3CEDA9FC8906A5035C9)
+[1004/232827.049:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : AA19E0569332D3CEDA9FC8906A5035C9
+[1004/232827.049:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : AA19E0569332D3CEDA9FC8906A5035C9
+[1004/232827.161:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : AA19E0569332D3CEDA9FC8906A5035C9
+[1004/232827.161:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : AA19E0569332D3CEDA9FC8906A5035C9
+[1004/232827.269:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : AA19E0569332D3CEDA9FC8906A5035C9
+[1004/232827.269:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : AA19E0569332D3CEDA9FC8906A5035C9
+[1004/232827.360:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : AA19E0569332D3CEDA9FC8906A5035C9
+[1004/232827.493:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : AA19E0569332D3CEDA9FC8906A5035C9
+[1004/232827.572:ERROR:components\viz\service\transitions\surface_animation_manager.cc:274] No SurfaceAnimationManager for token : AA19E0569332D3CEDA9FC8906A5035C9

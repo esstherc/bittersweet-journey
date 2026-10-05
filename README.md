@@ -32,6 +32,14 @@ bittersweet journey/
 - 《我的山河》现为第 03 章全图入口：五步交互开场连接双语五节正文与总图的“河”字印记。详见 [章节说明](docs/chapters/my-hometown/README.md)。
 - 本次计划制作九篇：我的山河、都江堰、道士塔、莫高窟、沙原隐泉、阳关雪、西域喀什、山庄背影、鱼尾山屋；其中六篇已接入。
 
+## GitHub Pages 部署
+
+這是純靜態網站，不需要安裝套件或建置。使用 **Settings → Pages → Deploy from a branch → main / (root)**，入口為 `index.html`，會轉入 `site/index.html`。
+
+請保留根目錄與 `site/` 中的 `.nojekyll`。共用章節程式位於 `site/chapters/_shared/`；未停用 Jekyll 時，底線開頭的目錄可能不會被發布，造成章節 CSS／JavaScript 回傳 404，即使部署工作顯示成功。不要選擇 `/docs` 作為發布目錄。
+
+部署前執行 `node tools/check_site_paths.cjs`，檢查相對網址、大小寫與必要標記。修改需提交並推送後才會更新線上網站；本機修正不會自行部署。
+
 ## 重新生成数据
 
 解析脚本会读取 `source/` 中的两本 EPUB，按需重新创建

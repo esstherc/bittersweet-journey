@@ -193,30 +193,6 @@
   }]);
   const chapterTotal = orderedStories.length;
   window.ATLAS_STORIES = Object.freeze(orderedStories.map(([id,story]) => Object.freeze({id,storageKey:story.storageKey,title:story.title,seal:story.seal})));
-  let terrainLoading = false;
-
-  function loadExploredTerrain() {
-    if (!state.complete.kashgar || terrainLoading || body.classList.contains("kashgar-terrain-ready")) return;
-    const terrain = document.querySelector(".terrain-picture");
-    if (!terrain) return;
-    terrainLoading = true;
-    const image = new Image();
-    image.onload = () => {
-      terrain.setAttribute("href", image.src);
-      body.classList.add("kashgar-terrain-ready");
-      terrainLoading = false;
-    };
-    image.onerror = () => { terrainLoading = false; };
-    image.src = terrain.dataset.src;
-  }
-
-  const DISPLAY_OFFSETS = {
-    // spread far enough for 10pt labels (map-guidance M-2), each in its real direction from Dunhuang
-    "taoist-tower": { x: 88, y: -74 },
-    yangguan: { x: -80, y: 70 },
-    // the Mogao Caves lie 17 km south-east of Dunhuang: drawn toward the south-east
-    "mogao-caves": { x: 84, y: 74 }
-  };
 
   function applyRealGeography() {
     const geography = window.REAL_GEOGRAPHY?.global;
@@ -244,35 +220,11 @@
       });
     });
 
-    const originalAnchors = {
-      kashgar: [118, 327],
-      yangguan: [235, 304],
-      "secret-spring": [286, 272],
-      "taoist-tower": [314, 245],
-      "mogao-caves": [300, 300],
-      dujiangyan: [455, 476],
-      chengde: [856, 252],
-    };
-    Object.entries(originalAnchors).forEach(([name, [x, y]]) => {
-      const geographyName = ["secret-spring", "taoist-tower", "mogao-caves"].includes(name) ? "dunhuang" : name;
-      const point = geography.places[geographyName];
-      const group = document.querySelector(`[data-story="${name}"]`);
-      if (!group) return;
-      // Dunhuang-area dots are drawn apart so each can be reached: Yangguan lies 57 km
-      // south-west of Dunhuang, a few pixels at this scale, so it is drawn toward the south-west.
-      const offset = DISPLAY_OFFSETS[name] || { x: 0, y: 0 };
-      group.setAttribute(
-        "transform",
-        `translate(${point.x - x + offset.x} ${point.y - y + offset.y})`
-      );
-    });
-
     const silk = document.querySelector(".silk-road");
     const southwest = document.querySelector(".tea-road");
     const kashgar = geography.places.kashgar;
     const dunhuang = geography.places.dunhuang;
     const dujiangyan = geography.places.dujiangyan;
-    document.querySelector(".kashgar-memory")?.setAttribute("transform", `translate(${kashgar.x} ${kashgar.y})`);
     silk.setAttribute(
       "d",
       `M${kashgar.x},${kashgar.y}C${kashgar.x + 64},${kashgar.y - 32} ${dunhuang.x - 65},${dunhuang.y + 10} ${dunhuang.x},${dunhuang.y}`
@@ -372,7 +324,7 @@
     const ownershipPenalty = (p, box, gap) => {
       const own = distanceToBox(p.cx, p.cy, box);
       return points.reduce((sum, q) => {
-        if (q === p) return sum;
+        if (q === p || Math.hypot(q.cx-p.cx,q.cy-p.cy)*scale < 32) return sum;
         const d = distanceToBox(q.cx, q.cy, box);
         if (d < own + gap) sum += 500;
         if (q.labelBox && d < distanceToBox(q.cx, q.cy, q.labelBox)) sum += 500;
@@ -388,37 +340,85 @@
     // The chapter labels (H1 on this map: they are the page's controls). Each tries #1-#5 (L-4); the positions are
     // searched together, most crowded dots first (H-2), so one long label cannot shut a neighbour out. If no
     // arrangement is fully clear, each label falls back to its least-crowded spot.
-    const crowding = (p) => points.filter((q) => q !== p && Math.hypot(q.cx - p.cx, q.cy - p.cy) < 90).length;
+    // crowding is judged on screen: dots that zoom apart stop being a cluster
+    const crowding = (p) => points.filter((q) => q !== p && Math.hypot(q.cx - p.cx, q.cy - p.cy) * scale < 90).length;
     points.forEach(p => {
       p.inView = p.cx > area.left && p.cx < area.right && p.cy > area.top && p.cy < area.bottom;
-      [...p.clues,p.number].forEach(node => { node.style.visibility = p.inView ? '' : 'hidden'; });
+      [...p.clues,p.number, ...p.group.querySelectorAll('.chapter-label-leader')].forEach(node => { node.style.visibility = p.inView ? '' : 'hidden'; });
     });
     const labelled = [...points].sort((a, b) => crowding(b) - crowding(a)).filter((p) => p.inView && p.clues.some(shownElement));
     labelled.forEach((p) => {
       const clue = p.clues.find(shownElement);
-      p.clues.forEach((node) => { node.style.fontSize = `${size.clue.toFixed(2)}px`; });
+      // font and halo are both set in map units, so both are rescaled at every zoom (the halo grew with the map before)
+      p.clues.forEach((node) => { node.style.fontSize = `${size.clue.toFixed(2)}px`; node.style.strokeWidth = `${(3 / scale).toFixed(3)}px`; });
       p.number.style.fontSize = `${size.number.toFixed(2)}px`;
+      p.number.style.strokeWidth = `${(2.5 / scale).toFixed(3)}px`;
+      const availableWidth = area.right - area.left;
+      const textWidth = clue.getComputedTextLength();
+      if (textWidth > availableWidth) p.clues.forEach(node => { node.style.fontSize = (size.clue * availableWidth / textWidth) + 'px'; });
       const w = Math.max(clue.getComputedTextLength(), p.number.getComputedTextLength());
       // line heights from the fonts themselves (the English face has taller line boxes)
       const metrics = (node) => { node.setAttribute("y", "0"); const b = node.getBBox(); return { ascent: -b.y, height: b.height }; };
       const numberLine = metrics(p.number), clueLine = metrics(clue);
       const h = numberLine.height + clueLine.height;
-      const gap = size.clue * 0.25, lift = size.clue * 0.1;
+      const gap = crowding(p) ? 28 / scale : size.clue * 0.25, lift = size.clue * 0.1;
       const { cx, cy, r } = p;
       // [text-anchor, block left, block top]: #1 右上, #2 右下, #2 左上, #3 左下, #4 正上, #5 正下
       p.candidates = [
         ["start", cx + r + gap, cy - lift - h], ["start", cx + r + gap, cy + lift],
         ["end", cx - r - gap - w, cy - lift - h], ["end", cx - r - gap - w, cy + lift],
         ["middle", cx - w / 2, cy - r - gap - h], ["middle", cx - w / 2, cy + r + gap]
-      ].map(([anchor, x, y]) => {
+      ];
+      // Dense geographic clusters keep their dots in place; only their labels fan out.
+      if (crowding(p)) {
+        for (const row of [-2, 2, -3, 3, -4, 4]) {
+          const y = cy + row * (h + 18 / scale);
+          p.candidates.push(['start', cx + r + gap, y], ['end', cx - r - gap - w, y], ['middle', cx - w / 2, y]);
+        }
+      }
+      p.candidates = p.candidates.map(([anchor, x, y]) => {
+        x = Math.max(area.left, Math.min(area.right - w, x));
         const box = { left: x, right: x + w, top: y, bottom: y + h };
         return { anchor, x, y, w, box, fixed: cost(box) };
       });
       p.gap = gap;
       p.lines = { number: numberLine, clue: clueLine };
     });
-    const clash = (p, candidate) => labelled.reduce((sum, q) => (q.labelBox ? sum + boxOverlap(candidate.box, q.labelBox) : sum), 0) +
-      ownershipPenalty(p, candidate.box, p.gap);
+    const labelSpacing = 16 / scale;
+    const paddedLabel = box => ({left:box.left-labelSpacing, right:box.right+labelSpacing, top:box.top-labelSpacing, bottom:box.bottom+labelSpacing});
+    // A leader runs from the dot to the nearest point of its label box. Leaders must not cross each other,
+    // nor pass through another chapter's label, or the reader can no longer tell which label is whose (L-3).
+    const leaderOf = (p, box) => {
+      if (distanceToBox(p.cx, p.cy, box) * scale <= 20) return null;
+      return [p.cx, p.cy, Math.max(box.left, Math.min(box.right, p.cx)), Math.max(box.top, Math.min(box.bottom, p.cy))];
+    };
+    const cross = (a, b) => {
+      const d = (p, q, r) => (q[0] - p[0]) * (r[1] - p[1]) - (q[1] - p[1]) * (r[0] - p[0]);
+      const p1 = [a[0], a[1]], p2 = [a[2], a[3]], q1 = [b[0], b[1]], q2 = [b[2], b[3]];
+      return d(p1, p2, q1) * d(p1, p2, q2) < 0 && d(q1, q2, p1) * d(q1, q2, p2) < 0;
+    };
+    const throughBox = (line, box) => {
+      // sample the segment: a leader that enters another label's box passes through it
+      for (let i = 1; i < 12; i++) {
+        const x = line[0] + (line[2] - line[0]) * i / 12, y = line[1] + (line[3] - line[1]) * i / 12;
+        if (x > box.left && x < box.right && y > box.top && y < box.bottom) return true;
+      }
+      return false;
+    };
+    const clash = (p, candidate) => {
+      let sum = labelled.reduce((total, q) => (q.labelBox ? total + boxOverlap(candidate.box, paddedLabel(q.labelBox)) : total), 0) +
+        ownershipPenalty(p, candidate.box, p.gap);
+      const line = leaderOf(p, candidate.box);
+      labelled.forEach((q) => {
+        if (q === p || !q.labelBox) return;
+        const other = leaderOf(q, q.labelBox);
+        // crossing leaders outweigh any amount of overlap: the fallback never accepts one to save space
+        if (line && other && cross(line, other)) sum += 1e7;
+        if (line && throughBox(line, q.labelBox)) sum += 1e7;
+        if (other && throughBox(other, candidate.box)) sum += 1e7;
+      });
+      return sum;
+    };
     let budget = 40000;
     const search = (index) => {
       if (index === labelled.length) return true;
@@ -439,18 +439,44 @@
     mapSvg.dataset.labelLayout = clear ? "clear" : "fallback: " + labelled.filter((p) => p.candidates.every((c) => c.fixed > 0)).map((p) => p.name).join(" ");
     if (!clear) {
       labelled.forEach((p) => { p.labelBox = null; p.chosen = null; });
-      labelled.forEach((p) => {
-        // Even a crowded overview must leave every chapter dot tappable.
+      // Even a crowded overview must leave every chapter dot tappable.
+      const pick = (p) => {
         const safe = p.candidates.filter(c => points.every(q => distanceToBox(q.cx,q.cy,c.box) > q.r + 2 / scale));
         p.chosen = safe.reduce((best, c) => {
           const total = c.fixed + clash(p, c);
           return !best || total < best.total ? { ...c, total } : best;
         }, null);
         p.labelBox = p.chosen?.box || null;
-      });
+      };
+      labelled.forEach(pick);
+      // Repair passes: each label is chosen again against all the others, so a label placed early is not
+      // left crossing a leader that was drawn after it. Stops once a pass changes nothing.
+      for (let round = 0; round < 4; round += 1) {
+        let changed = false;
+        labelled.forEach((p) => {
+          const before = p.chosen;
+          p.labelBox = null;
+          pick(p);
+          if (p.chosen?.box !== before?.box && (p.chosen?.x !== before?.x || p.chosen?.y !== before?.y)) changed = true;
+        });
+        if (!changed) break;
+      }
     }
     labelled.forEach((p) => {
       const best = p.chosen;
+      let leader = p.group.querySelector('.chapter-label-leader');
+      if (!leader) {
+        leader = document.createElementNS(svgNS, 'path');
+        leader.setAttribute('class', 'chapter-label-leader');
+        leader.setAttribute('aria-hidden', 'true');
+        p.group.prepend(leader);
+      }
+      leader.removeAttribute('d');
+      if (best && distanceToBox(p.cx, p.cy, best.box) * scale > 20) {
+        const x = Math.max(best.box.left, Math.min(best.box.right, p.cx));
+        const y = Math.max(best.box.top, Math.min(best.box.bottom, p.cy));
+        leader.setAttribute('d', 'M'+(p.cx-p.tx)+','+(p.cy-p.ty)+' L'+(x-p.tx)+','+(y-p.ty));
+      }
       if (!best) {
         [...p.clues,p.number].forEach(node => { node.style.visibility = 'hidden'; });
         return;
@@ -497,7 +523,7 @@
       { path: document.querySelector(".tea-road"), labels: routeLabels.slice(2, 4) }
     ].forEach(({ path, labels }) => {
       const label = labels.find(shownElement);
-      labels.forEach((node) => { node.style.fontSize = `${size.context.toFixed(2)}px`; node.setAttribute("text-anchor", "middle"); });
+      labels.forEach((node) => { node.style.fontSize = `${size.context.toFixed(2)}px`; node.style.strokeWidth = `${(3 / scale).toFixed(3)}px`; node.setAttribute("text-anchor", "middle"); });
       if (!label || !path || !path.getTotalLength) return;
       const length = path.getTotalLength();
       const width = label.getComputedTextLength();
@@ -818,6 +844,21 @@
       const value = copy[state.language][node.dataset.copy];
       if (value) node.textContent = value;
     });
+    const question = document.querySelector('[data-copy="question-line-2"]');
+    const word = state.language === 'zh' ? '照亮' : 'illuminate';
+    const line = copy[state.language]['question-line-2'];
+    const at = line.indexOf(word);
+    // copy without the highlighted word: show it plainly rather than as "undefined"
+    const [before, after] = at < 0 ? [line, ''] : [line.slice(0, at), line.slice(at + word.length)];
+    const accent = document.createElement('span');
+    accent.className = 'question-accent';
+    accent.textContent = at < 0 ? '' : word;
+    const sparks = document.createElement('span');
+    sparks.className = 'title-fireflies';
+    sparks.setAttribute('aria-hidden', 'true');
+    for (let i = 0; i < 4; i++) sparks.append(document.createElement('i'));
+    accent.append(sparks);
+    question.replaceChildren(document.createTextNode(before), accent, document.createTextNode(after));
     languageButtons.forEach((button) => {
       button.setAttribute("aria-pressed", String(button.dataset.language === state.language));
     });
@@ -838,7 +879,6 @@
     body.classList.toggle("yangguan-complete", state.complete.yangguan);
     body.classList.toggle("fish-tail-lodge-complete", state.complete["fish-tail-lodge"]);
     body.classList.toggle("mogao-caves-complete", state.complete["mogao-caves"]);
-    loadExploredTerrain();
     document.querySelector('[data-story="kashgar"]').setAttribute('aria-label', state.complete.kashgar ? (state.language === 'zh' ? '进入西域喀什' : 'Enter Kashgar') : STORIES.kashgar.clue[state.language]);
     availablePoints.forEach(point => {
       const name = point.dataset.story;
@@ -1039,23 +1079,7 @@
     body.style.setProperty('--atlas-intro-height',`${entries[0].contentRect.height}px`);
     scheduleLayout();
   }).observe(document.querySelector('.atlas-intro'));
-  const leaderLayer = document.createElementNS(svgNS, 'g');
-  leaderLayer.setAttribute('class', 'atlas-location-leaders');
-  leaderLayer.setAttribute('aria-hidden', 'true');
-  document.querySelector('.story-points').before(leaderLayer);
-  const crowded = { 'taoist-tower': [314,245,'dunhuang'], 'mogao-caves': [300,300,'dunhuang'], yangguan: [235,304,'yangguan'] };
-  const leaders = Object.fromEntries(Object.keys(crowded).map(name => {
-    const line = document.createElementNS(svgNS, 'path');leaderLayer.append(line);return [name,line];
-  }));
   window.addEventListener('atlas-camera-change', () => {
-    const k = window.ATLAS_CAMERA?.state.k || 1;
-    Object.entries(crowded).forEach(([name,[x,y,place]]) => {
-      const anchor = window.REAL_GEOGRAPHY.global.places[place];
-      const offset = DISPLAY_OFFSETS[name];
-      const dx = offset.x / k, dy = offset.y / k;
-      document.querySelector(`[data-story="${name}"]`).setAttribute('transform', `translate(${anchor.x-x+dx} ${anchor.y-y+dy})`);
-      leaders[name].setAttribute('d',`M${anchor.x},${anchor.y}L${anchor.x+dx},${anchor.y+dy}`);
-    });
     // Keep chapter symbols comfortably sized at every scale, like their labels.
     const scale = Math.hypot(mapSvg.getScreenCTM().a,mapSvg.getScreenCTM().b);
     document.querySelectorAll('.story-point').forEach(group => {
@@ -1093,18 +1117,23 @@
 
   if (firstReturnReveal) {
     renderReceipt(returning);
-    seals[returning]?.classList.add("is-returning");
+    seals[returning]?.classList.add("is-reveal-pending");
     body.dataset.returningStory = returning;
-    body.classList.add("is-returning");
-    window.clearTimeout(receiptTimer);
-    receiptTimer = window.setTimeout(dismissReceipt, 3000);
     // Run after the return-page curtain opens and the physical map camera is mounted.
     let started = false;
     const arrivalDeadline = performance.now() + 8000;
     const collect = () => {
       if (started) return;
-      if (!window.ATLAS_CAMERA || document.documentElement.matches('.land-in-transit')) {
-        if (performance.now() > arrivalDeadline) return;
+      if (!window.ATLAS_CAMERA || !window.ATLAS_JOURNEY || document.documentElement.matches('.land-in-transit')) {
+        if (performance.now() > arrivalDeadline) {
+          // the map layers never mounted: show the seal and receipt without the animation
+          started = true;
+          seals[returning]?.classList.remove("is-reveal-pending");
+          body.classList.add("is-returning");
+          window.clearTimeout(receiptTimer);
+          receiptTimer = window.setTimeout(dismissReceipt, 3000);
+          return;
+        }
         window.requestAnimationFrame(collect);return;
       }
       started = true;collectReturningSeal(returning);
@@ -1122,7 +1151,28 @@
     const previousCount=Math.max(0, finalCount - 1);
     if (countNode) countNode.textContent=String(previousCount);
     const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!reducedMotion) await new Promise(resolve => window.setTimeout(resolve, 1000));
+    const bounds=source.getBoundingClientRect(),frame=mapSvg.getBoundingClientRect();
+    if(bounds.left<frame.left+10||bounds.right>frame.right-10||bounds.top<frame.top+10||bounds.bottom>frame.bottom-10)window.ATLAS_CAMERA.reset();
+    await new Promise(requestAnimationFrame);
+    body.dataset.sealCollection='lighting';
+    await window.ATLAS_JOURNEY.revealChapter(name);
+    const seal=seals[name];
+    if(!state.complete[name]){seal?.classList.remove('is-reveal-pending');body.dataset.sealCollection='cancelled';return;}
+    body.dataset.sealCollection='stamping';
+    seal?.classList.add('is-stamping');
+    seal?.classList.remove('is-reveal-pending');
+    if(seal&&!reducedMotion){
+      const stamp=seal.animate([
+        {opacity:0,transform:'scale(1.45) rotate(-9deg)'},
+        {opacity:.95,transform:'scale(.97) rotate(0deg)',offset:.72},
+        {opacity:.9,transform:'scale(1) rotate(0deg)'}
+      ],{duration:460,easing:'cubic-bezier(.16,1,.3,1)'});
+      try{await stamp.finished;}catch{}
+    }
+    seal?.classList.remove('is-stamping');
+    body.classList.add('is-returning');
+    window.clearTimeout(receiptTimer);
+    receiptTimer=window.setTimeout(dismissReceipt,3000);
     const animateCount=()=>{
       if (!countNode) return;
       if (reducedMotion) {
@@ -1153,9 +1203,6 @@
     image.src=STORIES[name].seal;
     try{await image.decode();}catch{received();return;}
     // A remembered zoom may put this chapter offscreen. Fit the story points before takeoff.
-    const bounds=source.getBoundingClientRect(),frame=mapSvg.getBoundingClientRect();
-    if(bounds.left<frame.left+10||bounds.right>frame.right-10||bounds.top<frame.top+10||bounds.bottom>frame.bottom-10)window.ATLAS_CAMERA.reset();
-    await new Promise(requestAnimationFrame);
     const a=source.getBoundingClientRect(),b=target.getBoundingClientRect();
     const sx=a.left+a.width/2-24,sy=a.top+a.height/2-24;
     const ex=b.left+b.width/2-24,ey=b.top+b.height/2-24;

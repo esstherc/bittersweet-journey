@@ -10,7 +10,7 @@ The homepage is now a north-up, pannable physical atlas. Coastlines, rivers, lak
 - [Existing DEM provenance and limitations](chapters/fish-tail-lodge/GEODATA.md) still apply. Copernicus DEM © DLR e.V. 2010–2014 and © Airbus Defence and Space GmbH 2014–2018; distributed by the European Union/ESA.
 - Geographic regions are real Natural Earth polygons rendered as a light wash. Labels use an interior horizontal cross-section of the source polygon, with small vertical offsets for collision avoidance. Region polygons are generalized extents, not precise mountain boundaries.
 - Projection: spherical Albers, standard parallels 25°/47°, central meridian 105°, affine registration to six existing homepage anchors. Maximum registration residual: **0.125 map units**. River paths already on the homepage remain intact; newly projected layers align with those paths.
-- Chapter offsets around Dunhuang shrink with zoom and have leader lines to the existing geographic anchors. The nearby cave/tower anchors still represent Dunhuang at this regional scale; the map does not claim site-survey precision.
+- Chapter markers use fixed WGS84 coordinates from the existing chapter geodata builders, projected with the same Albers transform as the terrain. Zoom and pan never displace a marker relative to the map. Nearby Dunhuang chapters remain geographically clustered; their clickable labels fan out with fine leader lines. Coordinates are regional reading anchors, not site-survey precision.
 
 ## Camera and information levels
 
@@ -29,7 +29,7 @@ The SVG `viewBox` is the shared camera, so land, water, names and chapter points
 
 - `tools/build_atlas_geography.cjs`: download/cache and generate `site/data/atlas-physical.js`. Raw source files are cached under the OS temporary directory, not checked into the repository. Node's built-in modules are sufficient.
 - `site/scripts/atlas-camera.js`: physical layers, camera, touch/pointer handling, level selection, physical-label placement and bilingual controls.
-- `site/scripts/atlas.js`: existing chapter UI and label layout, plus camera integration and chapter offset leaders.
+- `site/scripts/atlas.js`: existing chapter UI and label layout, plus camera integration and geographically anchored label leaders.
 - `site/styles/atlas-physical.css`, `site/assets/atlas-paper.svg`: hand-drawn atlas styling and fine paper grain.
 - `tools/test_atlas_camera.cjs`: Playwright browser regression and screenshots written to the OS temporary directory. Set `PLAYWRIGHT_MODULE` to an installed Playwright module path if it is not available by normal Node resolution.
 
@@ -48,6 +48,8 @@ Chapter previews use rectangular thought bubbles with 16 px corners in the origi
 On a completed chapter's `revealed` return, its seal lifts from the corresponding map point and travels to the masthead collector in 950 ms, followed by a brief arrival highlight. All eight completion paths use this shared animation, including Kashgar's automatic return. It waits for the page curtain and camera, decodes the seal first, and fits the overview if the source point is outside the remembered viewport. Refreshing does not repeat the ceremony. Reduced motion skips the flight while keeping collection state and an accessible announcement. Resizing or leaving the page cancels and cleans up the moving image. The compact collector remains visible on phones.
 
 ## Lantern exploration
+
+Hover/touch light removes 68% of the local coffee veil; completed chapter centers remove it fully, keeping temporary exploration distinct from saved progress. On the first completed return, the new circle starts dark and expands from its chapter point over 1100 ms. Only after that reveal does the map seal press into place over 460 ms, followed by the collection flight. Existing completed circles stay lit; reload does not replay the sequence. Reduced motion immediately applies the final light and collection state. The Kashgar terrain watermark and its lazy loader have been removed.
 
 `atlas-journey.js` adds a 75%-opaque coffee-brown canvas veil above the geographic SVG and a decorative SVG horse carrying a Chinese poet with a straw hat, gray-blue robe and book bag. The paper map remains faintly visible under the veil, with a feathered cursor/touch light (170 px radius on desktop, 125 px on phones), plus permanent chapter circles. The header, fixed title, CTA and controls use a brown palette with warm readable text. Keyboard focus supplies a light at the focused chapter, and a map focus supplies one at the viewport center.
 

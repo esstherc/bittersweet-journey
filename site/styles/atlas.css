@@ -159,6 +159,30 @@ body[data-language="en"] .hometown-entry span {
 
 .atlas-intro .question-accent {
   color: var(--seal);
+  position: relative;
+}
+
+.title-fireflies { position: absolute; inset: 0; pointer-events: none; }
+.chapter-label-leader {
+  fill: none; stroke: #8b1820; stroke-width: 1;
+  vector-effect: non-scaling-stroke; opacity: .85; pointer-events: none;
+}
+.title-fireflies i {
+  position: absolute; width: 3px; height: 3px; border-radius: 50%;
+  background: #e6c78d; box-shadow: 0 0 5px 1px #d9b57c66;
+  opacity: 0; animation: title-firefly 5.8s ease-in-out infinite;
+}
+.title-fireflies i:nth-child(1) { left: 8%; top: 8%; animation-delay: -1s; }
+.title-fireflies i:nth-child(2) { left: 68%; top: -12%; animation-delay: -3.4s; }
+.title-fireflies i:nth-child(3) { left: 96%; top: 66%; animation-delay: -4.8s; }
+.title-fireflies i:nth-child(4) { left: 35%; top: 95%; animation-delay: -2.2s; }
+@keyframes title-firefly {
+  0%, 100% { opacity: 0; transform: translate(0, 3px); }
+  45% { opacity: .65; }
+  70% { opacity: .18; transform: translate(5px, -7px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .title-fireflies { display: none; }
 }
 
 body[data-language="en"] .atlas-intro h1 {
@@ -170,7 +194,7 @@ body[data-language="en"] .atlas-intro h1 {
   letter-spacing: -.025em;
 }
 
-body[data-language="en"] .atlas-intro .question-accent::before {
+body[data-language="en"] .atlas-intro .question-tail::before {
   content: " ";
 }
 
@@ -1083,9 +1107,6 @@ body[data-language="en"] .chapter-preview > p:not(.preview-index) {
 /* Kashgar remains visible after reading. */
 body.kashgar-complete [data-story="kashgar"] .point-core { fill: var(--cinnabar, #944b39); r: 6px; }
 body.kashgar-complete [data-story="kashgar"] .point-glow { opacity: .3; }
-.kashgar-memory { opacity: 0; pointer-events: none; transition: opacity .8s ease; }
-body.kashgar-complete.kashgar-terrain-ready .kashgar-memory { opacity: .52; }
-@media (prefers-reduced-motion: reduce) { .kashgar-memory { transition: none; } }
 
 [data-story="kashgar"] .complete,body.kashgar-complete [data-story="kashgar"] .unread{display:none}
 body.kashgar-complete[data-language="zh"] [data-story="kashgar"] .complete.cn,body.kashgar-complete[data-language="en"] [data-story="kashgar"] .complete.en{display:block}
@@ -1156,5 +1177,7 @@ body.mogao-caves-complete [data-story="mogao-caves"] .point-orbit {
    atlas.js next to its dot where it covers no label, dot or other seal; stamped in when the reader returns. */
 .chapter-seal { opacity: 0; pointer-events: none; transition: opacity 1.3s; }
 .chapter-seal.is-shown { opacity: .9; }
-body.is-returning .chapter-seal.is-returning { transform-box: fill-box; transform-origin: center; animation: seal-imprint 2s .3s both; }
-@keyframes seal-imprint { from { opacity: 0; transform: scale(1.22); filter: blur(6px); } to { opacity: .9; transform: scale(1); filter: blur(0); } }
+
+.chapter-seal { transform-box:fill-box; transform-origin:center; }
+.chapter-seal.is-reveal-pending { opacity:0; transition:none; }
+.chapter-seal.is-stamping { transition:none; }
