@@ -936,6 +936,7 @@
   }
 
   function closeStampModal() {
+    window.JOURNEY_AUDIO?.play('close', .36);
     stampOverlay.classList.remove("is-visible");
     document.removeEventListener("keydown", onStampKeydown);
     window.setTimeout(() => {
@@ -952,6 +953,8 @@
   async function enterStory(storyName = activeStory) {
     if(journeyPending)return;
     journeyPending=true;
+    window.JOURNEY_AUDIO?.enterChapter(storyName);
+    let leaving=false;
     activeStory = storyName;
     hidePreview();
     try {
@@ -960,8 +963,9 @@
       if(!arrived)return;
       const url = new URL(STORIES[storyName].href, window.location.href);
       url.searchParams.set("lang", state.language);
+      leaving=true;
       window.LAND_TRANSITION.navigate(url.href);
-    } finally {journeyPending=false;}
+    } finally {journeyPending=false;if(!leaving)window.JOURNEY_AUDIO?.setAmbience(true);}
   }
 
   document.querySelector(".hometown-entry")?.addEventListener("click", () => enterStory("my-hometown"));
@@ -1168,6 +1172,7 @@
     const seal=seals[name];
     if(!state.complete[name]){seal?.classList.remove('is-reveal-pending');body.dataset.sealCollection='cancelled';return;}
     body.dataset.sealCollection='stamping';
+    window.JOURNEY_AUDIO?.play('stamp', .48);
     seal?.classList.add('is-stamping');
     seal?.classList.remove('is-reveal-pending');
     if(seal&&!reducedMotion){
