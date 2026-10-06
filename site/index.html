@@ -14,18 +14,19 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&family=Ysabeau:ital,wght@0,400..700;1,400..700&display=swap"
     />
-    <link rel="stylesheet" href="./styles/atlas.css?v=0ef91d4e3d28" />
+    <link rel="stylesheet" href="./styles/atlas.css?v=5f9a873380c5" />
     <link rel="stylesheet" href="./styles/atlas-physical.css?v=56607b469ef7" />
     <link rel="stylesheet" href="./styles/page-transition.css?v=899e8641905a">
-    <link rel="stylesheet" href="./styles/journey-audio.css?v=20261006-2">
-    <script src="./scripts/journey-audio.js?v=20261006-2"></script>
+    <link rel="stylesheet" href="./styles/journey-audio.css?v=3b21344a057e">
+    <script src="./scripts/journey-audio.js?v=8dd96af9db35"></script>
     <script src="./scripts/page-transition.js?v=b6d201aba663"></script>
     <link rel="stylesheet" href="./styles/site-header.css?v=700abd29d250">
-    <script src="./scripts/site-header.js?v=cf83fccaa9b7"></script>
+    <script src="./scripts/site-header.js?v=e00055e7bd37"></script>
     <script src="./scripts/min-type.js?v=880bda1eac59"></script>
     <link rel="stylesheet" href="./styles/atlas-journey.css?v=8e647b70d0b4">
     <noscript><style>.journey-ready:not(.journey-mounted) .china-map { visibility: visible; }</style></noscript>
     <link rel="preload" as="image" href="./assets/transition-book.svg?v=759a1f4c6555">
+    <link rel="stylesheet" href="./styles/atlas-credits.css?v=d4c85028cc58" />
 </head>
   <body data-language="en" class="journey-ready">
     <script>setTimeout(() => { if (!window.ATLAS_JOURNEY) document.body.classList.remove('journey-ready'); }, 5000);</script>
@@ -263,23 +264,21 @@
         role="dialog"
         aria-modal="true"
         aria-labelledby="stamp-modal-title"
-        aria-describedby="stamp-modal-desc"
       >
         <button type="button" class="stamp-close" data-aria="close-aria" aria-label="关闭">×</button>
         <h2 id="stamp-modal-title" data-copy="stamp-title">圖章</h2>
-        <p id="stamp-modal-desc" class="stamp-desc" data-copy="stamp-desc">
-          每完成一段旅程，就会留下一枚山河圖章。
-        </p>
         <p class="stamp-count"></p>
         <div class="stamp-grid"></div>
       </div>
     </div>
 
     <script src="./data/real-geography.js?v=49a9ddc8d22f"></script>
-    <script src="./scripts/atlas.js?v=20261006-sound"></script>
+    <script src="./scripts/atlas.js?v=2dbae353529b"></script>
     <script src="./data/atlas-physical.js?v=0a7abe3264ab"></script>
     <script src="./scripts/atlas-camera.js?v=293eb07c8e8d"></script>
     <script src="./scripts/atlas-journey.js?v=c06387b7878d"></script>
-    <script src="./scripts/atlas-ending.js?v=b52cdbfca13c"></script>
+    <script src="./data/book-contents.js?v=c83d024fbbd7"></script>
+    <script src="./scripts/atlas-credits.js?v=4573053b6f55"></script>
+    <script src="./scripts/atlas-ending.js?v=f0acd8e18dae"></script>
   </body>
 </html>

@@ -910,15 +910,13 @@
       .map(([name, story]) => {
         const unlocked = Boolean(state.complete[name]);
         const title = story.title[state.language];
-        const line = unlocked ? story.receipt[state.language] : text.locked;
         const mark = unlocked && story.seal
           ? `<img src="${story.seal}" alt="" />`
           : unlocked ? story.receipt.mark : "";
         return `
           <div class="stamp-card${unlocked ? " is-unlocked" : ""}">
-            <span class="stamp-mark${unlocked && story.seal ? ' has-seal' : ''}">${mark}</span>
+            <span class="stamp-mark${unlocked && story.seal ? ' has-seal' : ''}" role="img" aria-label="${unlocked ? title : text.locked}">${mark}</span>
             <span class="stamp-name">${title}</span>
-            <span class="stamp-line">${line}</span>
           </div>
         `;
       })
