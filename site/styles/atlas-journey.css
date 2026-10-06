@@ -42,12 +42,13 @@ body.journey-ready { background: #302219; }
 body.journey-illuminated { background: #ece7db; }
 .journey-illuminated .atlas-intro h1 { color: #423529; text-shadow: 0 1px 12px #f4ecdb; }
 .journey-illuminated .atlas-intro .question-accent { color: #944b39; }
-.atlas-finale { width: min(760px,calc(100vw - 32px)); max-height: calc(100dvh - 40px); overflow: auto; padding: 42px 36px; border: 1px solid #aa8a5955; color: #493c2e; background: #f1e8d7; box-shadow: 0 24px 100px #36231755; text-align: center; }
+.atlas-finale { width: min(620px,calc(100vw - 32px)); max-height: calc(100dvh - 40px); overflow: auto; padding: 42px 36px; border: 1px solid #aa8a5955; color: #493c2e; background: #f1e8d7; box-shadow: 0 24px 100px #36231755; text-align: center; }
 .atlas-finale::backdrop { background: #37261933; backdrop-filter: blur(2px); }
 .finale-kicker { margin: 0 0 16px; color: #927348; font: 14px var(--label); letter-spacing: .22em; }
 .atlas-finale h2 { margin: 0; font-weight: 400; font-size: clamp(25px,3vw,38px); line-height: 1.5; letter-spacing: .08em; }
 .finale-message { font-size: 16px; line-height: 1.8; margin: 20px auto 26px; max-width: 34em; }
-.finale-seals { display: grid; grid-template-columns: repeat(4,1fr); gap: 22px 18px; }
+/* nine chapters: a 3 × 3 grid of seals */
+.finale-seals { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px 18px; max-width: 480px; margin: 0 auto; }
 .finale-seals figure { margin: 0; }
 .finale-seals img { width: 70px; height: 70px; }
 .finale-seals figcaption { margin-top: 7px; font-size: 13.5px; line-height: 1.5; }

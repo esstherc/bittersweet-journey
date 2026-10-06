@@ -462,6 +462,15 @@
         if (!changed) break;
       }
     }
+    // H2: a label that still overlaps one already kept gives way (its dot stays, and its pop-up still names it).
+    // Labels are kept in reading order of priority: the chapter being read back, then unread chapters, then read ones.
+    const kept = [];
+    const priority = (p) => (p.name === body.dataset.returningStory ? 0 : state.complete[p.name] ? 2 : 1);
+    [...labelled].sort((a, b) => priority(a) - priority(b)).forEach((p) => {
+      if (!p.chosen) return;
+      if (kept.some((box) => boxOverlap(p.chosen.box, box) > 0)) { p.chosen = null; p.labelBox = null; return; }
+      kept.push(p.chosen.box);
+    });
     labelled.forEach((p) => {
       const best = p.chosen;
       let leader = p.group.querySelector('.chapter-label-leader');
