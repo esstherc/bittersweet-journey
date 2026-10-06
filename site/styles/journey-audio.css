@@ -1,0 +1,31 @@
+.site-masthead .site-sound-toggle {
+  appearance: none;
+  position: absolute;
+  top: 18px;
+  right: 142px;
+  width: 36px;
+  height: 36px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  background: transparent;
+  color: inherit;
+  opacity: .76;
+  font: 21px/1 Georgia, serif;
+  cursor: pointer;
+}
+.site-masthead .site-sound-toggle[aria-pressed="true"] { opacity: 1; }
+.site-masthead .site-sound-toggle[aria-pressed="false"]::after {
+  content: '';
+  position: absolute;
+  width: 27px;
+  height: 1px;
+  top: 17px;
+  left: 4px;
+  background: currentColor;
+  transform: rotate(-44deg);
+}
+.site-masthead .site-sound-toggle:hover,
+.site-masthead .site-sound-toggle:focus-visible { background: rgba(157, 61, 49, .1); }
+@media (max-width: 900px) {
+  .site-masthead .site-sound-toggle { top: 16px; right: 116px; width: 32px; height: 32px; font-size: 18px; }
+}

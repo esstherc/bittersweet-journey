@@ -7,7 +7,7 @@
 
   const LANGUAGE_KEY = "bittersweet-journey:language";
   const ATLAS_URL = "../../index.html";
-  const COMPLETE_DELAY = 350;
+  const COMPLETE_DELAY = 4200;
 
   const SHELL_COPY = {
     zh: {
@@ -333,6 +333,8 @@
     function openBook({ immediate = false } = {}) {
       if (state.open) return;
       state.open = true;
+      window.JOURNEY_AUDIO?.setAmbience(false);
+      if (!immediate) window.JOURNEY_AUDIO?.play('page', .48);
       if (immediate) els.curtain.style.transition = "none";
       body.classList.add("is-open");
       els.curtain.setAttribute("aria-hidden", "true");
@@ -348,6 +350,7 @@
 
     function toggleNotes(force, { focus = true } = {}) {
       state.notesOpen = typeof force === "boolean" ? force : !state.notesOpen;
+      if (!state.notesOpen) window.JOURNEY_AUDIO?.play('close', .36);
       body.classList.toggle("notes-open", state.notesOpen);
       els.notesButton.setAttribute("aria-expanded", String(state.notesOpen));
       els.notesDrawer.setAttribute("aria-hidden", String(!state.notesOpen));
@@ -369,13 +372,16 @@
     function finishChapter() {
       if (body.dataset.chapterCompleted === "true") return;
       body.dataset.chapterCompleted = "true";
+      body.classList.add("is-completing");
+      els.overlay.setAttribute("aria-hidden", "false");
+      window.JOURNEY_AUDIO?.play('complete', .58);
       window.localStorage.setItem(`bittersweet-journey:${id}:complete`, "true");
       window.localStorage.setItem(LANGUAGE_KEY, state.language);
       window.setTimeout(() => {
         const destination = `${ATLAS_URL}?revealed=${config.revealId || id}&lang=${state.language}`;
         if (window.LAND_TRANSITION) window.LAND_TRANSITION.navigate(destination);
         else window.location.href = destination;
-      }, COMPLETE_DELAY);
+      }, window.JOURNEY_AUDIO?.enabled ? COMPLETE_DELAY : 1400);
     }
 
     /* ---------- events ---------- */
@@ -423,6 +429,7 @@
 
     window.addEventListener("pageshow", () => {
       body.classList.remove("is-completing");
+      delete body.dataset.chapterCompleted;
       els.overlay.setAttribute("aria-hidden", "true");
     });
 

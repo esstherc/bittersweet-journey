@@ -81,6 +81,8 @@
   async function enter() {
     if (turning || !dialog.open) return;
     turning = true;
+    window.JOURNEY_AUDIO?.play('page', .48);
+    window.JOURNEY_AUDIO?.setAmbience(false);
     const action = dialog.querySelector('.chapter-leaf-enter');
     action.disabled = true;
     let entered = false;
@@ -180,6 +182,7 @@
     if (config.preview) { config.enter(); root.classList.remove('chapter-entry-pending'); startReading(); return; }
     root.classList.add('chapter-gate-open');
     dialog.showModal();
+    window.JOURNEY_AUDIO?.setAmbience(true);
     root.classList.remove('chapter-entry-pending');
     title.focus({preventScroll: true});
   }

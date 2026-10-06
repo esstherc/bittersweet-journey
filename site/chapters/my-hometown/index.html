@@ -21,8 +21,10 @@
       href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&family=Ysabeau:ital,wght@0,400..700;1,400..700&display=swap"
     />
     <link rel="stylesheet" href="../_shared/chapter-shell.css?v=5312138dfcc9" />
-    <link rel="stylesheet" href="./styles.css?v=597dccc36a80" />
+    <link rel="stylesheet" href="./styles.css?v=20261006-geography-pass" />
     <link rel="stylesheet" href="../../styles/page-transition.css?v=899e8641905a" />
+    <link rel="stylesheet" href="../../styles/journey-audio.css?v=20261006-2">
+    <script src="../../scripts/journey-audio.js?v=20261006-2"></script>
     <script src="../../scripts/page-transition.js?v=b6d201aba663"></script>
     <link rel="stylesheet" href="../../styles/site-header.css?v=700abd29d250" />
     <script src="../../scripts/site-header.js?v=cf83fccaa9b7"></script>
@@ -50,36 +52,100 @@
       <section class="map-stage" inert data-aria="map-aria" aria-label="我的山河文学地图">
         <h1 class="sr-only" data-copy="chapter-title">我的山河</h1>
 
-        <svg class="story-map hometown-map" viewBox="120 65 960 608" role="img" aria-labelledby="svg-title svg-desc" data-map="reader">
+        <svg class="story-map hometown-map" viewBox="120 65 960 608" role="img" aria-labelledby="svg-title svg-desc" data-map="reader" data-scene="earth">
           <title id="svg-title" data-copy="map-svg-title">我的山河 · 三条天地之线</title>
           <desc id="svg-desc" data-copy="map-svg-desc">黄河、长江和约四百毫米年降水量分界的文学地理示意。</desc>
-          <g class="map-art">
-            <path class="land-wash west" d="M156 168C289 88 456 144 554 220C560 295 535 381 451 432C343 421 245 387 176 318Z" />
-            <path class="land-wash north" d="M540 121C697 81 874 139 1002 219C951 277 848 307 693 291C624 248 581 188 540 121Z" />
-            <path class="land-wash south" d="M425 440C556 378 768 398 929 465C1020 522 1008 599 906 652C753 656 539 606 425 440Z" />
-            <path class="mountain-ink" d="M152 490Q202 391 249 470Q290 372 340 452Q384 362 434 437" />
-            <path class="mountain-ink fine" d="M230 295Q260 240 293 291Q325 224 363 294Q405 245 448 309" />
-            <path class="rain-wash" d="M430 304C520 315 592 301 671 258C741 231 827 211 913 163" />
-            <path class="rain-line" d="M430 304C520 315 592 301 671 258C741 231 827 211 913 163" />
-            <path class="wall-line" d="M561 327C626 324 681 305 729 280C791 273 839 245 883 220" />
+          <defs>
+            <clipPath id="reader-globe-clip"><rect x="170" y="150" width="860" height="430" rx="8" /></clipPath>
+            <filter id="reader-region-wash" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="1.2" /></filter>
+            <pattern id="reader-sand" width="7" height="9" patternUnits="userSpaceOnUse"><path d="M1 3q1.5-1 3 0M4 7h.3" fill="none" stroke="#a88b57" stroke-width=".4" opacity=".45" /></pattern>
+            <linearGradient id="reader-globe-ocean" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#edf0e9" /><stop offset="1" stop-color="#c8d7d3" /></linearGradient>
+          </defs>
+
+          <g class="reader-globe" aria-hidden="true">
+            <rect class="reader-globe-shadow" x="164" y="157" width="872" height="436" rx="12" />
+            <rect class="reader-globe-ocean" x="170" y="150" width="860" height="430" rx="8" />
+            <g clip-path="url(#reader-globe-clip)">
+              <path class="reader-graticule" data-reader-world-graticule />
+              <path class="reader-globe-land" data-reader-globe-land />
+              <g class="reader-world-focus">
+                <circle class="world-focus-ring" cx="851" cy="281" r="27" />
+                <circle class="world-focus-core" cx="851" cy="281" r="4" />
+              </g>
+            </g>
+            <rect class="reader-globe-ring" x="170" y="150" width="860" height="430" rx="8" />
+          </g>
+
+          <g class="reader-atlas" aria-hidden="true">
+            <g class="reader-atlas-physical" data-reader-physical></g>
+            <rect class="reader-climate-veil climate-cold" x="0" y="0" width="1200" height="760" />
+            <rect class="reader-climate-veil climate-warm" x="0" y="0" width="1200" height="760" />
+
+            <g class="reader-geography-labels">
+              <text x="450" y="295" data-map-zh="西北沙漠" data-map-en="Northwestern deserts">Northwestern deserts</text>
+              <text x="510" y="544" data-map-zh="青藏高原" data-map-en="Tibetan Plateau">Tibetan Plateau</text>
+              <text x="914" y="510" data-map-zh="太平洋" data-map-en="Pacific Ocean">Pacific Ocean</text>
+            </g>
+
+            <g class="reader-thematic-lines">
+            <path class="rain-line" data-rain-contour />
+            <path class="great-wall-line" data-great-wall />
             <path class="river river-yellow" data-river="yellow" pathLength="100" />
             <path class="river river-yangtze" data-river="yangtze" pathLength="100" />
-            <text class="map-label yellow-label" x="687" y="380">黄河</text>
-            <text class="map-label yangtze-label" x="702" y="524">长江</text>
-            <text class="map-label rain-label" x="861" y="171">约 400 mm</text>
-            <circle class="story-seal" cx="643" cy="430" r="18" />
-            <text class="story-seal-text" x="643" y="437" text-anchor="middle">03</text>
+            <path class="river river-pearl" data-river="pearl" pathLength="100" />
+            <text class="map-label yellow-label" x="687" y="380" data-map-zh="黄河" data-map-en="Yellow River">Yellow River</text>
+            <text class="map-label yangtze-label" x="702" y="524" data-map-zh="长江" data-map-en="Yangtze">Yangtze</text>
+            <text class="map-label pearl-label" x="778" y="566" data-map-zh="珠江" data-map-en="Pearl River">Pearl River</text>
+            <text class="map-label rain-label" data-rain-label>约 400 mm</text>
+            <text class="map-label great-wall-label" x="740" y="325" data-map-zh="万里长城" data-map-en="Great Wall">Great Wall</text>
+            </g>
+
+            <g class="reader-focus focus-yellow-source">
+              <circle cx="512" cy="419" r="5" />
+              <text x="494" y="400" text-anchor="end" data-map-zh="黄河源头" data-map-en="Yellow River source">Yellow River source</text>
+            </g>
+            <g class="reader-focus focus-dongying">
+              <circle cx="771" cy="373" r="5" />
+              <circle class="focus-pulse" cx="771" cy="373" r="13" />
+              <text x="788" y="358" data-map-zh="山东东营 · 入海口" data-map-en="Dongying · estuary">Dongying · estuary</text>
+            </g>
+            <g class="reader-focus focus-yangtze-source">
+              <circle cx="599" cy="517" r="5" />
+              <text x="579" y="538" text-anchor="end" data-map-zh="长江上游" data-map-en="Upper Yangtze">Upper Yangtze</text>
+            </g>
+            <g class="reader-focus focus-yangtze-mouth">
+              <circle cx="787" cy="453" r="5" />
+              <circle class="focus-pulse" cx="787" cy="453" r="13" />
+              <text x="804" y="438" data-map-zh="长江入海口" data-map-en="Yangtze estuary">Yangtze estuary</text>
+            </g>
+
+            <g class="reader-heritage heritage-yinxu" data-place="yinxu">
+              <circle r="4" />
+              <text x="9" y="-8" data-map-zh="殷墟" data-map-en="Yinxu">Yinxu</text>
+            </g>
+            <g class="reader-heritage heritage-sanxingdui" data-place="sanxingdui">
+              <circle r="4" />
+              <text x="-9" y="-8" text-anchor="end" data-map-zh="三星堆" data-map-en="Sanxingdui">Sanxingdui</text>
+            </g>
+            <g class="reader-heritage heritage-three-gorges" data-place="threeGorges">
+              <circle r="4" />
+              <text x="9" y="-8" data-map-zh="三峡" data-map-en="Three Gorges">Three Gorges</text>
+            </g>
+            <g class="reader-heritage heritage-liangzhu" data-place="liangzhu">
+              <circle r="4" />
+              <text x="9" y="-8" data-map-zh="良渚" data-map-en="Liangzhu">Liangzhu</text>
+            </g>
+
+            <g class="reader-boundary-labels">
+              <text x="490" y="185" data-map-zh="游牧文明（草原与沙漠）" data-map-en="Nomadic civilization (grassland and desert)">Nomadic civilization (grassland and desert)</text>
+              <text x="688" y="342" data-map-zh="农耕文明（种植农作物）" data-map-en="Agricultural civilization (crop cultivation)">Agricultural civilization (crop cultivation)</text>
+            </g>
           </g>
         </svg>
         <div class="map-tools" role="group" aria-label="地图控制">
           <button type="button" class="map-zoom-in" aria-label="放大地图">＋</button>
           <button type="button" class="map-zoom-out" aria-label="缩小地图">－</button>
           <button type="button" class="map-home" data-map-home>全图</button>
-        </div>
-        <div class="map-layer-switch">
-          <button type="button" class="rain-toggle" aria-pressed="false"><span class="layer-swatch"></span><span data-rain-toggle>降水图层</span></button>
-          <p data-map-caption aria-live="polite">地形，是故事的第一层底色。</p>
-          <button type="button" class="replay-tour" data-replay-tour>重看开场 ↗</button>
         </div>
       </section>
 
@@ -89,7 +155,7 @@
           <div class="reading-copy"></div>
 
           <div class="reader-end">
-            <span class="seal seal-m" aria-hidden="true">河</span>
+            <span class="seal seal-m seal-image" aria-hidden="true"><img src="./assets/seal-my-hometown.svg?v=20260930" alt="" /></span>
             <button class="finish-chapter" type="button">
               <span data-copy="finish">完成本章 · 返回总图</span>
               <svg viewBox="0 0 44 14" aria-hidden="true">
@@ -262,15 +328,18 @@
 
     <div class="chapter-complete-overlay" role="status" aria-live="polite" aria-hidden="true">
       <span class="complete-ripple"></span>
-      <span class="seal seal-l" aria-hidden="true">河</span>
+      <span class="seal seal-l seal-image" aria-hidden="true"><img src="./assets/seal-my-hometown.svg?v=20260930" alt="" /></span>
       <p data-copy="complete-kicker">一处山河已经显影</p>
       <strong data-copy="complete-line">三条线留下了山河的底色。</strong>
     </div>
 
     <script src="../../data/real-geography.js?v=49a9ddc8d22f"></script>
     <script src="../../data/atlas-physical.js?v=0a7abe3264ab"></script>
+    <script src="../../data/world-land.js?v=20261005-natural-earth"></script>
+    <script src="../../data/worldclim-400mm.js?v=20261006"></script>
+    <script src="../../data/great-wall.js?v=20261006-osm-318110"></script>
     <script src="./chapter-data.js?v=8cacbbc01ca4"></script>
-    <script src="../_shared/chapter-shell.js?v=a614b31418f5"></script>
-    <script src="./app.js?v=c3214d59044c"></script>
+    <script src="../_shared/chapter-shell.js?v=20261006-sound"></script>
+    <script src="./app.js?v=20261006-geography-pass"></script>
   </body>
 </html>

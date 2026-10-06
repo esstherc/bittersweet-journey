@@ -11,7 +11,6 @@
   const journey = $(".journey");
   const tourMap = $('[data-map="tour"]');
   const readerMap = $('[data-map="reader"]');
-  const rainToggle = $(".rain-toggle");
   const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const INTRO_KEY = "bittersweet-journey:my-hometown:intro-seen";
   let step = 0;
@@ -22,18 +21,18 @@
 
   const sections = {
     zh: [
-      { label: "一 · 山河之子", location: "从故乡走向山河" },
-      { label: "二 · 生存的底色", location: "海 · 沙漠 · 高原" },
-      { label: "三 · 三条天地之线", location: "黄河 · 长江 · 降水" },
-      { label: "四 · 界线两侧", location: "农耕与游牧" },
-      { label: "五 · 向海而望", location: "山河与海洋" }
+      { label: "一 · 山河之子" },
+      { label: "二 · 生存的底色" },
+      { label: "三 · 三条天地之线" },
+      { label: "四 · 界线两侧" },
+      { label: "五 · 向海而望" }
     ],
     en: [
-      { label: "I · Child of the Land", location: "From home to the land" },
-      { label: "II · A Place to Live", location: "Sea · Desert · Plateau" },
-      { label: "III · Three Great Lines", location: "Rivers · Rainfall" },
-      { label: "IV · Across the Line", location: "Farming and herding" },
-      { label: "V · Toward the Sea", location: "Land and ocean" }
+      { label: "I · Child of the Land" },
+      { label: "II · A Place to Live" },
+      { label: "III · Three Great Lines" },
+      { label: "IV · Across the Line" },
+      { label: "V · Toward the Sea" }
     ]
   };
 
@@ -44,15 +43,15 @@
       open: "开始阅读",
       "map-aria": "黄河、长江和降水分界的文学地理图",
       "map-svg-title": "我的山河 · 三条天地之线",
-      "map-svg-desc": "黄河和长江使用真实河道数据；降水分界是概念示意。",
+      "map-svg-desc": "黄河、长江、珠江、四百毫米等降水量线与万里长城均采用真实地理数据。",
       "rail-caption": "原文章节",
-      "notes-map": "开场依次练习点选河流、拖动、放大、切换图层和打开章节。正文可滚动阅读，也可点下方节次切换；地图上的线与第 3 节相连。",
-      "notes-data": "黄河与长江来自现有全国地图的 Natural Earth 河流数据，采用中国范围 Albers 等积投影。地形色块、长城与约 400 毫米年降水量线为文学示意；没有把长城画成降水边界。",
+      "notes-map": "正文滚动会推动地图从地球进入欧亚大陆和中国。镜头只在段落切换时改变范围；同一段内沿河平移，不反复缩放。也可点下方节次切换。",
+      "notes-data": "中国轮廓、地形分区、山地纹理和水系沿用全国总图。黄河、长江与珠江采用总图中的 Natural Earth 河流数据；400 毫米等降水量线由 WorldClim 2.1 的 BIO12 年降水量栅格提取；万里长城采用 OpenStreetMap relation 318110 的实际分段。",
       "notes-source-1": "文本：余秋雨《文化苦旅》中文版《我的山河》，及现有英文选译。",
-      "notes-source-2": "河流：Natural Earth 1:10m rivers，见全站地理数据说明。",
-      "notes-source-3": "降水分界：依据原文主题绘制的概念性带状示意，非逐年观测等值线。",
-      "notes-source-4": "地图交互与雨量底色：本站原创视觉表达。",
-      "notes-disclaimer": "400 毫米是概略的多年平均年降水量界线，位置随资料、年代与表达尺度而变化；农业与游牧也不由单一数值绝对决定。此图用于文学阅读，不用于测绘或行政判断。",
+      "notes-source-2": "世界陆地与河流：Natural Earth 公共领域数据，见全站地理数据说明。",
+      "notes-source-3": "降水分界：WorldClim 2.1，BIO12 年降水量，1970–2000 年平均，10 arc-minute；以 GDAL 提取 400 mm 等值线后投影到本站地图。",
+      "notes-source-4": "万里长城：© OpenStreetMap contributors，ODbL，relation 318110；遗址坐标参考 UNESCO 世界遗产资料。地图镜头与阅读动画为本站原创视觉表达。",
+      "notes-disclaimer": "图上线路是真实气候栅格的 400 毫米多年平均年降水量等值线，不代表每一年的固定边界。其位置会随资料时期与分辨率变化；农业与游牧也不由单一数值绝对决定。",
       "complete-line": "三条线留下了山河的底色。"
     },
     en: {
@@ -61,15 +60,15 @@
       open: "Begin reading",
       "map-aria": "A literary map of the two rivers and the rainfall transition",
       "map-svg-title": "My Hometown · Three lines across the land",
-      "map-svg-desc": "The two rivers use mapped geometry; the rainfall transition is conceptual.",
+      "map-svg-desc": "The Yellow, Yangtze and Pearl rivers, the 400 mm isohyet and the Great Wall use mapped geographic data.",
       "rail-caption": "Original sections",
-      "notes-map": "The opening introduces selecting a river, dragging, zooming, switching a layer and opening a chapter. Scroll the text or choose a section below. Selecting a line on the map takes you to section three.",
-      "notes-data": "The Yellow and Yangtze river paths reuse the atlas's Natural Earth data in a China Albers equal-area projection. Terrain washes, the Great Wall and the roughly 400 mm rainfall transition are literary diagrams.",
+      "notes-map": "Scrolling carries the map from Earth into Eurasia and China. The scale changes between paragraphs; within a paragraph the view travels along a river without repeated zooming. You can also choose a section below.",
+      "notes-data": "China's outline, terrain regions, mountain texture and water system come from the main atlas. The Yellow, Yangtze and Pearl reuse its Natural Earth river data; the 400 mm isohyet is extracted from WorldClim 2.1 BIO12 annual precipitation; the Great Wall uses the mapped segments in OpenStreetMap relation 318110.",
       "notes-source-1": "Text: Yu Qiuyu, My Hometown, and the supplied English translation.",
-      "notes-source-2": "Rivers: Natural Earth 1:10m rivers; see the atlas geography notes.",
-      "notes-source-3": "Rainfall transition: conceptual band based on the chapter, not an observed annual contour.",
-      "notes-source-4": "Map interactions and rainfall wash: original site design.",
-      "notes-disclaimer": "The 400 mm annual rainfall threshold is approximate. Its location and meaning change with data and time. Farming and herding do not follow a single absolute line. This literary map is not for survey or administrative use.",
+      "notes-source-2": "World land and rivers: Natural Earth public-domain data; see the atlas geography notes.",
+      "notes-source-3": "Rainfall boundary: WorldClim 2.1 BIO12 annual precipitation, 1970–2000 average, 10 arc-minute grid; the 400 mm contour was extracted with GDAL and projected into the atlas.",
+      "notes-source-4": "Great Wall: © OpenStreetMap contributors, ODbL, relation 318110; heritage coordinates reference UNESCO World Heritage records. Map camera and reading animation: original site design.",
+      "notes-disclaimer": "This line is the 400 mm multi-year mean annual precipitation contour derived from a real climate grid. It is not fixed from year to year, and its position changes with the reference period and resolution. Farming and herding do not follow a single absolute line.",
       "complete-line": "Three lines leave their trace upon the land."
     }
   };
@@ -106,12 +105,13 @@
   };
 
   const smallCopy = {
-    zh: { rain: "降水图层", home: "全图", replay: "重看开场 ↗", coord: "中国 · 文学地理示意", yellow: "黄河", yangtze: "长江", coach: "继续阅读，地图会随段落展开。点正文里的地名，可以在地图上找到它。", dismiss: "知道了", caption: ["地形，是故事的第一层底色。", "从四面观察这片土地。", "黄河与长江构成两条水线。", "雨量分界与长城在部分地段接近。", "两侧的相遇与交融。", "把目光转向海洋。"] },
-    en: { rain: "Rainfall layer", home: "Overview", replay: "Replay opening ↗", coord: "China · literary geography", yellow: "Yellow River", yangtze: "Yangtze", coach: "Keep reading. The map will unfold with each section. Select a place in the text to find it on the map.", dismiss: "Got it", caption: ["Terrain is the first layer of the story.", "See the land from its edges.", "Two great rivers cross the map.", "The rainfall transition and wall approach in places.", "The two sides meet and blend.", "Look toward the ocean."] }
+    zh: { home: "全图", coord: "中国 · 文学地理示意", yellow: "黄河", yangtze: "长江", coach: "继续阅读，地图会随段落展开。点正文里的地名，可以在地图上找到它。", dismiss: "知道了" },
+    en: { home: "Overview", coord: "China · literary geography", yellow: "Yellow River", yangtze: "Yangtze", coach: "Keep reading. The map will unfold with each section. Select a place in the text to find it on the map.", dismiss: "Got it" }
   };
 
   $$('[data-river="yellow"]').forEach((path) => path.setAttribute("d", geography.major.yellow));
   $$('[data-river="yangtze"]').forEach((path) => path.setAttribute("d", geography.major.yangtze));
+  $$('[data-river="pearl"]').forEach((path) => path.setAttribute("d", geography.secondary.pearl));
 
   function mountAtlasBasemap() {
     const atlas = window.ATLAS_PHYSICAL;
@@ -155,6 +155,96 @@
   }
   mountAtlasBasemap();
 
+  function mountReaderBasemap() {
+    const atlas = window.ATLAS_PHYSICAL;
+    const root = $("[data-reader-physical]");
+    const globeLand = $("[data-reader-globe-land]");
+    if (!atlas || !root || !globeLand) return;
+    const ns = "http://www.w3.org/2000/svg";
+    const make = (tag, attrs, parent = root) => {
+      const node = document.createElementNS(ns, tag);
+      Object.entries(attrs || {}).forEach(([name, value]) => node.setAttribute(name, value));
+      parent.append(node);
+      return node;
+    };
+    root.replaceChildren();
+    const worldRings = window.WORLD_LAND || [];
+    const worldPath = worldRings.map((ring) => ring.map(([longitude, latitude], index) => {
+      const x = 170 + (longitude + 180) / 360 * 860;
+      const y = 150 + (90 - latitude) / 180 * 430;
+      return `${index ? "L" : "M"}${x.toFixed(2)} ${y.toFixed(2)}`;
+    }).join("") + "Z").join("");
+    globeLand.setAttribute("d", worldPath || atlas.land);
+    globeLand.setAttribute("fill-rule", "evenodd");
+    const graticule = $(`[data-reader-world-graticule]`);
+    if (graticule) {
+      const lines = [];
+      for (let longitude = -150; longitude <= 150; longitude += 30) {
+        const x = 170 + (longitude + 180) / 360 * 860;
+        lines.push(`M${x.toFixed(2)} 150V580`);
+      }
+      for (let latitude = -60; latitude <= 60; latitude += 30) {
+        const y = 150 + (90 - latitude) / 180 * 430;
+        lines.push(`M170 ${y.toFixed(2)}H1030`);
+      }
+      graticule.setAttribute("d", lines.join(""));
+    }
+    const { n, C, coeff } = atlas.projection;
+    const radians = Math.PI / 180;
+    const project = ([longitude, latitude]) => {
+      const rho = Math.sqrt(C - 2 * n * Math.sin(latitude * radians)) / n;
+      const theta = n * (longitude - 105) * radians;
+      const raw = [rho * Math.sin(theta), -rho * Math.cos(theta), 1];
+      return coeff.map((row) => row.reduce((sum, value, index) => sum + value * raw[index], 0));
+    };
+    const climateContour = window.WORLDCLIM_400MM;
+    if (climateContour?.coordinates?.length) {
+      const projected = climateContour.coordinates.map(project);
+      const contourPath = projected.map(([x, y], index) => `${index ? "L" : "M"}${x.toFixed(2)} ${y.toFixed(2)}`).join("");
+      $$(`[data-rain-contour]`).forEach((path) => path.setAttribute("d", contourPath));
+      const label = $(`[data-rain-label]`);
+      if (label) {
+        const anchor = projected[projected.length - 1];
+        label.setAttribute("x", (anchor[0] + 12).toFixed(1));
+        label.setAttribute("y", (anchor[1] - 10).toFixed(1));
+      }
+    }
+    const wall = window.GREAT_WALL_GEOJSON?.features?.[0]?.geometry?.coordinates || [];
+    const wallPath = wall.map((line) => line.map((coordinate, index) => {
+      const [x, y] = project(coordinate);
+      return `${index ? "L" : "M"}${x.toFixed(2)} ${y.toFixed(2)}`;
+    }).join("")).join("");
+    const wallElement = $(`[data-great-wall]`);
+    if (wallElement) wallElement.setAttribute("d", wallPath);
+
+    const places = {
+      yinxu: [114.31861, 36.1225],
+      sanxingdui: [104.19944, 30.99389],
+      liangzhu: [119.99083, 30.39555],
+      threeGorges: [111.02, 30.82]
+    };
+    Object.entries(places).forEach(([name, coordinate]) => {
+      const marker = $(`[data-place="${name}"]`);
+      if (!marker) return;
+      const [x, y] = project(coordinate);
+      marker.setAttribute("transform", `translate(${x.toFixed(2)} ${y.toFixed(2)})`);
+    });
+    make("rect", { x: -500, y: -500, width: 2500, height: 2000, class: "reader-atlas-sea" });
+    make("path", { d: atlas.land, class: "reader-atlas-land", "fill-rule": "evenodd" });
+    const regions = make("g", { class: "reader-atlas-regions", filter: "url(#reader-region-wash)" });
+    atlas.regions.forEach((feature) => {
+      make("path", { d: feature.d, class: `reader-atlas-region region-${feature.kind}` }, regions);
+      if (feature.kind === "desert") make("path", { d: feature.d, fill: "url(#reader-sand)", opacity: ".5" }, regions);
+    });
+    const relief = make("g", { class: "reader-atlas-relief" });
+    atlas.hachures.forEach((d, index) => make("path", { d, class: `reader-atlas-hachure weight-${index}` }, relief));
+    atlas.contours.forEach((feature) => make("path", { d: feature.d, class: "reader-atlas-contour" }, relief));
+    const water = make("g", { class: "reader-atlas-water" });
+    atlas.rivers.forEach((feature) => make("path", { d: feature.d, class: "reader-atlas-stream" }, water));
+    atlas.lakes.forEach((feature) => make("path", { d: feature.d, class: "reader-atlas-lake" }, water));
+  }
+  mountReaderBasemap();
+
   function readSeen() { try { return localStorage.getItem(INTRO_KEY) === "true"; } catch { return false; } }
   function markSeen() { try { localStorage.setItem(INTRO_KEY, "true"); } catch {} }
 
@@ -183,6 +273,24 @@
     setCamera(svg);
   }
   function home(svg) { camera.set(svg, overview()); setCamera(svg); }
+
+  const cameraTarget = (x, y, w) => ({ x, y, w, h: w * 760 / 1200 });
+  const narrativeCameras = {
+    earth: overview(),
+    eurasia: cameraTarget(160, 100, 880),
+    sealed: cameraTarget(200, 126, 800),
+    climate: cameraTarget(225, 142, 750),
+    lines: cameraTarget(255, 155, 700),
+    yellowStart: cameraTarget(360, 235, 650),
+    yellowEnd: cameraTarget(450, 235, 650),
+    southward: cameraTarget(450, 325, 650),
+    yangtzeStart: cameraTarget(450, 325, 650),
+    yangtzeEnd: cameraTarget(540, 325, 650),
+    boundary: cameraTarget(360, 118, 640),
+    borderlands: cameraTarget(360, 118, 640),
+    ocean: cameraTarget(560, 260, 560),
+    "earth-return": overview()
+  };
 
   function moveCamera(svg, target) {
     const oldFrame = cameraFrames.get(svg);
@@ -271,6 +379,7 @@
     setText("[data-yangtze-quote]", text.yangtzeQuote);
     setText("[data-enter-copy]", text.enter);
     $$('[data-atlas-en]').forEach((element) => { element.textContent = element.dataset[language === "zh" ? "atlasZh" : "atlasEn"]; });
+    $$('[data-map-en]').forEach((element) => { element.textContent = element.dataset[language === "zh" ? "mapZh" : "mapEn"]; });
     $$(".journey .rain-label, .hometown-map .rain-label").forEach(el => el.textContent = language === "en" ? "≈ 400 mm" : "约 400 mm");
     $$(".journey .yellow-label, .hometown-map .yellow-label").forEach(el => el.textContent = labels.yellow);
     $$(".journey .yangtze-label, .hometown-map .yangtze-label").forEach(el => el.textContent = labels.yangtze);
@@ -408,6 +517,7 @@
   }
 
   function enterReader({ skipped = false } = {}) {
+    window.JOURNEY_AUDIO?.play('page', .48);
     clearSequenceTimers();
     markSeen();
     journey.hidden = true;
@@ -419,6 +529,89 @@
     }
   }
 
+  let narrativeParagraphs = [];
+  let narrativeKey = "";
+  let narrativeScrollFrame = null;
+
+  function refreshReaderNarrative() {
+    narrativeParagraphs = [];
+    $$(".reading-section").forEach((section, sectionIndex) => {
+      section.querySelectorAll(".reading-section-body > p").forEach((paragraph, paragraphIndex) => {
+        paragraph.dataset.mapSection = String(sectionIndex);
+        paragraph.dataset.mapParagraph = String(paragraphIndex);
+        narrativeParagraphs.push(paragraph);
+      });
+    });
+    narrativeKey = "";
+    updateReaderNarrative();
+  }
+
+  function narrativeFor(section, paragraph, total) {
+    if (section === 0) return { scene: "earth", camera: "earth" };
+    if (section === 1) {
+      if (paragraph <= 1) return { scene: "eurasia", camera: "eurasia" };
+      if (paragraph <= 3) return { scene: "sealed", camera: "sealed" };
+      return { scene: "climate", camera: "climate" };
+    }
+    if (section === 2) {
+      if (paragraph <= 1) return { scene: "lines", camera: "lines" };
+      if (paragraph === 2) return { scene: "yellow", camera: "yellow", track: ["yellowStart", "yellowEnd"] };
+      if (paragraph === 3) return { scene: "southward", camera: "southward" };
+      if (paragraph === 4) return { scene: "yangtze", camera: "yangtze", track: ["yangtzeStart", "yangtzeEnd"] };
+      return { scene: "boundary", camera: "boundary" };
+    }
+    if (section === 3) return { scene: "borderlands", camera: "borderlands" };
+    if (paragraph >= Math.max(0, total - 2)) return { scene: "earth-return", camera: "earth-return" };
+    return { scene: "ocean", camera: "ocean" };
+  }
+
+  function mixCamera(from, to, progress) {
+    return {
+      x: from.x + (to.x - from.x) * progress,
+      y: from.y + (to.y - from.y) * progress,
+      w: from.w + (to.w - from.w) * progress,
+      h: from.h + (to.h - from.h) * progress
+    };
+  }
+
+  function updateReaderNarrative() {
+    narrativeScrollFrame = null;
+    if (!narrativeParagraphs.length || !readerMap) return;
+    const scroll = $(".reader-scroll");
+    const scrollRect = scroll.getBoundingClientRect();
+    const anchor = scrollRect.top + scrollRect.height * .43;
+    let active = narrativeParagraphs[0];
+    for (const paragraph of narrativeParagraphs) {
+      if (paragraph.getBoundingClientRect().top <= anchor) active = paragraph;
+      else break;
+    }
+
+    const section = Number(active.dataset.mapSection || 0);
+    const paragraph = Number(active.dataset.mapParagraph || 0);
+    const sectionBody = active.parentElement;
+    const total = sectionBody ? sectionBody.querySelectorAll(":scope > p").length : 1;
+    const state = narrativeFor(section, paragraph, total);
+    const key = `${section}:${paragraph}:${state.scene}`;
+    readerMap.dataset.scene = state.scene;
+    readerMap.dataset.section = String(section);
+    if (state.track) {
+      const oldFrame = cameraFrames.get(readerMap);
+      if (oldFrame) {
+        cancelAnimationFrame(oldFrame);
+        cameraFrames.delete(readerMap);
+      }
+      const rect = active.getBoundingClientRect();
+      const progress = Math.max(0, Math.min(1, (anchor - rect.top) / Math.max(1, rect.height)));
+      const from = narrativeCameras[state.track[0]];
+      const to = narrativeCameras[state.track[1]];
+      camera.set(readerMap, mixCamera(from, to, progress));
+      setCamera(readerMap);
+    } else if (key !== narrativeKey) {
+      moveCamera(readerMap, narrativeCameras[state.camera]);
+    }
+    narrativeKey = key;
+  }
+
   const shell = window.ChapterShell.init({
     id: "my-hometown", number: 3, data, sections, copy,
     onRender(nextLanguage, state) {
@@ -426,28 +619,28 @@
       renderOpening();
       updateReaderMap(state.active);
       const labels = smallCopy[language];
-      $("[data-rain-toggle]").textContent = labels.rain;
       $("[data-map-home]").textContent = labels.home;
-      $("[data-replay-tour]").textContent = labels.replay;
       $("[data-reader-coach]").textContent = labels.coach;
       $("[data-dismiss-coach]").textContent = labels.dismiss;
+      window.requestAnimationFrame(refreshReaderNarrative);
     },
-    onSection(index) { updateReaderMap(index); }
+    onSection(index) {
+      updateReaderMap(index);
+      window.requestAnimationFrame(updateReaderNarrative);
+    }
   });
 
   // The prologue opens in English unless the URL explicitly requests a language.
   if (!params.has("lang") && (!readSeen() || params.get("tour") === "1")) shell.changeLanguage("en");
 
   function updateReaderMap(index) {
-    const chapterSection = Math.max(0, Math.min(5, index));
+    const chapterSection = Math.max(0, Math.min(4, index));
     readerMap.dataset.section = String(chapterSection);
-    const labels = smallCopy[language];
-    $("[data-map-caption]").textContent = labels.caption[chapterSection];
-    if (chapterSection >= 2) readerMap.classList.add("rivers-visible");
-    else readerMap.classList.remove("rivers-visible");
-    if (chapterSection >= 3) readerMap.classList.add("wall-visible");
-    else readerMap.classList.remove("wall-visible");
   }
+
+  $(".reader-scroll").addEventListener("scroll", () => {
+    if (narrativeScrollFrame === null) narrativeScrollFrame = requestAnimationFrame(updateReaderNarrative);
+  }, { passive: true });
 
   makeDraggable(readerMap);
   $$('[data-next]').forEach(button => button.addEventListener("click", () => {
@@ -456,7 +649,10 @@
   }));
   $$('[data-book-language]').forEach(button => button.addEventListener("click", () => {
     const nextLanguage = button.dataset.bookLanguage;
-    if (nextLanguage === "en" || nextLanguage === "zh") playBookTransition(button, nextLanguage);
+    if (nextLanguage === "en" || nextLanguage === "zh") {
+      window.JOURNEY_AUDIO?.play('page', .48);
+      playBookTransition(button, nextLanguage);
+    }
   }));
   $("[data-enter-reader]").addEventListener("click", () => enterReader());
   $("[data-skip-tour]").addEventListener("click", () => enterReader({ skipped: true }));
@@ -465,28 +661,6 @@
   $(".map-zoom-in").addEventListener("click", () => zoom(readerMap, "in"));
   $(".map-zoom-out").addEventListener("click", () => zoom(readerMap, "out"));
   $("[data-map-home]").addEventListener("click", () => home(readerMap));
-  rainToggle.addEventListener("click", () => {
-    const on = !readerMap.classList.contains("rain-on");
-    readerMap.classList.toggle("rain-on", on);
-    rainToggle.setAttribute("aria-pressed", String(on));
-  });
-  $("[data-replay-tour]").addEventListener("click", () => {
-    const url = new URL(location.href);
-    url.searchParams.delete("open");
-    url.searchParams.set("tour", "1");
-    url.searchParams.set("lang", language);
-    location.href = url.href;
-  });
-  $$('[data-map="reader"] .river, [data-map="reader"] .rain-line').forEach(path => {
-    path.setAttribute("role", "button");
-    path.setAttribute("tabindex", "0");
-    path.setAttribute("aria-label", language === "zh" ? "阅读三条天地之线" : "Read about the three great lines");
-    const select = () => shell.goToSection(2);
-    path.addEventListener("click", select);
-    path.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" || event.key === " ") { event.preventDefault(); select(); }
-    });
-  });
 
   if (params.get("open") === "1" || (readSeen() && params.get("tour") !== "1")) {
     journey.hidden = true;

@@ -261,8 +261,9 @@
   let completionTimer=null;
   function completeChapter(){
     if(document.body.classList.contains('is-completing'))return;
+    window.JOURNEY_AUDIO?.play('complete', .58);
     save('bittersweet-journey:kashgar:complete','true');state.maxScene=16;
-    hideCard();closeNotes();
+    hideCard();closeNotes({silent:true});
     document.body.classList.add('is-completing');
     $('#completion').setAttribute('aria-hidden','false');
     document.querySelectorAll('.chapter-layout, .site-masthead, .bottom-bar').forEach(el=>el.inert=true);
@@ -270,7 +271,7 @@
       const destination=`../../index.html?revealed=kashgar&lang=${state.lang}`;
       if(window.LAND_TRANSITION)window.LAND_TRANSITION.navigate(destination);
       else location.href=destination;
-    },3000);
+    },window.JOURNEY_AUDIO?.enabled?4200:1400);
   }
   window.addEventListener('pagehide',()=>clearTimeout(completionTimer));
   window.addEventListener('pageshow',event=>{
@@ -289,7 +290,7 @@
   $('#zoom-in').addEventListener('click',()=>zoom(1.55));$('#zoom-out').addEventListener('click',()=>zoom(1/1.55));
   function zoom(factor){setFollow(false);const scale=Math.max(250,Math.min(1800000,state.camera.scale*factor));moveCamera({...state.camera,scale});}
   document.querySelectorAll('[data-language]').forEach(b=>b.addEventListener('click',()=>changeLanguage(b.dataset.language)));
-  function closeNotes(){ $('#data-dialog').close(); document.body.classList.remove('notes-open'); $('#data-button').setAttribute('aria-expanded','false'); }
+  function closeNotes({silent=false}={}){ if($('#data-dialog').open&&!silent)window.JOURNEY_AUDIO?.play('close',.36); $('#data-dialog').close(); document.body.classList.remove('notes-open'); $('#data-button').setAttribute('aria-expanded','false'); }
   $('#data-button').addEventListener('click',()=>{
     if($('#data-dialog').open){closeNotes();return;}
     $('#data-dialog').show();document.body.classList.add('notes-open');$('#data-button').setAttribute('aria-expanded','true');
