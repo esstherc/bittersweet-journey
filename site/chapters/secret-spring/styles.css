@@ -1,6 +1,8 @@
 /*
-  沙原隐泉 - chapter-specific styling only: accent, the terrain/story map layers and the on-map camera caption.
-  Frame, title bar, curtain, reader, rails, bottom bar, notes drawer and completion screen live in ../_shared/chapter-shell.css.
+  沙原隐泉 - chapter-specific styling only: accent, the two DEM terrains, the labels and symbols drawn on
+  them, the north arrow and the scale bar. Map type sizes follow docs/map-guidance.md §4 (T table).
+  Frame, title bar, curtain, reader, rails, bottom bar, notes drawer and completion screen live in
+  ../_shared/chapter-shell.css.
 */
 
 :root {
@@ -8,6 +10,7 @@
   --sand-dark: #80613b;
   --spring: #2f6870;
   --spring-light: #78a4a2;
+  --river: #3f5d6c;
   --accent: var(--spring);
 }
 
@@ -19,455 +22,181 @@
     linear-gradient(145deg, #e4d9c1, #eee8da 56%, #e0d5bd);
 }
 
-/* ---------- map canvas: 3D terrain below, story layers above ---------- */
+/* ---------- 3D terrain below, labels above ---------- */
 
-.story-map {
+.terrain-viewport,
+.terrain-marks {
   position: absolute;
-  z-index: 3;
   inset: 0;
   width: 100%;
   height: 100%;
 }
 
 .terrain-viewport {
-  position: absolute;
   z-index: 1;
-  inset: 0;
   overflow: hidden;
   opacity: 0;
-  transform: scale(1.08);
-  transition:
-    opacity 1.1s ease,
-    transform 1.4s cubic-bezier(0.22, 0.7, 0.2, 1);
+  transition: opacity 1.1s ease;
 }
 
-.terrain-canvas {
-  display: block;
-  width: 100%;
-  height: 100%;
-  filter: sepia(0.1) saturate(0.86) contrast(1.04);
-}
+/* the canvas is never scaled by CSS: labels are projected onto it and must stay in register */
+.terrain-canvas { display: block; width: 100%; height: 100%; }
+body.webgl-ready.is-open .terrain-viewport { opacity: 1; }
 
 .terrain-atmosphere {
   position: absolute;
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse at 52% 74%, transparent 0 23%, rgba(236, 231, 219, 0.08) 49%, rgba(236, 231, 219, 0.64) 91%),
-    linear-gradient(112deg, rgba(255, 250, 237, 0.24), transparent 37%, rgba(116, 88, 51, 0.07) 73%, transparent);
+    radial-gradient(ellipse at 52% 74%, transparent 0 30%, rgba(236, 231, 219, 0.06) 55%, rgba(236, 231, 219, 0.5) 95%),
+    linear-gradient(112deg, rgba(255, 250, 237, 0.2), transparent 37%, rgba(116, 88, 51, 0.06) 73%, transparent);
   background-size: 100% 100%, 180% 100%;
   animation: desert-light 16s ease-in-out infinite alternate;
 }
 
 @keyframes desert-light {
-  to {
-    background-position: 0 0, 100% 0;
-  }
+  to { background-position: 0 0, 100% 0; }
 }
 
-body.webgl-ready.is-open:not([data-reading-level="2"]) .terrain-viewport {
-  opacity: 0.94;
-  transform: scale(1);
-}
-
-body[data-reading-level="3"] .terrain-viewport {
-  transform: scale(1.07) translate3d(-1.5%, 1%, 0);
-}
-
-body[data-reading-level="4"] .terrain-viewport {
-  transform: scale(1.13) translate3d(1.5%, 2%, 0);
-}
-
-.coordinate-grid {
-  opacity: 0.35;
-}
-
-.regional-scene {
-  opacity: 0;
+.terrain-marks {
+  z-index: 3;
+  overflow: visible;
   pointer-events: none;
-  transform-box: fill-box;
-  transform-origin: center;
-  transform: scale(1.06) translateY(12px);
-  transition:
-    opacity 0.9s ease,
-    transform 1.15s cubic-bezier(0.22, 0.72, 0.22, 1);
+  font-family: var(--sans);
 }
 
-body[data-reading-level="2"].is-open .regional-scene {
-  opacity: 1;
-  transform: scale(1) translateY(0);
-}
+/* each layer belongs to one terrain */
+.terrain-marks > g { display: none; }
+.terrain-marks[data-terrain="local"] .marks-local,
+.terrain-marks[data-terrain="regional"] .marks-regional { display: inline; }
 
-body[data-reading-level="2"].is-open .coordinate-grid,
-body[data-reading-level="2"].is-open .site-boundary-layer,
-body[data-reading-level="2"].is-open .regional-water,
-body[data-reading-level="2"].is-open .orientation-layer,
-body[data-reading-level="2"].is-open .narrative-route,
-body[data-reading-level="2"].is-open .ridge-layer,
-body[data-reading-level="2"].is-open .spring-layer,
-body[data-reading-level="2"].is-open .oasis-layer,
-body[data-reading-level="2"].is-open .scale-bar {
-  opacity: 0 !important;
-}
-
-.regional-ground {
-  fill: rgba(191, 166, 122, 0.14);
-  stroke: rgba(93, 72, 45, 0.22);
-  stroke-width: 1;
-}
-
-.regional-ridge {
-  fill: none;
-  stroke: rgba(128, 97, 59, 0.3);
-  stroke-width: 2;
-}
-
-.regional-ridge.secondary {
-  stroke-width: 0.9;
-  stroke-dasharray: 3 7;
-}
-
-.cultural-axis {
-  fill: none;
-  stroke: rgba(156, 67, 51, 0.52);
-  stroke-width: 1.6;
-  stroke-dasharray: 5 7;
-}
-
-.local-relation {
-  fill: none;
-  stroke: rgba(47, 104, 112, 0.55);
-  stroke-width: 1.2;
-}
-
-.regional-point circle {
-  fill: rgba(246, 240, 228, 0.94);
-  stroke: var(--ink);
-  stroke-width: 1;
-}
-
-.regional-point .point-core {
-  fill: var(--seal);
-  stroke: none;
-}
-
-.regional-point path {
-  fill: none;
-  stroke: var(--seal);
-  stroke-width: 1.1;
-}
-
-.regional-point.spring-point path {
-  fill: rgba(47, 104, 112, 0.3);
-  stroke: var(--spring);
-}
-
-.regional-point .label-cn,
-.regional-point .label-en {
-  fill: var(--ink);
-  font-size: 15px;
-  font-weight: 600;
+/* Halos: a paper-coloured stroke behind the letters, with round joins and caps so corners stay smooth. */
+.terrain-marks text {
   paint-order: stroke fill;
-  stroke: rgba(236, 231, 219, 0.98);
-  stroke-width: 5px;
-}
-
-.regional-point .label-en {
-  font-size: 12px;
-}
-
-.coordinate-label,
-.distance-label,
-.regional-subtitle {
-  fill: var(--ink-soft);
-  font: 11px var(--sans);
-  letter-spacing: 0.06em;
-  paint-order: stroke fill;
-  stroke: rgba(236, 231, 219, 0.96);
+  stroke: rgba(242, 237, 226, 0.94);
   stroke-width: 4px;
-}
-
-.distance-label {
-  fill: var(--seal);
-  font-size: 12px;
-}
-
-.regional-title {
-  fill: var(--ink);
-  font-size: 19px;
-  font-weight: 600;
-  letter-spacing: 0.13em;
-}
-
-.regional-title.label-en {
-  font-size: 13px;
-}
-
-.regional-subtitle {
-  font-size: 12px;
-}
-
-.regional-scale path {
-  fill: none;
-  stroke: var(--ink-soft);
-  stroke-width: 1;
-}
-
-.regional-scale text {
-  fill: var(--ink-soft);
-  font: 11px var(--sans);
-  letter-spacing: 0.08em;
-}
-
-.mingsha-boundary {
-  fill: rgba(183, 149, 95, 0.035);
-  stroke: rgba(128, 97, 59, 0.34);
-  stroke-width: 1;
-  stroke-dasharray: 6 7;
-}
-
-.danghe-path {
-  fill: none;
-  stroke: rgba(47, 104, 112, 0.42);
-  stroke-width: 4.5;
+  stroke-linejoin: round;
   stroke-linecap: round;
+  text-rendering: geometricPrecision;
 }
 
-.orientation-layer,
-.scale-bar {
-  fill: var(--ink-soft);
-  font: 10px var(--sans);
-  letter-spacing: 0.12em;
-}
+/* ---------- places (T1 focus, T2 places, T5 notes) ---------- */
 
-.north-line,
-.scale-bar path {
-  fill: none;
-  stroke: rgba(40, 37, 31, 0.65);
-  stroke-width: 1;
-}
-
-.orientation-layer > text:not(.label-cn):not(.label-en) {
-  font-size: 13px;
-}
-
-.orientation-layer .label-cn,
-.orientation-layer .label-en {
-  font-size: 12px;
-  text-anchor: middle;
-}
-
-.reveal-layer {
-  opacity: 0.035;
-  transition: opacity 1.15s ease;
-}
-
-body.is-open .reveal-layer.is-visible {
-  opacity: 1;
-}
-
-.narrative-route #route-path {
-  fill: none;
-  stroke: rgba(156, 67, 51, 0.6);
-  stroke-width: 1.7;
-  stroke-dasharray: 2 8;
-  stroke-linecap: round;
-  stroke-dashoffset: 180;
-  transition: stroke-dashoffset 2.4s ease;
-}
-
-body.is-open .narrative-route.is-visible #route-path {
-  stroke-dashoffset: 0;
-}
-
-.footprints ellipse {
-  fill: rgba(156, 67, 51, 0.5);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-body.is-open .narrative-route.is-visible .footprints ellipse {
-  opacity: 1;
-}
-
-.footprints ellipse:nth-child(2) { transition-delay: 0.18s; }
-.footprints ellipse:nth-child(3) { transition-delay: 0.36s; }
-.footprints ellipse:nth-child(4) { transition-delay: 0.54s; }
-.footprints ellipse:nth-child(5) { transition-delay: 0.72s; }
-.footprints ellipse:nth-child(6) { transition-delay: 0.9s; }
-.footprints ellipse:nth-child(7) { transition-delay: 1.08s; }
-
-.route-note {
-  fill: var(--seal);
-  font: 12px var(--sans);
-  letter-spacing: 0.13em;
-  paint-order: stroke fill;
-  stroke: rgba(236, 231, 219, 0.94);
-  stroke-width: 4px;
-}
-
-.peak-ring,
-.spring-marker {
-  fill: rgba(236, 231, 219, 0.82);
+.place .symbol {
+  fill: rgba(242, 237, 226, 0.95);
   stroke: var(--ink);
-  stroke-width: 1;
-}
-
-.peak-mark {
-  fill: none;
-  stroke: var(--sand-dark);
   stroke-width: 1.4;
+  stroke-linejoin: round;
+  stroke-linecap: round;
 }
+.place.is-town .symbol { fill: var(--ink-soft); stroke: rgba(242, 237, 226, 0.95); stroke-width: 1.6; }
+.place.is-cave .symbol { fill: rgba(242, 237, 226, 0.95); stroke: var(--sand-dark); fill-rule: evenodd; }
+.place.is-peak .symbol { fill: #c8a670; stroke: var(--sand-dark); }
+.place.is-spring .symbol { fill: var(--spring-light); stroke: var(--spring); }
+.place.is-origin .symbol { stroke-width: 1.8; }
+.place .backdrop { fill: rgba(242, 237, 226, 0.88); stroke: rgba(128, 97, 59, 0.35); stroke-width: 1; }
+.place.is-town .backdrop { display: none; }
+.place .symbol { vector-effect: non-scaling-stroke; }
+.place .leader { fill: none; stroke: var(--spring); stroke-width: 1; stroke-linecap: round; }
 
-.place-label,
-.spring-label,
-.oasis-note {
+.place .name {
   fill: var(--ink);
   font-family: var(--serif-cn);
-  font-size: 16px;
-  letter-spacing: 0.13em;
-  paint-order: stroke fill;
-  stroke: rgba(236, 231, 219, 0.95);
-  stroke-width: 5px;
+  font-size: 24px;
+  letter-spacing: 0.14em;
 }
+body[data-language="en"] .place .name { font-family: var(--serif-en); font-size: 22px; letter-spacing: 0.01em; }
+.place.is-spring .name { fill: var(--spring); }
+.place.is-origin .name { font-weight: 600; }
+.place.is-peak .name { fill: var(--sand-dark); }
+.place .note { fill: var(--ink-soft); font-size: 17px; letter-spacing: 0.06em; }
 
-.label-en {
-  font-family: var(--sans);
-  font-size: 11px;
-  letter-spacing: 0.12em;
-}
+/* ---------- lines and areas ---------- */
 
-body[data-language="zh"] .label-en,
-body[data-language="en"] .label-cn {
-  display: none;
+.mingsha-boundary {
+  fill: rgba(183, 149, 95, 0.08);
+  stroke: rgba(128, 97, 59, 0.6);
+  stroke-width: 1.4;
+  stroke-dasharray: 5 5;
+  stroke-linejoin: round;
 }
+.river { fill: none; stroke: var(--river); stroke-width: 1.8; stroke-linejoin: round; stroke-linecap: round; }
+.river-label { fill: var(--river); font-family: var(--serif-cn); font-size: 18px; letter-spacing: 0.12em; }
+body[data-language="en"] .river-label { font-family: var(--serif-en); font-style: italic; letter-spacing: 0.02em; }
 
-.ridge-quote {
-  fill: rgba(101, 95, 82, 0.76);
-  font-size: 13px;
-  letter-spacing: 0.31em;
-}
+.spring-lake { fill: rgba(47, 104, 112, 0.7); stroke: var(--spring); stroke-width: 1.2; stroke-linejoin: round; transition: fill 1.2s ease; }
+.spring-lake.is-still { fill: rgba(47, 104, 112, 0.85); }
 
-body[data-language="en"] .ridge-quote {
-  font-family: var(--serif-en);
-  letter-spacing: 0.08em;
-}
+.oasis-ring { fill: none; stroke: rgba(47, 104, 112, 0.5); stroke-width: 1.4; }
+.oasis-ring.is-outer { stroke-dasharray: 3 6; stroke: rgba(47, 104, 112, 0.35); }
 
-.spring-halo {
-  fill: rgba(47, 104, 112, 0.17);
-  filter: url("#spring-glow");
-}
+/* the literary climb: footprints, as in 阳关雪 */
+.route-trace { fill: none; stroke: rgba(157, 61, 49, 0.28); stroke-width: 1.2; stroke-dasharray: 2 7; stroke-linecap: round; }
+.footprint { fill: rgba(157, 61, 49, 0.75); }
+.ridge-quote { fill: var(--sand-dark); font-family: var(--serif-cn); font-size: 18px; letter-spacing: 0.2em; }
+body[data-language="en"] .ridge-quote { font-family: var(--serif-en); font-style: italic; letter-spacing: 0.02em; }
 
-.spring-lake {
-  fill: rgba(47, 104, 112, 0.14);
-  stroke: var(--spring);
-  stroke-width: 2;
-  transition: fill 1.2s ease, stroke-width 1.2s ease;
-}
+/* regional view */
+.link { fill: none; stroke: var(--seal); stroke-width: 1.4; stroke-dasharray: 2 7; stroke-linecap: round; }
+.link-label { fill: var(--seal); font-size: 17px; letter-spacing: 0.04em; }
 
-body[data-reading-level="3"] .spring-lake,
-body[data-reading-level="4"] .spring-lake {
-  fill: rgba(47, 104, 112, 0.72);
-  stroke-width: 2.5;
-}
+/* ---------- north arrow and scale bar: follow the 3D camera (app.js) ---------- */
 
-.spring-core {
-  fill: var(--spring);
+.compass {
+  position: absolute;
+  z-index: 7;
+  top: 34px;
+  right: 18px;
+  width: 52px;
+  height: 52px;
+  overflow: visible;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s ease;
 }
-
-.spring-label {
-  fill: var(--spring);
-}
-
-.oasis-ring {
-  fill: none;
-  stroke: rgba(47, 104, 112, 0.4);
-  stroke-width: 1;
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-body[data-reading-level="4"] .oasis-ring {
-  animation: oasis-breathe 3s ease-in-out infinite alternate;
-}
-
-#oasis-ring-b {
-  animation-delay: -1.3s;
-}
-
-@keyframes oasis-breathe {
-  to {
-    opacity: 0.18;
-    transform: scale(1.12);
-  }
-}
-
-.oasis-note {
-  fill: var(--spring);
-  font-size: 13px;
-}
+body.is-open .compass { opacity: 1; }
+.compass circle { fill: rgba(242, 237, 226, 0.85); stroke: rgba(32, 37, 31, 0.35); stroke-width: 1; }
+.compass-needle { transform: rotate(var(--north, 0deg)); }
+.compass .north { fill: var(--seal); }
+.compass .south { fill: rgba(32, 37, 31, 0.35); }
+.compass text { fill: var(--seal); font: 600 18px var(--sans); }
 
 .scale-bar {
-  font-size: 11px;
-}
-
-/* ---------- on-map caption: camera state, bottom-left of the map panel ---------- */
-
-.camera-caption {
   position: absolute;
-  z-index: 5;
+  z-index: 7;
   left: var(--ctx-pad-x);
-  bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 4px;
+  bottom: 22px;
+  height: 34px;
+  overflow: visible;
   pointer-events: none;
-  color: var(--ink-soft);
-  font-family: var(--sans);
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+body.is-open .scale-bar { opacity: 1; }
+.scale-line { fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
+.scale-bar text {
+  fill: var(--ink);
+  font: 14px var(--sans);
+  letter-spacing: 0.04em;
+  paint-order: stroke fill;
+  stroke: rgba(242, 237, 226, 0.94);
+  stroke-width: 4px;
+  stroke-linejoin: round;
 }
 
-.camera-mode {
-  color: var(--ink);
-  font-size: 15px;
-  letter-spacing: 0.1em;
-}
-
-.camera-tech {
-  font-size: 13.5px;
-  letter-spacing: 0.09em;
-}
-
-/* ---------- overlay zoom: the regional scene is wide and short, so it gets a little more room ---------- */
-
-.story-map {
-  transform-origin: 50% 52%;
-  transition: transform 0.9s cubic-bezier(0.22, 0.7, 0.2, 1);
-}
-
-body[data-reading-level="2"] .story-map {
-  transform: scale(1.1);
-  transform-origin: 50.5% 49%;
-}
-
-/* ---------- responsive map tuning (stacked layout below 900px) ---------- */
+/* ---------- responsive ---------- */
 
 @media (max-width: 900px) {
-  .story-map { transform: scale(1.08); transform-origin: 50% 55%; }
-  body[data-reading-level="2"] .story-map { transform: scale(1.6); transform-origin: 50.5% 49%; }
-  .camera-caption { left: 20px; bottom: 12px; }
+  .scale-bar { left: 20px; bottom: 14px; }
 }
 
 @media (max-width: 540px) {
-  .story-map { transform: scale(1.25); }
-  body[data-reading-level="2"] .story-map { transform: none; }
-  .regional-point .label-cn { font-size: 21px; }
-  .regional-point .label-en { font-size: 15px; }
-  .regional-title { font-size: 22px; }
-  .regional-title.label-en { font-size: 17px; }
-  .coordinate-label { font-size: 13px; }
-  .distance-label { font-size: 14px; }
-  .regional-subtitle { display: none; }
-  .camera-mode { font-size: 14px; }
-  .camera-tech { font-size: 13.5px; }
+  .place .name { font-size: 20px; }
+  body[data-language="en"] .place .name { font-size: 18px; }
+  .place .note, .link-label, .ridge-quote, .river-label { font-size: 15px; }
+  .compass { top: 26px; right: 10px; width: 40px; height: 40px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .terrain-atmosphere { animation: none; }
 }
