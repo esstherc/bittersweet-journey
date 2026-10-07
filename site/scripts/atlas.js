@@ -369,18 +369,33 @@
         ["end", cx - r - gap - w, cy - lift - h], ["end", cx - r - gap - w, cy + lift],
         ["middle", cx - w / 2, cy - r - gap - h], ["middle", cx - w / 2, cy + r + gap]
       ];
-      // Dense geographic clusters keep their dots in place; only their labels fan out.
+      // Dense geographic clusters keep their dots in place; only their labels fan out, stacked in rows on the
+      // side the dot lies on within its cluster (a western dot is labelled to the left, an eastern one to the
+      // right), so a leader never has to cross the cluster. Nearer rows are tried first.
+      p.side = null;
       if (crowding(p)) {
-        for (const row of [-2, 2, -3, 3, -4, 4]) {
-          const y = cy + row * (h + 18 / scale);
-          p.candidates.push(['start', cx + r + gap, y], ['end', cx - r - gap - w, y], ['middle', cx - w / 2, y]);
+        const cluster = points.filter((q) => Math.hypot(q.cx - cx, q.cy - cy) * scale < 90);
+        const offset = (cx - cluster.reduce((sum, q) => sum + q.cx, 0) / cluster.length) * scale;
+        p.side = offset < -3 ? "left" : offset > 3 ? "right" : null;
+        const step = h + 18 / scale; // clear of the 16px label spacing
+        for (let row = -4; row <= 4; row += 1) {
+          const y = cy - h / 2 + row * step;
+          p.candidates.push(["start", cx + r + gap, y], ["end", cx - r - gap - w, y]);
         }
       }
-      p.candidates = p.candidates.map(([anchor, x, y]) => {
+      p.candidates = p.candidates.map(([anchor, x, y], index) => {
         x = Math.max(area.left, Math.min(area.right - w, x));
         const box = { left: x, right: x + w, top: y, bottom: y + h };
-        return { anchor, x, y, w, box, fixed: cost(box) };
-      });
+        const wrongSide = (p.side === "left" && anchor !== "end") || (p.side === "right" && anchor !== "start");
+        // rank: the #1-#5 order for a dot on its own; side first, then nearness, in a cluster
+        const rank = p.side || crowding(p)
+          ? (wrongSide ? 1000 : 0) + (anchor === "middle" ? 40 : 0) + distanceToBox(cx, cy, box) * scale
+          : index;
+        return { anchor, x, y, w, box, rank, fixed: cost(box) };
+      })
+        // a label is never sent far from its dot: past this it yields instead (H2), its dot and pop-up remain
+        .filter((candidate) => distanceToBox(cx, cy, candidate.box) * scale <= 120)
+        .sort((a, b) => a.rank - b.rank);
       p.gap = gap;
       p.lines = { number: numberLine, clue: clueLine };
     });
@@ -407,8 +422,16 @@
     };
     const clash = (p, candidate) => {
       let sum = labelled.reduce((total, q) => (q.labelBox ? total + boxOverlap(candidate.box, paddedLabel(q.labelBox)) : total), 0) +
-        ownershipPenalty(p, candidate.box, p.gap);
+        // a clustered label is tied to its dot by its leader, so only a dot right beside the label confuses it
+        ownershipPenalty(p, candidate.box, p.side || crowding(p) ? 6 / scale : p.gap);
       const line = leaderOf(p, candidate.box);
+      // nor through another chapter's dot (dots that sit on top of each other excepted)
+      if (line) points.forEach((q) => {
+        if (q === p || Math.hypot(q.cx - p.cx, q.cy - p.cy) <= p.r + q.r + 2 / scale) return;
+        const dx = line[2] - line[0], dy = line[3] - line[1];
+        const t = Math.max(0, Math.min(1, ((q.cx - line[0]) * dx + (q.cy - line[1]) * dy) / (dx * dx + dy * dy || 1)));
+        if (Math.hypot(line[0] + dx * t - q.cx, line[1] + dy * t - q.cy) < q.r + 3 / scale) sum += 1e7;
+      });
       labelled.forEach((q) => {
         if (q === p || !q.labelBox) return;
         const other = leaderOf(q, q.labelBox);
@@ -419,22 +442,34 @@
       });
       return sum;
     };
+    // Branch and bound: of the fully clear arrangements, keep the one whose labels sit nearest their dots
+    // (lowest total rank), not merely the first found, so one label is not sent far away to make room.
     let budget = 40000;
-    const search = (index) => {
-      if (index === labelled.length) return true;
+    let best = null;
+    // lower bound for pruning: the best rank each remaining label could still get
+    const floor = labelled.map((p) => Math.min(Infinity, ...p.candidates.filter((c) => c.fixed === 0).map((c) => c.rank)));
+    const rest = floor.map((_, i) => floor.slice(i).reduce((sum, value) => sum + value, 0));
+    const search = (index, total) => {
+      if (best && total + (rest[index] || 0) >= best.total) return;
+      if (index === labelled.length) {
+        best = { total, picks: labelled.map((p) => p.chosen) };
+        return;
+      }
       const p = labelled[index];
       for (const candidate of p.candidates) {
-        if (--budget < 0) return false;
+        if (--budget < 0) return;
         if (candidate.fixed > 0 || clash(p, candidate) > 0) continue;
         p.labelBox = candidate.box;
         p.chosen = candidate;
-        if (search(index + 1)) return true;
+        search(index + 1, total + candidate.rank);
         p.labelBox = null;
+        p.chosen = null;
       }
-      return false;
     };
     labelled.forEach((p) => { p.labelBox = null; p.chosen = null; });
-    const clear = search(0);
+    search(0, 0);
+    const clear = Boolean(best);
+    if (best) labelled.forEach((p, i) => { p.chosen = best.picks[i]; p.labelBox = p.chosen.box; });
     // recorded for the map checks (docs/map-guidance.md §10): "clear", or the dots with no clear spot of their own
     mapSvg.dataset.labelLayout = clear ? "clear" : "fallback: " + labelled.filter((p) => p.candidates.every((c) => c.fixed > 0)).map((p) => p.name).join(" ");
     if (!clear) {
@@ -443,7 +478,7 @@
       const pick = (p) => {
         const safe = p.candidates.filter(c => points.every(q => distanceToBox(q.cx,q.cy,c.box) > q.r + 2 / scale));
         p.chosen = safe.reduce((best, c) => {
-          const total = c.fixed + clash(p, c);
+          const total = c.fixed + clash(p, c) + c.rank * 0.05;
           return !best || total < best.total ? { ...c, total } : best;
         }, null);
         p.labelBox = p.chosen?.box || null;

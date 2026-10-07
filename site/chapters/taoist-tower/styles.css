@@ -33,17 +33,13 @@
   opacity: 0.7;
 }
 
-.world-basemap {
-  opacity: 0.17;
-  transition: opacity 0.7s ease;
-}
-
-body[data-reading-level="4"] .world-basemap, body[data-reading-level="5"] .world-basemap {
-  opacity: 0.52;
-}
+/* one map in one projection: app.js moves .atlas-camera to each section's region */
+.atlas-base path { transition: opacity 0.7s ease; }
+body[data-reading-level="1"] #atlas-land { opacity: 0.55; }
+#china-provinces { opacity: 0; }
+body[data-reading-level="1"] #china-provinces { opacity: 1; }
 
 .world-land,
-.eurasia-land,
 .china-provinces {
   fill: rgba(81, 66, 47, 0.08);
   fill-rule: evenodd;
@@ -78,13 +74,6 @@ body[data-reading-level="4"] .world-basemap, body[data-reading-level="5"] .world
   fill: transparent;
   stroke: rgba(57, 48, 37, 0.3);
   stroke-width: 0.65;
-}
-
-.world-graticule {
-  fill: none;
-  stroke: rgba(56, 48, 37, 0.12);
-  stroke-width: 0.65;
-  stroke-dasharray: 2 8;
 }
 
 .projection-label {
@@ -388,6 +377,7 @@ body[data-reading-level="4"] .geo-level-four .crate-unit {
 
 .geo-level-five .grave-connection {
   fill: none;
+  vector-effect: non-scaling-stroke;
   stroke: var(--seal);
   stroke-width: 1.8;
   stroke-dasharray: 5 7;
@@ -404,8 +394,9 @@ body[data-reading-level="4"] .geo-level-four .crate-unit {
   opacity: 0.88;
 }
 .unknown-note-paper { fill: var(--paper); stroke: none; }
-.focused-geography .geo-place, .focused-geography .grave-name,
-.focused-geography .geo-note, .focused-geography .person-mini {
+/* a label that gives way to a more important one (app.js resolveCrowding); its symbol stays */
+.is-crowded > text, text.is-crowded { display: none; }
+.atlas-camera :is(.geo-place, .grave-name, .geo-note, .person-mini) {
   paint-order: stroke fill;
   stroke: var(--paper);
   stroke-width: 3px;
@@ -421,7 +412,9 @@ body[data-reading-level="1"] :is(.geo-level-one),
 body[data-reading-level="2"] :is(.geo-level-two),
 body[data-reading-level="3"] :is(.geo-level-three),
 body[data-reading-level="4"] :is(.geo-level-four),
-body[data-reading-level="5"] :is(.geo-level-five) {
+body[data-reading-level="5"] :is(.geo-level-five),
+body[data-reading-level="4"] .overlay-four,
+body[data-reading-level="5"] .overlay-five {
   opacity: 1;
 }
 

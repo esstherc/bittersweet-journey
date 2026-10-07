@@ -15,7 +15,7 @@
       href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&family=Ysabeau:ital,wght@0,400..700;1,400..700&display=swap"
     />
     <link rel="stylesheet" href="../_shared/chapter-shell.css?v=94022d2df1de" />
-    <link rel="stylesheet" href="./styles.css?v=94dabce0be66" />
+    <link rel="stylesheet" href="./styles.css?v=1eb426bb9a3a" />
     <link rel="stylesheet" href="../../styles/page-transition.css?v=899e8641905a">
     <link rel="stylesheet" href="../../styles/journey-audio.css?v=3b21344a057e">
     <script src="../../scripts/journey-audio.js?v=29675942ab62"></script>
@@ -57,163 +57,175 @@
             <pattern id="archive-grid" width="70" height="70" patternUnits="userSpaceOnUse">
               <path d="M70 0H0V70" fill="none" stroke="rgba(50,43,32,.08)" stroke-width=".7" />
             </pattern>
-            <clipPath id="eurasia-clip">
-              <rect x="70" y="145" width="860" height="505" />
-            </clipPath>
           </defs>
 
           <rect class="archive-grid" x="0" y="0" width="1000" height="760" fill="url(#archive-grid)" />
 
-          <g class="world-basemap" aria-hidden="true">
-            <path class="world-land" id="world-land" />
-            <g class="world-graticule">
-              <path d="M34 220H966M34 306H966M34 392H966M34 478H966M34 564H966" />
-              <path d="M189 135V650M344 135V650M500 135V650M655 135V650M811 135V650" />
-            </g>
-          </g>
-
-          <g class="level geo-level geo-level-one" data-level="1" aria-hidden="true">
-            <rect class="geo-sheet" x="73" y="145" width="854" height="512" />
-            <path class="china-outline" id="china-outline" />
-            <path class="china-provinces" id="china-provinces" />
-            <path class="province-highlight hubei" id="china-hubei" />
-            <path class="province-highlight gansu" id="china-gansu" />
-            <path class="biography-route" id="route-macheng-jiuquan" />
-            <path class="biography-route" id="route-jiuquan-dunhuang" />
-
-            <g class="geo-node origin-node" id="node-macheng">
-              <circle class="node-halo" r="17" />
-              <circle class="node-dot" r="4" />
-              <text x="13" y="-12" class="geo-place label-cn">湖北麻城</text>
-              <text x="13" y="-12" class="geo-place label-en">Macheng, Hubei</text>
-              <text x="13" y="8" class="geo-note label-cn">王圆箓籍贯</text>
-              <text x="13" y="8" class="geo-note label-en">Wang Yuanlu’s recorded origin</text>
-            </g>
-            <g class="geo-node" id="node-jiuquan">
-              <circle class="node-halo" r="17" />
-              <circle class="node-dot" r="4" />
-              <text x="14" y="-25" class="geo-place label-cn">肃州 · 今酒泉</text>
-              <text x="14" y="-25" class="geo-place label-en">Suzhou · present-day Jiuquan</text>
-              <text x="14" y="-6" class="geo-note label-cn">曾在甘肃当兵</text>
-              <text x="14" y="-6" class="geo-note label-en">Served as a soldier in Gansu</text>
-            </g>
-            <g class="geo-node destination-node" id="node-dunhuang-biography">
-              <circle class="node-halo" r="21" />
-              <circle class="node-dot" r="5" />
-              <text x="-15" y="31" text-anchor="end" class="geo-place label-cn">敦煌 · 莫高窟</text>
-              <text x="-15" y="31" text-anchor="end" class="geo-place label-en">Dunhuang · Mogao Caves</text>
-              <text x="-15" y="50" text-anchor="end" class="geo-note label-cn">成为守窟道士</text>
-              <text x="-15" y="50" text-anchor="end" class="geo-note label-en">Became the caves’ Taoist keeper</text>
+          <!-- One map in one projection (Albers, CM 110°E): app.js moves this camera to each section's region. -->
+          <g class="atlas-camera">
+            <g class="atlas-base" aria-hidden="true">
+              <path class="world-land" id="atlas-land" />
+              <path class="china-outline" id="china-outline" />
+              <path class="china-provinces" id="china-provinces" />
             </g>
 
-            <text id="label-hubei" class="province-label label-cn">湖北</text>
-            <text id="label-hubei-en" class="province-label label-en">Hubei</text>
-            <text id="label-gansu" class="province-label label-cn">甘肃</text>
-            <text id="label-gansu-en" class="province-label label-en">Gansu</text>
-          </g>
+            <g class="level geo-level geo-level-one" data-level="1" aria-hidden="true">
+              <path class="province-highlight hubei" id="china-hubei" />
+              <path class="province-highlight gansu" id="china-gansu" />
+              <path class="biography-route" id="route-macheng-jiuquan" />
+              <path class="biography-route" id="route-jiuquan-dunhuang" />
 
-          <g class="level geo-level geo-level-two" data-level="2" clip-path="url(#eurasia-clip)" aria-hidden="true">
-            <rect class="geo-sheet" x="70" y="145" width="860" height="505" />
-            <path class="eurasia-land" id="eurasia-land-two" />
-            <path class="country-highlight china" id="eurasia-china-two" />
-            <path class="country-highlight britain" id="eurasia-britain-two" />
-            <path class="country-highlight france" id="eurasia-france-two" />
-            <path class="country-highlight russia" id="eurasia-russia-two" />
-            <path class="northwest-link" id="route-kashgar-dunhuang-two" />
+              <g class="geo-node origin-node" id="node-macheng">
+                <circle class="node-halo" r="17" />
+                <circle class="node-dot" r="4" />
+                <text x="13" y="-12" class="geo-place label-cn">湖北麻城</text>
+                <text x="13" y="-12" class="geo-place label-en">Macheng, Hubei</text>
+                <text x="13" y="8" class="geo-note label-cn">王圆箓籍贯</text>
+                <text x="13" y="8" class="geo-note label-en">Wang Yuanlu’s recorded origin</text>
+              </g>
+              <g class="geo-node" id="node-jiuquan">
+                <circle class="node-halo" r="17" />
+                <circle class="node-dot" r="4" />
+                <text x="14" y="-25" class="geo-place label-cn">肃州 · 今酒泉</text>
+                <text x="14" y="-25" class="geo-place label-en">Suzhou · present-day Jiuquan</text>
+                <text x="14" y="-6" class="geo-note label-cn">曾在甘肃当兵</text>
+                <text x="14" y="-6" class="geo-note label-en">Served as a soldier in Gansu</text>
+              </g>
+              <g class="geo-node destination-node" id="node-dunhuang-biography">
+                <circle class="node-halo" r="21" />
+                <circle class="node-dot" r="5" />
+                <text x="-15" y="31" text-anchor="end" class="geo-place label-cn">敦煌 · 莫高窟</text>
+                <text x="-15" y="31" text-anchor="end" class="geo-place label-en">Dunhuang · Mogao Caves</text>
+                <text x="-15" y="50" text-anchor="end" class="geo-note label-cn">成为守窟道士</text>
+                <text x="-15" y="50" text-anchor="end" class="geo-note label-en">Became the caves’ Taoist keeper</text>
+              </g>
 
-            <g class="geo-node" id="node-kashgar-two">
-              <circle class="node-dot" r="4" />
-              <text x="-12" y="-12" text-anchor="end" class="geo-place label-cn">新疆 · 喀什</text>
-              <text x="-12" y="-12" text-anchor="end" class="geo-place label-en">Kashgar · Xinjiang</text>
+              <text id="label-hubei" class="province-label label-cn">湖北</text>
+              <text id="label-hubei-en" class="province-label label-en">Hubei</text>
+              <text id="label-gansu" class="province-label label-cn">甘肃</text>
+              <text id="label-gansu-en" class="province-label label-en">Gansu</text>
             </g>
-            <g class="geo-node destination-node" id="node-dunhuang-two">
-              <circle class="node-halo" r="18" />
-              <circle class="node-dot" r="5" />
-              <text x="13" y="-13" class="geo-place label-cn">甘肃 · 敦煌</text>
-              <text x="13" y="-13" class="geo-place label-en">Dunhuang · Gansu</text>
-            </g>
-            <g class="geo-node" id="node-beijing-two">
-              <circle class="node-dot" r="4" />
-              <text x="12" y="17" class="geo-place label-cn">北京</text>
-              <text x="12" y="17" class="geo-place label-en">Beijing</text>
-            </g>
-            <g class="geo-node power-node" id="node-london-two">
-              <circle class="power-dot" r="4" />
-              <text x="-9" y="-11" text-anchor="end" class="geo-place label-cn">英国</text>
-              <text x="-9" y="-11" text-anchor="end" class="geo-place label-en">Britain</text>
-            </g>
-            <g class="geo-node power-node" id="node-paris-two">
-              <circle class="power-dot" r="4" />
-              <text x="-10" y="19" text-anchor="end" class="geo-place label-cn">法国</text>
-              <text x="-10" y="19" text-anchor="end" class="geo-place label-en">France</text>
-            </g>
-            <g class="geo-node power-node" id="node-petersburg-two">
-              <circle class="power-dot" r="4" />
-              <text x="10" y="-11" class="geo-place label-cn">俄国</text>
-              <text x="10" y="-11" class="geo-place label-en">Russia</text>
-            </g>
-          </g>
 
-          <g class="level geo-level geo-level-three" data-level="3" clip-path="url(#eurasia-clip)" aria-hidden="true">
-            <rect class="geo-sheet" x="70" y="145" width="860" height="505" />
-            <path class="eurasia-land" id="eurasia-land-three" />
-            <path class="country-highlight china" id="eurasia-china-three" />
-            <path class="northwest-link active" id="route-kashgar-dunhuang-three" />
+            <g class="level geo-level geo-level-two" data-level="2" aria-hidden="true">
+              <path class="country-highlight china" id="eurasia-china-two" />
+              <path class="country-highlight britain" id="eurasia-britain-two" />
+              <path class="country-highlight france" id="eurasia-france-two" />
+              <path class="country-highlight russia" id="eurasia-russia-two" />
+              <path class="northwest-link" id="route-kashgar-dunhuang-two" />
 
-            <g class="geo-node" id="node-kashgar-three">
-              <circle class="node-halo" r="16" />
-              <circle class="node-dot" r="4" />
-              <text x="-13" y="-14" text-anchor="end" class="geo-place label-cn">喀什 · 起点</text>
-              <text x="-13" y="-14" text-anchor="end" class="geo-place label-en">Kashgar · Departure</text>
-            </g>
-            <g class="meeting-at-mogao" id="meeting-at-mogao">
-              <circle class="meeting-halo" r="56" />
-              <circle class="meeting-orbit wang" cx="-25" cy="13" r="9" />
-              <circle class="meeting-orbit stein" cx="20" cy="-21" r="9" />
-              <circle class="meeting-orbit jiang" cx="27" cy="24" r="9" />
-              <path class="meeting-links" d="M-25 13L20-21L27 24Z" />
-              <text x="-37" y="42" text-anchor="end" class="person-mini label-cn">王圆箓</text>
-              <text x="-37" y="42" text-anchor="end" class="person-mini label-en">Wang</text>
-              <text x="31" y="-30" class="person-mini label-cn">斯坦因</text>
-              <text x="31" y="-30" class="person-mini label-en">Stein</text>
-              <text x="39" y="42" class="person-mini label-cn">蒋孝琬</text>
-              <text x="39" y="42" class="person-mini label-en">Jiang</text>
-              <text x="0" y="78" text-anchor="middle" class="geo-place label-cn">甘肃 · 莫高窟</text>
-              <text x="0" y="78" text-anchor="middle" class="geo-place label-en">Mogao Caves · Gansu</text>
-            </g>
-          </g>
-
-          <g class="level geo-level geo-level-four" data-level="4" aria-hidden="true">
-            <path class="country-highlight china" id="world-china-four" />
-            <path class="country-highlight britain" id="world-britain-four" />
-            <path class="departure-route verified" id="route-dunhuang-london-four" />
-            <path class="northwest-link" id="route-kashgar-dunhuang-four" />
-
-            <g class="geo-node" id="node-kashgar-four">
-              <circle class="node-dot" r="3.5" />
-              <text x="-10" y="-11" text-anchor="end" class="geo-place label-cn">喀什</text>
-              <text x="-10" y="-11" text-anchor="end" class="geo-place label-en">Kashgar</text>
-            </g>
-            <g class="geo-node destination-node" id="node-dunhuang-four">
-              <circle class="node-halo" r="18" />
-              <circle class="node-dot" r="5" />
-              <text x="12" y="20" class="geo-place label-cn">敦煌</text>
-              <text x="12" y="20" class="geo-place label-en">Dunhuang</text>
-              <g class="mini-crates" transform="translate(-18 -38)">
-                <rect x="0" y="0" width="10" height="8" />
-                <rect x="12" y="0" width="10" height="8" />
-                <rect x="24" y="0" width="10" height="8" />
-                <rect x="6" y="-10" width="10" height="8" />
-                <rect x="18" y="-10" width="10" height="8" />
+              <g class="geo-node" id="node-kashgar-two">
+                <circle class="node-dot" r="4" />
+                <text x="-12" y="-12" text-anchor="end" class="geo-place label-cn">新疆 · 喀什</text>
+                <text x="-12" y="-12" text-anchor="end" class="geo-place label-en">Kashgar · Xinjiang</text>
+              </g>
+              <g class="geo-node destination-node" id="node-dunhuang-two">
+                <circle class="node-halo" r="18" />
+                <circle class="node-dot" r="5" />
+                <text x="13" y="-13" class="geo-place label-cn">甘肃 · 敦煌</text>
+                <text x="13" y="-13" class="geo-place label-en">Dunhuang · Gansu</text>
+              </g>
+              <g class="geo-node" id="node-beijing-two">
+                <circle class="node-dot" r="4" />
+                <text x="12" y="17" class="geo-place label-cn">北京</text>
+                <text x="12" y="17" class="geo-place label-en">Beijing</text>
+              </g>
+              <g class="geo-node power-node" id="node-london-two">
+                <circle class="power-dot" r="4" />
+                <text x="-9" y="-11" text-anchor="end" class="geo-place label-cn">英国</text>
+                <text x="-9" y="-11" text-anchor="end" class="geo-place label-en">Britain</text>
+              </g>
+              <g class="geo-node power-node" id="node-paris-two">
+                <circle class="power-dot" r="4" />
+                <text x="-10" y="19" text-anchor="end" class="geo-place label-cn">法国</text>
+                <text x="-10" y="19" text-anchor="end" class="geo-place label-en">France</text>
+              </g>
+              <g class="geo-node power-node" id="node-petersburg-two">
+                <circle class="power-dot" r="4" />
+                <text x="10" y="-11" class="geo-place label-cn">俄国</text>
+                <text x="10" y="-11" class="geo-place label-en">Russia</text>
               </g>
             </g>
-            <g class="geo-node power-node" id="node-london-four">
-              <circle class="node-halo" r="16" />
-              <circle class="power-dot" r="5" />
-              <text x="-11" y="-13" text-anchor="end" class="geo-place label-cn">伦敦 · 原文目的地</text>
-              <text x="-11" y="-13" text-anchor="end" class="geo-place label-en">London · Destination in the essay</text>
+
+            <g class="level geo-level geo-level-three" data-level="3" aria-hidden="true">
+              <path class="country-highlight china" id="eurasia-china-three" />
+              <path class="northwest-link active" id="route-kashgar-dunhuang-three" />
+
+              <g class="geo-node" id="node-kashgar-three">
+                <circle class="node-halo" r="16" />
+                <circle class="node-dot" r="4" />
+                <text x="-13" y="-14" text-anchor="end" class="geo-place label-cn">喀什 · 起点</text>
+                <text x="-13" y="-14" text-anchor="end" class="geo-place label-en">Kashgar · Departure</text>
+              </g>
+              <g class="meeting-at-mogao" id="meeting-at-mogao">
+                <circle class="meeting-halo" r="56" />
+                <circle class="meeting-orbit wang" cx="-25" cy="13" r="9" />
+                <circle class="meeting-orbit stein" cx="20" cy="-21" r="9" />
+                <circle class="meeting-orbit jiang" cx="27" cy="24" r="9" />
+                <path class="meeting-links" d="M-25 13L20-21L27 24Z" />
+                <text x="-37" y="42" text-anchor="end" class="person-mini label-cn">王圆箓</text>
+                <text x="-37" y="42" text-anchor="end" class="person-mini label-en">Wang</text>
+                <text x="31" y="-30" class="person-mini label-cn">斯坦因</text>
+                <text x="31" y="-30" class="person-mini label-en">Stein</text>
+                <text x="39" y="42" class="person-mini label-cn">蒋孝琬</text>
+                <text x="39" y="42" class="person-mini label-en">Jiang</text>
+                <text x="0" y="78" text-anchor="middle" class="geo-place label-cn">甘肃 · 莫高窟</text>
+                <text x="0" y="78" text-anchor="middle" class="geo-place label-en">Mogao Caves · Gansu</text>
+              </g>
             </g>
 
+            <g class="level geo-level geo-level-four" data-level="4" aria-hidden="true">
+              <path class="country-highlight china" id="world-china-four" />
+              <path class="country-highlight britain" id="world-britain-four" />
+              <path class="departure-route verified" id="route-dunhuang-london-four" />
+              <path class="northwest-link" id="route-kashgar-dunhuang-four" />
+
+              <g class="geo-node" id="node-kashgar-four">
+                <circle class="node-dot" r="3.5" />
+                <text x="-10" y="-11" text-anchor="end" class="geo-place label-cn">喀什</text>
+                <text x="-10" y="-11" text-anchor="end" class="geo-place label-en">Kashgar</text>
+              </g>
+              <g class="geo-node destination-node" id="node-dunhuang-four">
+                <circle class="node-halo" r="18" />
+                <circle class="node-dot" r="5" />
+                <text x="12" y="20" class="geo-place label-cn">敦煌</text>
+                <text x="12" y="20" class="geo-place label-en">Dunhuang</text>
+                <g class="mini-crates" transform="translate(-18 -38)">
+                  <rect x="0" y="0" width="10" height="8" />
+                  <rect x="12" y="0" width="10" height="8" />
+                  <rect x="24" y="0" width="10" height="8" />
+                  <rect x="6" y="-10" width="10" height="8" />
+                  <rect x="18" y="-10" width="10" height="8" />
+                </g>
+              </g>
+              <g class="geo-node power-node" id="node-london-four">
+                <circle class="node-halo" r="16" />
+                <circle class="power-dot" r="5" />
+                <text x="-11" y="-13" text-anchor="end" class="geo-place label-cn">伦敦 · 原文目的地</text>
+                <text x="-11" y="-13" text-anchor="end" class="geo-place label-en">London · Destination in the essay</text>
+              </g>
+            </g>
+
+            <g class="level geo-level geo-level-five" data-level="5" aria-hidden="true">
+              <path class="country-highlight china" id="world-china-five" />
+              <path class="country-highlight afghanistan" id="world-afghanistan-five" />
+              <path class="grave-connection" id="route-dunhuang-kabul-five" />
+
+              <g class="grave-node geographic" id="grave-dunhuang-five">
+                <circle class="grave-halo" r="27" />
+                <path d="M-17 22H17M-11 22V-2C-11-19 11-19 11-2V22" />
+                <text x="35" y="-31" class="grave-name label-cn">敦煌 · 王圆箓塔</text>
+                <text x="35" y="-31" class="grave-name label-en">Dunhuang · Wang’s stupa</text>
+              </g>
+              <g class="grave-node geographic" id="grave-kabul-five">
+                <circle class="grave-halo" r="27" />
+                <path d="M0-16V17M-12-4H12M-17 22H17" />
+                <text x="-34" y="47" text-anchor="end" class="grave-name label-cn">喀布尔 · 斯坦因墓</text>
+                <text x="-34" y="47" text-anchor="end" class="grave-name label-en">Kabul · Stein’s grave</text>
+              </g>
+            </g>
+          </g>
+
+          <g class="level map-overlay overlay-four" aria-hidden="true">
             <g class="crate-manifest" aria-label="二十九只大木箱，装有九千余经卷与五百余幅绘画">
               <rect class="crate-manifest-sheet" x="70" y="398" width="316" height="216" rx="4" />
               <text x="88" y="425" class="manifest-kicker label-cn">装箱记录 · 七日</text>
@@ -226,24 +238,7 @@
               <text x="88" y="605" class="archive-count label-en">9,000+ scrolls · 500+ paintings</text>
             </g>
           </g>
-
-          <g class="level geo-level geo-level-five" data-level="5" aria-hidden="true">
-            <path class="country-highlight china" id="world-china-five" />
-            <path class="country-highlight afghanistan" id="world-afghanistan-five" />
-            <path class="grave-connection" id="route-dunhuang-kabul-five" />
-
-            <g class="grave-node geographic" id="grave-dunhuang-five">
-              <circle class="grave-halo" r="27" />
-              <path d="M-17 22H17M-11 22V-2C-11-19 11-19 11-2V22" />
-              <text x="35" y="-31" class="grave-name label-cn">敦煌 · 王圆箓塔</text>
-              <text x="35" y="-31" class="grave-name label-en">Dunhuang · Wang’s stupa</text>
-            </g>
-            <g class="grave-node geographic" id="grave-kabul-five">
-              <circle class="grave-halo" r="27" />
-              <path d="M0-16V17M-12-4H12M-17 22H17" />
-              <text x="-34" y="47" text-anchor="end" class="grave-name label-cn">喀布尔 · 斯坦因墓</text>
-              <text x="-34" y="47" text-anchor="end" class="grave-name label-en">Kabul · Stein’s grave</text>
-            </g>
+          <g class="level map-overlay overlay-five" aria-hidden="true">
             <g class="grave-node unknown-coordinate" transform="translate(825 560)">
               <circle class="unknown-ring" r="28" />
               <text x="0" y="8" text-anchor="middle" class="unknown-mark">?</text>
@@ -318,8 +313,8 @@
       <section>
         <h3 data-copy="notes-data-title">数据与投影</h3>
         <p class="notes-datum">Albers 25°N / 47°N · 110°E</p>
-        <p><b data-copy="data-china-label">中国近景</b><span data-copy="data-china"></span></p>
-        <p><b data-copy="data-world-label">世界与欧亚</b><span data-copy="data-world"></span></p>
+        <p><b data-copy="data-china-label">投影</b><span data-copy="data-china"></span></p>
+        <p><b data-copy="data-world-label">中国以外</b><span data-copy="data-world"></span></p>
       </section>
 
       <section>
@@ -349,9 +344,9 @@
       <strong data-copy="complete-line">洞窟仍在敦煌，经卷散落世界。</strong>
     </div>
 
-    <script src="./geography-data.js?v=007f59cd9a4b"></script>
+    <script src="./geography-data.js?v=81d088ec8c74"></script>
     <script src="./chapter-data.js?v=22282f094820"></script>
     <script src="../_shared/chapter-shell.js?v=c6f78b90ce53"></script>
-    <script src="./app.js?v=48d5859b97a9"></script>
+    <script src="./app.js?v=aa79bfc0272a"></script>
   </body>
 </html>
