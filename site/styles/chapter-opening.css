@@ -45,6 +45,12 @@ html.has-chapter-opening .reader-panel > .reader-intro { display: none; }
   margin: 30px 0 0; max-width: 38em; font-size: clamp(15px, 1.3vw, 19px);
   line-height: 1.95; letter-spacing: .05em; color: #6c7064; text-wrap: balance;
 }
+#chapter-leaf .chapter-leaf-line:empty { display: none; }
+#chapter-leaf .chapter-leaf-subline {
+  margin: 16px 0 0; max-width: 34em; font-size: clamp(14px, 1.1vw, 17px);
+  line-height: 1.8; letter-spacing: .08em; color: #6c7064; text-wrap: balance;
+}
+#chapter-leaf .chapter-leaf-subline:empty { display: none; }
 #chapter-leaf .chapter-leaf-enter {
   margin: 46px 0 0; padding: 12px 0; display: inline-flex; align-items: center; gap: 24px;
   border: 0; border-bottom: 1px solid #944b3980; border-radius: 0; background: transparent;

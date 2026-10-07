@@ -73,22 +73,6 @@
   const ui=document.createElement('div'); ui.className='atlas-navigation';
   ui.innerHTML='<div class="atlas-zoom-controls" role="group"><button type="button" data-camera="in">+</button><button type="button" data-camera="out">−</button><button type="button" data-camera="home" class="atlas-home"></button></div><span class="atlas-scale"></span>';
   stage.append(ui);
-  const notesButton=document.querySelector('.atlas-notes-toggle');
-  const notes=document.createElement('aside');notes.className='atlas-geography-notes';
-  notes.id='atlas-geography-notes';notes.hidden=true;
-  notes.setAttribute('aria-labelledby','atlas-notes-title');
-  notes.innerHTML='<button class="atlas-notes-close" type="button">×</button><h2 id="atlas-notes-title"></h2><div></div>';
-  document.body.append(notes);
-  function toggleNotes(open,restoreFocus=false){
-    notes.hidden=!open;notesButton.setAttribute('aria-expanded',String(open));
-    if(open)notes.querySelector('button').focus({preventScroll:true});
-    else if(restoreFocus)notesButton.focus({preventScroll:true});
-    window.dispatchEvent(new CustomEvent('atlas-camera-change'));
-  }
-  notesButton.addEventListener('click',()=>toggleNotes(notes.hidden));
-  notes.querySelector('button').addEventListener('click',()=>toggleNotes(false,true));
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!notes.hidden){e.preventDefault();toggleNotes(false,true);}});
-  document.addEventListener('pointerdown',e=>{if(!notes.hidden&&!notes.contains(e.target)&&!notesButton.contains(e.target))toggleNotes(false);});
   const storageKey='bittersweet-journey:atlas-camera:v1';
   let camera={x:556,y:407,k:1},baseWidth=720,baseHeight=450,queued=false,level=1;
   let dragged=false,suppressUntil=0,gesture=null;
@@ -139,17 +123,12 @@
     ui.querySelectorAll('button').forEach((b,i)=>{b.setAttribute('aria-label',texts[i]);b.title=texts[i];});
     ui.querySelector('.atlas-home').textContent=en?'All':'全图';
     svg.setAttribute('aria-label',en?'Interactive landscape atlas. Arrow keys pan, plus and minus zoom, Home shows all chapters.':'可交互山河地图：方向键移动，加减键缩放，Home 键返回全图。');
-    const notesTitle=en?'Map notes & sources':'地图说明与数据来源';
-    notesButton.querySelector('.atlas-notes-label').textContent=notesTitle;
-    notes.querySelector('h2').textContent=notesTitle;
-    notes.querySelector('button').setAttribute('aria-label',en?'Close map notes':'关闭地图说明');
-    notes.querySelector('div').innerHTML=en?'<p>Natural Earth coastlines, lakes and rivers; mountain strokes follow slopes in the existing Copernicus elevation grid. Regional detail appears as you zoom. This is a regional reading atlas, not a street map.</p><p>Nearby Dunhuang chapters are offset for selection, with fine lines pointing to their geographic anchors. Relief is generalized at about 29 km per cell and covers 8–125°E, 10–52°N; no terrain detail is invented beyond it.</p><a href="https://www.naturalearthdata.com/downloads/10m-physical-vectors/" target="_blank" rel="noopener noreferrer">Natural Earth ↗</a>': '<p>海岸、河流与湖泊取自 Natural Earth；山势排线依据既有 Copernicus 高程格网的坡向绘制。放大后逐步显示区域水系与地名，适合阅读山河格局。</p><p>敦煌附近的章节为便于点选而错开，以细线连接地理位置。地形约每格 29 公里，范围为东经 8–125°、北纬 10–52°；范围外不补画虚构山势。</p><a href="https://www.naturalearthdata.com/downloads/10m-physical-vectors/" target="_blank" rel="noopener noreferrer">Natural Earth 地理资料 ↗</a>';
     labelEntries.forEach(f=>{f.node.textContent=en?f.en:f.zh||f.en;});
     requestPaint();
   }
   function layoutLabels(taken,area,scale){
     const intersects=(a,b)=>a.left<b.right&&a.right>b.left&&a.top<b.bottom&&a.bottom>b.top;
-    const overlays=[ui,...(notes.hidden?[]:[notes])].map(n=>n.getBoundingClientRect()).map(b=>{
+    const overlays=[ui].map(n=>n.getBoundingClientRect()).map(b=>{
       const a=screenPoint(b.left,b.top),c=screenPoint(b.right,b.bottom);return {left:a.x,top:a.y,right:c.x,bottom:c.y};
     });
     const occupied=[...taken,...overlays];

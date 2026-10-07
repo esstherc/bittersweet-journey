@@ -16,12 +16,8 @@
       "curtain-kicker": "第 {n} 章",
       "back-atlas": "总地图",
       source: "文本：余秋雨《文化苦旅》",
-      "notes-button": "地图说明与数据来源",
-      "notes-title": "地图说明与数据来源",
-      "notes-map-title": "如何阅读这幅地图",
-      "notes-data-title": "数据与投影",
-      "notes-sources-title": "数据来源",
-      "notes-disclaimer-title": "声明",
+      "notes-button": "Natural Earth",
+      "notes-title": "Natural Earth",
       "notes-keyboard-title": "键盘",
       "notes-keyboard": "↑ ↓ ← → 切换节次 · L 切换语言 · Esc 关闭本面板",
       "close-aria": "关闭",
@@ -42,12 +38,8 @@
       "curtain-kicker": "Chapter {n}",
       "back-atlas": "Atlas",
       source: "Text: Yu Qiuyu, A Bittersweet Journey Through Culture",
-      "notes-button": "Map notes & sources",
-      "notes-title": "Map notes & sources",
-      "notes-map-title": "Reading this map",
-      "notes-data-title": "Data & projection",
-      "notes-sources-title": "Sources",
-      "notes-disclaimer-title": "Disclaimer",
+      "notes-button": "Natural Earth",
+      "notes-title": "Natural Earth",
       "notes-keyboard-title": "Keyboard",
       "notes-keyboard": "↑ ↓ ← → switch sections · L language · Esc closes this panel",
       "close-aria": "Close",
@@ -85,7 +77,6 @@
       overlay: query(".chapter-complete-overlay"),
       notesButton: query(".notes-button"),
       notesDrawer: query(".notes-drawer"),
-      closeNotes: query(".close-notes"),
       atlasLinks: [...document.querySelectorAll("[data-atlas-link]")],
       languageButtons: [...document.querySelectorAll(".language-switch button[data-language]")]
     };
@@ -98,10 +89,19 @@
         : window.localStorage.getItem(LANGUAGE_KEY) || "en",
       active: 0,
       open: false,
-      notesOpen: false,
       previewLock: false
     };
     window.localStorage.setItem(LANGUAGE_KEY, state.language);
+
+    if (els.notesButton) {
+      const source = document.createElement("span");
+      source.className = "map-source-credit";
+      source.textContent = "Natural Earth";
+      els.notesButton.replaceWith(source);
+      els.notesButton = null;
+    }
+    els.notesDrawer?.remove();
+    els.notesDrawer = null;
 
     let headers = [];
     let scrollFrame = null;
@@ -346,17 +346,6 @@
       config.onOpen?.(state);
     }
 
-    /* ---------- notes drawer ---------- */
-
-    function toggleNotes(force, { focus = true } = {}) {
-      state.notesOpen = typeof force === "boolean" ? force : !state.notesOpen;
-      if (!state.notesOpen) window.JOURNEY_AUDIO?.play('close', .36);
-      body.classList.toggle("notes-open", state.notesOpen);
-      els.notesButton.setAttribute("aria-expanded", String(state.notesOpen));
-      els.notesDrawer.setAttribute("aria-hidden", String(!state.notesOpen));
-      if (focus) (state.notesOpen ? els.closeNotes : els.notesButton).focus();
-    }
-
     /* ---------- language ---------- */
 
     function changeLanguage(language) {
@@ -381,7 +370,7 @@
         const destination = `${ATLAS_URL}?revealed=${config.revealId || id}&lang=${state.language}`;
         if (window.LAND_TRANSITION) window.LAND_TRANSITION.navigate(destination);
         else window.location.href = destination;
-      }, window.JOURNEY_AUDIO?.enabled ? COMPLETE_DELAY : 1400);
+      }, COMPLETE_DELAY);
     }
 
     /* ---------- events ---------- */
@@ -391,8 +380,6 @@
     });
     els.openButton.addEventListener("click", () => openBook());
     els.finishButton.addEventListener("click", finishChapter);
-    els.notesButton.addEventListener("click", () => toggleNotes());
-    els.closeNotes.addEventListener("click", () => toggleNotes(false));
     els.scroll.addEventListener(
       "scroll",
       () => {
@@ -401,18 +388,8 @@
       { passive: true }
     );
 
-    document.addEventListener("click", (event) => {
-      if (!state.notesOpen) return;
-      if (els.notesDrawer.contains(event.target) || els.notesButton.contains(event.target)) return;
-      toggleNotes(false, { focus: false });
-    });
-
     document.addEventListener("keydown", (event) => {
       if (event.metaKey || event.ctrlKey || event.altKey) return;
-      if (event.key === "Escape" && state.notesOpen) {
-        toggleNotes(false);
-        return;
-      }
       if (event.key.toLowerCase() === "l") {
         changeLanguage(state.language === "zh" ? "en" : "zh");
         return;
@@ -447,6 +424,7 @@
           number: fill(text("curtain-kicker")),
           title: text("chapter-title"),
           line: text(id === "mountain-resort" ? "reader-note" : "map-teaser"),
+          subline: id === "fish-tail-lodge" || id === "yangguan" ? text("thesis") : "",
           action: text("open")
         }),
         language: changeLanguage,
@@ -468,9 +446,7 @@
     } else if (!window.CHAPTER_OPENING) {
       els.openButton.focus({ preventScroll: true });
     }
-    if (params.get("notes") === "1") toggleNotes(true, { focus: false });
-
-    return { state, goToSection, openBook, toggleNotes, changeLanguage };
+    return { state, goToSection, openBook, changeLanguage };
   }
 
   window.ChapterShell = { init };

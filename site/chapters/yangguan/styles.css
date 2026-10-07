@@ -31,7 +31,14 @@
 .terrain-viewport {
   z-index: 1;
   opacity: 0;
-  transition: opacity 1s ease;
+  filter: brightness(1) contrast(1) saturate(1);
+  transform: scale(1.045);
+  transform-origin: 24% 62%;
+  transition:
+    opacity 0.72s ease,
+    transform 1.15s cubic-bezier(0.2, 0.68, 0.25, 1),
+    filter 0.9s ease;
+  will-change: opacity, transform;
 }
 
 .terrain-canvas {
@@ -40,8 +47,26 @@
   height: 100%;
 }
 
-body.webgl-ready .terrain-viewport { opacity: 1; }
-body.webgl-ready[data-reading-level="2"] .terrain-viewport { opacity: 0; }
+body.webgl-ready .terrain-viewport { opacity: 1; transform: scale(1); }
+body.webgl-ready[data-reading-level="2"] .terrain-viewport { opacity: 0; transform: scale(1.085); }
+body.webgl-ready[data-reading-level="3"] .terrain-viewport { filter: brightness(0.82) contrast(1.08) saturate(0.68); }
+body.webgl-ready[data-reading-level="4"] .terrain-viewport { filter: brightness(0.98) contrast(1.04) saturate(0.84); }
+body.webgl-ready[data-reading-level="5"] .terrain-viewport { filter: brightness(0.93) contrast(1.06) saturate(0.72); }
+
+.map-stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 44% 66%, transparent 24%, rgba(45, 43, 38, 0.2) 100%),
+    linear-gradient(180deg, rgba(44, 50, 52, 0.13), transparent 42%, rgba(76, 61, 45, 0.12));
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+body[data-reading-level="3"] .map-stage::after { opacity: 1; }
 
 .snowfall {
   z-index: 6;
@@ -65,7 +90,7 @@ body.webgl-ready[data-reading-level="2"] .terrain-viewport { opacity: 0; }
 body[data-reading-level="1"] .marks-far,
 body[data-reading-level="3"] :is(.marks-route, .marks-mounds, .marks-wall, .marks-tags),
 body[data-reading-level="4"] :is(.marks-oasis, .marks-wall, .marks-pass, .marks-peak, .marks-tags),
-body[data-reading-level="5"] :is(.marks-oasis, .marks-pass, .marks-peak, .marks-poem) {
+body[data-reading-level="5"] :is(.marks-pass, .marks-poem) {
   opacity: 1;
 }
 
@@ -73,6 +98,9 @@ body[data-reading-level="4"] :is(.marks-route, .marks-mounds),
 body[data-reading-level="5"] :is(.marks-mounds, .marks-wall) {
   opacity: 0.35; /* 身后，沙坟如潮 */
 }
+
+body[data-reading-level="5"] .marks-pass { opacity: 0.68; }
+body[data-reading-level="5"] .marks-pass .coord { display: none; }
 
 /* tags follow their layer */
 body[data-reading-level="3"] .oasis-tag {
@@ -206,13 +234,21 @@ body.is-open .compass { opacity: 1; }
   opacity: 0;
   pointer-events: none;
   font-family: var(--sans);
-  transition: opacity 0.9s ease;
+  transform: scale(1.08);
+  transform-origin: 18% 60%;
+  transition:
+    opacity 0.72s ease,
+    transform 1.15s cubic-bezier(0.2, 0.68, 0.25, 1);
+  will-change: opacity, transform;
 }
 
 body[data-reading-level="2"] .regional-map,
 body.webgl-fallback .regional-map {
   opacity: 1;
+  transform: scale(1);
 }
+
+body[data-reading-level="3"] .regional-map { transform: scale(1.13); }
 
 body.webgl-fallback :is(.terrain-marks, .terrain-viewport) { display: none; }
 
@@ -297,10 +333,39 @@ body.webgl-fallback :is(.terrain-marks, .terrain-viewport) { display: none; }
   letter-spacing: 0.09em;
 }
 
+/* One-time reading cue when the walk begins to write itself across the terrain. */
+.journey-hint {
+  position: absolute;
+  z-index: 8;
+  left: var(--ctx-pad-x);
+  bottom: 104px;
+  max-width: min(25em, calc(100% - 2 * var(--ctx-pad-x)));
+  margin: 0;
+  padding: 9px 13px 10px;
+  border-left: 2px solid var(--seal);
+  color: var(--ink);
+  background: rgba(243, 239, 229, 0.92);
+  box-shadow: 0 8px 28px rgba(42, 40, 34, 0.1);
+  font: 500 14px/1.6 var(--sans);
+  letter-spacing: 0.08em;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity 0.28s ease, transform 0.36s ease;
+}
+
+.journey-hint.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+body[data-language="en"] .journey-hint { letter-spacing: 0.02em; }
+
 /* ---------- responsive ---------- */
 
 @media (max-width: 900px) {
   .camera-caption { left: 20px; bottom: 12px; max-width: calc(100% - 40px); }
+  .journey-hint { left: 20px; bottom: 92px; max-width: calc(100% - 40px); }
   .regional-point text { font-size: 26px; }
   .regional-distance { font-size: 20px; }
 }

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="《文化苦旅》双语阅读地图：鱼尾山屋。在喜马拉雅山脚下的小屋里回望古文明，再沿峡谷回到国门。"
+      content="《文化苦旅》双语阅读地图：鱼尾山屋。"
     />
     <title>山河显影 · 鱼尾山屋</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -15,10 +15,11 @@
       href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&family=Ysabeau:ital,wght@0,400..700;1,400..700&display=swap"
     />
     <link rel="stylesheet" href="../_shared/chapter-shell.css?v=5312138dfcc9" />
-    <link rel="stylesheet" href="./styles.css?v=774cf8993558" />
+    <link rel="stylesheet" href="./styles.css?v=20261006-clean-456" />
+    <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" />
     <link rel="stylesheet" href="../../styles/page-transition.css?v=899e8641905a">
-    <link rel="stylesheet" href="../../styles/journey-audio.css?v=3b21344a057e">
-    <script src="../../scripts/journey-audio.js?v=8dd96af9db35"></script>
+    <link rel="stylesheet" href="../../styles/journey-audio.css?v=20261006-5">
+    <script src="../../scripts/journey-audio.js?v=20261006-entrance-resume"></script>
     <script src="../../scripts/page-transition.js?v=b6d201aba663"></script>
     <link rel="stylesheet" href="../../styles/chapter-opening.css?v=e5443a7dfdb4">
     <script src="../../scripts/chapter-opening.js?v=2cd6816f1aec"></script>
@@ -55,6 +56,10 @@
           <canvas class="terrain-canvas"></canvas>
         </div>
 
+        <div class="mapbox-context" aria-hidden="true">
+          <div class="mapbox-canvas"></div>
+        </div>
+
         <!-- Labels drawn on real terrain positions every frame (app.js). -->
         <svg class="terrain-marks" aria-hidden="true"></svg>
 
@@ -67,10 +72,6 @@
           </g>
         </svg>
 
-        <div class="camera-caption" aria-hidden="true">
-          <span class="camera-mode">博克拉 · 鱼尾山屋</span>
-          <span class="camera-tech">3D terrain · Copernicus DEM</span>
-        </div>
       </section>
 
       <article class="reader-panel" inert data-aria="reader-aria" aria-label="章节正文">
@@ -101,7 +102,7 @@
         <h1 class="curtain-title" id="curtain-title" data-copy="chapter-title">鱼尾山屋</h1>
         <p class="curtain-thesis" data-copy="thesis">离开之后，才读懂了它。</p>
         <button class="open-book" type="button">
-          <span data-copy="open">推门看雪峰</span>
+          <span data-copy="open">进入章节</span>
           <svg viewBox="0 0 56 18" aria-hidden="true">
             <path d="M1 9H51M44 2L52 9L44 16" />
           </svg>
@@ -167,15 +168,17 @@
     <div class="chapter-complete-overlay" role="status" aria-live="polite" aria-hidden="true">
       <span class="complete-ripple"></span>
       <span class="seal seal-l seal-image" aria-hidden="true"><img src="./assets/seal-fish-tail-lodge.svg?v=f19fcbe77db2" alt="" /></span>
-      <p data-copy="complete-kicker">一处山河已经显影</p>
       <strong data-copy="complete-line">惟告别，方领悟。</strong>
     </div>
 
     <script src="./geography-data.js?v=5e0d49bf5544"></script>
     <script src="./terrain-data.js?v=fa48737f054d"></script>
     <script src="./chapter-data.js?v=61dbf309d222"></script>
-    <script src="./terrain-3d.js?v=d387d0fa2281"></script>
-    <script src="../_shared/chapter-shell.js?v=0d448df7d0f5"></script>
-    <script src="./app.js?v=3af06a1b407f"></script>
+    <script src="./mapbox-config.js?v=20261006-1"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+    <script src="./mapbox-context.js?v=20261006-10"></script>
+    <script src="./terrain-3d.js?v=20261006-wide-2"></script>
+    <script src="../_shared/chapter-shell.js?v=20261006-complete-4200"></script>
+    <script src="./app.js?v=20261006-clean-456"></script>
   </body>
 </html>

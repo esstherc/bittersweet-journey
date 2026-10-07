@@ -6,7 +6,7 @@
 
   const assetBase = new URL('../assets/sound/', document.currentScript.src);
   const preferenceKey = 'bittersweet-journey:sound-enabled';
-  const entranceKey = 'bittersweet-journey:entrance-sound';
+  const entranceKey = 'bittersweet-journey:chapter-entrance';
   const tracks = {
     ambient: 'bittersweet_map_bgm_ambient_loop.wav',
     click: 'sfx_Q_btn_click.wav',
@@ -43,6 +43,7 @@
   music.volume = .22;
   let ambienceWanted = true;
   let toggle;
+  let musicFade = 0;
   const voices = new Set();
 
   function play(name, volume = .55, startAt = 0) {
@@ -50,7 +51,9 @@
     const voice = new Audio(new URL(tracks[name], assetBase));
     voice.volume = volume;
     voices.add(voice);
-    const remove = () => voices.delete(voice);
+    let resolveDone;
+    voice.journeyDone = new Promise(resolve => { resolveDone = resolve; });
+    const remove = () => { voices.delete(voice); resolveDone(); };
     voice.addEventListener('ended', remove, {once: true});
     voice.addEventListener('error', remove, {once: true});
     if (startAt > 0) {
@@ -66,9 +69,33 @@
   }
 
   function syncAmbience() {
-    if (!enabled || !ambienceWanted || document.hidden) { music.pause(); return; }
-    if (!music.paused) return;
-    music.play().catch(() => {}); // A first visit may need a user gesture.
+    cancelAnimationFrame(musicFade);
+    if (!enabled || !ambienceWanted || document.hidden) {
+      if (music.paused) return;
+      const from = music.volume;
+      const started = performance.now();
+      const fadeOut = now => {
+        const progress = Math.min(1, (now - started) / 320);
+        music.volume = from * (1 - progress);
+        if (progress < 1 && !ambienceWanted && enabled && !document.hidden) musicFade = requestAnimationFrame(fadeOut);
+        else { music.pause(); music.volume = .22; }
+      };
+      musicFade = requestAnimationFrame(fadeOut);
+      return;
+    }
+    const fadeIn = () => {
+      const from = music.volume;
+      const started = performance.now();
+      const raise = now => {
+        const progress = Math.min(1, (now - started) / 520);
+        music.volume = from + (.22 - from) * progress;
+        if (progress < 1 && ambienceWanted && enabled && !document.hidden) musicFade = requestAnimationFrame(raise);
+      };
+      musicFade = requestAnimationFrame(raise);
+    };
+    if (!music.paused) { fadeIn(); return; }
+    music.volume = 0;
+    music.play().then(fadeIn).catch(() => {}); // A first visit may need a user gesture.
   }
 
   function setAmbience(wanted) {
@@ -91,7 +118,9 @@
     enabled = Boolean(next);
     try { localStorage.setItem(preferenceKey, String(enabled)); } catch {}
     if (!enabled) {
+      cancelAnimationFrame(musicFade);
       music.pause();
+      music.volume = .22;
       voices.forEach(voice => { voice.pause(); voice.currentTime = 0; });
       voices.clear();
     } else syncAmbience();
@@ -100,21 +129,38 @@
 
   function enterChapter(id) {
     setAmbience(false);
-    try { sessionStorage.setItem(entranceKey, JSON.stringify({id, at: Date.now()})); } catch {}
-    (chapterTracks[id] || []).forEach(([name, volume]) => play(name, volume));
+    const definitions = chapterTracks[id] || [];
+    if (enabled && definitions.length) {
+      try {
+        localStorage.setItem(entranceKey, JSON.stringify({
+          id,
+          startedAt: Date.now(),
+          cues: definitions
+        }));
+      } catch {}
+    }
+    const cues = definitions.map(([name, volume]) => play(name, volume));
+    const finished = Promise.all(cues.map(cue => cue?.journeyDone || Promise.resolve()));
+    // Never strand navigation if a browser fails to emit an audio completion event.
+    return Promise.race([finished, new Promise(resolve => setTimeout(resolve, 8500))]);
   }
 
-  function resumeEntrance() {
-    const id = location.pathname.match(/\/chapters\/([^/]+)\//)?.[1];
-    if (!id) return;
-    let pending;
+  function resumeChapterEntrance() {
+    let pending = null;
     try {
-      pending = JSON.parse(sessionStorage.getItem(entranceKey) || 'null');
-      sessionStorage.removeItem(entranceKey);
-    } catch { return; }
-    const elapsed = (Date.now() - pending?.at) / 1000;
-    if (pending?.id !== id || elapsed < 0 || elapsed > 7) return;
-    (chapterTracks[id] || []).forEach(([name, volume]) => play(name, volume, elapsed));
+      pending = JSON.parse(localStorage.getItem(entranceKey) || 'null');
+      localStorage.removeItem(entranceKey);
+    } catch {}
+    if (!enabled || !pending || !Array.isArray(pending.cues)) return false;
+    if (Date.now() - pending.startedAt > 12000) return false;
+    if (!location.pathname.includes(`/chapters/${pending.id}/`)) return false;
+    const elapsed = Math.max(0, (Date.now() - pending.startedAt) / 1000);
+    ambienceWanted = false;
+    const cues = pending.cues.map(([name, volume]) => play(name, volume, elapsed));
+    Promise.all(cues.map(cue => cue?.journeyDone || Promise.resolve())).then(() => {
+      if (!document.body.classList.contains('is-open')) setAmbience(true);
+    });
+    return true;
   }
 
   function mount() {
@@ -129,9 +175,9 @@
       updateToggle();
       new MutationObserver(updateToggle).observe(document.body, {attributes: true, attributeFilter: ['data-language']});
     }
-    if (document.body.classList.contains('is-open') || new URLSearchParams(location.search).get('open') === '1') ambienceWanted = false;
+    const resumedEntrance = resumeChapterEntrance();
+    if (resumedEntrance || document.body.classList.contains('is-open') || new URLSearchParams(location.search).get('open') === '1') ambienceWanted = false;
     syncAmbience();
-    resumeEntrance();
   }
 
   // General controls get the quiet UI click; story, page, and completion actions have their own cue.

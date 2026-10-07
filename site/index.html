@@ -14,11 +14,11 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&family=Ysabeau:ital,wght@0,400..700;1,400..700&display=swap"
     />
-    <link rel="stylesheet" href="./styles/atlas.css?v=5f9a873380c5" />
+    <link rel="stylesheet" href="./styles/atlas.css?v=20261006-chapter-03-map" />
     <link rel="stylesheet" href="./styles/atlas-physical.css?v=56607b469ef7" />
     <link rel="stylesheet" href="./styles/page-transition.css?v=899e8641905a">
-    <link rel="stylesheet" href="./styles/journey-audio.css?v=3b21344a057e">
-    <script src="./scripts/journey-audio.js?v=8dd96af9db35"></script>
+    <link rel="stylesheet" href="./styles/journey-audio.css?v=20261006-5">
+    <script src="./scripts/journey-audio.js?v=20261006-entrance-resume"></script>
     <script src="./scripts/page-transition.js?v=b6d201aba663"></script>
     <link rel="stylesheet" href="./styles/site-header.css?v=700abd29d250">
     <script src="./scripts/site-header.js?v=e00055e7bd37"></script>
@@ -71,11 +71,6 @@
             <em data-copy="cta-hint">移动游标／触碰提灯 · 拖动或双指缩放 · 完成章节留下光圈</em>
           </span>
         </div>
-        <button class="hometown-entry" type="button">
-          <small data-copy="hometown-entry-kicker">03 · 全图入口</small>
-          <span data-copy="hometown-entry">先从《我的山河》出发</span>
-          <i aria-hidden="true">↗</i>
-        </button>
       </section>
 
       <section class="atlas-map-stage" data-aria="stage-aria" aria-label="文化苦旅中国故事地图">
@@ -128,6 +123,18 @@
           <!-- One image seal per read chapter, placed next to its dot by atlas.js (layoutAtlas). -->
           <g class="chapter-seals" aria-hidden="true"></g>
           <g class="story-points">
+            <!-- 《我的山河》谈的是整片土地，因此用黄河与长江之间的文学坐标，不伪装成精确故乡地点。 -->
+            <g class="story-point available" role="button" tabindex="0" data-story="my-hometown" data-aria="point-my-hometown-aria" aria-label="进入我的山河">
+              <circle class="point-glow" cx="606" cy="414" r="38" />
+              <circle class="point-pulse" cx="606" cy="414" r="12" />
+              <circle class="point-core" cx="606" cy="414" r="4" />
+              <text x="620" y="397" class="point-number">03</text>
+              <text x="620" y="421" class="point-clue unread cn" lang="zh">从山河出发</text>
+              <text x="620" y="421" class="point-clue unread en" lang="en">Begin with the land</text>
+              <text x="620" y="421" class="point-clue complete cn" lang="zh">我的山河</text>
+              <text x="620" y="421" class="point-clue complete en" lang="en">My Hometown</text>
+            </g>
+
             <g class="story-point available" role="button" tabindex="0" data-story="kashgar" aria-label="有人把来世，选在这里。">
               <circle class="point-glow" cx="118" cy="327" r="35" />
               <circle class="point-pulse" cx="118" cy="327" r="11" />
@@ -250,9 +257,7 @@
     <footer class="atlas-footer">
       <div class="atlas-footer-source">
         <span class="atlas-citation" data-copy="source">文本：余秋雨《文化苦旅》</span>
-        <button class="atlas-notes-toggle" type="button" aria-expanded="false" aria-controls="atlas-geography-notes">
-          <span aria-hidden="true">ⓘ</span><span class="atlas-notes-label">地图说明与数据来源</span>
-        </button>
+        <span class="atlas-map-source">Natural Earth</span>
       </div>
       <button class="view-stamps" type="button" data-copy="view-stamps">圖章</button>
       <button class="reset-progress" type="button" data-copy="reset">重置阅读痕迹</button>
@@ -273,7 +278,7 @@
     </div>
 
     <script src="./data/real-geography.js?v=49a9ddc8d22f"></script>
-    <script src="./scripts/atlas.js?v=2dbae353529b"></script>
+    <script src="./scripts/atlas.js?v=20261006-chapter-03-map"></script>
     <script src="./data/atlas-physical.js?v=0a7abe3264ab"></script>
     <script src="./scripts/atlas-camera.js?v=293eb07c8e8d"></script>
     <script src="./scripts/atlas-journey.js?v=c06387b7878d"></script>
