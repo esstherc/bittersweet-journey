@@ -149,11 +149,32 @@ body.is-open .river-system .reveal-layer.is-visible path {
   pointer-events: none;
 }
 
+#qingcheng-point .qingcheng-peaks {
+  fill: var(--paper);
+  stroke: #8b1820;
+  stroke-width: 1.6;
+  stroke-linejoin: round;
+}
+#qingcheng-point .qingcheng-ridges {
+  stroke: #8b1820;
+  stroke-width: 1;
+  stroke-linejoin: round;
+}
+
+#qingcheng-point text {
+  fill: #8b1820;
+  stroke: var(--paper);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+  paint-order: stroke fill;
+}
+
 .engineering-leader {
   fill: none;
-  stroke: rgba(52, 93, 110, .35);
-  stroke-width: 1;
-  stroke-dasharray: 3 7;
+  stroke: #8b1820;
+  stroke-width: 1.8;
+  stroke-dasharray: 6 4;
+  stroke-linecap: round;
 }
 
 .site-point .site-core {
@@ -172,8 +193,8 @@ body.is-open .site-point text {
 
 .engineering-inset > rect {
   fill: rgba(239, 232, 215, .9);
-  stroke: rgba(42, 45, 38, .24);
-  stroke-width: .8;
+  stroke: #8b1820;
+  stroke-width: 1.4;
 }
 
 .inset-kicker {
@@ -184,6 +205,10 @@ body.is-open .site-point text {
 
 .inset-title {
   fill: var(--ink);
+  stroke: var(--paper);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+  paint-order: stroke fill;
   font-size: 15px;
   letter-spacing: .14em;
 }

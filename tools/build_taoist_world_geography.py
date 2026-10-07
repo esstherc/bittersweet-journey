@@ -60,6 +60,8 @@ COUNTRY_CODES = {
     "russia": "RUS",
     "afghanistan": "AFG",
     "india": "IND",
+    "germany": "DEU",
+    "hungary": "HUN",
 }
 
 STANDARD_PROVINCES = {
@@ -256,6 +258,16 @@ def main() -> None:
         )
         == "CHN"
     )
+    # Only the narrative highlight excludes Taiwan; the neutral world base remains intact.
+    china_pov["geometry"] = {
+        "type": "MultiPolygon",
+        "coordinates": [[ring] for ring in rings(china_pov["geometry"])
+                        if not all(119 < lon < 124 and 21 < lat < 26 for lon, lat, *_ in ring)]
+    }
+    # Country labels use the provider's label anchors, not invented travel stops.
+    for name in ("germany", "hungary"):
+        props = country_by_code[COUNTRY_CODES[name]]["properties"]
+        POINTS[name] = {"lon": props["LABEL_X"], "lat": props["LABEL_Y"]}
 
     world_land = "".join(
         geographic_path(feature["geometry"], WORLD_BOUNDS, WORLD_RECT)

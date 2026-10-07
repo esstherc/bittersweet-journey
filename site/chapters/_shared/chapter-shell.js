@@ -156,7 +156,7 @@
         label.className = "reader-section-label";
         label.textContent = meta[index]?.label ?? section.label;
         heading.appendChild(label);
-        if (meta[index]?.location) {
+        if (config.showReaderLocation !== false && meta[index]?.location) {
           const location = document.createElement("p");
           location.className = "reader-location";
           location.textContent = meta[index].location;
@@ -166,7 +166,8 @@
         progress.className = "reader-progress";
         progress.setAttribute("aria-label", text("progress-aria"));
         progress.textContent = `${pad(index + 1)} / ${pad(total)}`;
-        header.append(heading, progress);
+        header.append(heading);
+        if (config.showReaderProgress !== false) header.append(progress);
 
         const rule = document.createElement("div");
         rule.className = "reader-rule";

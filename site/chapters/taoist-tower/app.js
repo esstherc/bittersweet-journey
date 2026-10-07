@@ -27,24 +27,6 @@
     ]
   };
 
-  // On-map caption (M-5): what the current map view shows.
-  const captions = {
-    zh: [
-      "人物地理 · 从湖北到河西走廊",
-      "1900 · 西北考古与全球权力背景",
-      "一条可定位的行程，一场发生在洞窟里的相遇",
-      "二十九箱离开敦煌",
-      "两处可定位的墓，一处地理空白"
-    ],
-    en: [
-      "Biography map · From Hubei to the Hexi Corridor",
-      "1900 · Northwest archaeology and global power",
-      "A locatable journey; a meeting inside the cave",
-      "Twenty-nine crates leave Dunhuang",
-      "Two locatable graves; one geographic absence"
-    ]
-  };
-
   const copy = {
     zh: {
       "map-aria": "藏经洞与文物流散文学地图",
@@ -55,12 +37,8 @@
       "rail-aria": "阅读档案",
       "section-aria": "档案 {n}",
       "notes-keyboard": "↑ ↓ ← → 切换档案 · L 切换语言 · Esc 关闭本面板",
-      "data-solid-label": "实线",
-      "data-solid": "红色实线表示本篇明确叙述的地点关系。",
-      "data-dashed-label": "虚线",
-      "data-dashed": "赭色虚线表示法、俄收藏等补充背景，不表示同一条运输路线。",
-      "data-wudang-label": "武当山",
-      "data-wudang": "仅作为湖北道教文化背景，不是王圆箓的已知行迹。",
+      "data-solid-label": "连线",
+      "data-solid": "连线表示本篇叙述的地点关系，不是实测路线。蒋孝琬随斯坦因由喀什前往敦煌，三人在莫高窟相遇；文物流散图仅保留原文提及的大英博物馆方向。",
       "data-unknown-label": "空白",
       "data-unknown": "蒋孝琬的墓址没有可核验的坐标；地图上的“?”不是任意一点，而是地图无法回答的问题。",
       "data-china-label": "中国近景",
@@ -82,12 +60,8 @@
       "rail-aria": "Reading the Archive",
       "section-aria": "Record {n}",
       "notes-keyboard": "↑ ↓ ← → switch files · L language · Esc closes this panel",
-      "data-solid-label": "Solid",
-      "data-solid": "Solid red lines mark relationships stated in the essay.",
-      "data-dashed-label": "Dashed",
-      "data-dashed": "Ochre dashes add later French and Russian collection context; they do not describe a single transport route.",
-      "data-wudang-label": "Wudang",
-      "data-wudang": "Shown only as Hubei Taoist context, not a documented journey by Wang.",
+      "data-solid-label": "Connections",
+      "data-solid": "Connections show narrative relationships, not surveyed routes. Jiang accompanied Stein from Kashgar to Dunhuang, where the three met at Mogao. The dispersal map retains only the British Museum destination named in the essay.",
       "data-unknown-label": "Gap",
       "data-unknown": "Jiang Xiaowan’s burial place has no verifiable coordinate; the “?” is not an arbitrary point but a question the map cannot answer.",
       "data-china-label": "China close-up",
@@ -120,7 +94,7 @@
   }
 
   const body = document.body;
-  const caption = document.querySelector(".map-caption");
+
 
   function svgNode(name, attributes = {}) {
     const node = document.createElementNS("http://www.w3.org/2000/svg", name);
@@ -151,23 +125,18 @@
   }
 
   function applyGeography() {
-    setPath("#world-land", geography.world.landPath);
-    setPath("#china-outline", geography.china.outlinePath);
-    setPath("#china-provinces", geography.china.provincePath);
-    ["hubei", "gansu", "xinjiang"].forEach((province) => {
+    const mainlandDetail = path => path.match(/M[^M]+/g).filter(ring => {
+      const values=ring.match(/-?\d+(?:\.\d+)?/g).map(Number);
+      const points=[];for(let i=0;i<values.length;i+=2)points.push([values[i],values[i+1]]);
+      return !points.every(([x,y])=>(x>620&&y>510)||(x>700&&y>478));
+    }).join('');
+    setPath("#china-outline", mainlandDetail(geography.china.outlinePath));
+    setPath("#china-provinces", mainlandDetail(geography.china.provincePath));
+    ["hubei", "gansu"].forEach((province) => {
       setPath(`#china-${province}`, geography.china.highlights[province]);
       const center = geography.china.centers[province];
       const label = document.querySelector(`#label-${province}`);
       const englishLabel = document.querySelector(`#label-${province}-en`);
-      [label, englishLabel].forEach((node, index) => {
-        node?.setAttribute("x", center.x);
-        node?.setAttribute("y", center.y + index * 17);
-      });
-    });
-    ["xizang", "taiwan"].forEach((territory) => {
-      const center = geography.china.labels[territory];
-      const label = document.querySelector(`#label-${territory}`);
-      const englishLabel = document.querySelector(`#label-${territory}-en`);
       [label, englishLabel].forEach((node, index) => {
         node?.setAttribute("x", center.x);
         node?.setAttribute("y", center.y + index * 17);
@@ -178,7 +147,6 @@
     setTransform("#node-macheng", chinaPoints.macheng);
     setTransform("#node-jiuquan", chinaPoints.jiuquan);
     setTransform("#node-dunhuang-biography", chinaPoints.dunhuang);
-    setTransform("#node-wudang", chinaPoints.wudang);
     setPath(
       "#route-macheng-jiuquan",
       routePath(chinaPoints.macheng, chinaPoints.jiuquan, 54)
@@ -186,10 +154,6 @@
     setPath(
       "#route-jiuquan-dunhuang",
       routePath(chinaPoints.jiuquan, chinaPoints.dunhuang, 24)
-    );
-    setPath(
-      "#context-macheng-wudang",
-      routePath(chinaPoints.macheng, chinaPoints.wudang, 14)
     );
 
     ["two", "three"].forEach((level) => {
@@ -214,18 +178,6 @@
       "#route-kashgar-dunhuang-two",
       routePath(eurasiaPoints.kashgar, eurasiaPoints.dunhuang, 28)
     );
-    setPath(
-      "#route-britain-northwest",
-      routePath(eurasiaPoints.london, eurasiaPoints.dunhuang, 92)
-    );
-    setPath(
-      "#route-france-northwest",
-      routePath(eurasiaPoints.paris, eurasiaPoints.dunhuang, 67)
-    );
-    setPath(
-      "#route-russia-northwest",
-      routePath(eurasiaPoints.saintPetersburg, eurasiaPoints.dunhuang, 42)
-    );
 
     setTransform("#node-kashgar-three", eurasiaPoints.kashgar);
     setTransform("#meeting-at-mogao", eurasiaPoints.mogao);
@@ -234,7 +186,7 @@
       routePath(eurasiaPoints.kashgar, eurasiaPoints.mogao, 35)
     );
 
-    ["china", "britain", "france", "russia"].forEach((country) => {
+    ["china", "britain"].forEach((country) => {
       setPath(
         `#world-${country}-four`,
         geography.world.highlights[country]
@@ -250,23 +202,13 @@
     setTransform("#node-kashgar-four", worldPoints.kashgar);
     setTransform("#node-dunhuang-four", worldPoints.dunhuang);
     setTransform("#node-london-four", worldPoints.london);
-    setTransform("#node-paris-four", worldPoints.paris);
-    setTransform("#node-petersburg-four", worldPoints.saintPetersburg);
     setPath(
       "#route-kashgar-dunhuang-four",
       routePath(worldPoints.kashgar, worldPoints.dunhuang, 10)
     );
     setPath(
       "#route-dunhuang-london-four",
-      routePath(worldPoints.dunhuang, worldPoints.london, 120)
-    );
-    setPath(
-      "#route-dunhuang-paris-four",
-      routePath(worldPoints.dunhuang, worldPoints.paris, 76)
-    );
-    setPath(
-      "#route-dunhuang-petersburg-four",
-      routePath(worldPoints.dunhuang, worldPoints.saintPetersburg, 45)
+      routePath(worldPoints.dunhuang, worldPoints.london, 45)
     );
 
     setTransform("#grave-dunhuang-five", worldPoints.dunhuang);
@@ -275,6 +217,83 @@
       "#route-dunhuang-kabul-five",
       routePath(worldPoints.dunhuang, worldPoints.kabul, 35)
     );
+  }
+
+  function focusStoryMaps() {
+    const svg = document.querySelector('.story-map');
+    const project = (lon, lat) => ({x:70+(lon+15)/155*860, y:145+(76-lat)/58*505});
+    const addCountry = (level, name, zh, en, point) => {
+      const layer = svg.querySelector(`.geo-level-${level}`);
+      const shape = svgNode('path', {class:`country-highlight ${name}`, d:geography.eurasia.highlights[name]});
+      layer.querySelector('.country-highlight').before(shape);
+      const marker = svgNode('g', {class:'geo-node power-node', id:`node-${name}-${level}`, transform:`translate(${point.x} ${point.y})`});
+      marker.append(svgNode('circle', {class:'power-dot', r:4}));
+      [['cn',zh],['en',en]].forEach(([language,title]) => {
+        const text = svgNode('text', {x:10,y:-12,class:`geo-place label-${language}`});text.textContent=title;marker.append(text);
+      });
+      layer.append(marker);
+      return marker;
+    };
+    addCountry('two','germany','德國','Germany',geography.eurasia.points.germany);
+    addCountry('three','hungary','匈牙利','Hungary',geography.eurasia.points.hungary);
+    addCountry('three','britain','英國 · 大英博物館','UK · British Museum',geography.eurasia.points.london);
+    addCountry('three','india','印度','India',geography.eurasia.points.newDelhi);
+    // Both collections and biography are framed by their actual story locations.
+    const frames = {
+      one: [geography.china.points.dunhuang,geography.china.points.jiuquan,geography.china.points.macheng],
+      two: [project(-10,62),project(125,32)],
+      three: [geography.eurasia.points.london,geography.eurasia.points.hungary,geography.eurasia.points.newDelhi,geography.eurasia.points.mogao],
+      four: [geography.world.points.london,geography.world.points.dunhuang],
+      five: [geography.world.points.kabul,geography.world.points.dunhuang]
+    };
+    const clip = svgNode('clipPath',{id:'story-focus-clip'});
+    clip.append(svgNode('rect',{x:65,y:130,width:870,height:520}));svg.querySelector('defs').append(clip);
+    Object.entries(frames).forEach(([name, points]) => {
+      const layer=svg.querySelector(`.geo-level-${name}`);
+      layer.setAttribute('clip-path','url(#story-focus-clip)');
+      layer.querySelectorAll('.geo-sheet').forEach(n=>n.remove());
+      const group=svgNode('g',{class:'focused-geography'});
+      [...layer.children].filter(n=>!n.matches('.crate-manifest,.unknown-coordinate')).forEach(n=>group.append(n));
+      if(name==='four'||name==='five')group.prepend(svgNode('path',{class:'world-land',d:geography.world.landPath}));
+      layer.prepend(group);
+      const xs=points.map(p=>p.x),ys=points.map(p=>p.y);
+      const minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
+      const scale=Math.min(680/(maxX-minX+70),300/(maxY-minY+60));
+      const cx=(minX+maxX)/2,cy=(minY+maxY)/2;
+      const targetY=name==='four'?330:name==='five'?340:375;
+      group.setAttribute('transform',`translate(500 ${targetY}) scale(${scale}) translate(${-cx} ${-cy})`);
+      // Geography enlarges; text and symbols retain a readable, consistent size.
+      group.querySelectorAll('.geo-node,.meeting-at-mogao,.grave-node').forEach(node=>node.setAttribute('transform',`${node.getAttribute('transform')} scale(${1/scale})`));
+      group.querySelectorAll(':scope > text').forEach(node=>{
+        const x=+node.getAttribute('x'),y=+node.getAttribute('y');
+        node.setAttribute('transform',`translate(${x} ${y}) scale(${1/scale}) translate(${-x} ${-y})`);
+      });
+    });
+    svg.querySelector('.world-basemap').remove();
+    const unknown=svg.querySelector('.unknown-coordinate');
+    unknown.setAttribute('transform','translate(690 545)');
+    unknown.prepend(svgNode('rect',{class:'unknown-note-paper'}));
+    // Short captions keep neighboring European labels separate.
+    const offsets={
+      '#node-london-two':[-12,-24,'end'], '#node-paris-two':[-12,30,'end'],
+      '#node-germany-two':[12,8,'start'], '#node-britain-three':[10,-48,'start'],
+      '#node-hungary-three':[12,24,'start'], '#node-london-four':[10,-45,'start'],
+      '#node-kashgar-three':[-10,-60,'end']
+    };
+    Object.entries(offsets).forEach(([selector,[x,y,anchor]])=>svg.querySelectorAll(`${selector} text`).forEach(n=>{n.setAttribute('x',x);n.setAttribute('y',y);n.setAttribute('text-anchor',anchor);}));
+    const labelLines = (selector, zh, en) => {
+      [['cn',zh],['en',en]].forEach(([lang,lines])=>{
+        const text=svg.querySelector(`${selector} .geo-place.label-${lang}`)||svg.querySelector(`${selector} .label-${lang}`);
+        text.replaceChildren(...lines.map((line,i)=>{const span=svgNode('tspan',{x:text.getAttribute('x'),dy:i?'1.2em':0});span.textContent=line;return span;}));
+      });
+    };
+    labelLines('#node-britain-three',['英國','大英博物館'],['UK','British Museum']);
+    labelLines('#node-london-four',['倫敦','大英博物館'],['London','British Museum']);
+    labelLines('#node-kashgar-three',['喀什'],['Kashgar']);
+    labelLines('#meeting-at-mogao',['莫高窟'],['Mogao Caves']);
+    labelLines('#grave-dunhuang-five',['敦煌','王圓籙塔'],['Dunhuang',"Wang’s stupa"]);
+    labelLines('#grave-kabul-five',['喀布爾','斯坦因墓'],['Kabul',"Stein’s grave"]);
+    labelLines('.unknown-coordinate',['蔣孝琬','墓址未詳'],['Jiang Xiaowan','Burial place unknown']);
   }
 
   // Section IV: twenty-nine crates, built as SVG so each can arrive with its own delay.
@@ -305,29 +324,39 @@
     });
   }
 
-  let language = body.dataset.language || "zh";
-
-  function onRender(nextLanguage, state) {
-    language = nextLanguage;
-    caption.textContent = captions[language][state.active];
+  function fitUnknownNote() {
+    const note=document.querySelector('.unknown-coordinate');
+    const boxes=[...note.querySelectorAll('circle,text')]
+      .filter(node=>getComputedStyle(node).display!=='none')
+      .map(node=>node.getBBox());
+    const left=Math.min(...boxes.map(b=>b.x)),top=Math.min(...boxes.map(b=>b.y));
+    const right=Math.max(...boxes.map(b=>b.x+b.width)),bottom=Math.max(...boxes.map(b=>b.y+b.height));
+    const paper=note.querySelector('.unknown-note-paper');
+    Object.entries({x:left-4,y:top-4,width:right-left+8,height:bottom-top+8}).forEach(([key,value])=>paper.setAttribute(key,value));
   }
-
+  const scheduleNote=()=>requestAnimationFrame(fitUnknownNote);
   function onSection(index) {
     body.dataset.readingLevel = String(index + 1);
-    caption.textContent = captions[language][index];
+    scheduleNote();
   }
 
   applyGeography();
+  focusStoryMaps();
   buildCrates();
+  new ResizeObserver(scheduleNote).observe(document.querySelector('.story-map'));
+  new MutationObserver(scheduleNote).observe(document.querySelector('.unknown-coordinate'),{subtree:true,attributes:true,attributeFilter:['style']});
+  document.fonts?.ready.then(scheduleNote);
 
   ChapterShell.init({
     id: "taoist-tower",
+    showReaderLocation: false,
+    showReaderProgress: false,
     number: data.number,
     data,
     sections,
     copy,
     formatParagraph,
-    onRender,
+    onRender: scheduleNote,
     onSection
   });
 })();

@@ -173,6 +173,8 @@
 
   const shell = window.ChapterShell.init({
     id: "dujiangyan",
+    showReaderLocation: false,
+    showReaderProgress: false,
     number: data.number,
     data,
     sections,
