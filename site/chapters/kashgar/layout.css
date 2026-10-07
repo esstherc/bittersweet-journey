@@ -29,6 +29,7 @@ body[data-language="en"] .reading-section p { font-family: var(--serif-en); font
 .map-status { left: 32px; bottom: 40px; font-family: var(--sans); }
 .map-controls { bottom: 70px; }
 .bottom-bar .credit { font-family: var(--sans); }
+.map-source-credit { font: 11px var(--sans); color: var(--muted); letter-spacing: .06em; }
 #data-dialog { margin: 0; top: auto; right: auto; width: min(480px,calc(100vw - 48px)); max-height: calc(100dvh - var(--site-header-height) - var(--bar-bottom) - 40px); color: var(--ink); text-align: left; }
 #data-dialog:not([open]) { display: none; }
 .place-card { bottom: 78px; }

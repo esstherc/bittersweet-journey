@@ -305,34 +305,6 @@ body.webgl-fallback :is(.terrain-marks, .terrain-viewport) { display: none; }
   letter-spacing: 0.08em;
 }
 
-/* ---------- on-map caption (same place as 沙原隐泉) ---------- */
-
-.camera-caption {
-  position: absolute;
-  z-index: 7;
-  left: var(--ctx-pad-x);
-  bottom: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  max-width: calc(100% - 2 * var(--ctx-pad-x) - 60px);
-  pointer-events: none;
-  color: var(--ink-soft);
-  font-family: var(--sans);
-}
-
-.camera-mode {
-  color: var(--ink);
-  font-size: 30px;
-  line-height: 1.15;
-  letter-spacing: 0.1em;
-}
-
-.camera-tech {
-  font-size: 22px;
-  letter-spacing: 0.09em;
-}
-
 /* One-time reading cue when the walk begins to write itself across the terrain. */
 .journey-hint {
   position: absolute;
@@ -364,15 +336,12 @@ body[data-language="en"] .journey-hint { letter-spacing: 0.02em; }
 /* ---------- responsive ---------- */
 
 @media (max-width: 900px) {
-  .camera-caption { left: 20px; bottom: 12px; max-width: calc(100% - 40px); }
   .journey-hint { left: 20px; bottom: 92px; max-width: calc(100% - 40px); }
   .regional-point text { font-size: 26px; }
   .regional-distance { font-size: 20px; }
 }
 
 @media (max-width: 540px) {
-  .camera-mode { font-size: 26px; }
-  .camera-tech { font-size: 20px; }
   .marks-poem text { font-size: 28px; }
   body[data-language="en"] .marks-poem text { font-size: 24px; }
   .marks-pass .label { font-size: 26px; }

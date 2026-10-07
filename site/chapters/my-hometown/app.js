@@ -99,8 +99,8 @@
   };
 
   const smallCopy = {
-    zh: { home: "全图", coord: "中国 · 文学地理示意", yellow: "黄河", yangtze: "长江", coach: "继续阅读，地图会随段落展开。点正文里的地名，可以在地图上找到它。", dismiss: "知道了" },
-    en: { home: "Overview", coord: "China · literary geography", yellow: "Yellow River", yangtze: "Yangtze", coach: "Keep reading. The map will unfold with each section. Select a place in the text to find it on the map.", dismiss: "Got it" }
+    zh: { home: "全图", zoomIn: "放大开场地图", zoomOut: "缩小开场地图", nav: "开场地图导航", skip: "跳过序章 ↗", coord: "中国文学地理示意", yellow: "黄河", yangtze: "长江", coach: "继续阅读，地图会随段落展开。点正文里的地名，可以在地图上找到它。", dismiss: "知道了" },
+    en: { home: "Overview", zoomIn: "Zoom in on the prologue map", zoomOut: "Zoom out of the prologue map", nav: "Prologue map navigation", skip: "Skip prologue ↗", coord: "Literary geography of China", yellow: "Yellow River", yangtze: "Yangtze", coach: "Keep reading. The map will unfold with each section. Select a place in the text to find it on the map.", dismiss: "Got it" }
   };
 
   $$('[data-river="yellow"]').forEach((path) => path.setAttribute("d", geography.major.yellow));
@@ -131,6 +131,31 @@
     const water = make("g", { class: "prologue-atlas-water" });
     atlas.rivers.forEach((feature) => make("path", { d: feature.d, class: "prologue-atlas-stream" }, water));
     atlas.lakes.forEach((feature) => make("path", { d: feature.d, class: "prologue-atlas-lake" }, water));
+
+    const { n, C, coeff } = atlas.projection;
+    const radians = Math.PI / 180;
+    const project = ([longitude, latitude]) => {
+      const rho = Math.sqrt(C - 2 * n * Math.sin(latitude * radians)) / n;
+      const theta = n * (longitude - 105) * radians;
+      const raw = [rho * Math.sin(theta), -rho * Math.cos(theta), 1];
+      return coeff.map((row) => row.reduce((sum, value, index) => sum + value * raw[index], 0));
+    };
+    const marineLabels = make("g", { class: "prologue-marine-labels" });
+    [
+      { zh: "渤海", en: "Bohai Sea", at: [119.25, 39.1] },
+      { zh: "黄海", en: "Yellow Sea", at: [123.35, 34.45] },
+      { zh: "东海", en: "East China Sea", at: [124.7, 28.15] },
+      { zh: "南海", en: "South China Sea", at: [116.4, 18.9] },
+      { zh: "台湾海峡", en: "Taiwan Strait", at: [119.45, 24.45], detail: true }
+    ].forEach(({ zh, en, at, detail }) => {
+      const [x, y] = project(at);
+      const label = make("text", {
+        x: x.toFixed(1), y: y.toFixed(1),
+        class: `prologue-marine-label${detail ? " is-detail" : ""}`,
+        "text-anchor": "middle", "data-atlas-zh": zh, "data-atlas-en": en
+      }, marineLabels);
+      label.textContent = en;
+    });
 
     const majorRivers = {
       yellow: geography.major.yellow,
@@ -244,18 +269,21 @@
 
   const camera = new WeakMap();
   const cameraFrames = new WeakMap();
-  const overview = () => ({ x: 120, y: 65, w: 960, h: 608 });
+  const overview = (svg) => svg === tourMap
+    ? ({ x: 46, y: 98, w: 944, h: 590 })
+    : ({ x: 120, y: 65, w: 960, h: 608 });
   function getCamera(svg) {
-    if (!camera.has(svg)) camera.set(svg, overview());
+    if (!camera.has(svg)) camera.set(svg, overview(svg));
     return camera.get(svg);
   }
   function setCamera(svg) {
     const c = getCamera(svg);
     c.w = Math.max(480, Math.min(1200, c.w));
-    c.h = c.w * 760 / 1200;
+    c.h = c.w * (svg === tourMap ? 590 / 944 : 760 / 1200);
     c.x = Math.max(0, Math.min(1200 - c.w, c.x));
     c.y = Math.max(0, Math.min(760 - c.h, c.y));
     svg.setAttribute("viewBox", `${c.x} ${c.y} ${c.w} ${c.h}`);
+    if (svg === tourMap) svg.dataset.mapDetail = c.w <= 760 ? "2" : "1";
   }
   function zoom(svg, direction) {
     const c = getCamera(svg);
@@ -266,11 +294,11 @@
     c.w = nextW;
     setCamera(svg);
   }
-  function home(svg) { camera.set(svg, overview()); setCamera(svg); }
+  function home(svg) { camera.set(svg, overview(svg)); setCamera(svg); }
 
   const cameraTarget = (x, y, w) => ({ x, y, w, h: w * 760 / 1200 });
   const narrativeCameras = {
-    earth: overview(),
+    earth: overview(readerMap),
     eurasia: cameraTarget(160, 100, 880),
     sealed: cameraTarget(200, 126, 800),
     climate: cameraTarget(225, 142, 750),
@@ -358,8 +386,22 @@
       scene.toggleAttribute("inert", !active);
     });
     $$(".journey-progress i").forEach((item, index) => item.classList.toggle("is-done", index <= step));
-    $("[data-skip-tour]").textContent = "Skip prologue ↗";
+    $("[data-skip-tour]").textContent = labels.skip;
     $(".journey-map-coordinate").textContent = labels.coord;
+    const tourNavigation = $(".journey-map-tools");
+    const mapVisible = step >= sceneSteps.yellow;
+    tourNavigation.setAttribute("aria-label", labels.nav);
+    tourNavigation.setAttribute("aria-hidden", String(!mapVisible));
+    tourNavigation.toggleAttribute("inert", !mapVisible);
+    setText("#tour-svg-title", copy[language]["map-svg-title"]);
+    setText("#tour-svg-desc", copy[language]["map-svg-desc"]);
+    $$('[data-tour-zoom]').forEach((button) => {
+      const action = button.dataset.tourZoom;
+      const text = action === "in" ? labels.zoomIn : action === "out" ? labels.zoomOut : labels.home;
+      button.setAttribute("aria-label", text);
+      button.title = text;
+      if (action === "home") button.textContent = labels.home;
+    });
     setText("[data-lines-quote]", text.linesQuote);
     setText("[data-lines-second]", text.linesSecond);
     setText("[data-lines-third]", text.linesThird);
@@ -634,6 +676,7 @@
   }, { passive: true });
 
   makeDraggable(readerMap);
+  makeDraggable(tourMap);
   $$('[data-next]').forEach(button => button.addEventListener("click", () => {
     const next = sceneSteps[button.dataset.next];
     if (Number.isFinite(next)) advance(next);
@@ -649,6 +692,11 @@
   $("[data-skip-tour]").addEventListener("click", () => enterReader({ skipped: true }));
   $("[data-dismiss-coach]").addEventListener("click", () => { $(".reader-coach").hidden = true; });
   $(".section-buttons").addEventListener("click", () => { $(".reader-coach").hidden = true; });
+  $$('[data-tour-zoom]').forEach((button) => button.addEventListener("click", () => {
+    const action = button.dataset.tourZoom;
+    if (action === "home") home(tourMap);
+    else zoom(tourMap, action);
+  }));
   $(".map-zoom-in").addEventListener("click", () => zoom(readerMap, "in"));
   $(".map-zoom-out").addEventListener("click", () => zoom(readerMap, "out"));
   $("[data-map-home]").addEventListener("click", () => home(readerMap));
@@ -664,5 +712,6 @@
     $(".opening-curtain").setAttribute("inert", "");
     $(".scene-question .opening-link").focus({ preventScroll: true });
   }
+  setCamera(tourMap);
   renderOpening();
 })();

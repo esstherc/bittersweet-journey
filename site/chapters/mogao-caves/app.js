@@ -61,10 +61,10 @@
     }
   };
   const captionTech = {
-    wide: "Wide terrain · Wikidata places",
-    local: "3D terrain · Copernicus DEM · OpenStreetMap",
-    cliff: "3D terrain · Copernicus GLO-30 · caves: Dunhuang Academy",
-    globe: "World map · Natural Earth"
+    wide: "Wide terrain",
+    local: "3D terrain",
+    cliff: "Cliff terrain",
+    globe: "World map"
   };
 
   const fmt = (n) => Number(n).toLocaleString("en");

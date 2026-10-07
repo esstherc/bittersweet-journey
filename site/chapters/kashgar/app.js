@@ -15,16 +15,16 @@
   const lastScene = Math.max(1, Math.min(16, Number(saved('bittersweet-journey:kashgar:scene')) || 1));
   const state = { opened:false, maxScene:wasCompleted?16:1, lang: saved('bittersweet-journey:language') === 'zh' ? 'zh' : 'en', scene: 1, cameraParagraph: null, selected: null, follow: true, returnTo: null, camera: null };
   const copy = {
-    zh: {chapter:'西域喀什',places:'本文地名',expand:'展开地图',collapse:'收起地图',following:'地图随文浏览',exploring:'正在探索地图',resume:'继续随文浏览 ↗',data:'地图来源与精度 ↗',dataTitle:'地图来源与精度',loading:'正在展开西域地理…',instruction:'点击文中地名，在地图上找到它；点击地图，回到相关原文。',start:'开始阅读 ↓',source:'余秋雨《文化苦旅》',finish:'完成本章 · 返回总图 ↗',sections:'原文',return:'返回刚才阅读处 ↩',choose:'选择地点',section:'原文第',paragraph:'段',references:'相关原文',none:'本篇通过相关地名提及此处。',cross:'在《道士塔》中继续阅读喀什 ↗',point:'地点',river:'河流',mountain:'山地',desert:'沙漠',basin:'盆地',lake:'水域',unlocated:'位置待核实',introNote:'点击下方片段，返回原文。'},
-    en: {chapter:'Kashgar',places:'Places',expand:'Expand map',collapse:'Collapse map',following:'Following the text',exploring:'Exploring the map',resume:'Follow the text ↗',data:'Sources & accuracy ↗',dataTitle:'Sources & accuracy',loading:'Unfolding the geography…',instruction:'Select a place in the text to find it on the map. Select the map to return to its passages.',start:'Begin reading ↓',source:'Yu Qiuyu · A Bittersweet Journey Through Culture',finish:'Complete chapter · Return to atlas ↗',sections:'Sections',return:'Back to reading ↩',choose:'Choose a place',section:'Section ',paragraph:'paragraph',references:'Passages',none:'This location appears through related place names.',cross:'Read about Kashgar in The Taoist Priest’s Tower ↗',point:'Place',river:'River',mountain:'Mountains',desert:'Desert',basin:'Basin',lake:'Water',unlocated:'Location unverified',introNote:'Select a passage to return to the original text.'}
+    zh: {chapter:'西域喀什',places:'本文地名',expand:'展开地图',collapse:'收起地图',following:'地图随文浏览',exploring:'正在探索地图',resume:'继续随文浏览 ↗',loading:'正在展开西域地理…',instruction:'点击文中地名，在地图上找到它；点击地图，回到相关原文。',start:'开始阅读 ↓',source:'余秋雨《文化苦旅》',finish:'完成本章 · 返回总图 ↗',sections:'原文',return:'返回刚才阅读处 ↩',choose:'选择地点',section:'原文第',paragraph:'段',references:'相关原文',none:'本篇通过相关地名提及此处。',cross:'在《道士塔》中继续阅读喀什 ↗',point:'地点',river:'河流',mountain:'山地',desert:'沙漠',basin:'盆地',lake:'水域',unlocated:'位置待核实',introNote:'点击下方片段，返回原文。'},
+    en: {chapter:'Kashgar',places:'Places',expand:'Expand map',collapse:'Collapse map',following:'Following the text',exploring:'Exploring the map',resume:'Follow the text ↗',loading:'Unfolding the geography…',instruction:'Select a place in the text to find it on the map. Select the map to return to its passages.',start:'Begin reading ↓',source:'Yu Qiuyu · A Bittersweet Journey Through Culture',finish:'Complete chapter · Return to atlas ↗',sections:'Sections',return:'Back to reading ↩',choose:'Choose a place',section:'Section ',paragraph:'paragraph',references:'Passages',none:'This location appears through related place names.',cross:'Read about Kashgar in The Taoist Priest’s Tower ↗',point:'Place',river:'River',mountain:'Mountains',desert:'Desert',basin:'Basin',lake:'Water',unlocated:'Location unverified',introNote:'Select a passage to return to the original text.'}
   };
   Object.assign(copy.zh,{invitation:'有人把来世，选在这里。',question1:'如果生命能够重来一次，',question2:'你愿意生在何处？',openBook:'循着远方，开卷 →',continueBook:'继续上次阅读 ↗',replay:'重看开场',closing:'远方，在这里有了归宿。',revealed:'一处山河已经显影',fullTitle:'西域喀什',memorySaved:'这枚印记，将留在总图上。',carryBack:'将这片山河带回总图 →',stayReading:'留在此页',backAtlas:'← 返回总图',finish:'让这片山河显影 →'});
   Object.assign(copy.en,{invitation:'Someone chose to be reborn here.',question1:'If life could begin again,',question2:'where would you choose to be born?',openBook:'Follow the far horizon →',continueBook:'Continue reading ↗',replay:'Replay the opening',closing:'Here, the faraway comes home.',revealed:'One landscape brought to light',fullTitle:'Kashgar in the Western Regions',memorySaved:'This seal will remain on the atlas.',carryBack:'Carry this landscape back to the atlas →',stayReading:'Stay with the text',backAtlas:'← Return to atlas',finish:'Bring this landscape to light →'});
   Object.assign(copy.zh,{inPassage:'本段地点',allPlaces:'全部地点',exploring:'临时查看 · 滚动正文继续',resume:'回到本段 ↗',instruction:'点击地名查看地图，继续滚动即可回到随文浏览。'});
   Object.assign(copy.en,{inPassage:'In this passage',allPlaces:'All places',exploring:'Preview · scroll text to resume',resume:'Back to this passage ↗',instruction:'Select a place to look closer. Keep scrolling the text to return to the story.'});
   const t = k => copy[state.lang][k] || k;
-  Object.assign(copy.zh, {data:'地图说明与数据来源', dataTitle:'地图说明与数据来源', source:'文本：余秋雨《文化苦旅》', backAtlas:'← 总地图', finish:'完成本章 · 返回总图'});
-  Object.assign(copy.en, {data:'Map notes & sources', dataTitle:'Map notes & sources', backAtlas:'← Atlas', finish:'Complete chapter · Return to atlas'});
+  Object.assign(copy.zh, {source:'文本：余秋雨《文化苦旅》', backAtlas:'← 总地图', finish:'完成本章 · 返回总图'});
+  Object.assign(copy.en, {backAtlas:'← Atlas', finish:'Complete chapter · Return to atlas'});
   const places = new Map((source?.places || []).map(p => [p.id, p]));
   let refs = new Map(), anchors = [], paragraphs = [], scrollFrame = 0, animation = 0, mapSize = {w:900,h:760}, cameraFrame = 0;
   const mercator = ([lon,lat]) => [lon * Math.PI / 180, Math.log(Math.tan(Math.PI / 4 + Math.max(-80, Math.min(80,lat)) * Math.PI / 360))];
@@ -105,7 +105,6 @@
     const width=distance/kmPerPx,x=mapSize.w-145,y=mapSize.h-53;
     scale.append(node('path',{d:`M${x},${y-4}V${y}H${x+width}V${y-4}`,fill:'none',stroke:'#67725f','stroke-width':1}));
     scale.append(node('text',{x,y:y-9,class:'grid-label'},distance<1?`${Math.round(distance*1000)} m`:`${+distance.toPrecision(2)} km`));
-    $('#extent-label').textContent=`WGS 84 · ${close?(state.lang==='zh'?'喀什市区':'KASHGAR'):'GEOJSON'}`;
   }
   function moveCamera(target,animate=true){cancelAnimationFrame(animation);if(!state.camera||!animate||reduced()){state.camera=target;drawMap();return;}const from={...state.camera},start=performance.now();function tick(now){const f=Math.min(1,(now-start)/480),q=1-(1-f)**3;state.camera={x:from.x+(target.x-from.x)*q,y:from.y+(target.y-from.y)*q,scale:Math.exp(Math.log(from.scale)+(Math.log(target.scale)-Math.log(from.scale))*q)};drawMap();if(f<1)animation=requestAnimationFrame(tick);}animation=requestAnimationFrame(tick);}
   function fitPlace(id){const p=places.get(id),ff=byPlace.get(id);if(!ff?.length)return;
@@ -201,7 +200,7 @@
     const nav=$('#section-nav');nav.replaceChildren();chapter[state.lang].sections.forEach((s,i)=>{const b=safeText('button',s.label);b.setAttribute('aria-label',`${state.lang==='zh'?'原文第':'Section '}${s.label}${state.lang==='zh'?'节':''}`);b.addEventListener('click',()=>{resumeReading(false);collapseMap();requestAnimationFrame(()=>$('#section-'+(i+1)).scrollIntoView({block:'start',behavior:reduced()?'auto':'smooth'}));});nav.append(b);});
     $('#place-directory').replaceChildren(...[...places.keys()].filter(id=>refs.has(id)).map(makePlaceButton));renderContextPlaces();
   }
-  function renderLanguage(){document.documentElement.lang=state.lang==='zh'?'zh-CN':'en';document.body.dataset.language=state.lang;document.querySelectorAll('[data-copy]').forEach(el=>el.textContent=t(el.dataset.copy));document.querySelectorAll('[data-language]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.language===state.lang)));renderReading();document.querySelectorAll('.back-atlas').forEach(link=>{const url=new URL(link.href);url.searchParams.set('lang',state.lang);link.href=url.href;});document.title=state.opened?'山河显影 · '+t('fullTitle'):'山河显影 · '+t('invitation');updateExpand();setFollow(state.follow);renderProgress();renderSources();}
+  function renderLanguage(){document.documentElement.lang=state.lang==='zh'?'zh-CN':'en';document.body.dataset.language=state.lang;document.querySelectorAll('[data-copy]').forEach(el=>el.textContent=t(el.dataset.copy));document.querySelectorAll('[data-language]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.language===state.lang)));renderReading();document.querySelectorAll('.back-atlas').forEach(link=>{const url=new URL(link.href);url.searchParams.set('lang',state.lang);link.href=url.href;});document.title=state.opened?'山河显影 · '+t('fullTitle'):'山河显影 · '+t('invitation');updateExpand();setFollow(state.follow);renderProgress();}
   function renderProgress(){const scene=chapter.scenes[state.scene-1];[...$('#section-nav').children].forEach((b,i)=>b.setAttribute('aria-current',String(i===scene.section-1)));$('#anchor-count').textContent=`${String(state.scene).padStart(2,'0')} / 16`;$('#progress').style.width=`${state.scene/16*100}%`;renderContextPlaces();}
   function updateScroll(){
     scrollFrame=0;if(!state.opened||document.body.classList.contains('is-completing'))return;
@@ -231,22 +230,6 @@
     // Return anchors use semantic scene IDs across languages, never raw indices.
     if(state.returnTo){const r=state.returnTo;let pi=r.paragraph;if(r.section===3&&pi>=9)pi=9;if(r.section===4&&pi>=6)pi=lang==='en'?(pi<=7?6:pi-1):(pi===6?6:pi+1);r.paragraph=pi;}
   }
-  function renderSources(){const zh=state.lang==='zh';const content=zh?[
-    '地物来自 GeoJSON，经 Web Mercator 投影绘制。地图没有手绘河道、山脉轮廓或推测的旅行路线。',
-    '区域河流、湖泊和自然地理区来自 Natural Earth 1:10m。山系、盆地与沙漠多边形是该数据集的概化范围，适合区域阅读，不是精密地形或边界测绘。',
-    '喀什城市道路和水系来自 OpenStreetMap，部分峰顶与遗址定位点来自 Wikidata（CC0）。城市街道表示数据获取时的现代地理，不作为十九世纪街道复原。地点卡中的历史关联来自本文，不能据此认定现代城市范围等同于古城范围。',
-    '尚无可靠位置对应的称谓会显示“位置待核实”，保留原文入口而不放置猜测坐标。相邻地点不能替代冰川、遗址或历史建筑。',
-    '中文与英文保留所供 EPUB 原文；五个原文分节下设 16 个语义阅读锚点，无新增小标题。年代、人物与考古归属沿用原文叙述，地图只标注其地理对应，不把文学叙述转成已核证的历史路线。',
-    `数据获取：${source?.generated||'2026-09-18'}。GeoJSON 与离线脚本来自同一构建结果；每个要素保留来源及原始对象标识。`
-  ]:[
-    'All geographic shapes are projected from GeoJSON using Web Mercator. No river courses, mountain outlines or travel routes are hand drawn.',
-    'Regional rivers, lakes and physical regions come from Natural Earth at 1:10m. Mountain, basin and desert polygons are generalized physical-region extents, not surveyed terrain or precise boundaries.',
-    'Kashgar streets and waterways come from OpenStreetMap; selected summit and site coordinates come from Wikidata (CC0). The city layer depicts modern geography, not a reconstruction of nineteenth-century streets. A modern city anchor does not define an ancient city’s extent.',
-    'Names without a reliable geographic match retain passage links and a location-unverified note; no speculative coordinates are plotted. Nearby peaks or villages do not stand in for glaciers or ruins.',
-    'Both supplied EPUB texts are preserved. Sixteen semantic anchors sit within the five original sections, without added headings. Historical claims remain attributed to the essay; no historical itinerary is inferred from them.',
-    `Retrieved ${source?.generated||'2026-09-18'}. The downloadable GeoJSON and offline bundle share the same build. Features retain source identifiers.`
-  ];$('#data-description').replaceChildren(...content.map(x=>safeText('p',x)));}
-
   function enterReading(scene=1){
     document.body.classList.remove('is-unopened');
     document.body.classList.add('is-open');
@@ -263,7 +246,7 @@
     if(document.body.classList.contains('is-completing'))return;
     window.JOURNEY_AUDIO?.play('complete', .58);
     save('bittersweet-journey:kashgar:complete','true');state.maxScene=16;
-    hideCard();closeNotes({silent:true});
+    hideCard();
     document.body.classList.add('is-completing');
     $('#completion').setAttribute('aria-hidden','false');
     document.querySelectorAll('.chapter-layout, .site-masthead, .bottom-bar').forEach(el=>el.inert=true);
@@ -290,14 +273,6 @@
   $('#zoom-in').addEventListener('click',()=>zoom(1.55));$('#zoom-out').addEventListener('click',()=>zoom(1/1.55));
   function zoom(factor){setFollow(false);const scale=Math.max(250,Math.min(1800000,state.camera.scale*factor));moveCamera({...state.camera,scale});}
   document.querySelectorAll('[data-language]').forEach(b=>b.addEventListener('click',()=>changeLanguage(b.dataset.language)));
-  function closeNotes({silent=false}={}){ if($('#data-dialog').open&&!silent)window.JOURNEY_AUDIO?.play('close',.36); $('#data-dialog').close(); document.body.classList.remove('notes-open'); $('#data-button').setAttribute('aria-expanded','false'); }
-  $('#data-button').addEventListener('click',()=>{
-    if($('#data-dialog').open){closeNotes();return;}
-    $('#data-dialog').show();document.body.classList.add('notes-open');$('#data-button').setAttribute('aria-expanded','true');
-  });
-  $('#close-data').addEventListener('click',()=>{closeNotes();$('#data-button').focus();});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#data-dialog').open){closeNotes();$('#data-button').focus();}});
-  document.addEventListener('click',e=>{if($('#data-dialog').open&&!e.target.closest('#data-dialog, #data-button'))closeNotes();});
   $('#finish').addEventListener('click',completeChapter);
   readerScroll.addEventListener('scroll',()=>{if(!scrollFrame)scrollFrame=requestAnimationFrame(updateScroll);},{passive:true});
   const mapObserver=new ResizeObserver(()=>{cancelAnimationFrame(cameraFrame);cameraFrame=requestAnimationFrame(()=>resizeMap(false));});

@@ -76,12 +76,7 @@
         [english ? 'English edition' : '英譯版本', 'A Bittersweet Journey Through Culture · CN Times Books · 2015'],
         [english ? 'English translator' : '英譯本譯者', english ? 'CN Times Books team' : 'CN Times Books 團隊'],
         [english ? 'Story map' : '故事地圖作者', 'Yanbing Chen · Eugenie Huang'],
-        [english ? 'Physical geography & rivers' : '自然地理與河流', 'Natural Earth', 'https://www.naturalearthdata.com/'],
-        [english ? 'Local features & waterways' : '地方地物與水系', '© OpenStreetMap contributors · ODbL', 'https://www.openstreetmap.org/copyright'],
-        [english ? 'Elevation & terrain' : '高程與地形', 'Copernicus DEM · GLO-30 / GLO-90', 'https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM'],
-        [english ? 'Climate' : '氣候資料', 'WorldClim', 'https://www.worldclim.org/'],
-        [english ? 'Place coordinates & references' : '地點座標與參照', 'Wikidata', 'https://www.wikidata.org/'],
-        [english ? 'China reference basemaps' : '中國參照底圖', english ? 'Ministry of Natural Resources · Standard Map Service' : '自然資源部 · 標準地圖服務', 'https://bzdt.ch.mnr.gov.cn/']
+        [english ? 'Map data' : '地圖資料', 'Natural Earth', 'https://www.naturalearthdata.com/']
       ];
       dialog.querySelector('dl').replaceChildren(...credits.flatMap(([role, name, url]) => {
         const dt = document.createElement('dt'), dd = document.createElement('dd'); dt.textContent = role;

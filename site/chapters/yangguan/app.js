@@ -9,7 +9,6 @@
   }
 
   // Section label = ordinal + short title; location = the place line (guideline R-3).
-  // The essay has no numbered sections: five parts pace the map (see reader note).
   const sections = {
     zh: [
       { label: "一 · 诗与远方", location: "未出发" },
@@ -26,19 +25,6 @@
       { label: "V · West of Yangguan", location: "Song at Weicheng · The Tang" }
     ]
   };
-
-  // On-map caption (M-5): what the current view shows.
-  const captions = {
-    zh: ["纸上的阳关", "出敦煌，入雪漠", "疑是古战场", "阳关古址", "渭城一杯酒"],
-    en: ["The pass on paper", "Out of Dunhuang, into the snow", "Perhaps an old battlefield", "The old site of the Southern Pass", "One more cup, at Weicheng"]
-  };
-  const captionTech = [
-    "3D terrain · Copernicus DEM",
-    "Regional · WGS 84",
-    "3D terrain · Literary mounds",
-    "3D terrain · Wikidata Q909541",
-    "3D terrain · Looking west"
-  ];
 
   const labels = {
     zh: {
@@ -77,7 +63,6 @@
       "rail-caption": "阅读行程",
       "rail-aria": "阅读行程",
       "section-aria": "段落 {n}",
-      "reader-note": "五个段落用于交互节奏，不是原文编号分节。",
       "journey-hint": "向下阅读，脚印将继续向阳关延伸",
       "notes-keyboard": "↑ ↓ ← → 切换段落 · L 切换语言 · Esc 关闭本面板",
       "data-3d-label": "三维",
@@ -112,7 +97,6 @@
       "rail-caption": "The walk",
       "rail-aria": "Parts of the walk",
       "section-aria": "Part {n}",
-      "reader-note": "These five parts pace the interaction; the essay itself has no numbered sections.",
       "journey-hint": "Read downward; the footprints will continue toward Yangguan",
       "notes-keyboard": "↑ ↓ ← → switch parts · L language · Esc closes this panel",
       "data-3d-label": "3D",
@@ -150,8 +134,6 @@
   const scroller = document.querySelector(".reader-scroll");
   const marks = document.querySelector(".terrain-marks");
   const regional = document.querySelector(".regional-map");
-  const modeLabel = document.querySelector(".camera-mode");
-  const techLabel = document.querySelector(".camera-tech");
   const journeyHint = document.querySelector(".journey-hint");
   const reduced = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   let language = body.dataset.language || "zh";
@@ -614,11 +596,6 @@
 
   /* ---------- reading state ---------- */
 
-  function setCaption() {
-    modeLabel.textContent = captions[language][level - 1];
-    techLabel.textContent = captionTech[level - 1];
-  }
-
   function updateSnowGoal() {
     [snowGoal, windGoal] = snowTarget();
   }
@@ -682,13 +659,11 @@
     regionalText.wall.textContent = text.regionalWall;
     window.requestAnimationFrame(layoutRegional);
     level = state.active + 1;
-    setCaption();
   }
 
   function onSection(index) {
     level = index + 1;
     body.dataset.readingLevel = String(level);
-    setCaption();
     drawCompass();
     window.YANGGUAN_TERRAIN_RENDERER?.setState(level);
     if (level === 3) showJourneyHint();

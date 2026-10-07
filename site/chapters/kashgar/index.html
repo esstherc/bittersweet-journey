@@ -33,7 +33,7 @@
           invitation: 'Someone chose to be reborn here.',
           instruction: 'The complete text is available below. Reload to try the map again.',
           loading: 'The map could not load. You can keep reading.', start: 'Begin reading ↓',
-          data: 'Sources & accuracy ↗'
+          data: 'Natural Earth'
         } : {
           instruction: '完整正文仍可阅读；重新加载页面可重试地图。',
           loading: '地图暂未展开，正文可继续阅读。'
@@ -110,7 +110,6 @@
         <p id="place-kind" class="eyebrow"></p><h2 id="place-title"></h2><p id="place-note"></p>
         <div id="place-passages"></div><a id="cross-chapter" href="../taoist-tower/index.html" hidden></a>
       </aside>
-      <div class="map-footer"><span id="extent-label">WGS 84 · GEOJSON</span></div>
       <div class="loading" id="map-loading" role="status" data-copy="loading">正在展开西域地理…</div>
     </section>
     <aside class="reader-panel" aria-label="双语原文 / Bilingual original text">
@@ -128,10 +127,9 @@
   </main>
 
   <footer class="bottom-bar">
-    <div class="bar-left"><span class="credit" data-copy="source">文本：余秋雨《文化苦旅》</span><button id="data-button" class="notes-button" aria-expanded="false" aria-controls="data-dialog"><span aria-hidden="true">ⓘ</span><span data-copy="data">地图说明与数据来源</span></button></div>
+    <div class="bar-left"><span class="credit" data-copy="source">文本：余秋雨《文化苦旅》</span><span class="map-source-credit">Natural Earth</span></div>
     <a class="back-atlas" href="../../index.html" data-copy="backAtlas">← 总地图</a>
   </footer>
-  <dialog id="data-dialog" class="notes-drawer" aria-labelledby="data-title"><button id="close-data" class="close-button" aria-label="关闭 / Close">×</button><p class="eyebrow">GEOGRAPHIC SOURCES</p><h2 id="data-title" data-copy="dataTitle">地图来源与精度</h2><div id="data-description"></div><div class="source-links"><a href="https://www.naturalearthdata.com/downloads/10m-physical-vectors/" target="_blank" rel="noreferrer">Natural Earth · public domain ↗</a><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">© OpenStreetMap contributors · ODbL ↗</a><a href="https://www.wikidata.org/wiki/Wikidata:Licensing" target="_blank" rel="noreferrer">Wikidata · CC0 ↗</a><a href="./data/geography.geojson" download>GeoJSON ↓</a></div></dialog>
   <div id="completion" class="chapter-complete-overlay" role="status" aria-live="polite" aria-hidden="true">
     <span class="complete-ripple"></span>
     <span class="seal seal-l seal-image" aria-hidden="true"><img src="./assets/seal-kashgar.svg?v=81b3b06a7520" alt=""></span>

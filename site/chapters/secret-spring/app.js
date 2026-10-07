@@ -29,7 +29,7 @@
     zh: ["贴近沙脊", "拉远至敦煌石窟带", "向月牙泉下潜", "泉边低空停驻"],
     en: ["Skimming the dune", "Pulling back to the grottoes", "Diving toward the spring", "Holding low above the water"]
   };
-  const cameraTech = ["3D terrain · DEM", "Regional positioning · WGS 84", "3D terrain · Camera dive", "3D terrain · Low hold"];
+  const cameraTech = ["3D terrain", "Regional view", "Camera dive", "Low hold"];
 
   const copy = {
     zh: {
