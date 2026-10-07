@@ -79,44 +79,6 @@ button { font: inherit; }
   transition: opacity .4s ease, transform .4s ease;
 }
 
-.hometown-entry {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: end;
-  gap: 2px 20px;
-  width: min(325px, 82vw);
-  margin-top: 12px;
-  padding: 12px 16px 13px;
-  border: 1px solid rgba(116, 105, 82, .34);
-  background: rgba(243, 238, 225, .92);
-  box-shadow: 0 8px 24px rgba(65, 56, 41, .08);
-  text-align: left;
-  cursor: pointer;
-  pointer-events: auto;
-  transition: border-color .24s, transform .24s, box-shadow .24s;
-}
-.hometown-entry:hover {
-  border-color: var(--seal);
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(65, 56, 41, .13);
-}
-.hometown-entry small {
-  grid-column: 1 / -1;
-  color: #8b6955;
-  font: 10px var(--label);
-  letter-spacing: .16em;
-}
-.hometown-entry span {
-  color: var(--ink);
-  font: 17px var(--cn);
-  letter-spacing: .08em;
-}
-body[data-language="en"] .hometown-entry span {
-  font: 17px var(--en);
-  letter-spacing: 0;
-}
-.hometown-entry i { color: var(--seal); font: normal 21px var(--label); }
-
 .cta-arrow {
   width: 26px;
   flex-shrink: 0;
@@ -368,6 +330,14 @@ body[data-language="en"] [lang="zh"] {
 }
 
 .story-point .complete { display: none; }
+
+body.my-hometown-complete .story-point[data-story="my-hometown"] .unread {
+  display: none;
+}
+
+body.my-hometown-complete .story-point[data-story="my-hometown"] .complete {
+  display: block;
+}
 
 body.dujiangyan-complete .story-point[data-story="dujiangyan"] .unread {
   display: none;
@@ -880,6 +850,13 @@ body[data-seal-collection="flying"] .site-progress {
   margin-right: auto;
 }
 
+.atlas-map-source {
+  color: var(--ink-soft);
+  font-family: var(--label);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+}
+
 .reset-progress {
   appearance: none;
   padding: 0;
@@ -1124,6 +1101,7 @@ body[data-language="en"] .chapter-preview > p[data-copy="preview-text"] { font-s
 /* 阳关雪: the drawn seal stays on the map after reading, as with Kashgar. */
 
 /* A read chapter's dot settles like Kashgar's: a larger, still cinnabar dot, no pulse. */
+body.my-hometown-complete [data-story="my-hometown"] .point-core,
 body.dujiangyan-complete [data-story="dujiangyan"] .point-core,
 body.secret-spring-complete [data-story="secret-spring"] .point-core,
 body.taoist-tower-complete [data-story="taoist-tower"] .point-core,
@@ -1134,6 +1112,7 @@ body.mogao-caves-complete [data-story="mogao-caves"] .point-core {
   fill: var(--cinnabar, #944b39);
   r: 6px;
 }
+body.my-hometown-complete [data-story="my-hometown"] .point-glow,
 body.dujiangyan-complete [data-story="dujiangyan"] .point-glow,
 body.secret-spring-complete [data-story="secret-spring"] .point-glow,
 body.taoist-tower-complete [data-story="taoist-tower"] .point-glow,
@@ -1143,6 +1122,7 @@ body.fish-tail-lodge-complete [data-story="fish-tail-lodge"] .point-glow,
 body.mogao-caves-complete [data-story="mogao-caves"] .point-glow {
   opacity: .3;
 }
+body.my-hometown-complete [data-story="my-hometown"] .point-pulse,
 body.kashgar-complete [data-story="kashgar"] .point-pulse,
 body.dujiangyan-complete [data-story="dujiangyan"] .point-pulse,
 body.secret-spring-complete [data-story="secret-spring"] .point-pulse,

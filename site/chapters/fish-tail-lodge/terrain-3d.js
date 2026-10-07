@@ -264,11 +264,32 @@
   const gorge = [[-0.12, -0.1], [0.12, -0.1], [-0.12, 0.1], [0.12, 0.1]].map(([dx, dy]) => [bridgePlace.lon + dx, bridgePlace.lat + dy]);
 
   const sites = geography.places.filter((p) => p.section);
+  let wideFocusIds = [];
+
+  function wideCamera(ids, fallback) {
+    const chosen = (ids.length ? ids : fallback)
+      .map((id) => place(id))
+      .filter(Boolean)
+      .map(lonlat);
+    const lons = chosen.map(([lon]) => lon);
+    const lats = chosen.map(([, lat]) => lat);
+    const west = Math.min(...lons), east = Math.max(...lons);
+    const south = Math.min(...lats), north = Math.max(...lats);
+    const lonPad = Math.max(3.8, (east - west) * 0.24);
+    const latPad = Math.max(2.8, (north - south) * 0.34);
+    const bounds = terrains.wide.bounds;
+    const frame = [
+      [Math.max(bounds.west, west - lonPad), Math.max(bounds.south, south - latPad)],
+      [Math.min(bounds.east, east + lonPad), Math.min(bounds.north, north + latPad)]
+    ];
+    return fitNorthUp("wide", frame, { tilt: 0.28, margin: [0.72, 0.68] });
+  }
+
   function cameraFor(level, progress) {
     const lodge = lonlat(place("lodge"));
     if (level === 1) return partOne;
-    if (level === 2) return fitNorthUp("wide", [lodge, ...sites.filter((p) => p.section === 2).map(lonlat)]);
-    if (level === 3) return fitNorthUp("wide", [lodge, ...sites.map(lonlat)]);
+    if (level === 2) return wideCamera(wideFocusIds, sites.filter((p) => p.section === 2).map((p) => p.id));
+    if (level === 3) return wideCamera(wideFocusIds, sites.filter((p) => p.section === 3).map((p) => p.id));
     if (level === 4) {
       if (progress > 0.8) {
         // the day trip to Lumbini, closing part four
@@ -390,7 +411,15 @@
     setState(next) {
       level = next;
       zoomed = false;
+      wideFocusIds = [];
       goal = copyCamera(cameraFor(level, 0));
+    },
+    setWideFocus(ids) {
+      if (level !== 2 && level !== 3) return;
+      const next = [...new Set(ids)].filter((id) => place(id)?.section === level);
+      if (next.length === wideFocusIds.length && next.every((id, index) => id === wideFocusIds[index])) return;
+      wideFocusIds = next;
+      goal = copyCamera(cameraFor(level, progress));
     },
     setProgress(value) {
       progress = Math.max(0, Math.min(1, value));

@@ -279,7 +279,7 @@
   const routeStart = local.toModel(route[0][0], route[0][1]);
   const routeEnd = local.toModel(route[route.length - 1][0], route[route.length - 1][1]);
   const along = [routeEnd[0] - routeStart[0], routeEnd[2] - routeStart[2]];
-  const walkEye = [routeStart[0] - along[0] * 0.2, routeStart[1] + 0.26, routeStart[2] - along[1] * 0.2];
+  const walkEye = [routeStart[0] - along[0] * 0.2, routeStart[1] + 0.2, routeStart[2] - along[1] * 0.2];
   const walkTarget = [routeStart[0] + along[0] * 0.7, routeEnd[1], routeStart[2] + along[1] * 0.7];
   const cameras = {
     3: localCamera(walkEye, walkTarget, 44, 0.3),
@@ -353,10 +353,15 @@
 
     const terrain = terrains[current.terrain];
     const drift = reduced() ? 0 : Math.sin(time * 0.00012) * 0.012;
-    const eye = [current.eye[0] + drift, current.eye[1], current.eye[2]];
+    const reveal = level === 4 ? Math.max(0, Math.min(1, (progress - 0.05) / 0.28)) : 0;
+    const easedReveal = reveal * reveal * (3 - 2 * reveal);
+    const eye = [current.eye[0] + drift, current.eye[1] + easedReveal * 0.015, current.eye[2]];
+    const target = [...current.target];
+    // “猛一抬头” is read as a restrained camera tilt: the beacon gives way to the snowy horizon.
+    if (level === 4) target[1] += easedReveal * 0.06;
     mvp = multiply(
       perspective((current.fov * Math.PI) / 180, canvas.width / canvas.height, 0.01, 20),
-      lookAt(eye, current.target)
+      lookAt(eye, target)
     );
 
     gl.clearColor(0, 0, 0, 0);

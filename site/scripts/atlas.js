@@ -282,7 +282,7 @@
 
     // H0: the heading and call-out float over the map on wide screens (L-7)
     const taken = [];
-    [".atlas-intro h1", ".cta-callout", ".hometown-entry", ".atlas-navigation", ".atlas-geography-notes"].forEach((selector) => {
+    [".atlas-intro h1", ".cta-callout", ".atlas-navigation", ".atlas-geography-notes"].forEach((selector) => {
       const node = document.querySelector(selector);
       if (!shownElement(node)) return;
       const b = node.getBoundingClientRect();
@@ -571,6 +571,7 @@
       "point-mogao-caves-aria": "进入莫高窟",
       "point-secret-spring-aria": "进入沙原隐泉",
       "point-taoist-tower-aria": "进入道士塔",
+      "point-my-hometown-aria": "进入我的山河",
       "point-dujiangyan-aria": "进入都江堰",
       "point-chengde-aria": "进入山庄背影",
       "point-jiangnan-aria": "江南故事，尚未接入",
@@ -579,8 +580,6 @@
       "progress-label": "我的印章",
       "question-line-1": "一部书能够",
       "question-line-2": "照亮多少中国？",
-      "hometown-entry": "先从《我的山河》出发",
-      "hometown-entry-kicker": "03 · 全图入口",
       unavailable: "这处故事仍在等待显影",
       "receipt-title": "一处山河已经显影",
       "receipt-body": "岷江的水，由此化作丰饶的成都平原。",
@@ -606,6 +605,7 @@
       "point-mogao-caves-aria": "Enter the Mogao Caves",
       "point-secret-spring-aria": "Enter A Secret Spring in the Sand",
       "point-taoist-tower-aria": "Enter The Taoist Priest’s Tower",
+      "point-my-hometown-aria": "Enter My Hometown",
       "point-dujiangyan-aria": "Enter Dujiangyan",
       "point-chengde-aria": "Enter The Villa from Behind",
       "point-jiangnan-aria": "Home stories in Jiangnan — not yet available",
@@ -614,8 +614,6 @@
       "progress-label": "My Seals",
       "question-line-1": "How much of China",
       "question-line-2": "can one book illuminate?",
-      "hometown-entry": "Begin with My Hometown",
-      "hometown-entry-kicker": "03 · ATLAS ENTRANCE",
       unavailable: "This story is still waiting to be revealed",
       "receipt-title": "One landscape brought to light",
       "receipt-body": "The Min River transforms into the fertile Chengdu Plain.",
@@ -836,7 +834,7 @@
   // A short grace period lets the pointer travel from the dot into the card.
   function scheduleHide() {
     window.clearTimeout(hideTimer);
-    // Touch previews stay open until a second tap, an outside tap or a map gesture.
+    // Touch input does not use the hover dismissal timer.
     if (window.matchMedia('(hover: none)').matches) return;
     hideTimer = window.setTimeout(hidePreview, 260);
   }
@@ -880,6 +878,7 @@
   }
 
   function renderProgress() {
+    body.classList.toggle("my-hometown-complete", state.complete["my-hometown"]);
     body.classList.toggle("dujiangyan-complete", state.complete.dujiangyan);
     body.classList.toggle("secret-spring-complete", state.complete["secret-spring"]);
     body.classList.toggle("taoist-tower-complete", state.complete["taoist-tower"]);
@@ -966,8 +965,6 @@
     } finally {journeyPending=false;if(!leaving)window.JOURNEY_AUDIO?.setAmbience(true);}
   }
 
-  document.querySelector(".hometown-entry")?.addEventListener("click", () => enterStory("my-hometown"));
-
   function showUnavailable() {
     unavailable.classList.add("is-visible");
     window.clearTimeout(showUnavailable.timer);
@@ -997,21 +994,8 @@
     point.addEventListener("pointerleave", event => { if (event.pointerType === 'mouse') scheduleHide(); });
     point.addEventListener("focus", () => showPreview(point));
     point.addEventListener("blur", scheduleHide);
-    // A touch tap fires an emulated mouseenter before click, so what the callout looked like
-    // *before* the tap is recorded at pointerdown. First tap opens the callout; a second tap
-    // on the same dot (or the callout's button) enters the chapter. Mouse clicks always enter.
-    let tap = null;
-    point.addEventListener("pointerdown", (event) => {
-      tap = {
-        touch: event.pointerType === "touch",
-        wasShowing: anchorPoint === point && preview.classList.contains("is-visible")
-      };
-    });
     point.addEventListener("click", () => {
-      const last = tap;
-      tap = null;
-      if (last && last.touch && !last.wasShowing) showPreview(point);
-      else enterStory(point.dataset.story);
+      enterStory(point.dataset.story);
     });
     point.addEventListener("keydown", (event) => {
       onKeyboardActivate(event, () => enterStory(point.dataset.story));

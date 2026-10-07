@@ -736,6 +736,14 @@ body[data-language="en"] .curtain-thesis {
   transition: color 180ms ease;
 }
 
+.map-source-credit {
+  color: var(--ink-soft);
+  font-family: var(--sans);
+  font-size: 11px;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+}
+
 .notes-button:hover,
 .back-atlas:hover {
   color: var(--seal);

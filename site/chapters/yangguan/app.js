@@ -12,7 +12,7 @@
   // The essay has no numbered sections: five parts pace the map (see reader note).
   const sections = {
     zh: [
-      { label: "一 · 诗与远方", location: "未出发 · 诗境" },
+      { label: "一 · 诗与远方", location: "未出发" },
       { label: "二 · 雪漠孤行", location: "敦煌县城以西 · 雪" },
       { label: "三 · 荒原坟冢", location: "沙地 · 坟堆" },
       { label: "四 · 阳关古址", location: "烽火台 · 雪峰" },
@@ -78,6 +78,7 @@
       "rail-aria": "阅读行程",
       "section-aria": "段落 {n}",
       "reader-note": "五个段落用于交互节奏，不是原文编号分节。",
+      "journey-hint": "向下阅读，脚印将继续向阳关延伸",
       "notes-keyboard": "↑ ↓ ← → 切换段落 · L 切换语言 · Esc 关闭本面板",
       "data-3d-label": "三维",
       "data-3d": "雪漠地形直接由 DEM 高程网格生成，随阅读切换镜头；雪的覆盖随原文变化：出发时大雪，天晴后低处化出沙底，高处与远山积雪不化。",
@@ -85,7 +86,7 @@
       "data-real": "阳关烽燧点、阳关长城（汉代烽燧线）、今阳关绿洲（林场、果园、水体与渠道）和阿尔金山均按真实坐标放在地形上。",
       "data-literary-label": "文学意象",
       "data-literary": "地图上的脚印（叙事路径）与坟堆都是文学示意：原文没有可核验的行走坐标，也没有指名坟堆所在的遗址，所以它们不是作者的实测路线，也不是测绘坟场。“今阳关绿洲”指现代农林用地，不代表汉唐时的屯垦范围。",
-      "data-far-label": "诗境",
+      "data-far-label": "远方地标",
       "data-far": "第一段换用一块从阳关到苏州的大范围地形（约 8 公里一格），白帝城、黄鹤楼、寒山寺按真实坐标标在上面，虚线连到原点阳关，数字为大圆直线距离（白帝城 1,713 km、黄鹤楼 2,106 km、寒山寺 2,568 km；手机上只显示地名）。镜头由高处俯视，北方朝上。第三至五段换回阳关周边的细网格地形。",
       "data-region-label": "区域",
       "data-region": "第二段切换为敦煌县城—阳关的区域图，距离为大圆直线距离，不是公路里程。",
@@ -112,6 +113,7 @@
       "rail-aria": "Parts of the walk",
       "section-aria": "Part {n}",
       "reader-note": "These five parts pace the interaction; the essay itself has no numbered sections.",
+      "journey-hint": "Read downward; the footprints will continue toward Yangguan",
       "notes-keyboard": "↑ ↓ ← → switch parts · L language · Esc closes this panel",
       "data-3d-label": "3D",
       "data-3d": "The snow desert is generated directly from the DEM and changes camera with the reading. Snow follows the essay: heavy at the start, melting on low ground once the sky clears, lasting on the heights and the far mountains.",
@@ -150,10 +152,13 @@
   const regional = document.querySelector(".regional-map");
   const modeLabel = document.querySelector(".camera-mode");
   const techLabel = document.querySelector(".camera-tech");
+  const journeyHint = document.querySelector(".journey-hint");
   const reduced = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   let language = body.dataset.language || "zh";
   let level = 1;
   let progress = 0;
+  let journeyHintShown = false;
+  let journeyHintTimer = 0;
 
   const make = (tag, attributes = {}, parent) => {
     const node = document.createElementNS(svgNS, tag);
@@ -359,9 +364,18 @@
     const compact = panelWidth < 520;
     const taken = [boxOf(originName, originNote, origin, originSize * 0.6, -originSize * 0.9, "start", compact)];
     farMarks
-      .map((mark) => ({ ...mark, p: project(mark.site.lon, mark.site.lat, 400) }))
+      .map((mark, index) => ({ ...mark, index, p: project(mark.site.lon, mark.site.lat, 400) }))
       .sort((a, b) => b.p.x - a.p.x) // the right side is the most crowded: place from there
-      .forEach(({ site, ray, dot, name, note, p }) => {
+      .forEach(({ site, ray, dot, name, note, index, p }) => {
+        // The distant poetic sites enter in the order in which the prose recalls them.
+        // This keeps the opening view quiet and lets the cultural map assemble while reading.
+        const revealAt = 0.08 + index * 0.11;
+        if (progress < revealAt) {
+          ray.setAttribute("d", "");
+          dot.style.visibility = "hidden";
+          [name, note].forEach((node) => { node.style.visibility = "hidden"; });
+          return;
+        }
         if (!p.visible || !origin.visible) {
           ray.setAttribute("d", "");
           dot.style.visibility = "hidden";
@@ -609,6 +623,25 @@
     [snowGoal, windGoal] = snowTarget();
   }
 
+  function updatePoemPresence() {
+    if (level !== 5) {
+      poemLayer.style.removeProperty("opacity");
+      return;
+    }
+    poemLayer.style.opacity = String(Math.min(1, 0.42 + progress * 0.72));
+  }
+
+  function showJourneyHint() {
+    if (!journeyHint || journeyHintShown) return;
+    journeyHintShown = true;
+    journeyHint.classList.add("is-visible");
+    journeyHint.setAttribute("aria-hidden", "false");
+    journeyHintTimer = window.setTimeout(() => {
+      journeyHint.classList.remove("is-visible");
+      journeyHint.setAttribute("aria-hidden", "true");
+    }, 5600);
+  }
+
   // Where in the active part the reader is (0-1), measured like the shell measures sections.
   function updateProgress() {
     const threshold = scroller.clientHeight * 0.4;
@@ -621,6 +654,7 @@
     if (scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 4) progress = 1;
     window.YANGGUAN_TERRAIN_RENDERER?.setProgress(progress);
     updateSnowGoal();
+    updatePoemPresence();
   }
 
   function onRender(nextLanguage, state) {
@@ -657,11 +691,14 @@
     setCaption();
     drawCompass();
     window.YANGGUAN_TERRAIN_RENDERER?.setState(level);
+    if (level === 3) showJourneyHint();
+    updatePoemPresence();
     window.requestAnimationFrame(updateProgress);
   }
 
   window.YANGGUAN_TERRAIN_RENDERER?.onFrame(drawMarks);
   scroller.addEventListener("scroll", () => window.requestAnimationFrame(updateProgress), { passive: true });
+  window.addEventListener("pagehide", () => window.clearTimeout(journeyHintTimer));
   window.requestAnimationFrame(tick);
 
   ChapterShell.init({

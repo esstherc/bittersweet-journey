@@ -8,39 +8,25 @@
     return;
   }
 
-  // Section label = ordinal + short title; location = the place line (guideline R-3).
-  // The six sections are the essay's own numbered sections.
+  // Keep the rail neutral: the essay's six numbered sections are the source structure.
   const sections = {
     zh: [
-      { label: "一 · 鱼尾山屋", location: "博克拉 · 喜马拉雅南麓" },
-      { label: "二 · 思维高度", location: "希腊 · 克里特 · 埃及" },
-      { label: "三 · 出埃及", location: "西奈 · 中东 · 波斯 · 印度" },
-      { label: "四 · 未曾中断", location: "中华文明 · 蓝毗尼" },
-      { label: "五 · 世纪最后一天", location: "加德满都 → 樟木" },
-      { label: "六 · 国门", location: "中尼友谊桥" }
+      { label: "一" },
+      { label: "二" },
+      { label: "三" },
+      { label: "四" },
+      { label: "五" },
+      { label: "六" }
     ],
     en: [
-      { label: "I · Fish Tail Lodge", location: "Pokhara · South of the Himalayas" },
-      { label: "II · A height of thought", location: "Greece · Crete · Egypt" },
-      { label: "III · Out of Egypt", location: "Sinai · Middle East · Persia · India" },
-      { label: "IV · Unbroken", location: "Chinese civilization · Lumbini" },
-      { label: "V · The century’s last day", location: "Kathmandu to Zhangmu" },
-      { label: "VI · The gate", location: "Sino-Nepal Friendship Bridge" }
+      { label: "I" },
+      { label: "II" },
+      { label: "III" },
+      { label: "IV" },
+      { label: "V" },
+      { label: "VI" }
     ]
   };
-
-  const captions = {
-    zh: ["博克拉 · 鱼尾山屋", "希腊、克里特、埃及", "从西奈到印度河", "中华文明的天然屏障", "加德满都 → 边境", "峡谷上的大桥"],
-    en: ["Pokhara · Fish Tail Lodge", "Greece, Crete, Egypt", "From Sinai to the Indus", "The natural walls around China", "Kathmandu to the border", "The bridge over the gorge"]
-  };
-  const captionMood = {
-    zh: { night: "炉火与烛光", dawn: "朝霞染红峰顶", lumbini: "去蓝毗尼，佛陀诞生地" },
-    en: { night: "Stove and candlelight", dawn: "Dawn on the peaks", lumbini: "To Lumbini, the Buddha’s birthplace" }
-  };
-  const captionTech = [
-    "3D terrain · Copernicus DEM", "Wide terrain · Wikidata places", "Wide terrain · Wikidata places",
-    "Wide terrain · Natural Earth regions", "3D terrain · OpenStreetMap road", "3D terrain · Bhote Koshi gorge"
-  ];
 
   const elevations = geography.elevations;
   const fmt = (n) => Number(n).toLocaleString("en");
@@ -49,19 +35,19 @@
       "map-aria": "喜马拉雅山南麓与古文明遗址的三维地形图",
       "map-teaser": "雪峰下，回望中国。",
       thesis: "离开之后，才读懂了它。",
-      open: "推门看雪峰",
+      open: "进入章节",
       "rail-caption": "原文章节",
       "notes-keyboard": "↑ ↓ ← → 切换节次 · L 切换语言 · Esc 关闭本面板",
       "data-views-label": "视图",
-      "data-views": "第一节是博克拉一带的三维地形（鱼尾山屋、费瓦湖、鱼尾峰、安纳布尔纳）；第二至四节换成从地中海到太平洋的大范围地形，北方朝上；第五、六节是加德满都到边境的三维地形，最后停在波特科西河峡谷的中尼友谊桥。",
+      "data-views": "第一节先从南亚总览进入尼泊尔，再沿加德满都—博克拉方向缩放，最后切入博克拉一带的三维地形（鱼尾山屋、费瓦湖、鱼尾峰、安纳布尔纳）；第二至四节换成从地中海到太平洋的大范围地形，北方朝上；第五、六节是加德满都到边境的三维地形，最后停在波特科西河峡谷的中尼友谊桥。",
       "data-sites-label": "遗址",
-      "data-sites": "文中提到的古文明遗址按真实坐标标出，读到哪一节显出哪些；虚线从“此刻所在”的鱼尾山屋连过去，数字为大圆直线距离。只标点，不连成路线：千禧之旅的完整行程与日期出自《千年一叹》，本文没有写。原文只说“古代波斯文明”，地图以波斯波利斯为代表点；摩亨佐-达罗是“深夜路过，未及考察”，以较淡的点表示。",
+      "data-sites": "第一节沿加德满都—博克拉的实际公路方向展开。第二、三节只标出正文正在谈论的古文明地点；悬停或聚焦正文中的地名，地图会点亮相应地点与河流。千禧之旅的完整行程与日期出自《千年一叹》，本文没有写。原文只说“古代波斯文明”，地图以波斯波利斯为代表点。",
       "data-barrier-label": "屏障",
       "data-barrier": "第四节依原文标出喜马拉雅、昆仑、天山、阿尔泰，塔克拉玛干与戈壁，以及东面、南面的海；不画国界。读到去蓝毗尼的一段，镜头移回尼泊尔。",
       "data-text-label": "原文与地理",
       "data-text": "原文说乘拉缆浮筏“渡过了一条清澈的雪水河”，鱼尾山屋其实在费瓦湖畔，地图画湖，正文照原文。去蓝毗尼“来回行车六百公里”是公路里程，直线距离约 105 公里。第五节的车队路线沿今阿尼哥公路（约 " + fmt(geography.border.highwayKm) + " 公里），只是示意这一段路，不是当年车队的实测轨迹。",
       "data-projection-label": "投影",
-      "data-projection": "WGS 84 经纬度，每块地形按其中心纬度的余弦等比例展开；大范围地形跨度大，东西向距离在南北两端有明显误差，图上的公里数另按大圆公式计算。",
+      "data-projection": "WGS 84 经纬度，每块地形按其中心纬度的余弦等比例展开；大范围地形跨度大，东西向距离在南北两端有明显误差。",
       "data-terrain-label": "地形",
       "data-terrain": "Copernicus DEM GLO-90：博克拉约 250 米一格、边境约 340 米一格；大范围地形由内部缩图层平均为约 28 公里一格。为了看得见，高程都有夸大，大范围地形夸大最多。",
       "data-height-label": "海拔",
@@ -77,19 +63,19 @@
       "map-aria": "Terrain maps of the southern Himalayas and the ancient sites named in the essay",
       "map-teaser": "Beneath snow peaks",
       thesis: "I did not comprehend it until I was separated from it.",
-      open: "Open the door to the peaks",
+      open: "Enter chapter",
       "rail-caption": "Sections",
       "notes-keyboard": "↑ ↓ ← → switch sections · L language · Esc closes this panel",
       "data-views-label": "Views",
-      "data-views": "Section one is 3D terrain around Pokhara (the lodge, Phewa Lake, Machhapuchhre, Annapurna). Sections two to four use a wide terrain from the Mediterranean to the Pacific, north up. Sections five and six are 3D terrain from Kathmandu to the border, ending at the Friendship Bridge in the Bhote Koshi gorge.",
+      "data-views": "Section one begins with a South Asia overview, zooms along the Kathmandu–Pokhara direction, then resolves into 3D terrain around Pokhara (the lodge, Phewa Lake, Machhapuchhre, Annapurna). Sections two to four use a wide terrain from the Mediterranean to the Pacific, north up. Sections five and six are 3D terrain from Kathmandu to the border, ending at the Friendship Bridge in the Bhote Koshi gorge.",
       "data-sites-label": "Sites",
-      "data-sites": "The ancient sites named in the essay sit at their real coordinates and appear section by section; dashed lines join them to the lodge, “where I am now”, and the figures are great-circle distances. They are points only, not a route: the full itinerary and dates of the millennium journey are in Sign in a Thousand Years, not in this essay. The essay speaks only of “ancient Persian civilization”; Persepolis stands for it. Mohenjo-daro was “passed by at night”, so it is drawn fainter.",
+      "data-sites": "Section one follows the actual road direction from Kathmandu to Pokhara. Sections two and three show only the ancient sites being discussed in the text; hovering or focusing a place name lights up its site and related rivers on the map. The full itinerary and dates of the millennium journey are in Sign in a Thousand Years, not in this essay. The essay speaks only of “ancient Persian civilization”; Persepolis stands for it.",
       "data-barrier-label": "Barriers",
       "data-barrier": "Section four marks what the essay names: the Himalayas, Kunlun, Tian Shan and Altai, the Taklimakan and the Gobi, and the seas to the east and south; no borders are drawn. When the day trip to Lumbini begins, the view returns to Nepal.",
       "data-text-label": "Text and ground",
       "data-text": "The essay says they crossed “a clear river of snowmelt” by raft; Fish Tail Lodge is in fact on Phewa Lake, so the map shows the lake while the text is kept as written. The “six hundred kilometers” to Lumbini and back is road distance; the straight line is about 105 km. The motorcade in section five follows today’s Araniko Highway (about " + fmt(geography.border.highwayKm) + " km) to show the road, not the motorcade’s surveyed track.",
       "data-projection-label": "Projection",
-      "data-projection": "WGS 84 longitude and latitude, each terrain scaled by the cosine of its central latitude. The wide terrain spans so much that east-west distances are noticeably off at its north and south edges; distances shown are computed separately as great circles.",
+      "data-projection": "WGS 84 longitude and latitude, each terrain scaled by the cosine of its central latitude. The wide terrain spans so much that east-west distances are noticeably off at its north and south edges.",
       "data-terrain-label": "Terrain",
       "data-terrain": "Copernicus DEM GLO-90: about 250 m per cell around Pokhara and 340 m at the border; the wide terrain is averaged from the internal overviews to about 28 km. Heights are exaggerated so the relief is visible, the wide terrain most of all.",
       "data-height-label": "Heights",
@@ -127,14 +113,70 @@
   const svgNS = "http://www.w3.org/2000/svg";
   const scroller = document.querySelector(".reader-scroll");
   const marks = document.querySelector(".terrain-marks");
-  const modeLabel = document.querySelector(".camera-mode");
-  const techLabel = document.querySelector(".camera-tech");
   const compass = document.querySelector(".compass");
   const place = (id) => geography.places.find((p) => p.id === id);
   let language = body.dataset.language || "zh";
   let level = 1;
   let progress = 0;
   let view = { terrain: "pokhara", north: 0, night: 0, glow: 0, zoomedToNepal: false };
+  let narrativeFocusKey = null;
+  let pointerFocusKey = null;
+  let keyboardFocusKey = null;
+  let lockedFocusKey = null;
+
+  const wideFocusGroups = {
+    "section-2": { sites: ["parthenon", "olympia", "mycenae", "knossos", "giza", "cairo", "luxor"], rivers: [] },
+    greece: { sites: ["parthenon", "olympia", "mycenae", "knossos"], rivers: [] },
+    egypt: { sites: ["giza", "cairo", "luxor"], rivers: ["nile"] },
+    "section-3": { sites: ["sinai", "jerusalem", "baghdad", "babylon", "persepolis", "mohenjo"], rivers: ["jordan", "tigris", "euphrates", "indus"] },
+    levant: { sites: ["sinai", "jerusalem"], rivers: ["jordan"] },
+    mesopotamia: { sites: ["baghdad", "babylon"], rivers: ["tigris", "euphrates"] },
+    persia: { sites: ["persepolis"], rivers: [] },
+    indus: { sites: ["mohenjo"], rivers: ["indus"] },
+    parthenon: { sites: ["parthenon"], rivers: [] },
+    olympia: { sites: ["olympia"], rivers: [] },
+    mycenae: { sites: ["mycenae"], rivers: [] },
+    knossos: { sites: ["knossos"], rivers: [] },
+    giza: { sites: ["giza"], rivers: [] },
+    cairo: { sites: ["cairo"], rivers: ["nile"] },
+    luxor: { sites: ["luxor"], rivers: ["nile"] },
+    nile: { sites: ["giza", "cairo", "luxor"], rivers: ["nile"] },
+    sinai: { sites: ["sinai"], rivers: [] },
+    jerusalem: { sites: ["jerusalem"], rivers: ["jordan"] },
+    jordan: { sites: ["jerusalem"], rivers: ["jordan"] },
+    baghdad: { sites: ["baghdad"], rivers: ["tigris"] },
+    babylon: { sites: ["babylon"], rivers: ["tigris", "euphrates"] },
+    tigris: { sites: ["baghdad", "babylon"], rivers: ["tigris"] },
+    euphrates: { sites: ["babylon"], rivers: ["euphrates"] },
+    persepolis: { sites: ["persepolis"], rivers: [] },
+    mohenjo: { sites: ["mohenjo"], rivers: ["indus"] }
+  };
+
+  const paragraphFocus = {
+    2: ["section-2", "section-2", "section-2", "section-2", "section-2", "greece", "greece", "greece", "greece", "egypt", "egypt", "egypt", "egypt"],
+    3: ["section-3", "section-3", "section-3", "section-3", "levant", "levant", "levant", "levant", "levant", "mesopotamia", "mesopotamia", "mesopotamia", "persia", "indus", "section-3", "section-3"]
+  };
+
+  const narrativeTerms = {
+    zh: [
+      ["美索不达米亚文明", "mesopotamia"], ["摩亨佐·达罗", "mohenjo"], ["巴特农神庙", "parthenon"],
+      ["古希腊文明", "greece"], ["希腊文明", "greece"], ["埃及文明", "egypt"], ["波斯文明", "persia"],
+      ["底格里斯河", "tigris"], ["幼发拉底河", "euphrates"], ["西奈沙漠", "sinai"], ["印度文明", "indus"],
+      ["巴比伦文明", "mesopotamia"], ["巴比伦帝国", "babylon"], ["奥林匹亚", "olympia"], ["迈锡尼", "mycenae"], ["克里特岛", "knossos"], ["克里特", "knossos"],
+      ["金字塔", "giza"], ["尼罗河", "nile"], ["开罗", "cairo"], ["卢克索", "luxor"],
+      ["约旦河", "jordan"], ["耶路撒冷", "jerusalem"], ["巴格达", "baghdad"], ["巴比伦", "babylon"],
+      ["波斯帝国", "persia"], ["波斯", "persia"], ["印度河", "indus"]
+    ],
+    en: [
+      ["Mesopotamian civilization", "mesopotamia"], ["Mohenjo-daro", "mohenjo"], ["Parthenon", "parthenon"],
+      ["Greek civilization", "greece"], ["Egyptian civilization", "egypt"], ["Persian civilization", "persia"],
+      ["Tigris River", "tigris"], ["Euphrates River", "euphrates"], ["Sinai Desert", "sinai"], ["Indian civilization", "indus"],
+      ["Babylonian civilization", "mesopotamia"], ["Babylonian Empire", "babylon"], ["Olympia", "olympia"], ["Mycenae", "mycenae"], ["Crete", "knossos"], ["Pyramids", "giza"],
+      ["Nile River", "nile"], ["Nile", "nile"], ["Cairo", "cairo"], ["Luxor", "luxor"],
+      ["Jordan River", "jordan"], ["Jerusalem", "jerusalem"], ["Baghdad", "baghdad"], ["Babylon", "babylon"],
+      ["Persian Empire", "persia"], ["Persia", "persia"], ["Indus River", "indus"]
+    ]
+  };
 
   const make = (tag, attributes = {}, parent) => {
     const node = document.createElementNS(svgNS, tag);
@@ -164,6 +206,7 @@
   // A labelled point: dot, name, optional note. Labels avoid each other and the panel edges.
   function pointMark(parent, cls) {
     return {
+      halo: make("circle", { class: `dot-halo ${cls}`, r: 11 }, parent),
       dot: make("circle", { class: `dot ${cls}`, r: 4 }, parent),
       name: make("text", { class: `name ${cls}` }, parent),
       note: make("text", { class: `note ${cls}` }, parent)
@@ -180,6 +223,7 @@
     return { left, right: left + width, top: p.y + dy, bottom: p.y + dy + height };
   }
   function hideMark(mark) {
+    mark.halo.style.visibility = "hidden";
     mark.dot.style.visibility = "hidden";
     mark.name.style.visibility = "hidden";
     mark.note.style.visibility = "hidden";
@@ -199,10 +243,13 @@
     }
     return best;
   }
-  function placeMark(mark, p, taken, size, noteOn = true) {
+  function placeMark(mark, p, taken, size, noteOn = true, force = false) {
     if (!p.visible) return hideMark(mark);
     const metrics = { name: typeSize(mark.name), note: typeSize(mark.note) };
     let withNote = noteOn && Boolean(mark.note.textContent) && size.width >= 520;
+    mark.halo.style.visibility = "";
+    mark.halo.setAttribute("cx", p.x.toFixed(1));
+    mark.halo.setAttribute("cy", p.y.toFixed(1));
     mark.dot.style.visibility = "";
     mark.dot.setAttribute("cx", p.x.toFixed(1));
     mark.dot.setAttribute("cy", p.y.toFixed(1));
@@ -212,7 +259,7 @@
       const bare = bestSpot(mark, p, taken, size, false, metrics);
       if (bare.cost < best.cost) { best = bare; withNote = false; }
     }
-    if (best.cost > 0 && !mark.dot.classList.contains("is-origin")) {
+    if (best.cost > 0 && !force && !mark.dot.classList.contains("is-origin")) {
       mark.name.style.visibility = "hidden";
       mark.note.style.visibility = "hidden";
       return;
@@ -302,14 +349,14 @@
   }));
   const regionPaths = geography.wide.regions.map((region) => ({
     region,
-    outlines: region.outlines.map(() => make("path", { class: `region region-${region.kind}` }, wideLayer)),
     label: make("text", { class: `region-label region-${region.kind}` }, wideLayer)
   }));
   const seaLabels = geography.wide.seas.map((sea) => ({ sea, node: make("text", { class: "water-label sea" }, wideLayer) }));
-  const siteRays = geography.places.filter((p) => p.section).map((site) => ({ site, node: make("path", { class: "ray" }, wideLayer) }));
-  const lumbiniRay = make("path", { class: "ray ray-lumbini" }, wideLayer);
-  const wideOrigin = pointMark(wideLayer, "is-origin");
-  const siteMarks = geography.places.filter((p) => p.section).map((site) => ({ site, mark: pointMark(wideLayer, site.role === "passed" ? "is-passed" : "is-site") }));
+  const siteMarks = geography.places.filter((p) => p.section).map((site) => {
+    const mark = pointMark(wideLayer, "is-site");
+    Object.values(mark).forEach((node) => { node.dataset.place = site.id; });
+    return { site, mark };
+  });
   const nepalMarks = { lumbini: pointMark(wideLayer, "is-site"), kathmandu: pointMark(wideLayer, "is-town") };
 
   /* parts five and six: the road to the border */
@@ -354,22 +401,71 @@
     }
   }
 
-  function drawWide(project, size, taken) {
-    const lodgeP = project(place("lodge").lon, place("lodge").lat, 3000);
-    wideRivers.forEach(({ name, points, node }) => {
-      const show = level === 4 ? ["yellow", "yangtze", "ganges"].includes(name) : !["yellow", "yangtze"].includes(name);
-      node.setAttribute("d", show ? polyline(points, project, 2500) : "");
+  function currentWideFocus() {
+    const interactionKey = pointerFocusKey || keyboardFocusKey || lockedFocusKey;
+    const key = interactionKey || narrativeFocusKey;
+    return {
+      key,
+      interaction: Boolean(interactionKey),
+      group: wideFocusGroups[key] || { sites: [], rivers: [] }
+    };
+  }
+
+  function setWideMarkState(mark, context, selected) {
+    Object.values(mark).forEach((node) => {
+      node.classList.toggle("is-context", context);
+      node.classList.toggle("is-selected", selected);
+      node.classList.toggle("is-muted", !context);
     });
-    // the lodge first: every other label gives way to it
+  }
+
+  function placeWideDot(mark, p) {
+    if (!p.visible) return hideMark(mark);
+    mark.halo.style.visibility = "";
+    mark.halo.setAttribute("cx", p.x.toFixed(1));
+    mark.halo.setAttribute("cy", p.y.toFixed(1));
+    mark.dot.style.visibility = "";
+    mark.dot.setAttribute("cx", p.x.toFixed(1));
+    mark.dot.setAttribute("cy", p.y.toFixed(1));
+    mark.name.style.visibility = "hidden";
+    mark.note.style.visibility = "hidden";
+  }
+
+  function drawWide(project, size, taken) {
+    const focus = currentWideFocus();
+    const focusSites = new Set(focus.group.sites);
+    const focusRivers = new Set(focus.group.rivers);
+    const sectionRivers = level === 2 ? ["nile"] : level === 3 ? ["jordan", "tigris", "euphrates", "indus"] : ["yellow", "yangtze", "ganges"];
+    wideRivers.forEach(({ name, points, node }) => {
+      const show = sectionRivers.includes(name);
+      node.setAttribute("d", show ? polyline(points, project, 2500) : "");
+      const context = focusRivers.has(name);
+      node.classList.toggle("is-context", context);
+      node.classList.toggle("is-selected", focus.interaction && context);
+      node.classList.toggle("is-muted", level !== 4 && !context);
+    });
     const showSites = level === 2 || level === 3;
-    const shown = siteMarks
-      .filter(({ site }) => showSites && site.section <= level)
-      .map(({ site }) => project(site.lon, site.lat, 2500));
-    reserve(taken, [lodgeP, ...shown]);
-    placeMark(wideOrigin, lodgeP, taken, size);
+    const available = siteMarks
+      .filter(({ site }) => showSites && site.section === level)
+      .map((item) => ({ ...item, p: project(item.site.lon, item.site.lat, 2500) }));
+    siteMarks.forEach(({ site, mark }) => {
+      if (!showSites || site.section !== level) {
+        setWideMarkState(mark, false, false);
+        hideMark(mark);
+      }
+    });
+    available.forEach(({ site, mark, p }) => {
+      const context = focusSites.has(site.id);
+      setWideMarkState(mark, context, focus.interaction && context);
+      placeWideDot(mark, p);
+    });
+    reserve(taken, available.map(({ p }) => p));
+    available
+      .filter(({ site }) => focusSites.has(site.id))
+      .sort((a, b) => Number(b.mark.dot.classList.contains("is-selected")) - Number(a.mark.dot.classList.contains("is-selected")))
+      .forEach(({ mark, p }) => placeMark(mark, p, taken, size, false, mark.dot.classList.contains("is-selected")));
     const barriers = level === 4 && !view.zoomedToNepal;
-    regionPaths.forEach(({ region, outlines, label }) => {
-      outlines.forEach((node, i) => node.setAttribute("d", barriers ? polyline(region.outlines[i], project, 3500, true) : ""));
+    regionPaths.forEach(({ region, label }) => {
       if (barriers) placeText(label, project(region.label[0], region.label[1], 4500), 0, 0, taken, size);
       else label.style.visibility = "hidden";
     });
@@ -377,31 +473,8 @@
       if (barriers) placeText(node, project(sea.label[0], sea.label[1], 0), 0, 0, taken, size);
       else node.style.visibility = "hidden";
     });
-    siteRays.forEach(({ site, node }) => {
-      const p = project(site.lon, site.lat, 2500);
-      const on = showSites && site.section <= level && p.visible && lodgeP.visible;
-      node.setAttribute("d", on ? `M${lodgeP.x.toFixed(1)},${lodgeP.y.toFixed(1)}L${p.x.toFixed(1)},${p.y.toFixed(1)}` : "");
-    });
-    // sites from the right (nearest the lodge) outward, so the crowded Levant settles first
-    siteMarks
-      .map((item) => ({ ...item, p: project(item.site.lon, item.site.lat, 2500) }))
-      .sort((a, b) => b.p.x - a.p.x)
-      .forEach(({ site, mark, p }) => {
-        // distances only for the sites this section adds; earlier ones keep just their names,
-        // or on a phone just their dots
-        if (!showSites || site.section > level) return hideMark(mark);
-        if (site.section < level && size.width < 520) {
-          hideMark(mark);
-          mark.dot.style.visibility = p.visible ? "" : "hidden";
-          mark.dot.setAttribute("cx", p.x.toFixed(1));
-          mark.dot.setAttribute("cy", p.y.toFixed(1));
-          return;
-        }
-        placeMark(mark, p, taken, size, site.section === level);
-      });
     const nepal = level === 4 && view.zoomedToNepal;
     const lumbini = project(place("lumbini").lon, place("lumbini").lat, 2500);
-    lumbiniRay.setAttribute("d", nepal && lumbini.visible ? `M${lodgeP.x.toFixed(1)},${lodgeP.y.toFixed(1)}L${lumbini.x.toFixed(1)},${lumbini.y.toFixed(1)}` : "");
     if (nepal) {
       placeMark(nepalMarks.lumbini, lumbini, taken, size);
       placeMark(nepalMarks.kathmandu, project(place("kathmandu").lon, place("kathmandu").lat, 2500), taken, size);
@@ -411,7 +484,9 @@
     }
     // river names last, only where they fit
     wideRiverLabels.forEach(({ name, points, node }) => {
-      const show = level === 4 ? ["yellow", "yangtze", "ganges"].includes(name) : !["yellow", "yangtze"].includes(name);
+      const show = level === 4 ? sectionRivers.includes(name) : focusRivers.has(name);
+      node.classList.toggle("is-context", focusRivers.has(name));
+      node.classList.toggle("is-selected", focus.interaction && focusRivers.has(name));
       if (show && !nepal) placeRiverLabel(node, points, project, 2500, taken, size);
       else node.style.visibility = "hidden";
     });
@@ -459,23 +534,22 @@
     marks.dataset.terrain = view.terrain;
     compass.style.setProperty("--north", `${(view.north * 180 / Math.PI).toFixed(1)}deg`);
     marks.classList.toggle("is-night", view.night > 0.5);
-    // the on-map caption and north arrow are furniture that labels keep clear of
+    // The compass is map furniture; labels leave a small safety zone around it.
     const origin = marks.getBoundingClientRect();
-    const taken = [document.querySelector(".camera-caption"), compass].map((node) => {
+    const taken = [compass].map((node) => {
       const b = node.getBoundingClientRect();
       return { left: b.left - origin.left - 4, right: b.right - origin.left + 4, top: b.top - origin.top - 4, bottom: b.bottom - origin.top + 4 };
     });
     if (view.terrain === "pokhara") drawPokhara(project, size, taken);
     if (view.terrain === "wide") drawWide(project, size, taken);
     if (view.terrain === "border") drawBorder(project, size, taken);
-    updateCaption();
   }
 
   /* ---------- text on the map ---------- */
 
   const peakNote = (id) => {
-    if (id === "machhapuchhre") return language === "zh" ? "6,993 米（公开资料）" : "6,993 m (published)";
-    return language === "zh" ? "8,091 米（公开资料）" : "8,091 m (published)";
+    if (id === "machhapuchhre") return language === "zh" ? "6,993 米" : "6,993 m";
+    return language === "zh" ? "8,091 米" : "8,091 m";
   };
   function setMapText() {
     const zh = language === "zh";
@@ -485,16 +559,12 @@
     pokharaMarks.machhapuchhre.note.textContent = peakNote("machhapuchhre");
     pokharaMarks.annapurna.note.textContent = peakNote("annapurna");
     lakeLabel.textContent = name("phewa");
-    wideOrigin.name.textContent = name("lodge");
-    wideOrigin.note.textContent = zh ? "此刻所在" : "where I am now";
     siteMarks.forEach(({ site, mark }) => {
       mark.name.textContent = site[language === "zh" ? "zh" : "en"];
-      mark.note.textContent = site.role === "passed"
-        ? (zh ? `深夜路过 · ${fmt(site.distanceKm)} km` : `passed at night · ${fmt(site.distanceKm)} km`)
-        : `${fmt(site.distanceKm)} km`;
+      mark.note.textContent = "";
     });
     nepalMarks.lumbini.name.textContent = name("lumbini");
-    nepalMarks.lumbini.note.textContent = zh ? `佛陀诞生地 · 直线 ${place("lumbini").distanceKm} km` : `the Buddha’s birthplace · ${place("lumbini").distanceKm} km`;
+    nepalMarks.lumbini.note.textContent = "";
     nepalMarks.kathmandu.name.textContent = name("kathmandu");
     nepalMarks.kathmandu.note.textContent = "";
     regionPaths.forEach(({ region, label }) => { label.textContent = region[language === "zh" ? "zh" : "en"]; });
@@ -504,22 +574,113 @@
     borderMarks.kathmandu.name.textContent = name("kathmandu");
     borderMarks.kathmandu.note.textContent = "";
     borderMarks.kodari.name.textContent = name("kodari");
-    borderMarks.kodari.note.textContent = zh ? "尼泊尔海关" : "Nepali customs";
+    borderMarks.kodari.note.textContent = "";
     borderMarks.bridge.name.textContent = name("bridge");
-    borderMarks.bridge.note.textContent = zh ? `DEM 约 ${fmt(elevations.bridge.point)} 米` : `DEM about ${fmt(elevations.bridge.point)} m`;
+    borderMarks.bridge.note.textContent = "";
     borderMarks.zhangmu.name.textContent = name("zhangmu");
-    borderMarks.zhangmu.note.textContent = zh ? `DEM 约 ${fmt(elevations.zhangmu.point)} 米` : `DEM about ${fmt(elevations.zhangmu.point)} m`;
+    borderMarks.zhangmu.note.textContent = "";
     compass.querySelector("text").textContent = zh ? "北" : "N";
     compass.setAttribute("aria-label", zh ? "指北针" : "North arrow");
   }
 
-  function updateCaption() {
-    let text = captions[language][level - 1];
-    if (level === 1 && view.glow > 0.5) text = captionMood[language].dawn;
-    else if (level === 1 && view.night > 0.5) text = captionMood[language].night;
-    else if (level === 4 && view.zoomedToNepal) text = captionMood[language].lumbini;
-    if (modeLabel.textContent !== text) modeLabel.textContent = text;
-    techLabel.textContent = captionTech[level - 1];
+  function updateNarrativeLinkStates() {
+    const active = pointerFocusKey || keyboardFocusKey || lockedFocusKey;
+    document.querySelectorAll(".map-place-link").forEach((button) => {
+      const selected = button.dataset.mapFocus === active;
+      button.classList.toggle("is-selected", selected);
+      button.setAttribute("aria-pressed", String(button.dataset.mapFocus === lockedFocusKey));
+    });
+  }
+
+  function setPointerFocus(key) {
+    pointerFocusKey = key;
+    updateNarrativeLinkStates();
+  }
+
+  function setKeyboardFocus(key) {
+    keyboardFocusKey = key;
+    updateNarrativeLinkStates();
+  }
+
+  function toggleLockedFocus(key) {
+    lockedFocusKey = lockedFocusKey === key ? null : key;
+    updateNarrativeLinkStates();
+  }
+
+  function enhanceNarrativeLinks() {
+    const terms = [...narrativeTerms[language]].sort((a, b) => b[0].length - a[0].length);
+    const flags = language === "en" ? "gi" : "g";
+    const escaped = terms.map(([term]) => term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+    const pattern = new RegExp(escaped.join("|"), flags);
+    const lookup = new Map(terms.map(([term, key]) => [language === "en" ? term.toLowerCase() : term, key]));
+    [2, 3].forEach((sectionNumber) => {
+      document.querySelectorAll(`#reading-section-${sectionNumber} .reading-section-body p`).forEach((paragraph) => {
+        const source = paragraph.textContent;
+        const fragment = document.createDocumentFragment();
+        let cursor = 0;
+        for (const match of source.matchAll(pattern)) {
+          if (language === "en" && (/[A-Za-z]/.test(source[match.index - 1] || "") || /[A-Za-z]/.test(source[match.index + match[0].length] || ""))) continue;
+          fragment.append(document.createTextNode(source.slice(cursor, match.index)));
+          const label = match[0];
+          const key = lookup.get(language === "en" ? label.toLowerCase() : label);
+          const belongsHere = wideFocusGroups[key]?.sites.some((id) => place(id)?.section === sectionNumber);
+          if (!belongsHere) {
+            fragment.append(document.createTextNode(label));
+            cursor = match.index + label.length;
+            continue;
+          }
+          const button = document.createElement("button");
+          button.type = "button";
+          button.className = "map-place-link";
+          button.dataset.mapFocus = key;
+          button.textContent = label;
+          button.setAttribute("aria-label", language === "zh" ? `${label}，在地图上点亮` : `${label}, highlight on map`);
+          button.setAttribute("aria-pressed", "false");
+          button.addEventListener("mouseenter", () => setPointerFocus(key));
+          button.addEventListener("mouseleave", () => { if (pointerFocusKey === key) setPointerFocus(null); });
+          button.addEventListener("focus", () => setKeyboardFocus(key));
+          button.addEventListener("blur", () => { if (keyboardFocusKey === key) setKeyboardFocus(null); });
+          button.addEventListener("click", (event) => {
+            toggleLockedFocus(key);
+            if (event.detail > 0) button.blur();
+          });
+          button.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") {
+              lockedFocusKey = null;
+              pointerFocusKey = null;
+              keyboardFocusKey = null;
+              button.blur();
+              updateNarrativeLinkStates();
+            }
+          });
+          fragment.append(button);
+          cursor = match.index + label.length;
+        }
+        fragment.append(document.createTextNode(source.slice(cursor)));
+        paragraph.replaceChildren(fragment);
+      });
+    });
+    updateNarrativeLinkStates();
+  }
+
+  function updateNarrativeFocus() {
+    if (level !== 2 && level !== 3) {
+      narrativeFocusKey = null;
+      return;
+    }
+    const section = document.querySelector(`#reading-section-${level}`);
+    const paragraphs = [...(section?.querySelectorAll(".reading-section-body p") || [])];
+    if (!paragraphs.length) return;
+    const scrollRect = scroller.getBoundingClientRect();
+    const readingLine = scrollRect.top + Math.min(scroller.clientHeight * 0.34, 210);
+    let paragraphIndex = 0;
+    paragraphs.forEach((paragraph, index) => {
+      if (paragraph.getBoundingClientRect().top <= readingLine) paragraphIndex = index;
+    });
+    const next = paragraphFocus[level][paragraphIndex] || `section-${level}`;
+    if (next === narrativeFocusKey) return;
+    narrativeFocusKey = next;
+    window.FISHTAIL_TERRAIN_RENDERER?.setWideFocus(wideFocusGroups[next]?.sites || []);
   }
 
   // Where in the active section the reader is (0-1).
@@ -532,21 +693,33 @@
     progress = Math.max(0, Math.min(1, (threshold - (rect.top - top)) / Math.max(rect.height - threshold, 1)));
     if (scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 4) progress = 1;
     window.FISHTAIL_TERRAIN_RENDERER?.setProgress(progress);
+    window.FISHTAIL_MAPBOX?.setProgress(level, progress);
+    updateNarrativeFocus();
   }
 
   function onRender(nextLanguage, state) {
     language = nextLanguage;
     level = state.active + 1;
     setMapText();
-    updateCaption();
+    enhanceNarrativeLinks();
+    window.requestAnimationFrame(updateNarrativeFocus);
+    window.FISHTAIL_MAPBOX?.setLanguage(language);
   }
 
   function onSection(index) {
     level = index + 1;
+    pointerFocusKey = null;
+    keyboardFocusKey = null;
+    lockedFocusKey = null;
+    narrativeFocusKey = null;
+    updateNarrativeLinkStates();
     body.dataset.readingLevel = String(level);
     window.FISHTAIL_TERRAIN_RENDERER?.setState(level);
-    window.requestAnimationFrame(updateProgress);
-    updateCaption();
+    window.FISHTAIL_MAPBOX?.setSection(level);
+    window.requestAnimationFrame(() => {
+      updateProgress();
+      updateNarrativeFocus();
+    });
   }
 
   window.FISHTAIL_TERRAIN_RENDERER?.onFrame(drawMarks);
