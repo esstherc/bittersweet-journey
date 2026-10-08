@@ -4,7 +4,7 @@
 
 ## 内容与阅读
 
-- 逐字保留所供中英文 EPUB 原文及五个编号分节，无新增小标题。
+- 逐字保留所供中英文 EPUB 原文及五个编号分节；节号旁显示编辑加的短标题（见下），原文本身不改。
 - 16 个内部语义锚点用于地图状态与阅读进度。第五节第 5 段内的山川、乐舞为两个锚点，段落本身不拆开。
 - 中文 57 段，英文 55 段。第四节末尾两段及第五节题字部分存在合并，语言切换显式处理，不能直接用相同索引对齐。
 - 地名最长匹配生成按钮，使用统一地点标识，保留原始可见文字；一个地点对应多处段落。
@@ -32,10 +32,30 @@ node --check site/chapters/kashgar/app.js
 
 地图展示当前数据的地理对应，不复原未经考证的丝路线路、人物完整行程或十九世纪街道。七个称谓暂留“位置待核实”卡片，仍可回到原文。未用山峰替代冰川、酒店替代旧领事馆建筑。
 
-地图中山系多边形来自 Natural Earth 概化地理区，不是 DEM 山体模型；没有制作虚构地形或强加旧地图边界。
+地形是 Copernicus DEM GLO-90 晕渲（约 3 km 一格，见下）；Natural Earth 概化地理区只作为可点击范围与标签位置，不再着色或加纹理。没有制作虚构地形或强加旧地图边界。
 
 章节地图标题与开场揭名仅显示当前语言，不附另一语言副标题；地图地名和地点卡同样使用当前语言。正文程序化定位保留焦点与阅读位置，但不显示整块红框；交互按钮仍保留键盘焦点提示。
 
 完整中英文原文由构建脚本同时写入 HTML，地图脚本不可用时仍能阅读和切换语言；地图初始化成功后再显示完成章节操作。正文增强先在内存中完成，再一次性替换原文。构建脚本也为章节 CSS、JS 和数据生成内容哈希 URL，避免更新后沿用旧缓存。每次修改章节资源后运行 `python3 tools/build_kashgar_chapter.py`。
 
 揭题页由共享 `site/scripts/chapter-opening.js` 和 `site/styles/chapter-opening.css` 实现。阅读区直接从原文第一节开始，小节首次进入时仅编号和开头轻微渐显，回读不重复；其余正文始终可见。修改共享资源后运行 `python3 tools/version_chapter_assets.py`。
+
+## 2026-10-08 与其他章节一致化
+
+本章沿用自己的阅读与地图程序（地名双向链接、本段地点、地图缩放与拖动都保留），但读者看到的部分改为与其他八章一致：
+
+- **节标题**：一 · 汤因比的来世／I · Toynbee’s next life；二 · 文明交汇／II · Where civilizations met；三 · 中心的中心／III · The centre of the centre；四 · 两座领事馆／IV · Two consulates；五 · 白色旗幡／V · The white banner。显示在 `app.js` 的 `sectionTitles`，构建脚本的 `TITLES` 同步写入无脚本时的正文；`chapter-data.js` 原文不变。
+- **节首**：去掉“01 / 05”计数；改用共享阅读区的标题与红色短线；首字放大（以“一”等笔画起首的段落除外，同共享阅读区）。
+- **英文节首**：EPUB 的全大写开头在页面上改为句首大写（`app.js` 的 `englishOpenings`）；HTML 后备正文保持逐字原文，`tools/verify_kashgar.py` 仍检查这一点。
+- **导轨**：01–05 加当前节下方的小点、“原文章节／Sections”、红色进度线，与共享导轨相同；“返回刚才阅读处”保留。
+- **指北针**：改用共享的圆形指北针（墨卡托图始终北方朝上）。
+- **地图字号**：地名 24 px（英文 22 px）、山脉与沙漠 20 px；手机 20／18／17 px；光晕 4 px 圆角。
+- **地形**：`assets/region-relief.jpg`，Copernicus DEM GLO-90 平均到 1/30°（70–100°E、31–46°N），按地图本身的墨卡托行距重采样，以两个角点贴图，multiply 叠在陆地上；镜头进入喀什城区时淡出。构建：
+  ```sh
+  python3 tools/fetch_fish_tail_wide_dem.py WORK/kashgar-dem.tif 70 100 31 46 30
+  python3 tools/build_kashgar_relief.py WORK/kashgar-dem.tif
+  ```
+  图片版本号写在 `app.js` 的 `RELIEF.href`，重建图片后需更新。
+- **章号与标题**：揭题页“第 09 章”；分页标题一律为“山河显影 · 西域喀什／Kashgar in the Western Regions”。
+- **预览参数**：`?open=1&section=N` 跳过揭题页并直接打开第 N 节，同其他章节。
+- **构建脚本**：`tools/build_kashgar_chapter.py` 原本因 `<div id="reading" class="reading-copy">` 带 class 而匹配失败，已修正；读写指定 UTF-8；`layout.css` 也加入内容哈希。

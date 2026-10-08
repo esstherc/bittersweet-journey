@@ -660,7 +660,9 @@
     onSection(index) {
       updateReaderMap(index);
       window.requestAnimationFrame(updateReaderNarrative);
-    }
+    },
+    showReaderLocation: false,
+    showReaderProgress: false
   });
 
   // The prologue opens in English unless the URL explicitly requests a language.

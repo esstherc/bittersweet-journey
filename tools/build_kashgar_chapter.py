@@ -36,20 +36,29 @@ print('Built',out)
 # Ship the original text in HTML too: maps and JavaScript enhance reading,
 # but are never prerequisites for seeing the essay.
 page = out.with_name('index.html')
-markup = page.read_text()
+# Short section titles shown with the numbers (editorial; the original text itself stays verbatim). Keep in step
+# with sectionTitles in app.js.
+TITLES = {
+    'zh': ['汤因比的来世', '文明交汇', '中心的中心', '两座领事馆', '白色旗幡'],
+    'en': ['Toynbee’s next life', 'Where civilizations met', 'The centre of the centre', 'Two consulates', 'The white banner'],
+}
+markup = page.read_text(encoding='utf-8')
 blocks = []
 for lang in ['zh', 'en']:
     sections = []
     for i, section in enumerate(payload[lang]['sections']):
+        # verbatim (tools/verify_kashgar.py checks it); app.js shows the English capitalised openings in sentence case
         paragraphs = ''.join('<p>' + html.escape(text) + '</p>' for text in section['paragraphs'])
-        sections.append(f'<section class="reading-section"><h2 class="section-heading">{html.escape(section["label"])}<span>{i+1:02d} / 05</span></h2>{paragraphs}</section>')
+        title = TITLES[lang][i]
+        sections.append(f'<section class="reading-section"><h2 class="section-heading">{html.escape(section["label"])} · {html.escape(title)}</h2>{paragraphs}</section>')
     blocks.append(f'<div class="fallback-reading" lang="{lang}">' + ''.join(sections) + '</div>')
-static_reading = '<div id="reading">\n<!-- BEGIN GENERATED ORIGINAL TEXT -->\n' + '\n'.join(blocks) + '\n<!-- END GENERATED ORIGINAL TEXT -->\n</div>'
-markup, count = re.subn(r'<div id="reading">(?:\s*<!-- BEGIN GENERATED ORIGINAL TEXT -->.*?<!-- END GENERATED ORIGINAL TEXT -->\s*)?</div>', lambda _: static_reading, markup, flags=re.S)
+static_reading = '\n<!-- BEGIN GENERATED ORIGINAL TEXT -->\n' + '\n'.join(blocks) + '\n<!-- END GENERATED ORIGINAL TEXT -->\n</div>'
+# the container keeps whatever attributes the page gives it (e.g. class="reading-copy")
+markup, count = re.subn(r'(<div id="reading"[^>]*>)(?:\s*<!-- BEGIN GENERATED ORIGINAL TEXT -->.*?<!-- END GENERATED ORIGINAL TEXT -->\s*)?</div>', lambda m: m[1] + static_reading, markup, flags=re.S)
 assert count == 1, 'Expected exactly one generated reading container'
 # Content hashes invalidate old cached assets after a page update, including file:// use.
-for asset in ['styles.css', 'chapter-data.js', 'geography-data.js', 'app.js']:
+for asset in ['styles.css', 'layout.css', 'chapter-data.js', 'geography-data.js', 'app.js']:
     digest = hashlib.sha256(out.with_name(asset).read_bytes()).hexdigest()[:12]
     markup = re.sub(r'((?:src|href)="\./' + re.escape(asset) + r')(?:\?v=[^"\s]*)?"', lambda m: m[1] + '?v=' + digest + '"', markup)
-page.write_text(markup)
+page.write_text(markup, encoding='utf-8')
 print('Built static bilingual text and versioned chapter assets:', page)

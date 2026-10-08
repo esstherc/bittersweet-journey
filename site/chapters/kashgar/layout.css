@@ -71,3 +71,49 @@ body[data-language="en"] .reading-section p { font-family: var(--serif-en); font
   .chapter-complete-overlay strong { opacity: 1; transform: none; }
   .complete-ripple { display: none; }
 }
+
+/* ---------- 2026-10-08: aligned with the other chapters ---------- */
+
+/* section heading: number · short title, then the shared rule; no counter */
+.section-heading { display: block; margin: 0; padding: 0; border: 0; font-size: inherit; }
+.section-heading::after { content: none; }
+.reading-section > .reader-rule + p:not(.no-dropcap)::first-letter {
+  float: left;
+  margin: 0.12em 0.13em 0 0;
+  color: var(--accent);
+  font-size: 3.3em;
+  line-height: 0.78;
+}
+
+/* the rail: 01 02 03 with a dot under the current section (the shared .section-button) */
+#section-nav button { width: auto; height: auto; min-width: 32px; min-height: 32px; padding: 0 6px; border: 0; font: 500 14px var(--sans); letter-spacing: .12em; }
+#section-nav button[aria-current=true] { border-color: transparent; color: var(--ink); }
+.reading-rail .rail-line.progress-track { height: 2px; flex: 1 1 40px; min-width: 40px; max-width: none; }
+.reading-rail .rail-line #progress { height: 2px; background: var(--seal); }
+
+/* the shared compass (the Mercator map is always north up) */
+.compass { position: absolute; z-index: 7; top: 34px; right: 18px; width: 52px; height: 52px; overflow: visible; pointer-events: none; }
+.compass circle { fill: rgba(242, 237, 226, 0.85); stroke: rgba(32, 37, 31, 0.35); stroke-width: 1; }
+.compass .north { fill: var(--seal); }
+.compass .south { fill: rgba(32, 37, 31, 0.35); }
+.compass text { fill: var(--seal); font: 600 18px var(--sans); }
+.map-heading { right: 86px; }
+
+/* the terrain is real shaded relief (Copernicus DEM); the generalised mountain and desert shapes are no longer filled */
+.geo-relief { mix-blend-mode: multiply; opacity: .85; pointer-events: none; transition: opacity .3s; }
+.geo-mountain, .geo-desert, .geo-basin { fill: transparent; stroke: none; }
+
+/* map labels at the shared sizes, with round halos */
+.map-label text { font-family: var(--serif-cn); font-size: 24px; letter-spacing: .12em; fill: var(--ink); paint-order: stroke fill; stroke: rgba(240, 237, 228, .94); stroke-width: 4px; stroke-linejoin: round; stroke-linecap: round; }
+body[data-language="en"] .map-label text { font-family: var(--serif-en); font-size: 22px; letter-spacing: .01em; }
+.map-label.region text { font-size: 20px; letter-spacing: .3em; fill: #5d6a59; }
+body[data-language="en"] .map-label.region text { font-size: 20px; letter-spacing: .04em; }
+.map-label.active text { fill: var(--red); }
+
+@media (max-width: 900px) {
+  .compass { display: block; top: 58px; right: 10px; width: 40px; height: 40px; }
+  .map-heading { right: 20px; }
+  .map-label text { font-size: 20px; }
+  body[data-language="en"] .map-label text { font-size: 18px; }
+  .map-label.region text, body[data-language="en"] .map-label.region text { font-size: 17px; }
+}
