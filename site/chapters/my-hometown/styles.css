@@ -1,6 +1,62 @@
 :root { --accent: #426475; }
 
 .map-stage { background: #e8e5d9; }
+.earth-scene { position: absolute; inset: 0; display: flex; align-items: center; padding: 28px 22px; gap: 0; color: #344e4c; }
+.earth-scene[hidden] { display: none; }
+.has-earth > .hometown-map { visibility: hidden; }
+.earth-orb { position: relative; flex: 1; min-width: 0; }
+.earth-orb canvas { display: block; width: 100%; aspect-ratio: 1; }
+.earth-orb svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.earth-orb svg path { fill: none; stroke: #8f3029; stroke-width: 1.3; }
+.earth-orb svg circle { fill: #8f3029; }
+.earth-orb svg text { fill: #632b26; text-anchor: middle; font: 16px var(--serif-en), var(--serif-cn); paint-order: stroke; stroke: #eee7d9; stroke-width: 4px; stroke-linejoin: round; }
+.earth-context { flex: 0 0 29%; font: 15px/1.6 var(--serif-en), var(--serif-cn); }
+.earth-context h2 { font: 26px/1.25 var(--serif-en), var(--serif-cn); margin: 0 0 22px; color: #334c4a; }
+.earth-context h3 { font: inherit; color: #8f3029; margin: 24px 0 8px; }
+.earth-context p { margin: 14px 0; }
+.earth-context ul { list-style: none; padding: 0; margin: 10px 0; }
+.earth-context li { margin: 8px 0; }
+.earth-context small { display: block; font: 11px/1.5 var(--sans); color: #626255; }
+.earth-fractions { display: flex; gap: 20px; }
+.earth-fractions span { display: flex; flex-direction: column; }
+.earth-fractions b { font-size: 30px; font-weight: 400; color: #326369; }
+.earth-fractions span:last-child b { color: #806a44; }
+.earth-ratio { display: flex; gap: 3px; margin: 14px 0 22px; }
+.earth-ratio i { flex: 1; height: 7px; background: #517f83; }
+.earth-ratio .land { background: #b09a6c; }
+.earth-landmass { color: #775b32; }
+.civilization-list li { padding: 8px 0; border-bottom: 1px solid #7b796044; }
+.civilization-list li:last-child { color: #326369; }
+@media (max-width: 1100px) and (min-width: 761px) {
+  .earth-scene { flex-direction: column; justify-content: center; padding: 16px; }
+  .earth-orb { flex: 0 1 auto; width: min(100%, 470px); }
+  .earth-context { flex: 0 0 auto; width: 90%; }
+  .earth-context h2 { margin-bottom: 8px; font-size: 22px; }
+  .earth-context p { margin: 6px 0; }
+  .earth-context ul { display: flex; flex-wrap: wrap; gap: 4px 15px; }
+}
+@media (max-width: 760px), (max-height: 500px) {
+  .earth-scene { flex-direction: row; padding: 8px 12px; gap: 6px; }
+  .earth-orb { flex: 1 1 57%; max-width: 65vh; }
+  .earth-context { flex: 1 1 40%; font-size: 11px; line-height: 1.4; }
+  .earth-context h2 { font-size: 18px; margin-bottom: 10px; }
+  .earth-context h3 { margin: 8px 0 3px; }
+  .earth-context p, .earth-context li { margin: 5px 0; }
+  .earth-fractions { gap: 12px; }
+  .earth-fractions b { font-size: 22px; }
+  .earth-ratio { margin: 8px 0; gap: 2px; }
+  .earth-ratio i { height: 5px; }
+  .earth-context small { font-size: 9px; }
+  .earth-orb svg text { font-size: 24px; stroke-width: 5px; }
+}
+@media (max-height: 500px) {
+  .earth-scene { justify-content: center; gap: 24px; }
+  .earth-orb { flex: 0 0 auto; width: min(36%, calc(100svh - 220px)); }
+  .earth-context { flex: 0 1 430px; max-height: 100%; overflow-y: auto; columns: 2; column-gap: 22px; }
+  .earth-context > * { break-inside: avoid; }
+  .earth-context h2 { font-size: 15px; margin: 0 0 5px; }
+  .earth-context small { display: none; }
+}
 .hometown-map {
   display: block;
   width: 100%;
@@ -97,7 +153,11 @@ body[data-language="en"] .reader-heritage text { font-family: var(--serif-en); f
 .hometown-map[data-scene="yangtze"] :is(.heritage-sanxingdui,.heritage-three-gorges,.heritage-liangzhu),
 .hometown-map:is([data-scene="boundary"],[data-scene="borderlands"]) .reader-boundary-labels { opacity: 1; }
 .reader-boundary-labels text:first-child { fill: #7f684e; }
-.reader-boundary-labels text:last-child { fill: #3f6967; }
+.reader-boundary-labels text:nth-child(2) { fill: #3f6967; }
+.reader-boundary-labels .maritime-civilization { opacity: 0; fill: #326369; }
+.hometown-map[data-scene="ocean"] .reader-boundary-labels,
+.hometown-map[data-scene="ocean"] .maritime-civilization { opacity: 1; }
+.hometown-map[data-scene="ocean"] :is(.river-yellow,.river-yangtze,.rain-line) { opacity: .8; }
 
 .map-tools { position: absolute; top: 24px; right: 22px; display: flex; flex-direction: column; z-index: 5; border: 1px solid var(--line); background: #f3efe7db; backdrop-filter: blur(8px); }
 .map-tools button { min-width: 42px; min-height: 42px; border: 0; border-bottom: 1px solid var(--line); background: none; font: 19px var(--sans); cursor: pointer; }

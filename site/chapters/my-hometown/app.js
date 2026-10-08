@@ -45,7 +45,7 @@
       "map-svg-title": "我的山河 · 三条天地之线",
       "map-svg-desc": "黄河、长江、珠江、四百毫米等降水量线与万里长城均采用真实地理数据。",
       "rail-caption": "原文章节",
-      "notes-map": "正文滚动会推动地图从地球进入欧亚大陆和中国。镜头只在段落切换时改变范围；同一段内沿河平移，不反复缩放。也可点下方节次切换。",
+      "notes-map": "开场地球缓慢自转；第二节转向亚洲，显示海陆比例、欧亚大陆、中国与周边地貌。随后进入自然地理地图，沿三条天地之线阅读，最后呈现游牧、农耕与海洋文明。地球上的色带仅示意地理位置，不代表精确边界。也可点下方节次切换。",
       "notes-data": "中国轮廓、地形分区、山地纹理和水系沿用全国总图。黄河、长江与珠江采用总图中的 Natural Earth 河流数据；400 毫米等降水量线由 WorldClim 2.1 的 BIO12 年降水量栅格提取；万里长城采用 OpenStreetMap relation 318110 的实际分段。",
       "notes-source-1": "文本：余秋雨《文化苦旅》中文版《我的山河》，及现有英文选译。",
       "notes-source-2": "世界陆地与河流：Natural Earth 公共领域数据，见全站地理数据说明。",
@@ -62,7 +62,7 @@
       "map-svg-title": "My Hometown · Three lines across the land",
       "map-svg-desc": "The Yellow, Yangtze and Pearl rivers, the 400 mm isohyet and the Great Wall use mapped geographic data.",
       "rail-caption": "Original sections",
-      "notes-map": "Scrolling carries the map from Earth into Eurasia and China. The scale changes between paragraphs; within a paragraph the view travels along a river without repeated zooming. You can also choose a section below.",
+      "notes-map": "The opening globe rotates slowly, then faces Asia in section II to show ocean and land, Eurasia, China and its surrounding terrain. The physical map follows the three great lines before bringing nomadic, agrarian and maritime civilizations together. Globe washes indicate locations, not precise boundaries. You can also choose a section below.",
       "notes-data": "China's outline, terrain regions, mountain texture and water system come from the main atlas. The Yellow, Yangtze and Pearl reuse its Natural Earth river data; the 400 mm isohyet is extracted from WorldClim 2.1 BIO12 annual precipitation; the Great Wall uses the mapped segments in OpenStreetMap relation 318110.",
       "notes-source-1": "Text: Yu Qiuyu, My Hometown, and the supplied English translation.",
       "notes-source-2": "World land and rivers: Natural Earth public-domain data; see the atlas geography notes.",
@@ -177,8 +177,7 @@
   function mountReaderBasemap() {
     const atlas = window.ATLAS_PHYSICAL;
     const root = $("[data-reader-physical]");
-    const globeLand = $("[data-reader-globe-land]");
-    if (!atlas || !root || !globeLand) return;
+    if (!atlas || !root) return;
     const ns = "http://www.w3.org/2000/svg";
     const make = (tag, attrs, parent = root) => {
       const node = document.createElementNS(ns, tag);
@@ -187,27 +186,6 @@
       return node;
     };
     root.replaceChildren();
-    const worldRings = window.WORLD_LAND || [];
-    const worldPath = worldRings.map((ring) => ring.map(([longitude, latitude], index) => {
-      const x = 170 + (longitude + 180) / 360 * 860;
-      const y = 150 + (90 - latitude) / 180 * 430;
-      return `${index ? "L" : "M"}${x.toFixed(2)} ${y.toFixed(2)}`;
-    }).join("") + "Z").join("");
-    globeLand.setAttribute("d", worldPath || atlas.land);
-    globeLand.setAttribute("fill-rule", "evenodd");
-    const graticule = $(`[data-reader-world-graticule]`);
-    if (graticule) {
-      const lines = [];
-      for (let longitude = -150; longitude <= 150; longitude += 30) {
-        const x = 170 + (longitude + 180) / 360 * 860;
-        lines.push(`M${x.toFixed(2)} 150V580`);
-      }
-      for (let latitude = -60; latitude <= 60; latitude += 30) {
-        const y = 150 + (90 - latitude) / 180 * 430;
-        lines.push(`M170 ${y.toFixed(2)}H1030`);
-      }
-      graticule.setAttribute("d", lines.join(""));
-    }
     const { n, C, coeff } = atlas.projection;
     const radians = Math.PI / 180;
     const project = ([longitude, latitude]) => {
@@ -294,7 +272,6 @@
     c.w = nextW;
     setCamera(svg);
   }
-  function home(svg) { camera.set(svg, overview(svg)); setCamera(svg); }
 
   const cameraTarget = (x, y, w) => ({ x, y, w, h: w * 760 / 1200 });
   const narrativeCameras = {
@@ -310,7 +287,7 @@
     yangtzeEnd: cameraTarget(540, 325, 650),
     boundary: cameraTarget(360, 118, 640),
     borderlands: cameraTarget(360, 118, 640),
-    ocean: cameraTarget(560, 260, 560),
+    ocean: cameraTarget(255, 155, 700),
     "earth-return": overview()
   };
 
@@ -388,20 +365,8 @@
     $$(".journey-progress i").forEach((item, index) => item.classList.toggle("is-done", index <= step));
     $("[data-skip-tour]").textContent = labels.skip;
     $(".journey-map-coordinate").textContent = labels.coord;
-    const tourNavigation = $(".journey-map-tools");
-    const mapVisible = step >= sceneSteps.yellow;
-    tourNavigation.setAttribute("aria-label", labels.nav);
-    tourNavigation.setAttribute("aria-hidden", String(!mapVisible));
-    tourNavigation.toggleAttribute("inert", !mapVisible);
     setText("#tour-svg-title", copy[language]["map-svg-title"]);
     setText("#tour-svg-desc", copy[language]["map-svg-desc"]);
-    $$('[data-tour-zoom]').forEach((button) => {
-      const action = button.dataset.tourZoom;
-      const text = action === "in" ? labels.zoomIn : action === "out" ? labels.zoomOut : labels.home;
-      button.setAttribute("aria-label", text);
-      button.title = text;
-      if (action === "home") button.textContent = labels.home;
-    });
     setText("[data-lines-quote]", text.linesQuote);
     setText("[data-lines-second]", text.linesSecond);
     setText("[data-lines-third]", text.linesThird);
@@ -626,6 +591,7 @@
     const state = narrativeFor(section, paragraph, total);
     const key = `${section}:${paragraph}:${state.scene}`;
     readerMap.dataset.scene = state.scene;
+    window.HOMETOWN_GLOBE?.set(state.scene, language);
     readerMap.dataset.section = String(section);
     if (state.track) {
       const oldFrame = cameraFrames.get(readerMap);
@@ -652,7 +618,6 @@
       renderOpening();
       updateReaderMap(state.active);
       const labels = smallCopy[language];
-      $("[data-map-home]").textContent = labels.home;
       $("[data-reader-coach]").textContent = labels.coach;
       $("[data-dismiss-coach]").textContent = labels.dismiss;
       window.requestAnimationFrame(refreshReaderNarrative);
@@ -694,14 +659,6 @@
   $("[data-skip-tour]").addEventListener("click", () => enterReader({ skipped: true }));
   $("[data-dismiss-coach]").addEventListener("click", () => { $(".reader-coach").hidden = true; });
   $(".section-buttons").addEventListener("click", () => { $(".reader-coach").hidden = true; });
-  $$('[data-tour-zoom]').forEach((button) => button.addEventListener("click", () => {
-    const action = button.dataset.tourZoom;
-    if (action === "home") home(tourMap);
-    else zoom(tourMap, action);
-  }));
-  $(".map-zoom-in").addEventListener("click", () => zoom(readerMap, "in"));
-  $(".map-zoom-out").addEventListener("click", () => zoom(readerMap, "out"));
-  $("[data-map-home]").addEventListener("click", () => home(readerMap));
 
   if (params.get("open") === "1" || (readSeen() && params.get("tour") !== "1")) {
     journey.hidden = true;

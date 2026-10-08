@@ -21,7 +21,7 @@
       href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&family=Ysabeau:ital,wght@0,400..700;1,400..700&display=swap"
     />
     <link rel="stylesheet" href="../_shared/chapter-shell.css?v=94022d2df1de" />
-    <link rel="stylesheet" href="./styles.css?v=a0a48f8bb79c" />
+    <link rel="stylesheet" href="./styles.css?v=3a54576dc7c3" />
     <link rel="stylesheet" href="../../styles/page-transition.css?v=899e8641905a" />
     <link rel="stylesheet" href="../../styles/journey-audio.css?v=3b21344a057e">
     <script src="../../scripts/journey-audio.js?v=29675942ab62"></script>
@@ -137,16 +137,12 @@
             </g>
 
             <g class="reader-boundary-labels">
-              <text x="490" y="185" data-map-zh="游牧文明（草原与沙漠）" data-map-en="Nomadic civilization (grassland and desert)">Nomadic civilization (grassland and desert)</text>
-              <text x="688" y="342" data-map-zh="农耕文明（种植农作物）" data-map-en="Agricultural civilization (crop cultivation)">Agricultural civilization (crop cultivation)</text>
+              <text x="490" y="185" data-map-zh="游牧文明" data-map-en="Nomadic civilization">Nomadic civilization</text>
+              <text x="688" y="342" data-map-zh="农耕文明" data-map-en="Agrarian civilization">Agrarian civilization</text>
+              <text class="maritime-civilization" x="920" y="510" text-anchor="end" data-map-zh="海洋文明" data-map-en="Maritime civilization">Maritime civilization</text>
             </g>
           </g>
         </svg>
-        <div class="map-tools" role="group" aria-label="地图控制">
-          <button type="button" class="map-zoom-in" aria-label="放大地图">＋</button>
-          <button type="button" class="map-zoom-out" aria-label="缩小地图">－</button>
-          <button type="button" class="map-home" data-map-home>全图</button>
-        </div>
       </section>
 
       <article class="reader-panel" inert data-aria="reader-aria" aria-label="章节正文">
@@ -207,11 +203,6 @@
             </g>
           </svg>
           <span class="journey-map-coordinate">Literary geography of China</span>
-        </div>
-        <div class="journey-map-tools" role="group" aria-label="Prologue map navigation">
-          <button type="button" data-tour-zoom="in" aria-label="Zoom in on the prologue map">+</button>
-          <button type="button" data-tour-zoom="out" aria-label="Zoom out of the prologue map">−</button>
-          <button type="button" data-tour-zoom="home" aria-label="Show the full prologue map">Overview</button>
         </div>
         <div class="journey-topline"><button type="button" class="journey-skip" data-skip-tour>Skip prologue ↗</button></div>
 
@@ -342,6 +333,7 @@
     <script src="../../data/great-wall.js?v=51008ac96e3b"></script>
     <script src="./chapter-data.js?v=8cacbbc01ca4"></script>
     <script src="../_shared/chapter-shell.js?v=c6f78b90ce53"></script>
-    <script src="./app.js?v=6f2616e2e559"></script>
+    <script src="./globe.js?v=fde662e1efb9"></script>
+    <script src="./app.js?v=a024844e47c1"></script>
   </body>
 </html>
