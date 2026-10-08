@@ -1,6 +1,6 @@
 /*
-  山庄背影 - chapter-specific styling only: accent, the two-scale map, the on-map status caption,
-  and the map legend inside the notes drawer.
+  山庄背影 - chapter-specific styling only: accent, the flat map (sections 1, 5) and the resort on 3D terrain
+  (sections 2-4), the labels drawn on them, the on-map status caption, and the map legend inside the notes drawer.
   Frame, title bar, curtain, reader, rails, timeline, bottom bar and completion screen live in ../_shared/chapter-shell.css.
 */
 
@@ -20,358 +20,138 @@
     linear-gradient(145deg, #cfc8b9, #e6e0d3 56%, #cbc6ba);
 }
 
-/* ---------- map canvas ---------- */
+/* ---------- the maps: flat (sections 1, 5) and 3D terrain (2-4), above the docked timeline ---------- */
 
-.regional-map,
-.resort-map {
+.flat-map,
+.terrain-viewport,
+.terrain-marks {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: calc(100% - var(--rail-h));
-  transition:
-    opacity 1250ms ease,
-    transform 1550ms cubic-bezier(.18,.74,.18,1),
-    filter 1250ms ease;
 }
 
-.regional-map {
+.flat-map {
   z-index: 1;
-  opacity: 1;
-  transform: scale(1);
-  transform-origin: 86% 50%;
+  display: block;
+  overflow: hidden;
+  opacity: 0;
+  background: linear-gradient(100deg, rgba(247, 239, 224, 0.56), transparent 58%), var(--paper);
+  transition: opacity 0.9s ease;
+}
+body.flat-on .flat-map { opacity: 1; }
+.flat-land { fill: rgba(81, 66, 47, 0.08); stroke: none; }
+.flat-relief { mix-blend-mode: multiply; opacity: 0.55; }
+.flat-provinces { fill: none; stroke: rgba(57, 48, 37, 0.24); stroke-width: 0.8; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.flat-outline { fill: none; stroke: rgba(42, 36, 28, 0.6); stroke-width: 1.4; vector-effect: non-scaling-stroke; }
+
+.terrain-viewport { z-index: 2; overflow: hidden; opacity: 0; transition: opacity 0.9s ease; }
+body.webgl-ready:not(.flat-on) .terrain-viewport { opacity: 1; }
+.terrain-canvas { display: block; width: 100%; height: 100%; }
+
+.terrain-marks { z-index: 3; overflow: visible; pointer-events: none; font-family: var(--sans); }
+.terrain-marks > g { display: none; }
+.terrain-marks[data-terrain="flat"] .marks-flat,
+.terrain-marks[data-terrain="resort"] .marks-resort { display: inline; }
+
+/* Halos: a paper-coloured stroke with round joins and caps (sizes follow 沙原隐泉, docs/map-guidance.md §4). */
+.terrain-marks text {
+  paint-order: stroke fill;
+  stroke: rgba(240, 237, 228, 0.94);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  text-rendering: geometricPrecision;
 }
 
-.resort-map {
-  z-index: 2;
-  opacity: 0;
-  transform: scale(.52);
-  transform-origin: 56% 52%;
-}
+.place .symbol { fill: rgba(240, 237, 228, 0.95); stroke: var(--ink); stroke-width: 1.4; stroke-linejoin: round; }
+.place .name { fill: var(--ink); font-family: var(--serif-cn); font-size: 24px; letter-spacing: 0.12em; }
+body[data-language="en"] .place .name { font-family: var(--serif-en); font-size: 22px; letter-spacing: 0.01em; }
+.place .note { fill: var(--ink-soft); font-size: 17px; letter-spacing: 0.06em; }
+.place.is-resort .symbol, .place.is-memory .symbol { fill: var(--cinnabar); stroke: rgba(240, 237, 228, 0.95); stroke-width: 2; }
+.place.is-resort .name, .place.is-memory .name { fill: var(--cinnabar-dark); font-weight: 600; }
+.place.is-capital .symbol { fill: var(--ink-soft); stroke: rgba(240, 237, 228, 0.95); }
+.place.is-temple .symbol { fill: var(--cinnabar); stroke: rgba(240, 237, 228, 0.95); stroke-width: 1.2; }
+.place.is-temple .name { font-size: 18px; letter-spacing: 0.06em; }
+body[data-language="en"] .place.is-temple .name { font-size: 17px; }
+.place .symbol.tent, .place .symbol.gate { fill: rgba(240, 237, 228, 0.95); stroke: var(--cinnabar); stroke-width: 1.6; fill-rule: evenodd; }
+.place.is-gate .name { fill: var(--cinnabar-dark); font-weight: 600; }
 
-body:not([data-reading-level="1"]) .regional-map {
-  opacity: 0;
-  transform: scale(2.65);
-  filter: blur(2px);
+/* section one: the northern-tour axis */
+.regional-route { fill: none; stroke: var(--cinnabar); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+/* the Great Wall: the conventional wall symbol, a line with battlements */
+.great-wall { fill: none; stroke: #5b4733; stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; }
+.great-wall-teeth { fill: none; stroke: #5b4733; stroke-width: 2.6; stroke-linecap: butt; }
+.mulan-range { fill: rgba(113, 126, 99, 0.14); stroke: rgba(84, 98, 72, 0.55); stroke-width: 1.2; stroke-dasharray: 4 4; }
+.line-label { fill: #5b4733; font-family: var(--serif-cn); font-size: 18px; letter-spacing: 0.24em; }
+.area-label { fill: #54624a; font-size: 17px; letter-spacing: 0.08em; }
+/* section five: a memory across two cities, not the same place */
+.memory-link { fill: none; stroke: var(--cinnabar); stroke-width: 1.6; stroke-dasharray: 2 7; stroke-linecap: round; }
+.memory-label { fill: var(--cinnabar-dark); font-size: 17px; letter-spacing: 0.06em; }
+.memory-note { fill: var(--ink-soft); font-size: 15px; letter-spacing: 0.06em; }
+
+/* sections two to four: the resort, from OpenStreetMap, on the terrain */
+.resort-wall { fill: rgba(240, 237, 228, 0.12); stroke: var(--cinnabar-dark); stroke-width: 2; stroke-linejoin: round; }
+.lake { fill: rgba(117, 145, 143, 0.78); stroke: #4d6b69; stroke-width: 0.8; stroke-linejoin: round; }
+.river-area { fill: rgba(117, 145, 143, 0.55); stroke: none; }
+.river-line { fill: none; stroke: #4d6b69; stroke-width: 1.2; stroke-linejoin: round; opacity: 0.7; }
+.temple { fill: rgba(162, 91, 76, 0.42); stroke: var(--cinnabar); stroke-width: 1; stroke-linejoin: round; }
+.temple-link { fill: none; stroke: rgba(162, 91, 76, 0.45); stroke-width: 1; stroke-dasharray: 2 5; }
+.zone-label { fill: var(--ink); font-family: var(--serif-cn); font-size: 20px; letter-spacing: 0.3em; }
+.zone-label.is-lake { fill: #2f4a49; }
+.zone-label.is-temples { fill: var(--cinnabar-dark); font-size: 18px; letter-spacing: 0.12em; }
+.chair-label { fill: var(--ink); font-family: var(--serif-cn); font-size: 22px; letter-spacing: 0.24em; }
+.river-label { fill: #3f5d5c; font-family: var(--serif-cn); font-size: 18px; letter-spacing: 0.16em; }
+body[data-language="en"] :is(.zone-label, .chair-label, .river-label) { font-family: var(--serif-en); letter-spacing: 0.03em; }
+
+/* 1861: the gates close - the terrain dims (terrain-3d.js) and the resort's lines fade */
+body[data-reading-level="4"] :is(.lake, .river-area, .temple) { opacity: 0.55; }
+.marks-resort path { transition: opacity 0.8s ease; }
+
+/* ---------- north arrow and scale bar: follow the camera ---------- */
+
+.compass {
+  position: absolute;
+  z-index: 7;
+  top: 34px;
+  right: 18px;
+  width: 52px;
+  height: 52px;
+  overflow: visible;
   pointer-events: none;
-}
-
-body:not([data-reading-level="1"]) .resort-map {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.regional-route {
-  fill: none;
-  stroke: var(--cinnabar);
-  stroke-width: 2.4;
-  stroke-linecap: round;
-  opacity: .72;
-}
-
-.regional-wall {
-  fill: none;
-  stroke: rgba(40, 48, 44, .63);
-  stroke-width: 1.6;
-  stroke-dasharray: 7 6;
-}
-
-.mulan-range {
-  fill: rgba(113, 126, 99, .15);
-  stroke: none;
-}
-
-.regional-point .point-halo {
-  fill: url("#regional-glow");
-}
-
-.regional-point .point-dot {
-  fill: var(--paper-light);
-  stroke: var(--cinnabar);
-  stroke-width: 2;
-}
-
-.regional-point .zoom-ring {
-  fill: none;
-  stroke: var(--cinnabar);
-  stroke-width: 1.3;
-  opacity: .52;
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-.is-scale-transition .regional-point .zoom-ring {
-  animation: resort-zoom-target 1.5s cubic-bezier(.18,.74,.18,1) both;
-}
-
-@keyframes resort-zoom-target {
-  0% { opacity: .65; transform: scale(.75); }
-  55% { opacity: .85; transform: scale(2.2); }
-  100% { opacity: 0; transform: scale(5.2); }
-}
-
-.regional-point.capital .point-dot,
-.regional-point.resort .point-dot {
-  fill: var(--cinnabar);
-}
-
-.regional-point text,
-.regional-line-label {
-  font-size: 17px;
-  fill: var(--ink);
-  paint-order: stroke;
-  stroke: rgba(222, 216, 202, .94);
-  stroke-width: 5px;
-  stroke-linejoin: round;
-}
-
-.regional-point .coordinate {
-  font: 13px var(--sans);
-  fill: var(--ink-soft);
-}
-
-.regional-line-label {
-  font-size: 14px;
-  fill: var(--ink-soft);
-}
-
-.coordinate-grid path {
-  stroke: rgba(42, 49, 45, .075);
-  stroke-width: 1;
-  fill: none;
-  stroke-dasharray: 2 8;
-}
-
-.chair-shadow path {
-  fill: none;
-  stroke: rgba(15, 18, 17, .16);
-  stroke-width: 35;
-  filter: url(#soft-shadow);
-}
-
-.mountain-mass { fill: url(#mountain-ink); }
-.ridge-line {
-  fill: none;
-  stroke: rgba(220, 216, 204, .44);
-  stroke-width: 1.4;
-}
-.ridge-line.faint { opacity: .5; }
-
-.map-note, .zone-label {
-  font-size: 15px;
-  letter-spacing: .09em;
-  fill: var(--ink-soft);
-}
-
-.chair-label {
-  fill: #e3ddcf;
-  font-size: 16px;
-  /* the label runs from the dark mountain band onto light ground: a dark halo keeps it readable on both */
-  paint-order: stroke;
-  stroke: rgba(20, 24, 22, .78);
-  stroke-width: 4px;
-  stroke-linejoin: round;
-}
-
-.resort-boundary {
-  fill: rgba(225, 220, 207, .37);
-  stroke: rgba(52, 60, 55, .7);
-  stroke-width: 1.5;
-  stroke-dasharray: 7 5;
-}
-
-.zone { stroke: rgba(255,255,255,.22); stroke-width: 1; }
-.mountain-zone { fill: rgba(52, 61, 55, .32); }
-.plain-zone { fill: rgba(174, 166, 140, .24); }
-.lake-zone { fill: var(--lake); }
-.lake-label { fill: #314846; }
-
-.palace-axis, .palace-gate {
-  fill: none;
-  stroke: var(--cinnabar-dark);
-  stroke-width: 2;
-}
-
-.geographic-points .relation {
-  stroke: rgba(116, 72, 61, .42);
-  stroke-width: 1;
-  stroke-dasharray: 3 5;
-}
-
-.geo-point circle {
-  fill: var(--paper-light);
-  stroke: var(--cinnabar);
-  stroke-width: 2;
-}
-
-.geo-point.resort circle { fill: var(--cinnabar); }
-.geo-point text {
-  font-size: 16px;
-  fill: var(--ink);
-  paint-order: stroke;
-  stroke: var(--map-halo);
-  stroke-width: 4px;
-  stroke-linejoin: round;
-}
-
-.geo-point .geo-coordinate {
-  font-family: var(--sans);
-  font-size: 12px;
-  letter-spacing: .05em;
-  fill: var(--ink-soft);
-}
-
-.geo-point.temple .geo-coordinate {
-  display: none;
-}
-
-.geo-point.resort .geo-coordinate {
-  display: none;
-}
-
-.empire-lines path {
-  fill: none;
-  stroke: var(--cinnabar);
-  stroke-width: 2;
-  stroke-dasharray: 1 7;
-  stroke-linecap: round;
-}
-
-.wanshu-event circle {
-  fill: rgba(147, 73, 61, .12);
-  stroke: var(--cinnabar);
-  stroke-width: 1;
-  stroke-dasharray: 3 4;
-}
-
-.wanshu-event .event-card {
-  fill: rgba(235, 230, 219, .91);
-  stroke: rgba(62, 70, 65, .32);
-  stroke-width: 1;
-}
-
-body:not([data-reading-level="3"]) .wanshu-event {
   opacity: 0;
+  transition: opacity 0.6s ease;
 }
+body.is-open .compass { opacity: 1; }
+.compass circle { fill: rgba(240, 237, 228, 0.85); stroke: rgba(32, 37, 31, 0.35); stroke-width: 1; }
+.compass-needle { transform: rotate(var(--north, 0deg)); }
+.compass .north { fill: var(--seal); }
+.compass .south { fill: rgba(32, 37, 31, 0.35); }
+.compass text { fill: var(--seal); font: 600 18px var(--sans); }
 
-.wanshu-tent {
-  fill: rgba(238, 233, 222, .62);
-  stroke: var(--cinnabar-dark);
-  stroke-width: 1.5;
+.scale-bar {
+  position: absolute;
+  z-index: 7;
+  right: 18px;
+  bottom: calc(var(--rail-h) + 14px);
+  height: 34px;
+  overflow: visible;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.6s ease;
 }
-
-.event-year {
-  font: 13px var(--sans);
-  letter-spacing: .12em;
-  fill: var(--cinnabar-dark);
-}
-
-.event-title {
-  font-size: 17px;
+body.is-open .scale-bar { opacity: 1; }
+.scale-line { fill: none; stroke: var(--ink); stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; }
+.scale-bar text {
   fill: var(--ink);
-}
-
-.event-note {
-  font-size: 14px;
-  fill: var(--ink-soft);
-}
-
-body:not([data-reading-level="2"]) .chair-label {
-  opacity: 0;
-}
-
-.chair-label {
-  transition: opacity 500ms ease;
-}
-
-.closing-shadow path:first-child {
-  fill: rgba(18, 22, 21, .56);
-}
-
-.closed-gate {
-  fill: rgba(24, 27, 25, .84);
-  stroke: #c7beb0;
-  stroke-width: 1.5;
-}
-
-.reflection ellipse {
-  fill: rgba(113, 143, 140, .3);
-  stroke: rgba(93, 123, 120, .6);
-}
-
-.reflection .figure,
-.reflection-lines {
-  fill: none;
-  stroke: var(--ink);
-  stroke-width: 2;
-  stroke-linecap: round;
-}
-
-.reflection-lines { opacity: .45; }
-
-.summer-palace-memory .memory-link {
-  fill: none;
-  stroke: #b9c6c1;
-  stroke-width: 1.5;
-  stroke-dasharray: 3 7;
-}
-
-body[data-reading-level="5"] .geographic-points,
-body[data-reading-level="5"] .empire-lines {
-  opacity: 0;
-}
-
-.memory-link-label {
-  font-size: 14px;
-  fill: #cbd2cc;
-  letter-spacing: .06em;
-}
-
-.summer-palace-memory rect {
-  fill: rgba(231, 226, 214, .94);
-  stroke: rgba(62, 71, 66, .62);
-  stroke-width: 1;
-}
-
-.memory-lake {
-  fill: rgba(113, 145, 143, .35);
-  stroke: var(--lake);
-  stroke-width: 1;
-}
-
-.summer-palace-memory circle { fill: var(--cinnabar); }
-.memory-place { font-size: 17px; fill: var(--ink); }
-.memory-distance {
   font: 14px var(--sans);
-  fill: var(--ink-soft);
+  letter-spacing: 0.04em;
+  paint-order: stroke fill;
+  stroke: rgba(240, 237, 228, 0.94);
+  stroke-width: 4px;
+  stroke-linejoin: round;
 }
-.memory-event { font-size: 15px; fill: var(--cinnabar-dark); }
-.chengde-present {
-  font-size: 15px;
-  fill: #d9d3c8;
-  letter-spacing: .06em;
-}
-.north-arrow path, .scale-bar path {
-  fill: none;
-  stroke: var(--ink-soft);
-  stroke-width: 1.3;
-}
-
-.north-arrow text, .scale-bar text {
-  fill: var(--ink-soft);
-  font-family: var(--sans);
-  font-size: 11px;
-}
-
-.reveal-layer {
-  opacity: 0;
-  transition: opacity 900ms ease, transform 1200ms cubic-bezier(.2,.8,.2,1);
-}
-.reveal-layer.is-visible { opacity: 1; }
-.mountain-chair { transform-origin: 490px 420px; transform: scale(.97); }
-.mountain-chair.is-visible { transform: scale(1); }
-.closing-shadow { transform: translateY(-10px); }
-.closing-shadow.is-visible { transform: translateY(0); }
 
 /* ---------- on-map caption: year + state, above the docked timeline ---------- */
 
@@ -452,18 +232,17 @@ body[data-reading-level="1"] .status-number {
 
 @media (max-width: 900px) {
   .map-status { left: 20px; bottom: calc(var(--rail-h) + 10px); }
-  .resort-map { transform: scale(1.2); transform-origin: center 60%; }
-  body:not([data-reading-level="1"]) .resort-map { transform: scale(1.2); }
-  .regional-map { transform: scale(1.15); transform-origin: 60% 58%; }
+  .scale-bar { right: 12px; bottom: calc(var(--rail-h) + 8px); }
 }
 
 @media (max-width: 540px) {
-  .resort-map { transform: scale(1.32); transform-origin: 56% 65%; }
-  body:not([data-reading-level="1"]) .resort-map { transform: scale(1.32); }
-  .regional-map { transform: scale(1); transform-origin: 50% 60%; }
-  .regional-point text { font-size: 24px; }
-  .regional-point .coordinate { font-size: 17px; }
-  .regional-line-label { font-size: 20px; }
+  .place .name { font-size: 20px; }
+  body[data-language="en"] .place .name { font-size: 18px; }
+  .place .note, .line-label, .area-label, .memory-label, .river-label, .place.is-temple .name { font-size: 15px; }
+  .memory-note { font-size: 14px; }
+  .zone-label, .chair-label { font-size: 17px; }
+  .compass { top: 26px; right: 10px; width: 40px; height: 40px; }
+  .scale-bar { right: auto; left: 12px; top: 14px; bottom: auto; }
   .status-number { font-size: 22px; }
   .status-label { font-size: 14px; }
 }

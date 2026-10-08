@@ -24,16 +24,28 @@ The Chengde–Summer Palace distance shown in the final movement is approximatel
 
 The line from Beijing through Gubeikou and Chengde toward Mulan expresses the historical northern-inspection axis. It is not a reconstructed turn-by-turn imperial road. The Great Wall line is likewise diagrammatic.
 
+## Real-map layers (2026-10-08)
+
+| Layer | Source | Notes |
+|---|---|---|
+| Terrain, sections 2–4 | Copernicus DEM GLO-30, 117.80–118.08°E, 40.91–41.10°N, 240 × 215 cells (~98 m) | 304–1,262 m; heights exaggerated 3× |
+| Resort wall | OpenStreetMap relation 8008566 | encloses ~540 ha (UNESCO property: 611.2 ha) |
+| Lakes, Wulie River | OpenStreetMap natural=water, waterway | lakes clipped to the wall |
+| Outlying temples | OpenStreetMap place_of_worship footprints | ten temples drawn, six labelled |
+| Lizheng Gate | OpenStreetMap relation 8008565 | section four |
+| Wanshu Garden | OpenStreetMap node 8659379119 (蒙古包) | approximate: the garden has no outline in OSM |
+| Chair-back label | highest DEM cell within ~1.5 km outside the north and west walls | a label anchor, not a named summit |
+| Relief, sections 1 and 5 | Copernicus DEM GLO-90 at 1/240° (~350 m), 114.8–119.8°E, 39.0–42.8°N | warped into the standard map's Albers projection |
+| Great Wall, sections 1 and 5 | OpenStreetMap ways named 长城 (historic=citywalls / barrier=city_wall), 114.8–119.8°E, 39.4–42.2°N | 1,451 ways merged into 538 lines; drawn with battlements on the north side |
+
 ## Diagrammatic elements
 
 The following are explicitly interpretive rather than surveyed:
 
-- the simplified resort boundary;
-- the internal hill, plain, lake and palace zones;
-- the chair-back mountain silhouette;
-- links between the resort and temples;
-- the closing gate and reflected figure.
-- the northern-inspection connector and simplified Great Wall line;
+- the placement of the hill, plain and lake zone labels (no zone boundaries are drawn);
+- the links between the resort and temples;
+- the exact spot of the 1793 audience within Wanshu Garden.
+- the northern-inspection connector;
 - the interior position of the Wanshu Garden event marker.
 
 The broad internal arrangement follows the Chengde Cultural Heritage Bureau description: hills in the west and northwest, lakes in the southeast, and a plain in the north.
