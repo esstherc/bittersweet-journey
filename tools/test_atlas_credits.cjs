@@ -61,7 +61,8 @@ const server=http.createServer((req,res)=>{
    await page.waitForFunction(()=>{const sky=document.querySelector('.credits-chapter-sky.is-current');return sky&&sky.style.backgroundImage.includes('dujiangyan');});
    await page.waitForFunction(()=>Number(getComputedStyle(document.querySelector('.credits-chapter-sky.is-current')).opacity)>.99);
    if(!process.env.SKIP_CREDITS_SCREENSHOTS)await page.screenshot({path:path.join(output,'credits-chapter-art-'+(mobile?'mobile':'desktop')+'.png')});
-   if(!mobile){
+   {
+    if(mobile)await page.emulateMedia({reducedMotion:'no-preference'});
     await view.evaluate(n=>n.scrollTop=document.querySelector('.credits-departure').offsetTop-n.clientHeight*.4-5);
     await page.waitForFunction(()=>document.querySelector('.cinema-credits').dataset.scene==='1');
     await page.locator('.credits-play').click();
@@ -69,9 +70,24 @@ const server=http.createServer((req,res)=>{
     await page.waitForTimeout(120);await page.locator('.credits-play').click();
     const time=await page.locator('.credits-traveler').evaluate(async n=>{const a=n.getAnimations().find(a=>a.animationName==='end-leave-page');await a.ready;return a.currentTime;});
     await page.waitForTimeout(120);assert.equal(await page.locator('.credits-traveler').evaluate(n=>n.getAnimations().find(a=>a.animationName==='end-leave-page').currentTime),time);
+    for(const [phase,at,selector] of [['page',0,'.credits-page-origin'],['edge',1672,'.credits-page-threshold']]){
+      await page.locator('.credits-traveler').evaluate((n,at)=>n.getAnimations().find(a=>a.animationName==='end-leave-page').currentTime=at,at);
+      await page.waitForTimeout(40);
+      const geometry=await page.evaluate(selector=>{
+        const traveler=document.querySelector('.credits-traveler'),marker=document.querySelector(selector).getBoundingClientRect();
+        const point=traveler.createSVGPoint();point.x=60;point.y=84.48;
+        const foot=point.matrixTransform(traveler.getScreenCTM());
+        return {distance:Math.hypot(foot.x-marker.left,foot.y-marker.top),opacity:getComputedStyle(traveler).opacity,front:Number(getComputedStyle(traveler).zIndex)>Number(getComputedStyle(document.querySelector('.credits-viewport')).zIndex)};
+      },selector);
+      assert(geometry.distance<12,`${phase}: traveller must stand on the actual page (${geometry.distance}px)`);
+      assert.equal(geometry.opacity,'1','traveller starts visibly inside the page');assert(geometry.front,'traveller crosses in front of the book');
+      if(!process.env.SKIP_CREDITS_SCREENSHOTS)await page.screenshot({path:path.join(output,`credits-departure-${phase}-${mobile?'mobile':'desktop'}.png`)});
+    }
+    await page.locator('.credits-traveler').evaluate((n,time)=>n.getAnimations().find(a=>a.animationName==='end-leave-page').currentTime=time,time);
     await page.locator('.credits-play').click();await page.waitForTimeout(120);
     assert((await page.locator('.credits-traveler').evaluate(n=>n.getAnimations().find(a=>a.animationName==='end-leave-page').currentTime))>=time,'departure resumes without restarting');
     await page.locator('.credits-play').click();
+    if(mobile)await page.emulateMedia({reducedMotion:'reduce'});
    }
    await view.evaluate(n=>n.scrollTop=n.scrollHeight);await page.waitForFunction(()=>document.querySelector('.cinema-credits').dataset.scene==='5');
    await page.locator('.credits-again').click();assert.equal(await view.evaluate(n=>n.scrollTop),0);

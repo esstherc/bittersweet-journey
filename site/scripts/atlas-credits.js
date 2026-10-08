@@ -9,7 +9,7 @@
       <nav class="credits-controls"><span class="credits-wordmark"></span><button type="button" class="credits-play credits-icon"></button><button type="button" class="credits-sound credits-icon"></button><button type="button" class="finale-return"></button></nav>
       <div class="credits-viewport" tabindex="0"><div class="credits-roll">
         <section class="credits-opening" data-ending-scene="1"><div class="credits-map-wrap"><div class="credits-map-snapshot"></div><div class="credits-last-light"></div><img class="credits-last-seal" alt=""/></div><h2 id="atlas-finale-title"></h2><p class="finale-message"></p><p class="credits-scroll-hint"></p></section>
-        <section class="credits-departure" data-ending-scene="2"><div class="credits-book" aria-hidden="true"><div class="credits-book-left"></div><div class="credits-book-right"></div></div><h3></h3><p></p></section>
+        <section class="credits-departure" data-ending-scene="2"><div class="credits-book" aria-hidden="true"><div class="credits-book-left"></div><div class="credits-book-right"><span class="credits-page-origin"></span><span class="credits-page-threshold"></span></div></div><h3></h3><p></p></section>
         <section class="credits-library" data-ending-scene="3"><h3></h3><p class="credits-legend"></p><ol class="credits-titles"></ol><p class="credits-beyond"></p></section>
         <section class="credits-attribution" data-ending-scene="4"><h3></h3><dl></dl></section>
         <section class="credits-coda" data-ending-scene="5"><h3></h3><p></p><div class="credits-travel-book"><div class="finale-seals"></div><p class="credits-record"></p></div><div class="credits-coda-actions"><button type="button" class="credits-end"></button><button type="button" class="credits-again"></button></div></section>
@@ -34,7 +34,23 @@
       lantern.setAttribute('class','credits-carried-lantern');
       lantern.innerHTML='<circle cx="76" cy="45" r="21" fill="url(#end-lamp)"/><path d="M71 32l5 3v3" fill="none" stroke="#d3bd8e"/><rect x="72" y="38" width="8" height="12" rx="2" fill="#f2cc85" stroke="#82532b" stroke-width=".8"/><path d="M72 40h8m-8 8h8m-4-9v9m0 2v3" stroke="#82532b" stroke-width=".6"/>';
       traveler.querySelector('.journey-rider').append(lantern);
-      dialog.querySelector('.credits-world').append(traveler);
+      // The traveller crosses in front of the page, rather than behind its layer.
+      dialog.append(traveler);
+    }
+    let departureScroll=0;
+    function prepareDeparture(){
+      const traveler=dialog.querySelector('.credits-traveler');if(!traveler)return;
+      const style=getComputedStyle(traveler),bounds=dialog.getBoundingClientRect();
+      const width=parseFloat(style.width),height=width*.8;
+      const footX=parseFloat(style.left)+width*.5;
+      const footY=bounds.height-parseFloat(style.bottom)-height*.12;
+      for(const [name,selector] of [['origin','.credits-page-origin'],['edge','.credits-page-threshold']]){
+        const point=dialog.querySelector(selector).getBoundingClientRect();
+        dialog.style.setProperty(`--departure-${name}-x`,`${point.left-bounds.left-footX}px`);
+        dialog.style.setProperty(`--departure-${name}-y`,`${point.top-bounds.top-footY}px`);
+      }
+      departureScroll=viewport.scrollTop;
+      dialog.style.setProperty('--departure-scroll','0px');
     }
     const skies=[...dialog.querySelectorAll('.credits-chapter-sky')];
     let skyIndex=0;
@@ -64,10 +80,12 @@
       dialog.style.setProperty('--far-shift',`${-y*.015}px`);dialog.style.setProperty('--middle-shift',`${-y*.04}px`);dialog.style.setProperty('--near-shift',`${-y*.075}px`);
       if(activeScene!==scene){
         activeScene=scene;dialog.dataset.scene=String(scene);
+        if(scene===2)prepareDeparture();
         dialog.classList.toggle('is-page-departure',scene===2&&running&&!reduce.matches);
         dialog.querySelectorAll('.credits-route i').forEach((dot,i)=>dot.classList.toggle('is-reached',i<=index));
         if(dialog.open&&running){if(scene===1)cue('stamp',.3);else if(scene===2)cue('dunes',.14);else if(scene===5)cue('bell',.18);}
       }
+      if(scene===2)dialog.style.setProperty('--departure-scroll',`${viewport.scrollTop-departureScroll}px`);
       let current=null,count=0;
       chapters().forEach(item=>{const reached=item.offsetTop<=anchor;item.classList.toggle('is-discovered',reached);if(reached){current=item;count++;}});
       [...lamps.children].forEach((lamp,i)=>lamp.classList.toggle('is-lit',scene===5||i<count));
@@ -96,7 +114,13 @@
       }
       previous=now;if(running)frame=requestAnimationFrame(tick);
     }
-    function start(delay=0){cancelAnimationFrame(frame);running=true;position=viewport.scrollTop;previous=performance.now();startsAt=previous+delay;control();frame=requestAnimationFrame(tick);}
+    function start(delay=0){
+      cancelAnimationFrame(frame);running=true;position=viewport.scrollTop;previous=performance.now();startsAt=previous+delay;
+      if(activeScene===2&&!reduce.matches&&!dialog.classList.contains('is-page-departure')){
+        prepareDeparture();dialog.classList.add('is-page-departure');
+      }
+      control();frame=requestAnimationFrame(tick);
+    }
     play.addEventListener('click',()=>running?stop():start());
     dialog.addEventListener('keydown',e=>{if(e.code==='Space'&&!e.target.closest('button,a')){e.preventDefault();if(!e.repeat){if(running)stop();else start();}}});
     sound.addEventListener('click',()=>{window.JOURNEY_AUDIO?.setEnabled(!window.JOURNEY_AUDIO.enabled);if(!window.JOURNEY_AUDIO?.enabled)stopVoice();control();});
