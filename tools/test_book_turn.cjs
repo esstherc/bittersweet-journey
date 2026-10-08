@@ -63,7 +63,7 @@ const server=http.createServer((req,res)=>{const p=path.resolve(root,'.'+new URL
       await page.waitForFunction(()=>!document.getAnimations().some(a=>a.animationName?.startsWith('book-')));
     }
     await page.goto(base+'index.html');await page.waitForFunction(()=>window.ATLAS_JOURNEY);
-    await page.locator('[data-story="kashgar"]').press('Enter');
+    await page.locator('.story-point[data-story="kashgar"]').press('Enter');
     await page.waitForURL('**/chapters/kashgar/**',{waitUntil:'commit'});await inspect('enter-chapter','forward');
     await page.locator('.chapter-leaf-enter').click();
     await inspectFade();

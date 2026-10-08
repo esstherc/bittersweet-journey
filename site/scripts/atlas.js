@@ -596,7 +596,7 @@
     zh: {
       "site-title": "山河显影",
       "document-title": "山河显影 · 文化苦旅阅读地图",
-      "view-stamps-aria": "查看已显影的圖章",
+      "view-stamps-aria": "查看已显影的图章",
       "close-aria": "关闭",
       "stage-aria": "文化苦旅中国故事地图",
       "map-aria": "未完全显影的中国故事地图",
@@ -622,10 +622,10 @@
       "cta-hint": "移动游标／触碰提灯 · 拖动或双指缩放 · 完成章节留下光圈",
       reset: "重置阅读痕迹",
       source: "文本：余秋雨《文化苦旅》",
-      "view-stamps": "圖章",
-      "stamp-kicker": "已收藏圖章",
-      "stamp-title": "圖章",
-      "stamp-desc": "每完成一段旅程，就会留下一枚山河圖章。"
+      "view-stamps": "图章",
+      "stamp-kicker": "已收藏图章",
+      "stamp-title": "图章",
+      "stamp-desc": "每完成一段旅程，就会留下一枚山河图章。"
     },
     en: {
       "site-title": "Land, Made Visible",

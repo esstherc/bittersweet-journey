@@ -28,7 +28,7 @@
     root.classList.remove('land-in-transit');busy=false;outgoing=null;incoming=null;
   }
   async function fade(reveal,useSnapshots=true){
-    if(reduced()){reveal();return;}
+    if(reduced()){await reveal();return;}
     root.dataset.transitionMode='fade';
     if(snapshots&&useSnapshots){
       const transition=document.startViewTransition(reveal);
@@ -37,22 +37,31 @@
     const page=document.querySelector('dialog[open]')||document.body;
     fadeAnimation=page.animate?.([{opacity:1},{opacity:0}],{duration:260,easing:'ease-out',fill:'forwards'});
     if(fadeAnimation)try{await fadeAnimation.finished;}catch{}
-    reveal();
+    await reveal();
   }
   // File previews and browsers without cross-document snapshots still get the
   // same book: prepare the destination in a frame and capture it in this document.
-  async function bookBeforeNavigation(url){
+  async function prepareDestination(url){
     frame=document.createElement('iframe');frame.className='book-destination';frame.title='Chapter preview';
-    frame.tabIndex=-1;frame.setAttribute('aria-hidden','true');frame.style.visibility='hidden';
+    frame.tabIndex=-1;frame.setAttribute('aria-hidden','true');frame.style.opacity='0';
     const preview=frame;
     const loaded=new Promise(resolve=>{preview.onload=()=>resolve(true);preview.onerror=()=>resolve(false);});
     preview.src=url.href;document.body.append(preview);
-    let timeout;
-    const ready=await Promise.race([loaded,new Promise(resolve=>timeout=setTimeout(()=>resolve(false),5000))]);
-    clearTimeout(timeout);
+    // Do not impose a five-second limit: cold GitHub Pages image requests can
+    // take longer. The frame's own load/error and decoded artwork determine readiness.
+    const ready=await loaded;
+    if(ready){
+      try{await preview.contentWindow.CHAPTER_OPENING?.ready;}
+      catch{ /* File previews can give local frames opaque origins; retain load fallback. */ }
+    }
+    return ready;
+  }
+  async function bookBeforeNavigation(url){
+    const ready=await prepareDestination(url);
+    const preview=frame;
     if(ready&&frame===preview){
       root.dataset.transitionMode='entry';
-      const transition=document.startViewTransition(()=>{preview.style.visibility='visible';});
+      const transition=document.startViewTransition(()=>{preview.style.opacity='1';});
       await transition.updateCallbackDone;await transition.finished;
     }
     outgoing='handled';remember(url,'handled');location.assign(url.href);
@@ -66,6 +75,9 @@
     busy=true;root.classList.add('land-in-transit');
     outgoing=isAtlas(new URL(location.href))&&isChapter(url)?'entry':'fade';
     root.dataset.transitionMode=outgoing;
+    if(outgoing==='entry'&&nativeNavigation){
+      try{await prepareDestination(url);}catch{ /* Navigation still offers the static fallback. */ }
+    }
     if(nativeNavigation){remember(url,outgoing);location.assign(url.href);rescue=setTimeout(clear,5000);return;}
     try{
       if(outgoing==='entry'&&snapshots){await bookBeforeNavigation(url);return;}

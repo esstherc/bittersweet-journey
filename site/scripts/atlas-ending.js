@@ -11,7 +11,7 @@
   const credits=window.createAtlasCredits(dialog,stories,close);
   const replay=document.createElement('button');replay.type='button';replay.className='credits-replay';
   document.querySelector('.atlas-footer-source').append(replay);
-  function localize(){credits.render();replay.textContent=document.body.dataset.language==='en'?'End credits':'旅程謝幕';}
+  function localize(){credits.render();replay.textContent=document.body.dataset.language==='en'?'End credits':'旅程谢幕';}
   function show(){if(!complete())return;previousFocus=document.activeElement;credits.open();}
   replay.addEventListener('click',show);
   function close(){dialog.close();if(previousFocus?.isConnected)previousFocus.focus({preventScroll:true});}

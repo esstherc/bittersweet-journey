@@ -42,10 +42,10 @@ body[data-language="en"] .cinema-credits { font-family: var(--en); }
 .credits-cursor-lamp { position: absolute; z-index: 3; inset: 0; opacity: 0; background: radial-gradient(circle 110px at var(--lamp-x) var(--lamp-y),#e6b86922,transparent); transition: opacity .3s ease; }
 .has-lantern-cursor .credits-cursor-lamp { opacity: 1; }
 .credits-controls { position: absolute; inset: 0 0 auto; z-index: 5; display: flex; align-items: center; gap: 20px; padding: 17px 38px; background: #32251e; border-bottom: 1px solid #b69a6633; color: #dfd8c8; }
-.credits-wordmark { margin-right: auto; text-align: left; font: 600 18px var(--label); letter-spacing: .15em; }
+.credits-wordmark { margin-right: auto; text-align: left; font: 600 18px var(--cn); letter-spacing: .15em; }
 .credits-controls button, .credits-coda-actions button { color: #f0e5d1; background: transparent; font: 14px var(--label); border: 0; border-bottom: 1px solid #ad8c5966; padding: 8px 0; cursor: pointer; margin: 0; transition: color .2s ease,border-color .2s ease; }
 .credits-controls button:hover, .credits-coda-actions button:hover { color: #f6ce87; border-color: #efc986; }
-.credits-controls .credits-icon { position: relative; flex: 0 0 36px; width: 36px; height: 36px; border: 1px solid currentColor; border-radius: 50%; padding: 0; opacity: .82; font: 21px/1 Georgia,serif; }
+.credits-controls .credits-icon { position: relative; flex: 0 0 36px; width: 36px; height: 36px; border: 1px solid currentColor; border-radius: 50%; padding: 0; opacity: .82; font: 21px/1 var(--sans); }
 .credits-controls .credits-icon:hover { opacity: 1; background: #9d3d311a; }
 .credits-controls .credits-icon[aria-pressed="true"] { opacity: 1; }
 .credits-sound[aria-pressed="false"]::after { content: ''; position: absolute; left: 4px; top: 17px; width: 27px; height: 1px; background: currentColor; transform: rotate(-44deg); }
@@ -136,3 +136,5 @@ body[data-language="en"] .cinema-credits h2 { font-family: var(--en); }
   .credits-cursor-lamp { display: none; }
 }
 @media (hover: none) { .credits-cursor-lamp { display: none; } }
+
+body[data-language="en"] .credits-wordmark { font-family: var(--en); }

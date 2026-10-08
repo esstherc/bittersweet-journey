@@ -1,5 +1,8 @@
 /* Shared by the atlas, chapter title leaf and chapter reading view. */
 :root {
+  --serif-cn: "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", serif;
+  --serif-en: "Caudex", Georgia, serif;
+  --sans: "Ysabeau", "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", serif;
   --site-header-height: 72px;
   --site-header-pad: 38px;
   --site-header-line: rgba(32, 37, 31, .2);
@@ -32,11 +35,11 @@
 }
 .site-masthead .site-wordmark span {
   display: inline;
-  font: 700 20px "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+  font: 700 20px var(--serif-cn);
   letter-spacing: .18em;
 }
 body[data-language="en"] .site-masthead .site-wordmark span {
-  font-family: "Ysabeau", sans-serif;
+  font-family: var(--serif-en);
   letter-spacing: .17em;
 }
 .site-masthead .site-progress {
@@ -50,7 +53,7 @@ body[data-language="en"] .site-masthead .site-wordmark span {
   border-radius: 3px;
   background: none;
   color: inherit;
-  font: 500 14px/1.35 "Ysabeau", sans-serif;
+  font: 500 14px/1.35 var(--sans);
   letter-spacing: .1em;
   text-decoration: none;
   cursor: pointer;
@@ -71,7 +74,7 @@ body[data-language="en"] .site-masthead .site-wordmark span {
   align-items: center;
   gap: 7px;
   color: inherit;
-  font: 600 14px/1.35 "Ysabeau", sans-serif;
+  font: 600 14px/1.35 var(--sans);
   letter-spacing: .08em;
 }
 .site-masthead .site-language button {

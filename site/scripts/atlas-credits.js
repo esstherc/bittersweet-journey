@@ -48,8 +48,8 @@
     }
     function control(){
       play.textContent=running?'Ⅱ':'▷';play.setAttribute('aria-pressed',String(running));
-      play.title=en()?(running?'Pause credits':'Play credits'):(running?'暫停謝幕':'播放謝幕');play.setAttribute('aria-label',play.title);
-      sound.textContent='♫';sound.title=en()?(window.JOURNEY_AUDIO?.enabled?'Mute':'Sound on'):(window.JOURNEY_AUDIO?.enabled?'靜音':'開啟聲音');sound.setAttribute('aria-label',sound.title);
+      play.title=en()?(running?'Pause credits':'Play credits'):(running?'暂停谢幕':'播放谢幕');play.setAttribute('aria-label',play.title);
+      sound.textContent='♫';sound.title=en()?(window.JOURNEY_AUDIO?.enabled?'Mute':'Sound on'):(window.JOURNEY_AUDIO?.enabled?'静音':'开启声音');sound.setAttribute('aria-label',sound.title);
       sound.setAttribute('aria-pressed',String(Boolean(window.JOURNEY_AUDIO?.enabled)));
       dialog.classList.toggle('is-playing',running);
     }
@@ -122,27 +122,27 @@
     function render() {
       const english = en(), lang = english ? 'en' : 'zh';
       const completed = stories.every(s => { try { return localStorage.getItem(s.storageKey) === 'true'; } catch { return false; } });
-      set('.credits-wordmark',english?'The journey continues':'旅程，仍在繼續');
-      set('#atlas-finale-title', english ? 'Nine seals. Nine landscapes.' : '九枚圖章，九段山河。');
-      set('.credits-departure h3', english ? 'Carry the light beyond the page.' : '提起燈，走出這一頁。');
-      set('.credits-departure p', english ? 'The landscapes become a road. Our traveller continues with you.' : '書中的山河，延伸成腳下的路。旅人與你，繼續前行。');
-      set('.credits-beyond', english ? 'There are more landscapes in the book, waiting for another departure.' : '書中還有更多山河，等待下一次出發。');
-      set('.credits-record', english ? 'Explored 9 / 9 · Seals collected 9 / 9' : '已探索 9 / 9 · 已集齊圖章 9 / 9');
-      set('.credits-again', english ? 'Watch again' : '重看謝幕');
+      set('.credits-wordmark',english?'The journey continues':'旅程，仍在继续');
+      set('#atlas-finale-title', english ? 'Nine seals. Nine landscapes.' : '九枚图章，九段山河。');
+      set('.credits-departure h3', english ? 'Carry the light beyond the page.' : '提起灯，走出这一页。');
+      set('.credits-departure p', english ? 'The landscapes become a road. Our traveller continues with you.' : '书中的山河，延伸成脚下的路。旅人与你，继续前行。');
+      set('.credits-beyond', english ? 'There are more landscapes in the book, waiting for another departure.' : '书中还有更多山河，等待下一次出发。');
+      set('.credits-record', english ? 'Explored 9 / 9 · Seals collected 9 / 9' : '已探索 9 / 9 · 已集齐图章 9 / 9');
+      set('.credits-again', english ? 'Watch again' : '重看谢幕');
       const lastStory=stories.find(s=>s.id===document.body.dataset.returningStory)||stories.at(-1);
       dialog.querySelector('.credits-last-seal').src=lastStory.seal;
       dialog.querySelector('.credits-book-right').style.backgroundImage=`url("${landscapeFor(lastStory.id)||landscapeFor('fish-tail-lodge')}")`;
       set('.finale-message', english
         ? (completed ? `You have read all ${stories.length} selected chapters, collected every seal, and illuminated the atlas. Beyond these pages, more journeys await.` : 'These landscapes are only a beginning. Beyond this atlas, more stories await in the book.')
-        : (completed ? `你已完成 ${stories.length} 篇選讀，集齊圖章，點亮山河。書頁之外，仍有更多故事等待相遇。` : '這些山河，只是起點。地圖之外，《文化苦旅》還有更多值得探索的故事。'));
+        : (completed ? `你已完成 ${stories.length} 篇选读，集齐图章，点亮山河。书页之外，仍有更多故事等待相遇。` : '这些山河，只是起点。地图之外，《文化苦旅》还有更多值得探索的故事。'));
       dialog.querySelector('.finale-seals').replaceChildren(...stories.map(story => {
         const figure = document.createElement('figure'), img = document.createElement('img'), caption = document.createElement('figcaption');
         img.src = story.seal; img.alt = ''; caption.textContent = story.title[lang];
         figure.append(img, caption); return figure;
       }));
-      set('.credits-scroll-hint', english ? 'Scroll at your own pace · Space to pause or resume' : '隨時捲動、停留 · 空白鍵暫停或繼續');
-      set('.credits-library h3', english ? 'Beyond this atlas' : '地圖之外，還有山河');
-      set('.credits-legend', english ? 'All 26 essays in the 2014 Chinese edition. Gold titles and seals mark the nine atlas selections. Chinese-only titles are absent from the 2015 English selection.' : '依 2014 年中文版篇序列出全書 26 篇。暖金篇名與圖章標示本故事地圖的 9 篇選讀。');
+      set('.credits-scroll-hint', english ? 'Scroll at your own pace · Space to pause or resume' : '随时卷动、停留 · 空白键暂停或继续');
+      set('.credits-library h3', english ? 'Beyond this atlas' : '地图之外，还有山河');
+      set('.credits-legend', english ? 'All 26 essays in the 2014 Chinese edition. Gold titles and seals mark the nine atlas selections. Chinese-only titles are absent from the 2015 English selection.' : '依 2014 年中文版篇序列出全书 26 篇。暖金篇名与图章标示本故事地图的 9 篇选读。');
       dialog.querySelector('.credits-titles').replaceChildren(...window.BOOK_CONTENTS.map((chapter, index) => {
         const item = document.createElement('li'), title = document.createElement('span');
         const story = stories.find(s => s.title.zh === chapter.zh);
@@ -151,30 +151,30 @@
         if (!chapter.en) {
           const note = document.createElement('small');
           note.className = 'credits-untranslated';
-          note.textContent = english ? 'Not included in the English edition' : '未收錄於英譯本';
+          note.textContent = english ? 'Not included in the English edition' : '未收录於英译本';
           item.append(note);
         }
         if (story) {
           item.className = 'credits-selected';
           item.dataset.story=story.id;
-          const img = document.createElement('img'); img.src = story.seal; img.alt = english ? 'Atlas selection' : '地圖選讀';
+          const img = document.createElement('img'); img.src = story.seal; img.alt = english ? 'Atlas selection' : '地图选读';
           item.prepend(img);
         }
         return item;
       }));
-      set('.credits-attribution h3', english ? 'Words, maps & the people behind them' : '文字、山河與幕後的人');
+      set('.credits-attribution h3', english ? 'Words, maps & the people behind them' : '文字、山河与幕後的人');
       const credits = [
-        [english ? 'Original author' : '原著作者', english ? 'Yu Qiuyu · 余秋雨' : '余秋雨'],
-        [english ? 'Chinese edition' : '中文版本', '文化苦旅 · 長江文藝出版社 · 2014'],
-        [english ? 'English edition' : '英譯版本', 'A Bittersweet Journey Through Culture · CN Times Books · 2015'],
-        [english ? 'English translator' : '英譯本譯者', english ? 'CN Times Books team' : 'CN Times Books 團隊'],
-        [english ? 'Story map' : '故事地圖作者', 'Yanbing Chen · Eugenie Huang'],
-        [english ? 'Coastlines, rivers & terrain regions' : '海岸、水系與地形分區', 'Natural Earth', 'https://www.naturalearthdata.com/'],
-        [english ? 'Roads, places & heritage' : '道路、地點與遺址', '© OpenStreetMap contributors · ODbL', 'https://www.openstreetmap.org/copyright'],
+        [english ? 'Original author' : '原着作者', english ? 'Yu Qiuyu · 余秋雨' : '余秋雨'],
+        [english ? 'Chinese edition' : '中文版本', '文化苦旅 · 长江文艺出版社 · 2014'],
+        [english ? 'English edition' : '英译版本', 'A Bittersweet Journey Through Culture · CN Times Books · 2015'],
+        [english ? 'English translator' : '英译本译者', english ? 'CN Times Books team' : 'CN Times Books 团队'],
+        [english ? 'Story map' : '故事地图作者', 'Yanbing Chen · Eugenie Huang'],
+        [english ? 'Coastlines, rivers & terrain regions' : '海岸、水系与地形分区', 'Natural Earth', 'https://www.naturalearthdata.com/'],
+        [english ? 'Roads, places & heritage' : '道路、地点与遗址', '© OpenStreetMap contributors · ODbL', 'https://www.openstreetmap.org/copyright'],
         [english ? 'Elevation' : '高程地形', 'Copernicus DEM GLO-30 / GLO-90', 'https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM'],
-        [english ? 'Climate & rainfall' : '氣候與降水', 'WorldClim 2.1 · 1970–2000', 'https://www.worldclim.org/data/worldclim21.html'],
-        [english ? 'Geographic reference coordinates' : '地理參考座標', 'Wikidata · P625', 'https://www.wikidata.org/wiki/Property:P625'],
-        [english ? 'Standard-map reference' : '標準地圖參考', english ? 'Ministry of Natural Resources · China' : '中國自然資源部標準地圖服務', 'https://bzdt.ch.mnr.gov.cn/']
+        [english ? 'Climate & rainfall' : '气候与降水', 'WorldClim 2.1 · 1970–2000', 'https://www.worldclim.org/data/worldclim21.html'],
+        [english ? 'Geographic reference coordinates' : '地理参考座标', 'Wikidata · P625', 'https://www.wikidata.org/wiki/Property:P625'],
+        [english ? 'Standard-map reference' : '标准地图参考', english ? 'Ministry of Natural Resources · China' : '中国自然资源部标准地图服务', 'https://bzdt.ch.mnr.gov.cn/']
       ];
       dialog.querySelector('dl').replaceChildren(...credits.flatMap(([role, name, url]) => {
         const dt = document.createElement('dt'), dd = document.createElement('dd'); dt.textContent = role;
@@ -182,11 +182,11 @@
         else dd.textContent = name;
         return [dt, dd];
       }));
-      set('.credits-coda h3', english ? 'Rest here.\nThe journey continues.' : '此卷暫歇，\n旅程未完。');
-      set('.credits-coda p', english ? 'Open the book again. Let the next story take you somewhere new.' : '再次翻開《文化苦旅》，讓下一篇故事，帶你走向未曾抵達的遠方。');
+      set('.credits-coda h3', english ? 'Rest here.\nThe journey continues.' : '此卷暂歇，\n旅程未完。');
+      set('.credits-coda p', english ? 'Open the book again. Let the next story take you somewhere new.' : '再次翻开《文化苦旅》，让下一篇故事，带你走向未曾抵达的远方。');
       set('.credits-end', english ? 'Return to the landscapes →' : '重返山河 →');
-      set('.finale-return', english ? 'Back to the atlas' : '返回地圖');
-      viewport.setAttribute('aria-label', english ? 'Book contents and credits' : '全書篇目與製作名錄');
+      set('.finale-return', english ? 'Back to the atlas' : '返回地图');
+      viewport.setAttribute('aria-label', english ? 'Book contents and credits' : '全书篇目与制作名录');
       control();
       if(dialog.open)syncWorld();
     }

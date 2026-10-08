@@ -21,7 +21,7 @@
   border: 0; background: none; color: #f8f0df; text-shadow: 0 1px 5px #332e22;
   font: 13.5px/1.4 "Ysabeau", "Songti SC", serif; letter-spacing: .04em; cursor: pointer;
 }
-#chapter-leaf .chapter-leaf-motion::before { content: "Ⅱ"; font: 14px Georgia, serif; }
+#chapter-leaf .chapter-leaf-motion::before { content: "Ⅱ"; font: 14px var(--sans); }
 #chapter-leaf.is-motion-paused .chapter-leaf-motion::before { content: "▷"; }
 #chapter-leaf.has-static-landscape .chapter-leaf-motion { display: none; }
 @media (max-width: 760px) {

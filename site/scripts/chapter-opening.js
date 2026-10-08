@@ -5,6 +5,26 @@
   let options, dialog, sheet, turning = false, reading = false, sectionsObserver, contentObserver;
   let header, headerHome;
   let motionButton;
+  let resolveReady;
+  const ready = new Promise(resolve => { resolveReady = resolve; });
+  const nextPaint = () => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  async function settleLandscape() {
+    const images = [...dialog.querySelectorAll('img')];
+    await Promise.all(images.map(async image => {
+      image.loading = 'eager';
+      image.decoding = 'sync';
+      if (!image.complete) await new Promise(resolve => {
+        image.addEventListener('load', resolve, {once: true});
+        image.addEventListener('error', resolve, {once: true});
+      });
+      if (image.naturalWidth && image.decode) {
+        try { await image.decode(); } catch { /* Keep the static paper fallback. */ }
+      }
+    }));
+    await nextPaint();
+    dialog.dataset.landscapeReady = 'true';
+    resolveReady();
+  }
   const seenSections = new Set();
   const root = document.documentElement;
   // Set before body parsing so a cold load cannot paint the reading spread first.
@@ -89,18 +109,21 @@
     action.disabled = true;
     let entered = false;
     const revealReading = () => {
-      options.enter();
-      window.scrollTo({top: 0, behavior: 'instant'});
       restoreHeader();
       dialog.close();
       root.classList.remove('chapter-gate-open');
       entered = true;
     };
     try {
+      // Prepare maps beneath the still-open title leaf. View-transition update
+      // callbacks suspend painting, so waiting for RAF inside one deadlocks.
+      options.enter();
+      window.scrollTo({top: 0, behavior: 'instant'});
+      await nextPaint();
       if (window.LAND_TRANSITION?.turnPage) {
         await window.LAND_TRANSITION.turnPage(revealReading);
       } else {
-        revealReading();
+        await revealReading();
       }
     } finally {
       turning = false;
@@ -148,7 +171,7 @@
         scene.setAttribute('aria-hidden', 'true');
         const painting = make('img', 'chapter-painted-image');
         painting.alt = '';
-        painting.decoding = 'async';
+        painting.decoding = 'sync';
         painting.fetchPriority = 'high';
         painting.src = landscape.content;
         scene.append(painting);
@@ -187,12 +210,13 @@
     new MutationObserver(refresh).observe(document.body, {attributes: true, attributeFilter: ['data-language']});
     refresh();
     // Explicit development deep-links retain their existing reading preview behavior.
-    if (config.preview) { config.enter(); root.classList.remove('chapter-entry-pending'); startReading(); return; }
+    if (config.preview) { config.enter(); root.classList.remove('chapter-entry-pending'); startReading(); resolveReady(); return; }
     root.classList.add('chapter-gate-open');
     dialog.showModal();
     window.JOURNEY_AUDIO?.setAmbience(true);
     root.classList.remove('chapter-entry-pending');
+    settleLandscape();
     title.focus({preventScroll: true});
   }
-  window.CHAPTER_OPENING = Object.freeze({mount, refresh});
+  window.CHAPTER_OPENING = Object.freeze({mount, refresh, ready});
 })();

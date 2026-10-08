@@ -43,7 +43,7 @@ body[data-language="en"] .physical-label { font-family: var(--en); font-style: i
 .atlas-zoom-controls { display: flex; border: 1px solid #958b7060; background: #f9f4e8ee; box-shadow: 0 2px 12px #5449340b; }
 .atlas-zoom-controls button {
   border: 0; border-right: 1px solid #958b7038; background: transparent;
-  min-width: 44px; min-height: 44px; padding: 5px 12px; cursor: pointer; font: 24px Georgia,serif; color: #565c4e;
+  min-width: 44px; min-height: 44px; padding: 5px 12px; cursor: pointer; font: 24px var(--sans); color: #565c4e;
 }
 .atlas-zoom-controls button:last-child { border-right: 0; }
 .atlas-zoom-controls button.atlas-home { font: 14px var(--cn); letter-spacing: .05em; }

@@ -16,7 +16,7 @@
 
   --serif-cn: "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", serif;
   --serif-en: "Caudex", Georgia, serif;
-  --sans: "Ysabeau", sans-serif;
+  --sans: "Ysabeau", "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", serif;
 
   /* [F-6] frame tokens */
   --bar-top: 76px;

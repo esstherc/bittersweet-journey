@@ -10,9 +10,9 @@
   --sand: #b7a47f;
   --seal: #9d3d31;
   --line: rgba(32, 37, 31, 0.2);
-  --cn: "Songti SC", "STSong", "Noto Serif CJK SC", serif;
+  --cn: "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", serif;
   --en: "Caudex", Georgia, serif;
-  --label: "Ysabeau", sans-serif;
+  --label: "Ysabeau", "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", serif;
 }
 
 * { box-sizing: border-box; }
