@@ -15,7 +15,7 @@
       href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&family=Ysabeau:ital,wght@0,400..700;1,400..700&display=swap"
     />
     <link rel="stylesheet" href="../_shared/chapter-shell.css?v=94022d2df1de" />
-    <link rel="stylesheet" href="./styles.css?v=dddb230acd49" />
+    <link rel="stylesheet" href="./styles.css?v=dd7d1332d165" />
     <link rel="stylesheet" href="../../styles/page-transition.css?v=899e8641905a">
     <link rel="stylesheet" href="../../styles/journey-audio.css?v=3b21344a057e">
     <script src="../../scripts/journey-audio.js?v=29675942ab62"></script>
@@ -58,7 +58,10 @@
         <!-- Labels drawn on real terrain positions every frame (app.js). -->
         <svg class="terrain-marks" aria-hidden="true"></svg>
 
-        <!-- Part four: the globe (orthographic, Natural Earth land), drawn by app.js. -->
+        <!-- Parts one and four: one flat world map (Equal Earth, 130°E), its camera moved per stage (world-map.js). -->
+        <svg class="world-flat" aria-hidden="true"></svg>
+
+        <!-- Part four: the lines and names over the world map, drawn by app.js. -->
         <svg class="world-globe" aria-hidden="true"></svg>
 
         <!-- Part three: a schematic cliff face (not a map) and the essay's sequence of dynasties. -->
@@ -77,10 +80,6 @@
           </g>
         </svg>
 
-        <div class="camera-caption" aria-hidden="true">
-          <span class="camera-mode">佛教石窟的来路</span>
-          <span class="camera-tech">Wide terrain</span>
-        </div>
       </section>
 
       <article class="reader-panel" inert data-aria="reader-aria" aria-label="章节正文">
@@ -183,10 +182,12 @@
     </div>
 
     <script src="./geography-data.js?v=2dfc3389af69"></script>
-    <script src="./terrain-data.js?v=d5adc53a0cb6"></script>
+    <script src="./terrain-data.js?v=86b27c5f9baa"></script>
     <script src="./chapter-data.js?v=46085fb2d69c"></script>
-    <script src="./terrain-3d.js?v=357ec64f755b"></script>
+    <script src="./terrain-3d.js?v=6d19ab026328"></script>
     <script src="../_shared/chapter-shell.js?v=c6f78b90ce53"></script>
-    <script src="./app.js?v=086dcbe0d0e4"></script>
+    <script src="./world-map-data.js?v=ec161c9b45cc"></script>
+    <script src="./world-map.js?v=ed49e63084a7"></script>
+    <script src="./app.js?v=59d18ff10e18"></script>
   </body>
 </html>

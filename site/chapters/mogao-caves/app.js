@@ -46,27 +46,6 @@
     ]
   };
 
-  const captions = {
-    zh: {
-      west: "西域", dunhuang: "敦煌", india: "从印度到犍陀罗", china: "从犍陀罗到敦煌",
-      day: "鸣沙山东麓 · 莫高窟", dusk: "闭馆之后的黄昏",
-      step: "一窟一窟看年代", russians: "二十世纪二十年代的莫高窟", america: "从美国来的人",
-      villagers: "约十五公里外赶来的村民", beijing: "从北京雇来的翻译", world: "几乎环绕了整个地球"
-    },
-    en: {
-      west: "The Western Regions", dunhuang: "Dunhuang", india: "From India to Gandhara", china: "From Gandhara to Dunhuang",
-      day: "The east face of Echoing Sand Hill", dusk: "After the caves close",
-      step: "Cave by cave", russians: "The Mogao Caves in the 1920s", america: "Visitors from America",
-      villagers: "The villagers who came to watch", beijing: "The interpreter hired in Beijing", world: "Almost around the planet"
-    }
-  };
-  const captionTech = {
-    wide: "Wide terrain",
-    local: "3D terrain",
-    cliff: "Cliff terrain",
-    globe: "World map"
-  };
-
   const fmt = (n) => Number(n).toLocaleString("en");
   const place = (id) => geography.places.find((p) => p.id === id);
   const caveCount = geography.caves.list.length;
@@ -80,7 +59,7 @@
       "cliff-title": "断崖立面 · 示意",
       "notes-keyboard": "↑ ↓ ← → 切换节次 · L 切换语言 · Esc 关闭本面板",
       "data-views-label": "视图",
-      "data-views": "第一节是从希腊到河西走廊的大范围地形，北方朝上；第二节是鸣沙山东麓、大泉河谷与敦煌的三维地形，读到“闭馆之后的黄昏”转为夜色；第三节镜头贴近莫高窟断崖（30 米网格），并附断崖立面示意与朝代顺序；第四节先回到莫高窟一带，再换成世界地图。",
+      "data-views": "第一节与第四节的世界部分是同一张平面世界地图（同一种投影，镜头随段落移动）：第一节看希腊、犍陀罗、印度到敦煌；第二节是鸣沙山东麓、大泉河谷与敦煌的三维地形，读到“闭馆之后的黄昏”转为夜色；第三节镜头贴近莫高窟断崖（30 米网格），并附断崖立面示意与朝代顺序；第四节先回到莫高窟一带，再回到那张世界地图，依次看美国、北京与几乎整个地球。",
       "data-arrows-label": "箭头",
       "data-arrows": "第一节的箭头表示原文所说的方向：佛像石窟从印度起身，在犍陀罗吸收了随亚历山大东征而来的希腊雕塑（西边汇入的虚线），再进入中国。它们是观念的走向，不是某一条实际道路。印度、希腊只写区域名，不定点；犍陀罗的点取 Wikidata 坐标。",
       "data-caves-label": "断崖立面",
@@ -90,9 +69,9 @@
       "data-text-label": "两个版本",
       "data-text": "英文译本依据较早的版本：第一节开头多出 10 段，写古代“西域”是几大文明相遇之地（地图在英文版读这几段时标出“西域”）；第四节多出“主人”等段落。村民的距离，中文作“大约十五公里”，英文引华尔纳原文作“fifteen miles”（约 24 公里），地图依中文。英文标题在语料中作 Mogai Caves，这里依正文写作 Mogao Caves。",
       "data-projection-label": "投影",
-      "data-projection": "WGS 84 经纬度，每块地形按其中心纬度的余弦等比例展开；世界地图为等距圆柱投影（与《道士塔》相同），图上的弧线只示意方向。距离另按大圆公式计算：莫高窟距敦煌市区直线约 " + fmt(place("dunhuang").distanceKm) + " 公里，距北京约 " + fmt(place("beijing").distanceKm) + " 公里，距哈佛约 " + fmt(place("harvard").distanceKm) + " 公里。",
+      "data-projection": "WGS 84 经纬度，每块地形按其中心纬度的余弦等比例展开；世界地图为 Equal Earth 等面积投影，中央经线 130°E（让希腊与美国都在同一张图上、不被切开），图上的弧线只示意方向。距离另按大圆公式计算：莫高窟距敦煌市区直线约 " + fmt(place("dunhuang").distanceKm) + " 公里，距北京约 " + fmt(place("beijing").distanceKm) + " 公里，距哈佛约 " + fmt(place("harvard").distanceKm) + " 公里。",
       "data-terrain-label": "地形",
-      "data-terrain": "Copernicus DEM：大范围地形由 GLO-90 内部缩图层平均为约 21 公里一格；敦煌一带为 GLO-90，约 157 米一格；断崖一带为 GLO-30，约 30 米一格。断崖只高几十米，高程有夸大。",
+      "data-terrain": "Copernicus DEM：世界地图上希腊到河西走廊的晕渲由 GLO-90 内部缩图层平均为约 11 公里一格；敦煌一带为 GLO-90，约 157 米一格；断崖一带为 GLO-30，约 30 米一格。断崖只高几十米，高程有夸大。",
       "notes-source-1": "地点：Wikidata 坐标属性 P625，2026 年 9 月 27 日取得（莫高窟 Q43286、敦煌市 Q319114、犍陀罗 Q213651、北京 Q956、福格艺术博物馆 Q809600、费城艺术博物馆 Q510324）；鸣沙山依 OpenStreetMap",
       "notes-source-2": "洞窟编号与时代：敦煌研究院“数字敦煌”洞窟列表（e-dunhuang.com），2026 年 9 月 28 日取得；北凉三窟：Whitfield、Whitfield 与 Agnew，Cave Temples of Mogao at Dunhuang（2015），第 55 页",
       "notes-source-3": "地形：Copernicus DEM GLO-90 与 GLO-30（© DLR e.V. 2010–2014，© Airbus Defence and Space GmbH 2014–2018，欧盟与 ESA 哥白尼计划提供）",
@@ -110,7 +89,7 @@
       "cliff-title": "The cliff face · schematic",
       "notes-keyboard": "↑ ↓ ← → switch sections · L language · Esc closes this panel",
       "data-views-label": "Views",
-      "data-views": "Section one is a wide terrain from Greece to the Hexi Corridor, north up. Section two is 3D terrain of the east face of Echoing Sand Hill, the Daquan valley and Dunhuang; it turns to night at “when the caves are closed in the evening”. Section three moves close to the Mogao cliff (30 m cells), with a schematic cliff face and the sequence of dynasties. Section four returns to the Mogao area, then turns to a world map.",
+      "data-views": "Section one and the world stages of section four are one flat world map in a single projection, its camera moving with the text: section one shows Greece, Gandhara and India to Dunhuang. Section two is 3D terrain of the east face of Echoing Sand Hill, the Daquan valley and Dunhuang; it turns to night at “when the caves are closed in the evening”. Section three moves close to the Mogao cliff (30 m cells), with a schematic cliff face and the sequence of dynasties. Section four returns to the Mogao area, then to the same world map for America, Beijing and almost the whole planet.",
       "data-arrows-label": "Arrows",
       "data-arrows": "The arrows in section one show the direction the essay describes: cave sculpture set out from India, took in Greek sculpture brought by Alexander’s campaign in Gandhara (the dashed line joining from the west), then entered China. They show a movement of ideas, not an actual road. India and Greece are named as regions, not points; Gandhara’s point is from Wikidata.",
       "data-caves-label": "Cliff face",
@@ -120,9 +99,9 @@
       "data-text-label": "Two editions",
       "data-text": "The English translation follows an earlier edition: section one opens with ten more paragraphs on the Western Regions as a meeting place of civilizations (the map names the region while you read them), and section four has more paragraphs, on “the owners”. The Chinese has the villagers coming from about fifteen kilometres; the English quotes Warner’s “fifteen miles” (about 24 km). The map follows the Chinese. The corpus heading reads “Mogai Caves”; the text itself has Mogao.",
       "data-projection-label": "Projection",
-      "data-projection": "WGS 84 longitude and latitude, each terrain scaled by the cosine of its central latitude; the world map is an equirectangular projection, and its lines show direction only. Distances are great circles: the caves are about " + fmt(place("dunhuang").distanceKm) + " km from Dunhuang in a straight line, " + fmt(place("beijing").distanceKm) + " km from Beijing and " + fmt(place("harvard").distanceKm) + " km from Harvard.",
+      "data-projection": "WGS 84 longitude and latitude, each terrain scaled by the cosine of its central latitude; the world map is the Equal Earth equal-area projection centred on 130°E (so Greece and America sit on one unbroken map), and its lines show direction only. Distances are great circles: the caves are about " + fmt(place("dunhuang").distanceKm) + " km from Dunhuang in a straight line, " + fmt(place("beijing").distanceKm) + " km from Beijing and " + fmt(place("harvard").distanceKm) + " km from Harvard.",
       "data-terrain-label": "Terrain",
-      "data-terrain": "Copernicus DEM: the wide terrain is averaged from the GLO-90 internal overviews to about 21 km; the Dunhuang area is GLO-90 at about 157 m; the cliff is GLO-30 at about 30 m. The cliff is only tens of metres high, so heights are exaggerated.",
+      "data-terrain": "Copernicus DEM: the world map’s shaded relief from Greece to the Hexi Corridor is averaged from the GLO-90 internal overviews to about 11 km; the Dunhuang area is GLO-90 at about 157 m; the cliff is GLO-30 at about 30 m. The cliff is only tens of metres high, so heights are exaggerated.",
       "notes-source-1": "Places: Wikidata coordinate property P625, retrieved 27 September 2026 (Mogao Caves Q43286, Dunhuang Q319114, Gandhara Q213651, Beijing Q956, Fogg Museum Q809600, Philadelphia Museum of Art Q510324); Echoing Sand Hill from OpenStreetMap",
       "notes-source-2": "Cave numbers and periods: Dunhuang Academy, Digital Dunhuang cave list (e-dunhuang.com), retrieved 28 September 2026; Northern Liang caves: Whitfield, Whitfield and Agnew, Cave Temples of Mogao at Dunhuang (2015), p. 55",
       "notes-source-3": "Terrain: Copernicus DEM GLO-90 and GLO-30 (© DLR e.V. 2010–2014, © Airbus Defence and Space GmbH 2014–2018, provided under COPERNICUS by the European Union and ESA)",
@@ -157,8 +136,6 @@
   const globeSvg = document.querySelector(".world-globe");
   const cliffSvg = document.querySelector(".cliff-elevation");
   const dynastyTrack = document.querySelector(".dynasty-track");
-  const modeLabel = document.querySelector(".camera-mode");
-  const techLabel = document.querySelector(".camera-tech");
   const compass = document.querySelector(".compass");
   let language = body.dataset.language || "zh";
   let level = 1;
@@ -390,7 +367,7 @@
     const mingsha = project(place("mingsha").lon, place("mingsha").lat, lift);
     reserve(taken, [mogao, dunhuang, mingsha]);
     placeMark(localMarks.mogao, mogao, taken, size);
-    if (view.terrain === "local") {
+    if (view.terrain === "local" || view.terrain === "region") {
       placeMark(localMarks.dunhuang, dunhuang, taken, size);
       placeMark(localMarks.mingsha, mingsha, taken, size);
     } else {
@@ -478,34 +455,19 @@
 
   /* ---------- part four: the world map (2D, as in 道士塔) ---------- */
 
-  // An equirectangular world map. Each stage frames the places it needs; the frame eases from one
-  // stage to the next. The lines are curves that show direction only, not routes (as in 道士塔).
+  // The same flat world map as part one (world-map.js); each stage moves its camera. The lines are
+  // curves that show direction only, not routes (as in 道士塔).
   const worldTargets = {
-    america: { frame: [-100, 128, 8, 66], arcs: ["harvard", "philadelphia"] },
-    beijing: { frame: [66, 132, 18, 56], arcs: ["beijing"] },
-    world: { frame: [-172, 178, -48, 78], arcs: ["harvard", "philadelphia", "beijing"] }
+    america: { arcs: ["harvard", "philadelphia"] },
+    beijing: { arcs: ["beijing"] },
+    world: { arcs: ["harvard", "philadelphia", "beijing"] }
   };
-  const worldView = { frame: [-100, 128, 8, 66] };
-  const worldParts = {
-    sea: make("rect", { class: "world-sea" }, globeSvg),
-    graticule: make("path", { class: "world-graticule" }, globeSvg),
-    land: make("path", { class: "world-land" }, globeSvg),
-    arcs: {},
-    labels: {}
-  };
+  const worldParts = { arcs: {}, labels: {} };
   ["beijing", "harvard", "philadelphia"].forEach((id) => { worldParts.arcs[id] = make("path", { class: "world-arc" }, globeSvg); });
   ["mogao", "beijing", "harvard", "philadelphia"].forEach((id) => {
     worldParts.labels[id] = { dot: make("circle", { class: `dot ${id === "mogao" ? "is-origin" : "is-site"}`, r: 4 }, globeSvg), name: make("text", { class: `name ${id === "mogao" ? "is-origin" : ""}` }, globeSvg), note: make("text", { class: "note" }, globeSvg) };
   });
-  // Antarctica is not needed for these lines.
-  const landRings = geography.world.land.filter((ring) => Math.min(...ring.map((point) => point[1])) > -60);
 
-  function worldProjection(frame, width, height) {
-    const [west, east, south, north] = frame;
-    const k = Math.min(width / (east - west), height / (north - south));
-    const x0 = (width - (east - west) * k) / 2, y0 = (height - (north - south) * k) / 2;
-    return (lon, lat) => ({ x: x0 + (lon - west) * k, y: y0 + (north - lat) * k, visible: true });
-  }
   // A curve from a to b that bows toward the top of the map, like 道士塔's routes.
   function worldCurve(a, b) {
     const lift = Math.max(24, Math.abs(b.x - a.x) * 0.18);
@@ -514,46 +476,34 @@
     return `M${a.x.toFixed(1)},${a.y.toFixed(1)}C${(a.x + dx * 0.34).toFixed(1)},${top.toFixed(1)} ${(a.x + dx * 0.68).toFixed(1)},${top.toFixed(1)} ${b.x.toFixed(1)},${b.y.toFixed(1)}`;
   }
 
-  function drawWorld() {
-    const target = level === 4 && worldTargets[stage];
-    body.classList.toggle("globe-shown", Boolean(target));
+  // Part four's lines and names, on the flat world map's camera.
+  function drawWorld(project) {
+    const target = worldTargets[stage];
     if (!target) return;
     const { width, height } = globeSvg.getBoundingClientRect();
     if (!width || !height) return;
     globeSvg.setAttribute("viewBox", `0 0 ${width} ${height}`);
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    worldView.frame = worldView.frame.map((value, index) => value + (target.frame[index] - value) * (reduced ? 1 : 0.08));
-    const project = worldProjection(worldView.frame, width, height);
-    const ring = (points) => points.map(([lon, lat], index) => { const p = project(lon, lat); return `${index ? "L" : "M"}${p.x.toFixed(1)},${p.y.toFixed(1)}`; }).join("") + "Z";
-    worldParts.land.setAttribute("d", landRings.map(ring).join(""));
-    const topLeft = project(-180, 90), bottomRight = project(180, -90);
-    worldParts.sea.setAttribute("x", topLeft.x.toFixed(1));
-    worldParts.sea.setAttribute("y", topLeft.y.toFixed(1));
-    worldParts.sea.setAttribute("width", (bottomRight.x - topLeft.x).toFixed(1));
-    worldParts.sea.setAttribute("height", (bottomRight.y - topLeft.y).toFixed(1));
-    let grid = "";
-    for (let lon = -180; lon <= 180; lon += 30) { const a = project(lon, 90), b = project(lon, -90); grid += `M${a.x.toFixed(1)},${a.y.toFixed(1)}V${b.y.toFixed(1)}`; }
-    for (let lat = -60; lat <= 60; lat += 30) { const a = project(-180, lat), b = project(180, lat); grid += `M${a.x.toFixed(1)},${a.y.toFixed(1)}H${b.x.toFixed(1)}`; }
-    worldParts.graticule.setAttribute("d", grid);
     const at = (id) => project(place(id).lon, place(id).lat);
     Object.entries(worldParts.arcs).forEach(([id, node]) => {
       node.setAttribute("d", target.arcs.includes(id) ? worldCurve(at(id), at("mogao")) : "");
     });
     const size = { width, height };
-    const taken = [document.querySelector(".camera-caption")].map((node) => {
-      const b = node.getBoundingClientRect(), o = globeSvg.getBoundingClientRect();
-      return { left: b.left - o.left - 4, right: b.right - o.left + 4, top: b.top - o.top - 4, bottom: b.bottom - o.top + 4 };
+    const origin = globeSvg.getBoundingClientRect();
+    const taken = [compass].map((node) => {
+      const b = node.getBoundingClientRect();
+      return { left: b.left - origin.left - 4, right: b.right - origin.left + 4, top: b.top - origin.top - 4, bottom: b.bottom - origin.top + 4 };
     });
     const shownIds = ["mogao", ...target.arcs];
+    // a narrow panel has room for the short names only (the notes drawer keeps the full ones)
+    const short = { harvard: ["哈佛", "Harvard"], philadelphia: ["费城", "Philadelphia"] };
+    Object.entries(short).forEach(([id, names]) => {
+      worldParts.labels[id].name.textContent = width < 520 ? names[language === "zh" ? 0 : 1] : place(id)[language === "zh" ? "zh" : "en"];
+    });
     reserve(taken, shownIds.map(at));
     Object.entries(worldParts.labels).forEach(([id, mark]) => {
       if (shownIds.includes(id)) placeMark(mark, at(id), taken, size);
       else hideMark(mark);
     });
-  }
-  function worldLoop() {
-    drawWorld();
-    window.requestAnimationFrame(worldLoop);
   }
 
   /* ---------- frame ---------- */
@@ -566,7 +516,7 @@
     marks.dataset.terrain = view.shown ? view.terrain : "none";
     compass.style.setProperty("--north", `${(view.north * 180 / Math.PI).toFixed(1)}deg`);
     const origin = marks.getBoundingClientRect();
-    const furniture = [document.querySelector(".camera-caption"), compass];
+    const furniture = [compass];
     if (level === 3) furniture.push(document.querySelector(".cliff-panel"));
     const taken = furniture.map((node) => {
       const b = node.getBoundingClientRect();
@@ -574,8 +524,8 @@
     });
     if (!view.shown) return;
     if (view.terrain === "wide") drawWide(project, size, taken);
+    else if (view.terrain === "world") drawWorld(project);
     else drawLocal(project, size, taken);
-    updateCaption();
   }
 
   /* ---------- text ---------- */
@@ -610,18 +560,6 @@
     drawCliffPanel();
   }
 
-  function updateCaption() {
-    const words = captions[language];
-    let text = words[stage] || "";
-    if (level === 3) {
-      const steps = geography.caves.steps[language];
-      text = activeStep >= 0 ? `${words.step} · ${steps[activeStep]}` : words.step;
-    }
-    if (modeLabel.textContent !== text) modeLabel.textContent = text;
-    const tech = level === 4 && worldTargets[stage] ? captionTech.globe : captionTech[level === 1 ? "wide" : level === 3 ? "cliff" : "local"];
-    if (techLabel.textContent !== tech) techLabel.textContent = tech;
-  }
-
   // Which paragraph of the active section is at the reading line, and the map stage it calls for.
   function updateStage() {
     const section = scroller.querySelectorAll(".reading-section")[level - 1];
@@ -648,7 +586,8 @@
       body.dataset.stage = stage;
     }
     window.MOGAO_TERRAIN_RENDERER?.setStage(stage.startsWith("step") ? "cliff" : stage, t);
-    updateCaption();
+    window.MOGAO_WORLD_MAP_VIEW?.setView(level, stage);
+    body.classList.toggle("globe-shown", level === 4 && Boolean(worldTargets[stage]));
   }
 
   function onRender(nextLanguage, state) {
@@ -664,15 +603,22 @@
     stage = "";
     activeStep = -1;
     window.MOGAO_TERRAIN_RENDERER?.setState(level);
+    window.MOGAO_WORLD_MAP_VIEW?.setView(level, stage);
+    body.classList.toggle("globe-shown", false);
     renderDynastyTrack();
     drawCliffPanel();
     window.requestAnimationFrame(updateStage);
   }
 
-  window.MOGAO_TERRAIN_RENDERER?.onFrame(drawMarks);
+  // Parts one and four's world stages are the flat world map (world-map.js); the rest is the 3D terrain.
+  window.MOGAO_TERRAIN_RENDERER?.onFrame((project, nextView) => {
+    if (!window.MOGAO_WORLD_MAP_VIEW?.active()) drawMarks(project, nextView);
+  });
+  window.MOGAO_WORLD_MAP_VIEW?.onFrame((project, flatView) => {
+    drawMarks(project, { terrain: level === 1 ? "wide" : "world", north: flatView.north, night: 0, shown: true });
+  });
   scroller.addEventListener("scroll", () => window.requestAnimationFrame(updateStage), { passive: true });
   window.addEventListener("resize", () => window.requestAnimationFrame(drawCliffPanel));
-  window.requestAnimationFrame(worldLoop);
 
   ChapterShell.init({
     id: "mogao-caves",
@@ -682,6 +628,8 @@
     copy,
     formatParagraph,
     onRender,
-    onSection
+    onSection,
+    showReaderLocation: false,
+    showReaderProgress: false
   });
 })();

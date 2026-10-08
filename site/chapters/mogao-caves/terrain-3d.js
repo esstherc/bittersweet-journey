@@ -1,7 +1,9 @@
 /*
   莫高窟 - WebGL terrain from Copernicus DEM (tools/build_mogao_geodata.py).
-  Three terrains: "wide" (Greece to the Hexi Corridor, part 1), "local" (Dunhuang, Echoing Sand Hill and the
-  Daquan valley, parts 2 and 4) and "cliff" (the cave cliff at 30 m, part 3). Based on the 鱼尾山屋 renderer;
+  Four terrains: "wide" (Greece to the Hexi Corridor; part 1 is now the flat world map, world-map.js),
+  "local" (Dunhuang, Echoing Sand Hill and the Daquan valley, parts 2 and 4), "region" (about 136 x 130 km
+  around the caves, for part four's 15 km villagers' circle) and "cliff" (the cave cliff at 30 m, part 3).
+  Based on the 鱼尾山屋 renderer;
   kept separate on purpose.
   Exposes window.MOGAO_TERRAIN_RENDERER:
     setState(level)        1-4: terrain + camera for the reading part
@@ -178,7 +180,10 @@
   const terrains = {
     wide: buildTerrain(data.wide, { exaggeration: 30, edgeStart: 0.92, sea: true, desert: 0, ramp: [0, 1] }),
     local: buildTerrain(data.local, { exaggeration: 3, edgeStart: 0.86, sea: false, desert: 1, ramp: range("local") }),
-    cliff: buildTerrain(data.cliff, { exaggeration: 2.2, edgeStart: 0.8, sea: false, desert: 1, ramp: range("cliff") })
+    cliff: buildTerrain(data.cliff, { exaggeration: 2.2, edgeStart: 0.8, sea: false, desert: 1, ramp: range("cliff") }),
+    // part four's villagers: about 136 x 130 km around the caves, so the 15 km circle sits well inside it and
+    // no terrain edge shows (tools/build_mogao_region_terrain.py)
+    region: buildTerrain(data.region, { exaggeration: 3, edgeStart: 0.9, sea: false, desert: 1, ramp: range("local") })
   };
 
   /* ---------- camera ---------- */
@@ -283,7 +288,7 @@
     }
     if (level === 3) return cliffCamera(stageT);
     // part four
-    if (stage === "villagers") return fitNorthUp("local", circleBox(), { tilt: 0.4, margin: [0.8, 0.76] });
+    if (stage === "villagers") return fitNorthUp("region", circleBox(), { tilt: 0.4, margin: [0.8, 0.76] });
     const camera = fitNorthUp("local", [mogao, [mogao[0] + 0.03, mogao[1] + 0.02], [mogao[0] - 0.03, mogao[1] - 0.02]], { tilt: 0.6, margin: [0.5, 0.45] });
     if (stage !== "russians") camera.fade = 0; // the globe is drawn over the map
     return camera;

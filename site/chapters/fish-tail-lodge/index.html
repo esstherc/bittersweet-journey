@@ -15,7 +15,7 @@
       href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&family=Ysabeau:ital,wght@0,400..700;1,400..700&display=swap"
     />
     <link rel="stylesheet" href="../_shared/chapter-shell.css?v=94022d2df1de" />
-    <link rel="stylesheet" href="./styles.css?v=ce300cffeee4" />
+    <link rel="stylesheet" href="./styles.css?v=8e9f03a651c6" />
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" />
     <link rel="stylesheet" href="../../styles/page-transition.css?v=899e8641905a">
     <link rel="stylesheet" href="../../styles/journey-audio.css?v=3b21344a057e">
@@ -59,6 +59,9 @@
         <div class="mapbox-context" aria-hidden="true">
           <div class="mapbox-canvas"></div>
         </div>
+
+        <!-- Parts 2-4: one flat map in one projection, the camera moved per part (wide-map.js). -->
+        <svg class="wide-map" aria-hidden="true"></svg>
 
         <!-- Labels drawn on real terrain positions every frame (app.js). -->
         <svg class="terrain-marks" aria-hidden="true"></svg>
@@ -178,7 +181,9 @@
     <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
     <script src="./mapbox-context.js?v=f39f7b7cd492"></script>
     <script src="./terrain-3d.js?v=92597d8f8efa"></script>
+    <script src="./wide-map-data.js?v=c3990904f9bf"></script>
+    <script src="./wide-map.js?v=00514e7bffa8"></script>
     <script src="../_shared/chapter-shell.js?v=c6f78b90ce53"></script>
-    <script src="./app.js?v=7e976d13e063"></script>
+    <script src="./app.js?v=27d87cc28aac"></script>
   </body>
 </html>

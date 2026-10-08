@@ -15,7 +15,7 @@
       href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&family=Ysabeau:ital,wght@0,400..700;1,400..700&display=swap"
     />
     <link rel="stylesheet" href="../_shared/chapter-shell.css?v=94022d2df1de" />
-    <link rel="stylesheet" href="./styles.css?v=48d04710bff0" />
+    <link rel="stylesheet" href="./styles.css?v=74394ec042e1" />
     <link rel="stylesheet" href="../../styles/page-transition.css?v=899e8641905a">
     <link rel="stylesheet" href="../../styles/journey-audio.css?v=3b21344a057e">
     <script src="../../scripts/journey-audio.js?v=29675942ab62"></script>
@@ -58,8 +58,8 @@
         <!-- Labels drawn on real terrain positions every frame (app.js). -->
         <svg class="terrain-marks" aria-hidden="true"></svg>
 
-        <!-- Level 2: Dunhuang to Yangguan, over a hillshade made from the same DEM. -->
-        <svg class="regional-map" role="img" aria-labelledby="regional-title">
+        <!-- Parts one and two: one flat map in the standard map's projection, as 道士塔's first map (flat-map.js). -->
+        <svg class="flat-map" role="img" aria-labelledby="regional-title">
           <title id="regional-title" data-copy="regional-svg-title">敦煌县城与阳关的区域关系</title>
         </svg>
 
@@ -183,6 +183,8 @@
     <script src="./chapter-data.js?v=d112b389427f"></script>
     <script src="./terrain-3d.js?v=d1535d38d542"></script>
     <script src="../_shared/chapter-shell.js?v=c6f78b90ce53"></script>
-    <script src="./app.js?v=1e4d65f84e00"></script>
+    <script src="./flat-map-data.js?v=ecaff35f7268"></script>
+    <script src="./flat-map.js?v=dcd20388a446"></script>
+    <script src="./app.js?v=d20813415162"></script>
   </body>
 </html>

@@ -8,23 +8,23 @@
     return;
   }
 
-  // Keep the rail neutral: the essay's six numbered sections are the source structure.
+  // The essay's six numbered sections, each with a short title (guideline R-3).
   const sections = {
     zh: [
-      { label: "一" },
-      { label: "二" },
-      { label: "三" },
-      { label: "四" },
-      { label: "五" },
-      { label: "六" }
+      { label: "一 · 鱼尾山屋" },
+      { label: "二 · 思维高度" },
+      { label: "三 · 出埃及" },
+      { label: "四 · 未曾中断" },
+      { label: "五 · 世纪最后一天" },
+      { label: "六 · 国门" }
     ],
     en: [
-      { label: "I" },
-      { label: "II" },
-      { label: "III" },
-      { label: "IV" },
-      { label: "V" },
-      { label: "VI" }
+      { label: "I · Fish Tail Lodge" },
+      { label: "II · A height of thought" },
+      { label: "III · Out of Egypt" },
+      { label: "IV · Unbroken" },
+      { label: "V · The century’s last day" },
+      { label: "VI · The gate" }
     ]
   };
 
@@ -39,23 +39,23 @@
       "rail-caption": "原文章节",
       "notes-keyboard": "↑ ↓ ← → 切换节次 · L 切换语言 · Esc 关闭本面板",
       "data-views-label": "视图",
-      "data-views": "第一节先从南亚总览进入尼泊尔，再沿加德满都—博克拉方向缩放，最后切入博克拉一带的三维地形（鱼尾山屋、费瓦湖、鱼尾峰、安纳布尔纳）；第二至四节换成从地中海到太平洋的大范围地形，北方朝上；第五、六节是加德满都到边境的三维地形，最后停在波特科西河峡谷的中尼友谊桥。",
+      "data-views": "第一节先从南亚总览进入尼泊尔，再沿加德满都—博克拉方向缩放，最后切入博克拉一带的三维地形（鱼尾山屋、费瓦湖、鱼尾峰、安纳布尔纳）；第二至四节是一张从地中海到太平洋的平面地图（同一种投影），镜头随段落移到希腊与埃及、黎凡特到印度河、亚洲，最后回到尼泊尔；第五、六节是加德满都到边境的三维地形，最后停在波特科西河峡谷的中尼友谊桥。",
       "data-sites-label": "遗址",
       "data-sites": "第一节沿加德满都—博克拉的实际公路方向展开。第二、三节只标出正文正在谈论的古文明地点；悬停或聚焦正文中的地名，地图会点亮相应地点与河流。千禧之旅的完整行程与日期出自《千年一叹》，本文没有写。原文只说“古代波斯文明”，地图以波斯波利斯为代表点。",
       "data-barrier-label": "屏障",
       "data-barrier": "第四节依原文标出喜马拉雅、昆仑、天山、阿尔泰，塔克拉玛干与戈壁，以及东面、南面的海；不画国界。读到去蓝毗尼的一段，镜头移回尼泊尔。",
       "data-text-label": "原文与地理",
-      "data-text": "原文说乘拉缆浮筏“渡过了一条清澈的雪水河”，鱼尾山屋其实在费瓦湖畔，地图画湖，正文照原文。去蓝毗尼“来回行车六百公里”是公路里程，直线距离约 105 公里。第五节的车队路线沿今阿尼哥公路（约 " + fmt(geography.border.highwayKm) + " 公里），只是示意这一段路，不是当年车队的实测轨迹。",
+      "data-text": "原文说乘拉缆浮筏“渡过了一条清澈的雪水河”，鱼尾山屋其实在费瓦湖畔，地图画湖，正文照原文。去蓝毗尼“来回行车六百公里”是公路里程，直线距离约 105 公里。第五节的路线沿今阿尼哥公路（约 " + fmt(geography.border.highwayKm) + " 公里），以虚线与脚印示意读到哪里，不是当年车队的实测轨迹。",
       "data-projection-label": "投影",
-      "data-projection": "WGS 84 经纬度，每块地形按其中心纬度的余弦等比例展开；大范围地形跨度大，东西向距离在南北两端有明显误差。",
+      "data-projection": "三维地形（第一、五、六节）：WGS 84 经纬度，按中心纬度的余弦等比例展开。平面地图（第二至四节）：正轴等积割圆锥投影（球体），中央经线 66.5°E，标准纬线 20°N／45°N。",
       "data-terrain-label": "地形",
-      "data-terrain": "Copernicus DEM GLO-90：博克拉约 250 米一格、边境约 340 米一格；大范围地形由内部缩图层平均为约 28 公里一格。为了看得见，高程都有夸大，大范围地形夸大最多。",
+      "data-terrain": "Copernicus DEM GLO-90：博克拉约 250 米一格、边境约 340 米一格；平面地图的晕渲由内部缩图层平均为约 11 公里一格。三维地形的高程有夸大。",
       "data-height-label": "海拔",
       "data-height": "原文说关口海拔一千九百米、樟木两千六百米。DEM 在友谊桥点位约 " + fmt(elevations.bridge.point) + " 米、附近最高 " + fmt(elevations.bridge.max5x5) + " 米；樟木镇代表点约 " + fmt(elevations.zhangmu.point) + " 米，附近最高 " + fmt(elevations.zhangmu.max5x5) + " 米（樟木沿山坡分布，高差很大）。鱼尾峰公开资料为 6,993 米，DEM 格网会削低峰顶（约 " + fmt(elevations.machhapuchhre.max5x5) + " 米）。地图标公开资料与 DEM，正文照原文。",
       "notes-source-1": "地点：Wikidata 坐标属性 P625，2026 年 9 月 27 日取得（鱼尾山屋 Q111402808、鱼尾峰 Q1051394、蓝毗尼 Q9213、中尼友谊桥 Q7524764 等 23 处）",
       "notes-source-2": "地形：Copernicus DEM GLO-90（© DLR e.V. 2010–2014，© Airbus Defence and Space GmbH 2014–2018，欧盟与 ESA 哥白尼计划提供）",
       "notes-source-3": "费瓦湖、河流、阿尼哥公路：OpenStreetMap contributors（ODbL 1.0），经 Overpass API 于 2026 年 9 月 27 日取得",
-      "notes-source-4": "山系、沙漠、海域与大河：Natural Earth（公有领域）",
+      "notes-source-4": "平面地图的海岸线与湖泊（1:50m），山系、沙漠、海域与大河：Natural Earth（公有领域）",
       "data-disclaimer": "文学阅读地图，不替代测绘、导航或边境通行信息。地图不画国界。",
       "complete-line": "惟告别，方领悟。"
     },
@@ -67,23 +67,23 @@
       "rail-caption": "Sections",
       "notes-keyboard": "↑ ↓ ← → switch sections · L language · Esc closes this panel",
       "data-views-label": "Views",
-      "data-views": "Section one begins with a South Asia overview, zooms along the Kathmandu–Pokhara direction, then resolves into 3D terrain around Pokhara (the lodge, Phewa Lake, Machhapuchhre, Annapurna). Sections two to four use a wide terrain from the Mediterranean to the Pacific, north up. Sections five and six are 3D terrain from Kathmandu to the border, ending at the Friendship Bridge in the Bhote Koshi gorge.",
+      "data-views": "Section one begins with a South Asia overview, zooms along the Kathmandu–Pokhara direction, then resolves into 3D terrain around Pokhara (the lodge, Phewa Lake, Machhapuchhre, Annapurna). Sections two to four are one flat map from the Mediterranean to the Pacific in a single projection; the camera moves with the text to Greece and Egypt, the Levant to the Indus, Asia, and finally back to Nepal. Sections five and six are 3D terrain from Kathmandu to the border, ending at the Friendship Bridge in the Bhote Koshi gorge.",
       "data-sites-label": "Sites",
       "data-sites": "Section one follows the actual road direction from Kathmandu to Pokhara. Sections two and three show only the ancient sites being discussed in the text; hovering or focusing a place name lights up its site and related rivers on the map. The full itinerary and dates of the millennium journey are in Sign in a Thousand Years, not in this essay. The essay speaks only of “ancient Persian civilization”; Persepolis stands for it.",
       "data-barrier-label": "Barriers",
       "data-barrier": "Section four marks what the essay names: the Himalayas, Kunlun, Tian Shan and Altai, the Taklimakan and the Gobi, and the seas to the east and south; no borders are drawn. When the day trip to Lumbini begins, the view returns to Nepal.",
       "data-text-label": "Text and ground",
-      "data-text": "The essay says they crossed “a clear river of snowmelt” by raft; Fish Tail Lodge is in fact on Phewa Lake, so the map shows the lake while the text is kept as written. The “six hundred kilometers” to Lumbini and back is road distance; the straight line is about 105 km. The motorcade in section five follows today’s Araniko Highway (about " + fmt(geography.border.highwayKm) + " km) to show the road, not the motorcade’s surveyed track.",
+      "data-text": "The essay says they crossed “a clear river of snowmelt” by raft; Fish Tail Lodge is in fact on Phewa Lake, so the map shows the lake while the text is kept as written. The “six hundred kilometers” to Lumbini and back is road distance; the straight line is about 105 km. The route in section five follows today’s Araniko Highway (about " + fmt(geography.border.highwayKm) + " km); the dotted line and footprints show how far the reading has come, not the motorcade’s surveyed track.",
       "data-projection-label": "Projection",
-      "data-projection": "WGS 84 longitude and latitude, each terrain scaled by the cosine of its central latitude. The wide terrain spans so much that east-west distances are noticeably off at its north and south edges.",
+      "data-projection": "3D terrains (sections one, five and six): WGS 84 longitude and latitude, scaled by the cosine of each terrain’s central latitude. Flat map (sections two to four): Albers equal-area conic on a sphere, central meridian 66.5°E, standard parallels 20°N / 45°N.",
       "data-terrain-label": "Terrain",
-      "data-terrain": "Copernicus DEM GLO-90: about 250 m per cell around Pokhara and 340 m at the border; the wide terrain is averaged from the internal overviews to about 28 km. Heights are exaggerated so the relief is visible, the wide terrain most of all.",
+      "data-terrain": "Copernicus DEM GLO-90: about 250 m per cell around Pokhara and 340 m at the border; the flat map’s shaded relief is averaged from the internal overviews to about 11 km. Heights on the 3D terrains are exaggerated so the relief is visible.",
       "data-height-label": "Heights",
       "data-height": "The essay gives 1,900 m at the border post and 2,600 m at Zhangmu. The DEM reads about " + fmt(elevations.bridge.point) + " m at the bridge (" + fmt(elevations.bridge.max5x5) + " m highest nearby) and " + fmt(elevations.zhangmu.point) + " m at Zhangmu’s point (" + fmt(elevations.zhangmu.max5x5) + " m nearby; the town climbs a steep slope). Machhapuchhre is published as 6,993 m; the DEM grid lowers the summit (about " + fmt(elevations.machhapuchhre.max5x5) + " m). The map shows published and DEM heights; the text is kept as written.",
       "notes-source-1": "Places: Wikidata coordinate property P625, retrieved 27 September 2026 (Fish Tail Lodge Q111402808, Machhapuchhre Q1051394, Lumbini Q9213, Sino-Nepal Friendship Bridge Q7524764 and 19 more)",
       "notes-source-2": "Terrain: Copernicus DEM GLO-90 (© DLR e.V. 2010–2014, © Airbus Defence and Space GmbH 2014–2018, provided under COPERNICUS by the European Union and ESA)",
       "notes-source-3": "Phewa Lake, rivers, Araniko Highway: OpenStreetMap contributors (ODbL 1.0), via the Overpass API, 27 September 2026",
-      "notes-source-4": "Ranges, deserts, seas and great rivers: Natural Earth (public domain)",
+      "notes-source-4": "Coastline and lakes of the flat map (1:50m), ranges, deserts, seas and great rivers: Natural Earth (public domain)",
       "data-disclaimer": "A literary reading map, not a substitute for survey, navigation or border-crossing information. No borders are drawn.",
       "complete-line": "Only in departure do we truly begin to comprehend it."
     }
@@ -364,9 +364,9 @@
   const borderRivers = geography.border.rivers.map((r) => ({ r, node: make("path", { class: "river" }, borderLayer) }));
   const bhoteKoshi = geography.border.rivers.filter((r) => r.name === "Bhote Koshi").flatMap((r) => r.points);
   const bhoteKoshiLabel = make("text", { class: "river-label", "text-anchor": "middle" }, borderLayer);
-  const roadTrace = make("path", { class: "road-trace" }, borderLayer);
-  const roadDone = make("path", { class: "road" }, borderLayer);
-  const motorcade = make("circle", { class: "motorcade", r: 5 }, borderLayer);
+  // the road as in 沙原隐泉's climb: a dotted trace, and footprints along the part already read
+  const roadTrace = make("path", { class: "route-trace" }, borderLayer);
+  const footprints = Array.from({ length: 140 }, () => make("ellipse", { class: "footprint", rx: 2.4, ry: 4.8 }, borderLayer));
   const gate = make("path", { class: "gate" }, borderLayer);
   const borderMarks = {
     kathmandu: pointMark(borderLayer, "is-town"),
@@ -495,14 +495,33 @@
   function drawBorder(project, size, taken) {
     borderRivers.forEach(({ r, node }) => node.setAttribute("d", polyline(r.points, project, 20)));
     roadTrace.setAttribute("d", polyline(highway, project, 40));
-    // the motorcade moves along the road as part five is read, and has arrived by part six
-    const reached = level === 5 ? Math.max(2, Math.round(progress * highway.length)) : highway.length;
-    roadDone.setAttribute("d", polyline(highway.slice(0, reached), project, 40));
-    const head = highway[Math.min(highway.length - 1, reached - 1)];
-    const h = project(head[0], head[1], 40);
-    motorcade.style.visibility = h.visible && level === 5 ? "" : "hidden";
-    motorcade.setAttribute("cx", h.x.toFixed(1));
-    motorcade.setAttribute("cy", h.y.toFixed(1));
+    // footprints every 14 px on screen, alternating sides, up to how far part five has been read
+    // (all the way by part six)
+    const road = highway.map(([lon, lat]) => project(lon, lat, 40));
+    const lengths = [0];
+    for (let i = 1; i < road.length; i += 1) {
+      const a = road[i - 1], b = road[i];
+      lengths.push(lengths[i - 1] + (a.visible && b.visible ? Math.hypot(b.x - a.x, b.y - a.y) : 0));
+    }
+    const total = lengths[lengths.length - 1];
+    const reached = level === 5 ? total * Math.min(1, 0.04 + progress * 0.96) : total;
+    let segment = 1;
+    footprints.forEach((foot, index) => {
+      const along = 7 + index * 14;
+      if (along > reached) { foot.style.visibility = "hidden"; return; }
+      while (segment < road.length - 1 && lengths[segment] < along) segment += 1;
+      const a = road[segment - 1], b = road[segment];
+      if (!a.visible || !b.visible) { foot.style.visibility = "hidden"; return; }
+      const f = (along - lengths[segment - 1]) / Math.max(lengths[segment] - lengths[segment - 1], 1e-6);
+      const angle = Math.atan2(b.y - a.y, b.x - a.x);
+      const side = index % 2 ? 1 : -1;
+      const x = a.x + (b.x - a.x) * f - Math.sin(angle) * 3.4 * side;
+      const y = a.y + (b.y - a.y) * f + Math.cos(angle) * 3.4 * side;
+      foot.style.visibility = "";
+      foot.setAttribute("cx", x.toFixed(1));
+      foot.setAttribute("cy", y.toFixed(1));
+      foot.setAttribute("transform", `rotate(${(angle * 180 / Math.PI + 90).toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)})`);
+    });
     const bridge = project(place("bridge").lon, place("bridge").lat, 30);
     // the full English name is wider than a phone's map panel
     borderMarks.bridge.name.textContent = language === "en" && size.width < 520 ? "Friendship Bridge" : place("bridge")[language === "zh" ? "zh" : "en"];
@@ -681,6 +700,7 @@
     if (next === narrativeFocusKey) return;
     narrativeFocusKey = next;
     window.FISHTAIL_TERRAIN_RENDERER?.setWideFocus(wideFocusGroups[next]?.sites || []);
+    window.FISHTAIL_WIDE_MAP_VIEW?.setWideFocus(wideFocusGroups[next]?.sites || []);
   }
 
   // Where in the active section the reader is (0-1).
@@ -693,6 +713,7 @@
     progress = Math.max(0, Math.min(1, (threshold - (rect.top - top)) / Math.max(rect.height - threshold, 1)));
     if (scroller.scrollTop + scroller.clientHeight >= scroller.scrollHeight - 4) progress = 1;
     window.FISHTAIL_TERRAIN_RENDERER?.setProgress(progress);
+    window.FISHTAIL_WIDE_MAP_VIEW?.setProgress(progress);
     window.FISHTAIL_MAPBOX?.setProgress(level, progress);
     updateNarrativeFocus();
   }
@@ -715,6 +736,7 @@
     updateNarrativeLinkStates();
     body.dataset.readingLevel = String(level);
     window.FISHTAIL_TERRAIN_RENDERER?.setState(level);
+    window.FISHTAIL_WIDE_MAP_VIEW?.setState(level);
     window.FISHTAIL_MAPBOX?.setSection(level);
     window.requestAnimationFrame(() => {
       updateProgress();
@@ -722,7 +744,11 @@
     });
   }
 
-  window.FISHTAIL_TERRAIN_RENDERER?.onFrame(drawMarks);
+  // parts 2-4 are drawn on the flat wide map (wide-map.js), the others on 3D terrain (terrain-3d.js)
+  window.FISHTAIL_TERRAIN_RENDERER?.onFrame((project, nextView) => {
+    if (!window.FISHTAIL_WIDE_MAP_VIEW?.active()) drawMarks(project, nextView);
+  });
+  window.FISHTAIL_WIDE_MAP_VIEW?.onFrame(drawMarks);
   scroller.addEventListener("scroll", () => window.requestAnimationFrame(updateProgress), { passive: true });
 
   ChapterShell.init({
@@ -733,6 +759,8 @@
     copy,
     formatParagraph,
     onRender,
-    onSection
+    onSection,
+    showReaderLocation: false,
+    showReaderProgress: false
   });
 })();

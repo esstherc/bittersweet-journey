@@ -72,16 +72,16 @@
       "data-literary-label": "文学意象",
       "data-literary": "地图上的脚印（叙事路径）与坟堆都是文学示意：原文没有可核验的行走坐标，也没有指名坟堆所在的遗址，所以它们不是作者的实测路线，也不是测绘坟场。“今阳关绿洲”指现代农林用地，不代表汉唐时的屯垦范围。",
       "data-far-label": "远方地标",
-      "data-far": "第一段换用一块从阳关到苏州的大范围地形（约 8 公里一格），白帝城、黄鹤楼、寒山寺按真实坐标标在上面，虚线连到原点阳关，数字为大圆直线距离（白帝城 1,713 km、黄鹤楼 2,106 km、寒山寺 2,568 km；手机上只显示地名）。镜头由高处俯视，北方朝上。第三至五段换回阳关周边的细网格地形。",
+      "data-far": "第一段是一张平面的中国标准地图（与道士塔第一张图相同的底图与投影），白帝城、黄鹤楼、寒山寺按真实坐标标在上面，虚线连到原点阳关，数字为大圆直线距离（白帝城 1,713 km、黄鹤楼 2,106 km、寒山寺 2,568 km；手机上只显示地名）。第二段同一张地图推近敦煌县城与阳关。第三至五段换回阳关周边的三维地形。",
       "data-region-label": "区域",
-      "data-region": "第二段切换为敦煌县城—阳关的区域图，距离为大圆直线距离，不是公路里程。",
+      "data-region": "第一、二段是同一张平面地图（与道士塔第一张图相同的标准地图与投影）：第一段看全国，第二段镜头推近敦煌县城—阳关，叠上同一 DEM 的晕渲、道路与汉长城线。距离为大圆直线距离，不是公路里程。",
       "data-projection-label": "投影",
-      "data-projection": "WGS 84 经纬度，局部按纬度余弦等比例展开，保持地物的相对位置与距离。",
+      "data-projection": "第一、二段：正轴等积割圆锥投影（中央经线 110°E，标准纬线 25°N／47°N，克拉索夫斯基椭球），即标准地图本身的投影；指北针随经线方向微转。第三至五段：WGS 84 经纬度，局部按纬度余弦等比例展开。",
       "data-terrain-label": "地形",
       "data-terrain": "Copernicus DEM GLO-90，重采样为约 325 米网格；高程夸大 8 倍，1600 米以上按 0.3 压缩，仅为显示，使平原起伏与远山同时可读。",
       "data-snow-label": "雪",
       "data-snow": "积雪、化雪与飘雪是依原文叙述的视觉表达，不是气象资料。",
-      "notes-source-1": "地形：Copernicus DEM GLO-90（© DLR e.V. 2010–2014，© Airbus Defence and Space GmbH 2014–2018，欧盟与 ESA 哥白尼计划提供）",
+      "notes-source-1": "中国底图（第一、二段）：自然资源部标准地图服务；地形与第二段晕渲：Copernicus DEM GLO-90（© DLR e.V. 2010–2014，© Airbus Defence and Space GmbH 2014–2018，欧盟与 ESA 哥白尼计划提供）",
       "notes-source-2": "阳关坐标：Wikidata Q909541（坐标属性 P625），2026 年 9 月 27 日取得",
       "notes-source-3": "阳关长城、绿洲、公路：OpenStreetMap contributors（ODbL 1.0），经 Overpass API 于 2026 年 9 月 27 日取得",
       "notes-source-4": "敦煌县城坐标：与《沙原隐泉》章节所用数据相同；白帝城、黄鹤楼、寒山寺：Wikidata Q803709、Q462372、Q1146619",
@@ -106,16 +106,16 @@
       "data-literary-label": "Literary",
       "data-literary": "The footprints (the narrative path) and the burial mounds are literary: the essay gives no verifiable walking coordinates and names no site for the mounds, so they are neither the author’s surveyed route nor a mapped burial ground. “Today’s Yangguan oasis” is modern farm and forest land, not the Han or Tang garrison fields.",
       "data-far-label": "Poems",
-      "data-far": "Part one uses a wide terrain from the pass to Suzhou (about 8 km per cell). White Emperor City, Yellow Crane Tower and Cold Mountain Temple sit at their real coordinates, joined by dashed lines to the origin at the pass; the figures are great-circle distances (White Emperor City 1,713 km, Yellow Crane Tower 2,106 km, Cold Mountain Temple 2,568 km; phones show the names only). The view looks down from high above, north up. Parts three to five return to the fine terrain around the pass.",
+      "data-far": "Part one is a flat standard map of China (the same base and projection as the first map of The Taoist Priest’s Tower). White Emperor City, Yellow Crane Tower and Cold Mountain Temple sit at their real coordinates, joined by dashed lines to the origin at the pass; the figures are great-circle distances (White Emperor City 1,713 km, Yellow Crane Tower 2,106 km, Cold Mountain Temple 2,568 km; phones show short names only). Part two moves the same map in to Dunhuang and the pass. Parts three to five return to the 3D terrain around the pass.",
       "data-region-label": "Region",
-      "data-region": "Part two switches to a regional map of Dunhuang and the pass. The distance is a great-circle line, not a road distance.",
+      "data-region": "Parts one and two are one flat map (the same standard map and projection as the first map of The Taoist Priest’s Tower): part one shows the country, part two moves in to Dunhuang and the pass, over shaded relief from the same DEM with roads and the Han wall line. The distance is a great-circle line, not a road distance.",
       "data-projection-label": "Projection",
-      "data-projection": "WGS 84 longitude and latitude, scaled by the cosine of latitude so relative position and distance hold.",
+      "data-projection": "Parts one and two: Albers equal-area conic (central meridian 110°E, standard parallels 25°N / 47°N, Krassovsky), the standard map’s own projection; the north arrow turns slightly with the meridians. Parts three to five: WGS 84 longitude and latitude, scaled by the cosine of latitude.",
       "data-terrain-label": "Terrain",
       "data-terrain": "Copernicus DEM GLO-90, resampled to about 325 m. Heights are exaggerated eight times and compressed by 0.3 above 1,600 m, for display only, so the plain and the mountains are both readable.",
       "data-snow-label": "Snow",
       "data-snow": "Snow cover, melting and falling snow follow the essay; they are not weather data.",
-      "notes-source-1": "Terrain: Copernicus DEM GLO-90 (© DLR e.V. 2010–2014, © Airbus Defence and Space GmbH 2014–2018, provided under COPERNICUS by the European Union and ESA)",
+      "notes-source-1": "Base map of China (parts one and two): Ministry of Natural Resources standard-map service. Terrain and part two’s relief: Copernicus DEM GLO-90 (© DLR e.V. 2010–2014, © Airbus Defence and Space GmbH 2014–2018, provided under COPERNICUS by the European Union and ESA)",
       "notes-source-2": "The pass: Wikidata Q909541 (coordinate property P625), retrieved 27 September 2026",
       "notes-source-3": "Wall line, oasis and roads: OpenStreetMap contributors (ODbL 1.0), via the Overpass API, 27 September 2026",
       "notes-source-4": "Dunhuang: the same coordinate as in A Secret Spring in the Sand; White Emperor City, Yellow Crane Tower, Cold Mountain Temple: Wikidata Q803709, Q462372, Q1146619",
@@ -133,7 +133,6 @@
   const svgNS = "http://www.w3.org/2000/svg";
   const scroller = document.querySelector(".reader-scroll");
   const marks = document.querySelector(".terrain-marks");
-  const regional = document.querySelector(".regional-map");
   const journeyHint = document.querySelector(".journey-hint");
   const reduced = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   let language = body.dataset.language || "zh";
@@ -148,69 +147,6 @@
     if (parent) parent.appendChild(node);
     return node;
   };
-
-  /* ---------- regional map (level 2) ---------- */
-
-  const region = geography.regional;
-  regional.setAttribute("viewBox", region.viewBox.join(" "));
-  regional.setAttribute("preserveAspectRatio", "xMidYMid slice");
-  make("image", { href: region.image, x: 0, y: 0, width: region.viewBox[2], height: region.viewBox[3], class: "regional-relief" }, regional);
-  const regionalRoads = make("g", { class: "regional-roads" }, regional);
-  region.roads.forEach((d) => make("path", { d }, regionalRoads));
-  const regionalWall = make("g", { class: "regional-wall" }, regional);
-  region.wall.forEach((d) => make("path", { d }, regionalWall));
-  const [dx, dy] = region.dunhuang;
-  const [px, py] = region.pass;
-  make("path", { class: "regional-line", d: `M${dx},${dy}L${px},${py}` }, regional);
-  const regionalPoint = (x, y, cls) => {
-    const group = make("g", { class: `regional-point ${cls}`, transform: `translate(${x} ${y})` }, regional);
-    make("circle", { r: 13, class: "halo" }, group);
-    make("circle", { r: 4.5 }, group);
-    return make("text", { x: 0, y: -22, "text-anchor": "middle" }, group);
-  };
-  const regionalText = {
-    dunhuang: regionalPoint(dx, dy, "is-town"),
-    yangguan: regionalPoint(px, py, "is-pass"),
-    distance: make("text", { class: "regional-distance", x: (dx + px) / 2, y: (dy + py) / 2 - 14, "text-anchor": "middle" }, regional),
-    wall: make("text", { class: "regional-note", x: px + 150, y: py - 44 }, regional)
-  };
-
-  // The regional map is scaled to cover the panel, so its edges are cut off at some sizes. Each label tries a few
-  // spots around its place and takes the first one fully in view and clear of the others (units are map units).
-  function layoutRegional() {
-    const frame = regional.getBoundingClientRect();
-    if (!frame.width || !frame.height) return;
-    const [, , vw, vh] = region.viewBox;
-    const s = Math.max(frame.width / vw, frame.height / vh);
-    const view = { left: (vw - frame.width / s) / 2, top: (vh - frame.height / s) / 2 };
-    view.right = vw - view.left;
-    view.bottom = vh - view.top;
-    const margin = 10 / s;
-    const taken = [[dx, dy], [px, py]].map(([x, y]) => ({ left: x - 13, right: x + 13, top: y - 13, bottom: y + 13 }));
-    const fit = (node, [ox, oy], candidates) => {
-      const n = typeSize(node);
-      let last = null;
-      for (const [cx, cy, anchor] of candidates(n)) {
-        node.setAttribute("text-anchor", anchor);
-        node.setAttribute("x", cx.toFixed(1));
-        node.setAttribute("y", cy.toFixed(1));
-        let b = node.getBBox();
-        const shift = Math.max(0, view.left + margin - (b.x + ox)) - Math.max(0, b.x + ox + b.width - (view.right - margin));
-        if (shift) { node.setAttribute("x", (cx + shift).toFixed(1)); b = node.getBBox(); }
-        const box = { left: b.x + ox, right: b.x + ox + b.width, top: b.y + oy, bottom: b.y + oy + b.height };
-        last = box;
-        const inside = box.top >= view.top + margin && box.bottom <= view.bottom - margin;
-        if (inside && !taken.some((other) => overlapArea(box, other) > 0)) { taken.push(box); return; }
-      }
-      taken.push(last);
-    };
-    fit(regionalText.dunhuang, [dx, dy], (n) => [[0, -22, "middle"], [-n * 0.6, -n * 0.4, "end"], [0, n * 1.5, "middle"], [n * 0.6, n * 1.3, "start"]]);
-    fit(regionalText.yangguan, [px, py], (n) => [[0, -22, "middle"], [0, n * 1.5, "middle"], [n * 0.7, n * 0.35, "start"], [n * 0.7, -n * 0.6, "start"]]);
-    const mx = (dx + px) / 2, my = (dy + py) / 2;
-    fit(regionalText.distance, [0, 0], (n) => [[mx, my - 14, "middle"], [mx + n * 0.5, my + n * 1.3, "start"], [mx, my + n * 1.5, "middle"]]);
-    fit(regionalText.wall, [0, 0], (n) => [[px + 150, py - 44, "start"], [px + n, py + n * 2.6, "start"], [px + 150, py + n * 2.2, "start"], [px + n * 4, py + n * 4, "start"]]);
-  }
-  window.addEventListener("resize", () => window.requestAnimationFrame(layoutRegional));
 
   /* ---------- labels on the 3D terrain ---------- */
 
@@ -272,6 +208,20 @@
   const farOrigin = make("circle", { class: "far-origin", r: 5 }, farLayer);
   const originName = make("text", { class: "far-origin-name" }, farLayer);
   const originNote = make("text", { class: "far-note" }, farLayer);
+  const gansuLabel = make("text", { class: "province-label" }, farLayer);
+  // Part two: Dunhuang to the pass on the same flat map; label sizes as before (guideline T-5 exception).
+  const regionalLayer = layer("regional");
+  const regionalLine = make("path", { class: "regional-line" }, regionalLayer);
+  const regionalPoint = (cls) => {
+    const group = make("g", { class: `regional-point ${cls}` }, regionalLayer);
+    return { group, halo: make("circle", { r: 13, class: "halo" }, group), dot: make("circle", { r: 4.5 }, group), text: make("text", { class: "regional-name" }, regionalLayer) };
+  };
+  const regionalText = {
+    dunhuang: regionalPoint("is-town"),
+    yangguan: regionalPoint("is-pass"),
+    distance: make("text", { class: "regional-distance" }, regionalLayer),
+    wall: make("text", { class: "regional-note" }, regionalLayer)
+  };
   const poemLayer = layer("poem");
   const poemLines = Array.from({ length: 4 }, () => make("text", {}, poemLayer));
   let poemText = [];
@@ -368,10 +318,14 @@
         dot.style.visibility = "";
         dot.setAttribute("cx", p.x.toFixed(1));
         dot.setAttribute("cy", p.y.toFixed(1));
+        // a narrow panel has room for the short English names only (the notes drawer keeps the full ones)
+        if (language === "en") name.textContent = compact ? site.en.replace(/ (City|Tower|Temple)$/, "") : site.en;
         const n = typeSize(name), gap = n * 0.5;
         const spots = [
           [gap, -1.5 * n, "start"], [gap, 0.95 * n, "start"], [-gap, -1.5 * n, "end"], [-gap, 0.95 * n, "end"],
-          [gap, -2.8 * n, "start"], [-gap, -2.8 * n, "end"], [gap, 2.25 * n, "start"], [-gap, 2.25 * n, "end"]
+          [gap, -2.8 * n, "start"], [-gap, -2.8 * n, "end"], [gap, 2.25 * n, "start"], [-gap, 2.25 * n, "end"],
+          // a narrow panel: names alone, a little further above or below the dot, centred on it
+          ...(compact ? [[0, -2.1 * n, "middle"], [0, 1.0 * n, "middle"]] : [])
         ];
         // first spot that is inside the panel and clear; otherwise the inside spot that overlaps least
         let best = null;
@@ -407,6 +361,17 @@
         if (!noteShown) note.style.visibility = "hidden";
       });
 
+    // The province of the origin, named as on 道士塔's first map; it gives way to the place labels.
+    const flat = window.YANGGUAN_FLAT_MAP;
+    if (flat) {
+      place(gansuLabel, project(flat.china.gansuLabel[0], flat.china.gansuLabel[1]), 0, 0);
+      const b = gansuLabel.getBBox();
+      const box = { left: b.x, right: b.x + b.width, top: b.y, bottom: b.y + b.height };
+      const note = originNote.style.visibility !== "hidden" && originNote.getBBox();
+      const noteBox = note && { left: note.x, right: note.x + note.width, top: note.y, bottom: note.y + note.height };
+      if ([...taken, noteBox].some((other) => other && overlapArea(box, other) > 0)) gansuLabel.style.visibility = "hidden";
+      else taken.push(box);
+    }
     // River names are secondary: drawn last, and dropped where they would cover a place name.
     Object.entries(riverLabels).forEach(([name, node]) => {
       const r = typeSize(node);
@@ -414,26 +379,63 @@
       if (node.style.visibility === "hidden") return;
       const b = node.getBBox();
       const box = { left: b.x, right: b.x + b.width, top: b.y, bottom: b.y + b.height };
-      if (taken.some((other) => overlapArea(box, other) > 0)) node.style.visibility = "hidden";
+      const note = originNote.style.visibility !== "hidden" && originNote.getBBox();
+      const noteBox = note && { left: note.x, right: note.x + note.width, top: note.y, bottom: note.y + note.height };
+      const cut = box.left < 6 || box.right > panelWidth - 6 || box.bottom > panelHeight - 6;
+      if (cut || [...taken, noteBox].some((other) => other && overlapArea(box, other) > 0)) node.style.visibility = "hidden";
     });
   }
 
   // Box of a two-line label (name above note) whose top-left/top-right is at p + (dx, dy).
   function boxOf(name, note, p, dx, dy, anchor, nameOnly = false) {
     const width = nameOnly ? name.getComputedTextLength() : Math.max(name.getComputedTextLength(), note.getComputedTextLength());
-    const left = anchor === "end" ? p.x + dx - width : p.x + dx;
+    const left = anchor === "end" ? p.x + dx - width : anchor === "middle" ? p.x + dx - width / 2 : p.x + dx;
     const n = typeSize(name);
     return { left, right: left + width, top: p.y + dy, bottom: p.y + dy + (nameOnly ? n * 1.15 : n * 1.35 + typeSize(note) * 1.3) };
   }
   const overlapArea = (a, b) =>
     Math.max(0, Math.min(a.right, b.right) - Math.max(a.left, b.left)) * Math.max(0, Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top));
 
-  // North arrow: turns with the camera; straight up on the regional map.
+  // North arrow: turns with the camera, and on the flat map with the conic projection's meridians.
   const compass = document.querySelector(".compass");
   let northAngle = 0;
   function drawCompass() {
-    const angle = level === 2 ? 0 : northAngle;
-    compass.style.setProperty("--north", `${(angle * 180 / Math.PI).toFixed(1)}deg`);
+    compass.style.setProperty("--north", `${(northAngle * 180 / Math.PI).toFixed(1)}deg`);
+  }
+
+  // Part two's labels: each tries a few spots around its place and keeps the first one inside the
+  // panel and clear of the others.
+  function drawRegional(project, width, height) {
+    const d = project(geography.points.dunhuang.lon, geography.points.dunhuang.lat);
+    const p = project(geography.points.pass.lon, geography.points.pass.lat);
+    regionalLine.setAttribute("d", `M${d.x.toFixed(1)},${d.y.toFixed(1)}L${p.x.toFixed(1)},${p.y.toFixed(1)}`);
+    [[regionalText.dunhuang, d], [regionalText.yangguan, p]].forEach(([mark, at]) => mark.group.setAttribute("transform", `translate(${at.x.toFixed(1)} ${at.y.toFixed(1)})`));
+    const taken = [d, p].map((at) => ({ left: at.x - 13, right: at.x + 13, top: at.y - 13, bottom: at.y + 13 }));
+    // place names always show; the distance and the wall note give way when nothing is clear
+    const fit = (node, candidates, optional = false) => {
+      node.style.visibility = "";
+      const n = typeSize(node);
+      let last = null;
+      for (const [x, y, anchor] of candidates(n)) {
+        node.setAttribute("text-anchor", anchor);
+        node.setAttribute("x", x.toFixed(1));
+        node.setAttribute("y", y.toFixed(1));
+        let b = node.getBBox();
+        const shift = Math.max(0, 10 - b.x) - Math.max(0, b.x + b.width - (width - 10));
+        if (shift) { node.setAttribute("x", (x + shift).toFixed(1)); b = node.getBBox(); }
+        const box = { left: b.x, right: b.x + b.width, top: b.y, bottom: b.y + b.height };
+        last = box;
+        if (box.top >= 10 && box.bottom <= height - 10 && !taken.some((other) => overlapArea(box, other) > 0)) { taken.push(box); return; }
+      }
+      if (optional) node.style.visibility = "hidden";
+      else taken.push(last);
+    };
+    fit(regionalText.dunhuang.text, (n) => [[d.x, d.y - 22, "middle"], [d.x - n * 0.6, d.y - n * 0.4, "end"], [d.x, d.y + n * 1.5, "middle"], [d.x + n * 0.6, d.y + n * 1.3, "start"]]);
+    fit(regionalText.yangguan.text, (n) => [[p.x, p.y - 22, "middle"], [p.x, p.y + n * 1.5, "middle"], [p.x + n * 0.7, p.y + n * 0.35, "start"], [p.x + n * 0.7, p.y - n * 0.6, "start"]]);
+    const mx = (d.x + p.x) / 2, my = (d.y + p.y) / 2;
+    fit(regionalText.distance, (n) => [[mx, my - 14, "middle"], [mx + n * 0.5, my + n * 1.3, "start"], [mx, my + n * 1.5, "middle"], [mx, my - n * 2, "middle"], [mx, my + n * 2.6, "middle"]], true);
+    const w = project(wallCentre[0], wallCentre[1]);
+    fit(regionalText.wall, (n) => [[w.x, w.y - n * 0.8, "middle"], [w.x, w.y + n * 1.6, "middle"], [w.x + n, w.y - n, "start"], [w.x + n, w.y + n * 1.4, "start"]], true);
   }
 
   function drawMarks(project, view) {
@@ -441,10 +443,10 @@
     marks.setAttribute("viewBox", `0 0 ${width} ${height}`);
     northAngle = view.north;
     drawCompass();
-    // Each layer is drawn only on the terrain it belongs to (the terrains swap between parts).
-    if (level === 2) layoutRegional();
-    if (view.terrain === "wide") {
+    // Each layer is drawn only on the map it belongs to: the flat map for parts one and two, the 3D terrain after.
+    if (view.terrain === "flat") {
       if (level === 1) drawFar(project);
+      if (level === 2) drawRegional(project, width, height);
       return;
     }
     if (level < 3) return;
@@ -653,11 +655,11 @@
     riverLabels.yellow.textContent = language === "zh" ? "黄河" : "Yellow River";
     compass.querySelector("text").textContent = language === "zh" ? "北" : "N";
     compass.setAttribute("aria-label", language === "zh" ? "指北针" : "North arrow");
-    regionalText.dunhuang.textContent = text.dunhuang;
-    regionalText.yangguan.textContent = text.yangguan;
+    regionalText.dunhuang.text.textContent = text.dunhuang;
+    regionalText.yangguan.text.textContent = text.yangguan;
     regionalText.distance.textContent = text.distance;
     regionalText.wall.textContent = text.regionalWall;
-    window.requestAnimationFrame(layoutRegional);
+    gansuLabel.textContent = language === "zh" ? "甘肃" : "Gansu";
     level = state.active + 1;
   }
 
@@ -666,12 +668,16 @@
     body.dataset.readingLevel = String(level);
     drawCompass();
     window.YANGGUAN_TERRAIN_RENDERER?.setState(level);
+    window.YANGGUAN_FLAT_MAP_VIEW?.setState(level);
     if (level === 3) showJourneyHint();
     updatePoemPresence();
     window.requestAnimationFrame(updateProgress);
   }
 
-  window.YANGGUAN_TERRAIN_RENDERER?.onFrame(drawMarks);
+  window.YANGGUAN_TERRAIN_RENDERER?.onFrame((project, view) => {
+    if (!window.YANGGUAN_FLAT_MAP_VIEW?.active()) drawMarks(project, view);
+  });
+  window.YANGGUAN_FLAT_MAP_VIEW?.onFrame(drawMarks);
   scroller.addEventListener("scroll", () => window.requestAnimationFrame(updateProgress), { passive: true });
   window.addEventListener("pagehide", () => window.clearTimeout(journeyHintTimer));
   window.requestAnimationFrame(tick);
@@ -684,6 +690,8 @@
     copy,
     formatParagraph,
     onRender,
-    onSection
+    onSection,
+    showReaderLocation: false,
+    showReaderProgress: false
   });
 })();

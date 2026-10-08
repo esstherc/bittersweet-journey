@@ -1,6 +1,7 @@
 /*
-  鱼尾山屋 - chapter-specific styling only: accent, the three terrains, the labels placed on them,
-  the lamp at night, the road to the border and the image seal.
+  鱼尾山屋 - chapter-specific styling only: accent, the 3D terrains (parts 1, 5-6), the flat wide map
+  (parts 2-4), the labels placed on them, the lamp at night, the road to the border and the image seal.
+  Map type sizes follow 沙原隐泉 (docs/map-guidance.md §4).
   Frame, title bar, curtain, reader, preface, rails, bottom bar, notes drawer and completion screen live in
   ../_shared/chapter-shell.css.
 */
@@ -21,6 +22,7 @@
 
 .terrain-viewport,
 .mapbox-context,
+.wide-map,
 .terrain-marks {
   position: absolute;
   inset: 0;
@@ -40,7 +42,22 @@
 .mapbox-context .mapboxgl-ctrl-bottom-right { z-index: 2; }
 .mapbox-context.mapbox-error { display: none; }
 
-.terrain-viewport { z-index: 2; opacity: var(--fish-tail-terrain-opacity, 1); }
+.terrain-viewport { z-index: 2; opacity: var(--fish-tail-terrain-opacity, 1); transition: opacity 0.6s ease; }
+
+/* parts 2-4: one flat map in one projection (wide-map.js), as in 道士塔 */
+.wide-map {
+  z-index: 2;
+  display: block;
+  overflow: hidden;
+  background: #dfe6e7;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+body.flat-wide .wide-map { opacity: 1; }
+body.flat-wide .terrain-viewport { opacity: 0; }
+.wide-coast { fill: none; stroke: rgba(63, 93, 108, 0.55); stroke-width: 0.9; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.wide-lakes { fill: #dfe6e7; stroke: rgba(63, 93, 108, 0.45); stroke-width: 0.7; vector-effect: non-scaling-stroke; }
 .terrain-canvas { display: block; width: 100%; height: 100%; }
 body.webgl-ready .terrain-viewport { opacity: var(--fish-tail-terrain-opacity, 1); }
 
@@ -59,11 +76,14 @@ body.mapbox-overview .terrain-marks { opacity: var(--fish-tail-terrain-opacity, 
 .terrain-marks[data-terrain="wide"] .marks-wide,
 .terrain-marks[data-terrain="border"] .marks-border { display: inline; }
 
+/* Halos: a paper-coloured stroke behind the letters, with round joins and caps so corners stay smooth. */
 .terrain-marks text {
-  paint-order: stroke;
-  stroke: rgba(240, 240, 238, 0.92);
-  stroke-width: 5px;
+  paint-order: stroke fill;
+  stroke: rgba(240, 240, 238, 0.94);
+  stroke-width: 4px;
   stroke-linejoin: round;
+  stroke-linecap: round;
+  text-rendering: geometricPrecision;
 }
 
 .dot-halo { fill: none; stroke: var(--seal); stroke-width: 1.2; opacity: 0; pointer-events: none; }
@@ -72,11 +92,11 @@ body.mapbox-overview .terrain-marks { opacity: var(--fish-tail-terrain-opacity, 
 .dot.is-peak { fill: var(--glacier); stroke: rgba(240, 240, 238, 0.95); stroke-width: 1.5; }
 .dot.is-town { fill: var(--ink-soft); stroke: rgba(240, 240, 238, 0.95); stroke-width: 1.2; }
 
-.name { fill: var(--ink); font-family: var(--serif-cn); font-size: 32px; letter-spacing: 0.16em; }
-body[data-language="en"] .name { font-family: var(--serif-en); font-size: 29px; letter-spacing: 0.01em; }
+.name { fill: var(--ink); font-family: var(--serif-cn); font-size: 24px; letter-spacing: 0.14em; }
+body[data-language="en"] .name { font-family: var(--serif-en); font-size: 22px; letter-spacing: 0.01em; }
 .name.is-origin { fill: var(--seal); font-weight: 600; }
 .name.is-peak { fill: var(--glacier); }
-.note { fill: var(--ink-soft); font-size: 22px; letter-spacing: 0.06em; }
+.note { fill: var(--ink-soft); font-size: 17px; letter-spacing: 0.06em; }
 
 .river { fill: none; stroke: rgba(63, 93, 108, 0.55); stroke-width: 1; stroke-linejoin: round; stroke-linecap: round; }
 .marks-wide .river { stroke: var(--river); stroke-width: 1.35; opacity: 0.28; transition: opacity 180ms ease, stroke-width 180ms ease, stroke 180ms ease; }
@@ -93,10 +113,11 @@ body[data-language="en"] .name { font-family: var(--serif-en); font-size: 29px; 
 .marks-wide .name.is-context { fill: var(--ink); }
 .marks-wide .name.is-selected { fill: var(--seal); font-weight: 600; }
 .lake { fill: rgba(111, 150, 168, 0.55); stroke: var(--river); stroke-width: 1; }
-.water-label { fill: var(--river); font-size: 24px; letter-spacing: 0.2em; text-anchor: middle; }
-.water-label.sea { font-size: 26px; letter-spacing: 0.3em; }
+.water-label { fill: var(--river); font-size: 18px; letter-spacing: 0.2em; text-anchor: middle; }
+.water-label.sea { font-size: 20px; letter-spacing: 0.3em; }
+body[data-language="en"] .water-label { font-family: var(--serif-en); font-style: italic; letter-spacing: 0.04em; }
 
-.region-label { fill: var(--glacier); font-family: var(--serif-cn); font-size: 30px; letter-spacing: 0.3em; text-anchor: middle; }
+.region-label { fill: var(--glacier); font-family: var(--serif-cn); font-size: 20px; letter-spacing: 0.3em; text-anchor: middle; }
 body[data-language="en"] .region-label { font-family: var(--serif-en); letter-spacing: 0.04em; }
 .region-label.region-desert { fill: #80613b; }
 
@@ -107,7 +128,7 @@ body[data-language="en"] .region-label { font-family: var(--serif-en); letter-sp
 .terrain-marks.is-night .name.is-origin { fill: var(--lamp); }
 .terrain-marks.is-night .note { fill: #c9cfd6; }
 
-.river-label { fill: var(--river); font-family: var(--serif-cn); font-size: 24px; letter-spacing: 0.12em; }
+.river-label { fill: var(--river); font-family: var(--serif-cn); font-size: 18px; letter-spacing: 0.12em; }
 body[data-language="en"] .river-label { font-family: var(--serif-en); font-style: italic; letter-spacing: 0.02em; }
 .marks-wide .river-label.is-selected { fill: var(--seal); }
 
@@ -144,10 +165,9 @@ body[data-language="en"] .river-label { font-family: var(--serif-en); font-style
 }
 .map-place-link:focus-visible { outline: 1px solid rgba(157, 61, 49, 0.58); outline-offset: 3px; }
 
-/* the road to the border */
-.road-trace { fill: none; stroke: rgba(157, 61, 49, 0.3); stroke-width: 1.2; stroke-dasharray: 3 5; }
-.road { fill: none; stroke: var(--seal); stroke-width: 2.4; stroke-linejoin: round; stroke-linecap: round; }
-.motorcade { fill: var(--seal); stroke: rgba(240, 240, 238, 0.95); stroke-width: 2; }
+/* the road to the border, as 沙原隐泉's climb: a dotted trace and footprints */
+.route-trace { fill: none; stroke: rgba(157, 61, 49, 0.28); stroke-width: 1.2; stroke-dasharray: 2 7; stroke-linecap: round; }
+.footprint { fill: rgba(157, 61, 49, 0.75); }
 .gate { fill: rgba(245, 244, 238, 0.95); stroke: var(--seal); stroke-width: 1.4; stroke-linejoin: round; }
 
 /* ---------- north arrow (as in 阳关雪) ---------- */
@@ -172,9 +192,10 @@ body.is-open .compass { opacity: 1; }
 .compass text { fill: var(--seal); font: 600 18px var(--sans); }
 
 @media (max-width: 540px) {
-  .name { font-size: 28px; }
-  body[data-language="en"] .name { font-size: 25px; }
-  .region-label { font-size: 26px; }
+  .name { font-size: 20px; }
+  body[data-language="en"] .name { font-size: 18px; }
+  .note, .river-label, .water-label { font-size: 15px; }
+  .water-label.sea, .region-label { font-size: 17px; }
   .compass { top: 26px; right: 10px; width: 40px; height: 40px; }
 }
 

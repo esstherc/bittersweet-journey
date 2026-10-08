@@ -10,11 +10,13 @@
 |---|---|---|---|---|
 | 说明 | 说明／Author’s note | 4 | 4 | 不切换地图 |
 | 一 | 一 · 鱼尾山屋／I · Fish Tail Lodge | 8 | 7 | 博克拉 3D 地形 |
-| 二 | 二 · 思维高度／II · A height of thought | 13 | 13 | 大范围地形：希腊、克里特、埃及 |
-| 三 | 三 · 出埃及／III · Out of Egypt | 16 | 16 | 大范围地形：加上西奈到印度河 |
-| 四 | 四 · 未曾中断／IV · Unbroken | 30 | 30 | 大范围地形东移：天然屏障；读到最后转回尼泊尔、去蓝毗尼 |
-| 五 | 五 · 世纪最后一天／V · The century’s last day | 24 | 21 | 加德满都—边境 3D 地形，车队沿公路前进 |
+| 二 | 二 · 思维高度／II · A height of thought | 13 | 13 | 平面地图：希腊、克里特、埃及 |
+| 三 | 三 · 出埃及／III · Out of Egypt | 16 | 16 | 平面地图：西奈到印度河 |
+| 四 | 四 · 未曾中断／IV · Unbroken | 30 | 30 | 平面地图东移：天然屏障；读到最后转回尼泊尔、去蓝毗尼 |
+| 五 | 五 · 世纪最后一天／V · The century’s last day | 24 | 21 | 加德满都—边境 3D 地形，脚印沿公路虚线随阅读前进 |
 | 六 | 六 · 国门／VI · The gate | 12 | 12 | 峡谷里的中尼友谊桥、白石大门、樟木 |
+
+节次标签就是阅读区每节的标题（原文只有编号，标题为本章所加）；外壳的 `reader-progress`（“03 / 06”）与 `reader-location` 不显示（`showReaderProgress: false`、`showReaderLocation: false`）。
 
 英文各节开头的全大写（如 “I ARRIVED AT A PLACE CALLED POKHARA”）在 `app.js` 的 `formatParagraph` 里改为句首大写，说明段同样处理。
 
@@ -24,10 +26,13 @@
 
 ## 地图
 
-- **地形引擎**：本章自带 `terrain-3d.js`（不与阳关雪共享），三块地形：
+- **地形引擎**：本章自带 `terrain-3d.js`（不与阳关雪共享），第一、五、六节用两块 3D 地形：
   - 博克拉：83.72–84.14°E、28.10–28.66°N，170 × 225 格，约 250 米一格。
   - 边境：85.24–86.10°E、27.62–28.08°N，250 × 150 格，约 340 米一格。
-  - 大范围：8–125°E、10–52°N，380 × 160 格，约 29 公里一格。
+- **第二至四节：一张平面地图**（2026-10-07，仿道士塔）：跨国的大范围改为同一种投影的一张平面地图（`wide-map.js`），镜头随节次与正文焦点移动——希腊与埃及、西奈到印度河、亚洲的天然屏障，最后回到尼泊尔。
+  - 投影：正轴等积割圆锥（球体），中央经线 66.5°E，标准纬线 20°N／45°N，原点 30°N；`wide-map.js` 与构建脚本用同一公式，标签由 app.js 以屏幕像素绘制，缩放时字号不变。
+  - 底图：Natural Earth 1:50m 海岸线与湖泊；晕渲来自 GLO-90 平均到 1/10°（约 11 km），尼泊尔与喜马拉雅前缘另有 1/60°（约 1.8 km）的清晰叠图，边缘淡入；不画国界。
+  - 原来的 3D 大范围地形（380 × 160 格，约 29 km）仍在 `terrain-data.js`，只是不再显示。
 - **配色**：浅色底，让河流（深蓝）和引导线（血红虚线）清楚可见。
 - **第一节随原文的时间推进**：傍晚转暗，夜里屋子亮起一点灯火，清晨峰顶先染红（`mood()` 依本节阅读进度）。
 - **第二、三节**：遗址只标点，从“此刻所在”的鱼尾山屋拉虚线，数字为大圆距离；只有本节新出现的遗址标距离。手机宽度下，前一节的遗址只留点，挤在一起的标签会让位。
@@ -35,8 +40,8 @@
 - **河流名称**：
   - 大范围地形上标出尼罗河、底格里斯河、幼发拉底河、约旦河、印度河、恒河、黄河、长江，第五、六节标出波特科西河。
   - 名称沿河从中段向两端找第一个不挡字的位置，找不到就不标。
-- **第二、三节**：大范围地形的陆地调淡（`uWash` 0.38），海面保持原色。
-- **字号**：地图上的文字（地名、注记、区域、河流、海、说明文字、指北针）是初版的两倍。
+- **字号**（2026-10-07，依沙原隐泉）：地名 24 px（英文 22 px）、注记 17 px、河名与水域 18 px、山系与海 20 px；手机（≤540 px）地名 20／18 px、其余 15–17 px。字的光晕 4 px，圆角接合。
+- **第五、六节的公路**：仿沙原隐泉的登山路线，全程淡色点线，读过的部分每 14 px 一枚左右交替的脚印；第六节全程走完。不再画实线与车队圆点。
 - **标签**：
   - 位置偏移依实际字号计算，依候选位置和重叠代价放置，避开其他地点的点、地图说明文字与指北针。
   - 放不下时先省注记、再省地名，只留点。
@@ -69,7 +74,8 @@
 ## 重新构建
 
 1. **章节文字**：`python tools/build_fish_tail_lodge_chapter.py`，从语料生成 `chapter-data.js`。
-2. **大范围 DEM**：`python tools/fetch_fish_tail_wide_dem.py WORK/glo90-wide-6arcmin.tif`，读取 COG 缩图层，4,914 块，海洋缺块补 0。
+2. **大范围 DEM**：`python tools/fetch_fish_tail_wide_dem.py WORK/glo90-wide-6arcmin.tif`，读取 COG 缩图层，4,914 块，海洋缺块补 0。尼泊尔叠图：`python tools/fetch_fish_tail_wide_dem.py WORK/glo90-nepal-1arcmin.tif 79 90 24 32 60`（88 块）。
+   平面地图：`python tools/build_fish_tail_wide_map.py WORK/glo90-wide-6arcmin.tif ne_50m_land.geojson ne_50m_lakes.geojson site/chapters/fish-tail-lodge WORK/glo90-nepal-1arcmin.tif`，生成 `wide-map-data.js`、`assets/wide-relief.jpg`、`assets/wide-relief-nepal.png`（Natural Earth GeoJSON 取自 nvkelso/natural-earth-vector）。
 3. **地形与地理**：`python tools/build_fish_tail_lodge_geodata.py WORK site/chapters/fish-tail-lodge`，生成 `terrain-data.js` 和 `geography-data.js`。`WORK` 需要以下文件，名称见脚本开头：
    - 局部 GLO-90 图块
    - Natural Earth GeoJSON

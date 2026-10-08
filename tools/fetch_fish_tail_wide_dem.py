@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """Fetch a coarse Copernicus DEM GLO-90 mosaic from the Mediterranean to the Pacific, for 鱼尾山屋 parts 2-4.
 
-usage: fetch_fish_tail_wide_dem.py OUTPUT_TIF
+usage: fetch_fish_tail_wide_dem.py OUTPUT_TIF [WEST EAST SOUTH NORTH PER_DEGREE]
+
+With the optional arguments it fetches another box at another resolution (the flat map's sharper Nepal
+tile uses 79 90 24 32 60, about 1.8 km).
 
 Reads only the smallest internal overview (1/4 resolution, ~360 m) of each 1° COG tile over HTTP,
 averages it to 1/10° (~11 km) and writes one small GeoTIFF. Ocean tiles do not exist in the
@@ -52,8 +55,12 @@ def fetch(lon: int, lat: int) -> tuple[int, int, np.ndarray | None]:
 
 
 def main() -> None:
-    if len(sys.argv) != 2:
+    global WEST, EAST, SOUTH, NORTH, PER_DEGREE
+    if len(sys.argv) not in (2, 7):
         raise SystemExit(__doc__)
+    if len(sys.argv) == 7:
+        WEST, EAST, SOUTH, NORTH = map(float, sys.argv[2:6])
+        PER_DEGREE = int(sys.argv[6])
     lons = range(int(np.floor(WEST)), int(np.ceil(EAST)))
     lats = range(int(np.floor(SOUTH)), int(np.ceil(NORTH)))
     width = len(lons) * PER_DEGREE
@@ -81,7 +88,7 @@ def main() -> None:
     with rasterio.open(sys.argv[1], "w", driver="GTiff", width=mosaic.shape[1], height=mosaic.shape[0], count=1,
                        dtype="float32", crs=WGS84, transform=transform, compress="deflate") as out:
         out.write(mosaic, 1)
-        out.update_tags(source="Copernicus DEM GLO-90, overview level 1, averaged to 1/10 degree",
+        out.update_tags(source=f"Copernicus DEM GLO-90, overview level 1, averaged to 1/{PER_DEGREE} degree",
                         missing_tiles_filled_with_zero=str(missing))
     print(f"wrote {sys.argv[1]} {mosaic.shape}, {len(jobs)} tiles, {missing} missing (ocean), range {mosaic.min():.0f}-{mosaic.max():.0f} m")
 
