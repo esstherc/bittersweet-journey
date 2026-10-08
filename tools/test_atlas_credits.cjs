@@ -16,7 +16,7 @@ const server=http.createServer((req,res)=>{
    const page=await browser.newPage({viewport:mobile?{width:390,height:844}:{width:1440,height:900},reducedMotion:mobile?'reduce':'no-preference'});
    const errors=[];page.on('pageerror',e=>errors.push(e.message));
    await page.goto(url+'?credits=1&lang='+(mobile?'zh':'en'));
-   await page.waitForFunction(()=>window.ATLAS_STORIES && document.querySelector('.credits-replay'));
+   await page.waitForFunction(()=>window.ATLAS_STORIES && document.querySelector('.credits-replay'));await page.evaluate(()=>document.fonts.ready);
    assert.equal(await page.locator('.cinema-credits').isVisible(),false,'query cannot bypass completion');
    assert.equal(await page.locator('.credits-replay').isVisible(),false);
    assert.equal(await page.locator('.cta-callout').isVisible(),true);
@@ -38,13 +38,47 @@ const server=http.createServer((req,res)=>{
    assert.equal(await page.locator('.credits-titles li').count(),26);
    assert.equal(await page.locator('.credits-selected').count(),9);
    assert.equal(await page.locator('.finale-seals img').count(),9);
-   await page.screenshot({path:path.join(output,mobile?'credits-mobile.png':'credits-desktop.png')});
+   assert.equal(await page.locator('.credits-fast,.credits-skip').count(),0);
+   assert.equal(await page.locator('.credits-controls button').count(),3);
+   assert.equal(await page.locator('.credits-sound').textContent(),'♫');
+   assert(await page.locator('.credits-sound').getAttribute('aria-label'));
+   assert.deepEqual(await page.locator('.credits-traveler .journey-leg').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('d'))),await page.locator('.atlas-map-stage > .journey-traveler .journey-leg').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('d'))));
+   if(!process.env.SKIP_CREDITS_SCREENSHOTS)await page.screenshot({path:path.join(output,mobile?'credits-mobile.png':'credits-desktop.png')});
    const view=page.locator('.credits-viewport');
    if(mobile){await page.waitForTimeout(400);assert.equal(await view.evaluate(n=>n.scrollTop),0);}
    else{await page.waitForFunction(()=>document.querySelector('.credits-viewport').scrollTop>5);await page.locator('.credits-play').click();const at=await view.evaluate(n=>n.scrollTop);await page.waitForTimeout(250);assert.equal(await view.evaluate(n=>n.scrollTop),at);}
    await view.evaluate(n=>n.scrollTop=document.querySelector('.credits-library').offsetTop-100);
-   await page.screenshot({path:path.join(output,mobile?'credits-titles-mobile.png':'credits-titles-desktop.png')});
+   if(!process.env.SKIP_CREDITS_SCREENSHOTS)await page.screenshot({path:path.join(output,mobile?'credits-titles-mobile.png':'credits-titles-desktop.png')});
    assert(await view.evaluate(n=>n.scrollWidth<=n.clientWidth+1),'no horizontal overflow');
+   for(const scene of [2,3,4,5]) {
+    await view.evaluate((n,scene)=>n.scrollTop=document.querySelector('[data-ending-scene="'+scene+'"]').offsetTop-110,scene);
+    await page.waitForFunction(scene=>document.querySelector('.cinema-credits').dataset.scene===String(scene),scene);
+    assert.equal(await page.locator('.cinema-credits').getAttribute('data-scene'),String(scene));
+    if(!process.env.SKIP_CREDITS_SCREENSHOTS)await page.screenshot({path:path.join(output,'credits-scene-'+scene+(mobile?'-mobile':'-desktop')+'.png')});
+   }
+   assert.equal(await page.locator('.credits-road-lamps .is-lit').count(),9);
+   await view.evaluate(n=>n.scrollTop=document.querySelector('.credits-selected[data-story="dujiangyan"]').offsetTop-n.clientHeight*.4+4);
+   await page.waitForFunction(()=>{const sky=document.querySelector('.credits-chapter-sky.is-current');return sky&&sky.style.backgroundImage.includes('dujiangyan');});
+   await page.waitForFunction(()=>Number(getComputedStyle(document.querySelector('.credits-chapter-sky.is-current')).opacity)>.99);
+   if(!process.env.SKIP_CREDITS_SCREENSHOTS)await page.screenshot({path:path.join(output,'credits-chapter-art-'+(mobile?'mobile':'desktop')+'.png')});
+   if(!mobile){
+    await view.evaluate(n=>n.scrollTop=document.querySelector('.credits-departure').offsetTop-n.clientHeight*.4-5);
+    await page.waitForFunction(()=>document.querySelector('.cinema-credits').dataset.scene==='1');
+    await page.locator('.credits-play').click();
+    await page.waitForFunction(()=>document.querySelector('.cinema-credits').classList.contains('is-page-departure'));
+    await page.waitForTimeout(120);await page.locator('.credits-play').click();
+    const time=await page.locator('.credits-traveler').evaluate(async n=>{const a=n.getAnimations().find(a=>a.animationName==='end-leave-page');await a.ready;return a.currentTime;});
+    await page.waitForTimeout(120);assert.equal(await page.locator('.credits-traveler').evaluate(n=>n.getAnimations().find(a=>a.animationName==='end-leave-page').currentTime),time);
+    await page.locator('.credits-play').click();await page.waitForTimeout(120);
+    assert((await page.locator('.credits-traveler').evaluate(n=>n.getAnimations().find(a=>a.animationName==='end-leave-page').currentTime))>=time,'departure resumes without restarting');
+    await page.locator('.credits-play').click();
+   }
+   await view.evaluate(n=>n.scrollTop=n.scrollHeight);await page.waitForFunction(()=>document.querySelector('.cinema-credits').dataset.scene==='5');
+   await page.locator('.credits-again').click();assert.equal(await view.evaluate(n=>n.scrollTop),0);
+   if(await page.locator('.credits-play').getAttribute('aria-pressed')==='true')await page.locator('.credits-play').click();
+   await view.focus();await page.keyboard.press('Space');await page.waitForTimeout(250);assert((await view.evaluate(n=>n.scrollTop))>5,'Space resumes');await page.keyboard.press('Space');assert.equal(await page.locator('.credits-play').getAttribute('aria-pressed'),'false');
+   const enabled=await page.evaluate(()=>window.JOURNEY_AUDIO.enabled);await page.locator('.credits-sound').click();assert.equal(await page.evaluate(()=>window.JOURNEY_AUDIO.enabled),!enabled);await page.locator('.credits-sound').click();
+   await view.evaluate(n=>n.scrollTop=n.scrollHeight);await page.waitForFunction(()=>document.querySelector('.cinema-credits').dataset.scene==='5');
    await page.keyboard.press('Escape');assert.equal(await page.locator('.cinema-credits').isVisible(),false);
    await page.locator('.credits-replay').click();assert(await page.locator('.cinema-credits').isVisible());
    await page.locator('.finale-return').click();assert.equal(await view.evaluate(n=>n.getAnimations().length),0);
@@ -59,6 +93,6 @@ const server=http.createServer((req,res)=>{
    assert.equal(await page.locator('.cta-callout').isVisible(),true);
    assert.deepEqual(errors,[]);await page.close();
   }
-  console.log('PASS: bilingual credits, 26 ordered titles, nine highlighted selections, auto-scroll/pause, reduced motion, completion-only replay, no chapter links, reset and responsive overflow.');
+  console.log('PASS: bilingual credits, 26 ordered titles, nine highlighted selections, five scenes and lit lanterns, shared atlas traveller, visible curtain artwork, icon controls, sound toggle, replay, auto-scroll/pause, reduced motion, completion-only replay, no chapter links, reset and responsive overflow.');
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;}).finally(()=>server.close());

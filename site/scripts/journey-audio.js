@@ -75,7 +75,7 @@
       const from = music.volume;
       const started = performance.now();
       const fadeOut = now => {
-        const progress = Math.min(1, (now - started) / 320);
+        const progress = Math.max(0, Math.min(1, (now - started) / 320));
         music.volume = from * (1 - progress);
         if (progress < 1 && !ambienceWanted && enabled && !document.hidden) musicFade = requestAnimationFrame(fadeOut);
         else { music.pause(); music.volume = .22; }
@@ -87,7 +87,7 @@
       const from = music.volume;
       const started = performance.now();
       const raise = now => {
-        const progress = Math.min(1, (now - started) / 520);
+        const progress = Math.max(0, Math.min(1, (now - started) / 520));
         music.volume = from + (.22 - from) * progress;
         if (progress < 1 && ambienceWanted && enabled && !document.hidden) musicFade = requestAnimationFrame(raise);
       };
