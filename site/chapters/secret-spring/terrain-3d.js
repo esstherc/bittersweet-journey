@@ -66,7 +66,7 @@
       color *= 0.72 + diffuse * 0.38;
       float fog = smoothstep(uFog.x, uFog.y, vDepth);
       color = mix(color, vec3(0.93, 0.90, 0.83), fog * 0.6);
-      float edgeAlpha = 1.0 - smoothstep(uEdgeStart, 1.0, vEdge);
+      float edgeAlpha = uEdgeStart >= 1.0 ? 1.0 : 1.0 - smoothstep(uEdgeStart, 1.0, vEdge);
       gl_FragColor = vec4(color, edgeAlpha * uFade);
     }
   `;
@@ -100,42 +100,72 @@
     for (let index = 0; index < binary.length; index += 1) bytes[index] = binary.charCodeAt(index);
     const heights = new Uint16Array(bytes.buffer); // metres above baseMetres
     const { columns, rows, bounds } = source;
-    const widthRatio = ((columns - 1) * source.cellSizeMetres.x) / ((rows - 1) * source.cellSizeMetres.y);
-    const halfDepth = ((rows - 1) * source.cellSizeMetres.y) / 2;
-    const range = Math.max(1, source.realRangeMetres[1] - source.realRangeMetres[0]);
-    const metres = (column, row) => heights[Math.max(0, Math.min(rows - 1, row)) * columns + Math.max(0, Math.min(columns - 1, column))];
-    const toY = (m) => (m / halfDepth) * exaggeration;
+    const base = source.baseMetres;
+    // Keep the existing camera/model frame while actual DEM coverage grows around it.
+    const modelBounds = source.modelBounds || bounds;
+    const core = source.coreGrid || {columns, rows};
+    const widthRatio = ((core.columns - 1) * source.cellSizeMetres.x) / ((core.rows - 1) * source.cellSizeMetres.y);
+    const halfDepth = ((core.rows - 1) * source.cellSizeMetres.y) / 2;
+    const longitudes = source.longitudeSamples || Array.from({length:columns},(_,i)=>bounds.west+i/(columns-1)*(bounds.east-bounds.west));
+    const latitudes = source.latitudeSamples || Array.from({length:rows},(_,i)=>bounds.north-i/(rows-1)*(bounds.north-bounds.south));
+    const modelX = lon => ((lon-modelBounds.west)/(modelBounds.east-modelBounds.west)-.5)*2*widthRatio;
+    const modelZ = lat => ((modelBounds.north-lat)/(modelBounds.north-modelBounds.south)-.5)*2;
+    const xs = longitudes.map(modelX), zs = latitudes.map(modelZ);
+    function sampleIndex(values, value, direction=1) {
+      const target=value*direction;
+      if(target<=values[0]*direction)return 0;
+      if(target>=values.at(-1)*direction)return values.length-1;
+      let lo=0,hi=values.length-1;
+      while(hi-lo>1){const mid=(lo+hi)>>1;if(values[mid]*direction<=target)lo=mid;else hi=mid;}
+      return lo+(value-values[lo])/(values[hi]-values[lo]);
+    }
+    const metres = (column, row) => {
+      const c = Math.max(0, Math.min(columns - 1, column));
+      const r = Math.max(0, Math.min(rows - 1, row));
+      return heights[r * columns + c];
+    };
+    const toY = (m) => ((m + base - (source.modelBaseMetres ?? base)) / halfDepth) * exaggeration;
 
-    // Model space: x east, z south, the north-south extent spans -1..1.
+    // Model space: x east, z south, both scaled so the north-south extent spans -1..1.
     function toModel(lon, lat, lift = 0) {
-      const fc = (lon - bounds.west) / (bounds.east - bounds.west);
-      const fr = (bounds.north - lat) / (bounds.north - bounds.south);
-      const column = fc * (columns - 1), row = fr * (rows - 1);
-      const c0 = Math.floor(column), r0 = Math.floor(row), tc = column - c0, tr = row - r0;
+      const column = sampleIndex(longitudes,lon);
+      const row = sampleIndex(latitudes,lat,-1);
+      const c0 = Math.floor(column), r0 = Math.floor(row);
+      const tc = column - c0, tr = row - r0;
       const h = (metres(c0, r0) * (1 - tc) + metres(c0 + 1, r0) * tc) * (1 - tr) +
         (metres(c0, r0 + 1) * (1 - tc) + metres(c0 + 1, r0 + 1) * tc) * tr;
-      return [(fc - 0.5) * 2 * widthRatio, toY(h + lift), (fr - 0.5) * 2];
+      return [modelX(lon), toY(h + lift), modelZ(lat)];
     }
 
+    const range = Math.max(1, (source.coreRangeMetres || source.realRangeMetres)[1] - (source.coreRangeMetres || source.realRangeMetres)[0]);
     const positions = [], normals = [], height = [];
-    const dx = (2 * widthRatio) / (columns - 1), dz = 2 / (rows - 1);
     for (let row = 0; row < rows; row += 1) {
       for (let column = 0; column < columns; column += 1) {
         const m = metres(column, row);
-        positions.push((column / (columns - 1) - 0.5) * 2 * widthRatio, toY(m), (row / (rows - 1) - 0.5) * 2);
-        height.push(m / range);
-        const gx = (toY(metres(column + 1, row)) - toY(metres(column - 1, row))) / (2 * dx);
-        const gz = (toY(metres(column, row + 1)) - toY(metres(column, row - 1))) / (2 * dz);
+        positions.push(xs[column], toY(m), zs[row]);
+        height.push((m + base - (source.modelBaseMetres ?? base)) / range);
+        const gx = (toY(metres(column + 1, row)) - toY(metres(column - 1, row))) / (xs[Math.min(columns-1,column+1)]-xs[Math.max(0,column-1)]);
+        const gz = (toY(metres(column, row + 1)) - toY(metres(column, row - 1))) / (zs[Math.min(rows-1,row+1)]-zs[Math.max(0,row-1)]);
         const length = Math.hypot(gx, 1, gz);
         normals.push(-gx / length, 1 / length, -gz / length);
       }
     }
-    const indices = [];
-    for (let row = 0; row < rows - 1; row += 1) {
-      for (let column = 0; column < columns - 1; column += 1) {
-        const a = row * columns + column;
-        indices.push(a, a + columns, a + 1, a + 1, a + columns, a + columns + 1);
+    // Row strips keep every index within WebGL 1's unsigned-short limit.
+    const chunks = [];
+    const stripRows = Math.floor(65536 / columns) - 1;
+    for (let first = 0; first < rows - 1; first += stripRows) {
+      const indices = [];
+      const last = Math.min(rows - 1, first + stripRows);
+      for (let row = first; row < last; row++) {
+        for (let column = 0; column < columns - 1; column++) {
+          const a = (row - first) * columns + column;
+          indices.push(a, a + columns, a + 1, a + 1, a + columns, a + columns + 1);
+        }
       }
+      const indexBuffer = gl.createBuffer();
+      gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
+      gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW);
+      chunks.push({indexBuffer, count: indices.length, offset: first * columns});
     }
     const buffer = (values) => {
       const handle = gl.createBuffer();
@@ -143,19 +173,16 @@
       gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(values), gl.STATIC_DRAW);
       return handle;
     };
-    const indexBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, indexBuffer);
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW);
     return {
-      bounds, widthRatio, toModel, edgeStart, metresPerModel: halfDepth,
+      bounds: modelBounds, widthRatio, toModel, edgeStart, metresPerModel: halfDepth,
       buffers: [[buffer(positions), 3], [buffer(normals), 3], [buffer(height), 1]],
-      indexBuffer, count: indices.length
+      chunks
     };
   }
 
   const terrains = {
     local: buildTerrain(data.local, { exaggeration: 2.2, edgeStart: 0.82 }),
-    regional: buildTerrain(data.regional, { exaggeration: 2.6, edgeStart: 0.88 })
+    regional: buildTerrain(data.regional, { exaggeration: 2.6, edgeStart: 1 })
   };
 
   /* ---------- camera ---------- */
@@ -326,18 +353,21 @@
     gl.enable(gl.DEPTH_TEST);
     gl.enable(gl.BLEND);
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-    terrain.buffers.forEach(([handle, size], index) => {
-      gl.bindBuffer(gl.ARRAY_BUFFER, handle);
-      gl.vertexAttribPointer(attributes[index], size, gl.FLOAT, false, 0, 0);
-    });
-    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, terrain.indexBuffer);
+
     gl.uniformMatrix4fv(u.mvp, false, new Float32Array(mvp));
     gl.uniform1f(u.widthRatio, terrain.widthRatio);
     gl.uniform1f(u.lightShift, (reduced() ? 0 : Math.sin(time * 0.00011) * 0.16) + progress * 0.08);
     gl.uniform1f(u.fade, current.fade);
     gl.uniform2f(u.fog, current.fog[0], current.fog[1]);
     gl.uniform1f(u.edgeStart, terrain.edgeStart);
-    gl.drawElements(gl.TRIANGLES, terrain.count, gl.UNSIGNED_SHORT, 0);
+    for (const chunk of terrain.chunks) {
+      terrain.buffers.forEach(([handle, size], index) => {
+        gl.bindBuffer(gl.ARRAY_BUFFER, handle);
+        gl.vertexAttribPointer(attributes[index], size, gl.FLOAT, false, 0, chunk.offset * size * 4);
+      });
+      gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, chunk.indexBuffer);
+      gl.drawElements(gl.TRIANGLES, chunk.count, gl.UNSIGNED_SHORT, 0);
+    }
 
     const view = { terrain: current.terrain, ...measure() };
     listeners.forEach((listener) => listener(project, view));

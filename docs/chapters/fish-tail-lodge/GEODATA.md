@@ -1,5 +1,11 @@
 # 《鱼尾山屋》地理数据与准确性
 
+## 局部 DEM 外围扩展（2026-10-08）
+
+第一张地图的博克拉地形扩展至 81–87°E、26–31°N（250 × 253 顶点）；最后一张地图的边境地形扩展至 82–89°E、25–31°N（290 × 210 顶点）。下表所列原范围仍为保留原始分辨率的核心区，高程逐点保留；外围采用同源 Copernicus GLO-90 格网，采样间距由核心向远方逐渐放宽。经纬度采样数组描述非等距网格，镜头和标记继续使用原核心区的坐标与高程基准。两张局部地形完全关闭边缘透明淡出，以真实地形延伸至视野之外。
+
+重建时先运行 `tools/build_fish_tail_lodge_geodata.py`，再运行 `tools/extend_fish_tail_dem.py`（需要 numpy、GDAL 和网络访问）。扩展资料打包在本地 `terrain-data.js`，浏览时无需下载 DEM。
+
 生成文件：`site/chapters/fish-tail-lodge/geography-data.js`、`terrain-data.js`，由 `tools/build_fish_tail_lodge_geodata.py` 写出。坐标取自 Wikidata P625，取得日期 2026-09-27；这是开放的地理参考数据，不等于测绘认证。页面上的说明面板（Map notes）对读者交代以下各项的要点。
 
 ## 尼泊尔（第一、四、五、六节）
