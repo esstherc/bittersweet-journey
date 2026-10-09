@@ -21,7 +21,12 @@
     let running=false,frame=0,previous=0,position=0,startsAt=0,openingStampPending=false,activeStory='',activeScene=0,voice=null;
     const en=()=>document.body.dataset.language==='en';
     const set=(selector,text)=>{dialog.querySelector(selector).textContent=text;};
-    const landscapeFor=id=>id==='my-hometown'?'':`./chapters/${id}/assets/${id==='kashgar'?'opening-pamir':'opening-landscape'}.jpg`;
+    const landscapeFor=id=>{
+      const story=stories.find(story=>story.id===id);if(!story)return '';
+      const chapter=new URL(story.href,location.href);
+      if(chapter.pathname.includes('/my-hometown/'))return '';
+      return new URL(`./assets/${chapter.pathname.includes('/kashgar/')?'opening-pamir':'opening-landscape'}.jpg`,chapter).href;
+    };
     const lamps=dialog.querySelector('.credits-road-lamps');
     lamps.innerHTML=stories.map(()=>'<i><span></span></i>').join('');
     // Use the atlas artwork itself so the same traveller continues into the ending.
@@ -63,7 +68,10 @@
       target.innerHTML=markup;
     }
     function control(){
-      play.textContent=running?'Ⅱ':'▷';play.setAttribute('aria-pressed',String(running));
+      play.innerHTML=running
+        ? '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>'
+        : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7Z"/></svg>';
+      play.setAttribute('aria-pressed',String(running));
       play.title=en()?(running?'Pause credits':'Play credits'):(running?'暂停谢幕':'播放谢幕');play.setAttribute('aria-label',play.title);
       sound.textContent='♫';sound.title=en()?(window.JOURNEY_AUDIO?.enabled?'Mute':'Sound on'):(window.JOURNEY_AUDIO?.enabled?'静音':'开启声音');sound.setAttribute('aria-label',sound.title);
       sound.setAttribute('aria-pressed',String(Boolean(window.JOURNEY_AUDIO?.enabled)));
@@ -166,7 +174,7 @@
       }));
       set('.credits-scroll-hint', english ? 'Scroll at your own pace · Space to pause or resume' : '随时卷动、停留 · 空白键暂停或继续');
       set('.credits-library h3', english ? 'Beyond this atlas' : '地图之外，还有山河');
-      set('.credits-legend', english ? 'All 26 essays in the 2014 Chinese edition. Gold titles and seals mark the nine atlas selections. Chinese-only titles are absent from the 2015 English selection.' : '依 2014 年中文版篇序列出全书 26 篇。暖金篇名与图章标示本故事地图的 9 篇选读。');
+      set('.credits-legend', english ? 'All 26 essays in the 2014 Chinese edition. Chinese-only titles are absent from the 2015 English selection.' : '依 2014 年中文版篇序列出全书 26 篇。');
       dialog.querySelector('.credits-titles').replaceChildren(...window.BOOK_CONTENTS.map((chapter, index) => {
         const item = document.createElement('li'), title = document.createElement('span');
         const story = stories.find(s => s.title.zh === chapter.zh);
@@ -188,11 +196,11 @@
       }));
       set('.credits-attribution h3', english ? 'Words, maps & the people behind them' : '文字、山河与幕後的人');
       const credits = [
+        [english ? 'Story map' : '故事地图作者', 'Yanbing Chen · Eugenie Huang'],
         [english ? 'Original author' : '原着作者', english ? 'Yu Qiuyu · 余秋雨' : '余秋雨'],
         [english ? 'Chinese edition' : '中文版本', '文化苦旅 · 长江文艺出版社 · 2014'],
         [english ? 'English edition' : '英译版本', 'A Bittersweet Journey Through Culture · CN Times Books · 2015'],
         [english ? 'English translator' : '英译本译者', english ? 'CN Times Books team' : 'CN Times Books 团队'],
-        [english ? 'Story map' : '故事地图作者', 'Yanbing Chen · Eugenie Huang'],
         [english ? 'Coastlines, rivers & terrain regions' : '海岸、水系与地形分区', 'Natural Earth', 'https://www.naturalearthdata.com/'],
         [english ? 'Roads, places & heritage' : '道路、地点与遗址', '© OpenStreetMap contributors · ODbL', 'https://www.openstreetmap.org/copyright'],
         [english ? 'Elevation' : '高程地形', 'Copernicus DEM GLO-30 / GLO-90', 'https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM'],

@@ -46,8 +46,6 @@
     dialog.querySelector('.chapter-leaf-number').textContent = copy.number;
     dialog.querySelector('.chapter-leaf-title').textContent = copy.title;
     dialog.querySelector('.chapter-leaf-line').textContent = copy.line;
-    const subline = dialog.querySelector('.chapter-leaf-subline');
-    if (subline) subline.textContent = copy.subline || '';
     dialog.querySelector('.chapter-leaf-enter span').textContent = copy.action.replace(/\s*[→↗]\s*$/, '');
     const back = dialog.querySelector('.chapter-leaf-back');
     back.textContent = copy.language === 'en' ? '← Return to atlas' : '← 返回总图';
@@ -199,7 +197,6 @@
       make('p', 'chapter-leaf-number'),
       title,
       make('p', 'chapter-leaf-line'),
-      make('p', 'chapter-leaf-subline'),
       action
     );
     sheet.append(content, make('a', 'chapter-leaf-back'));

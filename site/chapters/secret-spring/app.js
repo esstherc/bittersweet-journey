@@ -404,7 +404,6 @@
   function setMapText() {
     const zh = language === "zh";
     const name = (id) => places[id][zh ? "zh" : "en"];
-    const km = geography.distancesKm;
     localMarks.peak.name.textContent = name("peak");
     localMarks.spring.name.textContent = name("spring");
     localMarks.spring.note.textContent = zh ? "风沙中如此一静" : "Stillness within the sand";
@@ -413,9 +412,8 @@
     regionalMarks.mogao.name.textContent = name("mogao");
     regionalMarks.yulin.name.textContent = name("yulin");
     Object.values(regionalMarks).forEach((mark) => { mark.note.textContent = ""; });
-    links.forEach(({ a, b, label }) => {
-      const value = km[`${a}-${b}`];
-      label.textContent = zh ? `直线约 ${value} km` : `${value} km in a straight line`;
+    links.forEach(({ label }) => {
+      label.textContent = "";
     });
     localRiverLabel.textContent = zh ? "党河" : "Dang River";
     regionalRiverLabel.textContent = localRiverLabel.textContent;

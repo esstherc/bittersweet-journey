@@ -424,8 +424,7 @@
           language: state.language,
           number: fill(text("curtain-kicker")),
           title: text("chapter-title"),
-          line: text(id === "mountain-resort" ? "reader-note" : "map-teaser"),
-          subline: id === "fish-tail-lodge" || id === "yangguan" ? text("thesis") : "",
+          line: text("map-teaser"),
           action: text("open")
         }),
         language: changeLanguage,

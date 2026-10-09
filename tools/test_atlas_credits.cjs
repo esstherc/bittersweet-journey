@@ -42,6 +42,10 @@ const server=http.createServer((req,res)=>{
    assert.equal(await page.locator('.credits-controls button').count(),3);
    assert.equal(await page.locator('.credits-sound').textContent(),'♫');
    assert(await page.locator('.credits-sound').getAttribute('aria-label'));
+   assert.equal(await page.locator('.credits-play svg').count(),1,'drawn playback icon');
+   assert.equal(await page.locator('.credits-play').textContent(),'','no II text glyph');
+   assert((await page.locator('.credits-scroll-hint').evaluate(node=>getComputedStyle(node,'::before').maskImage)).includes('scroll-down.svg'),'hint has a downward arrow');
+   assert(!(await page.locator('.credits-legend').textContent()).includes('Gold titles and seals mark the nine atlas selections.'));
    assert.deepEqual(await page.locator('.credits-traveler .journey-leg').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('d'))),await page.locator('.atlas-map-stage > .journey-traveler .journey-leg').evaluateAll(nodes=>nodes.map(n=>n.getAttribute('d'))));
    if(!process.env.SKIP_CREDITS_SCREENSHOTS)await page.screenshot({path:path.join(output,mobile?'credits-mobile.png':'credits-desktop.png')});
    const view=page.locator('.credits-viewport');
@@ -60,6 +64,14 @@ const server=http.createServer((req,res)=>{
    await view.evaluate(n=>n.scrollTop=document.querySelector('.credits-selected[data-story="dujiangyan"]').offsetTop-n.clientHeight*.4+4);
    await page.waitForFunction(()=>{const sky=document.querySelector('.credits-chapter-sky.is-current');return sky&&sky.style.backgroundImage.includes('dujiangyan');});
    await page.waitForFunction(()=>Number(getComputedStyle(document.querySelector('.credits-chapter-sky.is-current')).opacity)>.99);
+   // Atlas IDs can differ from chapter folder names (chengde -> mountain-resort).
+   for(const story of await page.evaluate(()=>window.ATLAS_STORIES.filter(s=>!s.href.includes('/my-hometown/')).map(s=>({id:s.id,folder:new URL(s.href,location.href).pathname.split('/').at(-2)})))){
+    await view.evaluate((n,id)=>n.scrollTop=document.querySelector('.credits-selected[data-story="'+id+'"]').offsetTop-n.clientHeight*.4+4,story.id);
+    await page.waitForFunction(folder=>document.querySelector('.credits-chapter-sky.is-current')?.style.backgroundImage.includes('/'+folder+'/assets/'),story.folder);
+    const loaded=await page.locator('.credits-chapter-sky.is-current').evaluate(async node=>{
+      const image=new Image();image.src=node.style.backgroundImage.slice(5,-2);try{await image.decode();return image.naturalWidth>0;}catch{return false;}
+    });assert(loaded,story.id+' curtain must load from its actual chapter directory');
+   }
    if(!process.env.SKIP_CREDITS_SCREENSHOTS)await page.screenshot({path:path.join(output,'credits-chapter-art-'+(mobile?'mobile':'desktop')+'.png')});
    {
     if(mobile)await page.emulateMedia({reducedMotion:'no-preference'});

@@ -78,13 +78,7 @@ button {
 }
 
 .paper-noise {
-  position: fixed;
-  inset: 0;
-  z-index: 55;
-  pointer-events: none;
-  opacity: 0.085;
-  mix-blend-mode: multiply;
-  background-image: url("../../assets/paper-grain.svg");
+  display: none;
 }
 
 /* ---------- [T] title bar ---------- */
@@ -218,7 +212,12 @@ body[data-language="en"] .map-caption {
   outline: none;
   scrollbar-width: thin;
   scrollbar-color: rgba(32, 37, 31, 0.28) transparent;
+  background-image: repeating-linear-gradient(to bottom, #746b5808 0 1px, transparent 1px 32px);
 }
+
+/* Measurements do not belong on these literary chapter maps. */
+.map-stage :is(.scale-bar, #scale) { display: none; }
+.curtain-thesis { white-space: nowrap; }
 
 body:not(.is-open) .reader-scroll {
   overflow: hidden; /* [C-2] locked behind the curtain */

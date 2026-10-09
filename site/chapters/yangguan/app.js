@@ -647,7 +647,7 @@
     poemLines.forEach((line, index) => { line.textContent = text.poem[index] || ""; });
     farMarks.forEach(({ site, name, note }) => {
       name.textContent = site[language];
-      note.textContent = `${site.distanceKm.toLocaleString("en")} km`;
+      note.textContent = "";
     });
     originName.textContent = language === "zh" ? "阳关" : "The Southern Pass";
     originNote.textContent = language === "zh" ? "原点 · 烽燧遗址" : "origin · beacon site";
@@ -657,7 +657,7 @@
     compass.setAttribute("aria-label", language === "zh" ? "指北针" : "North arrow");
     regionalText.dunhuang.text.textContent = text.dunhuang;
     regionalText.yangguan.text.textContent = text.yangguan;
-    regionalText.distance.textContent = text.distance;
+    regionalText.distance.textContent = "";
     regionalText.wall.textContent = text.regionalWall;
     gansuLabel.textContent = language === "zh" ? "甘肃" : "Gansu";
     level = state.active + 1;

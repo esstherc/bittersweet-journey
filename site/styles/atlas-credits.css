@@ -50,6 +50,9 @@ body[data-language="en"] .cinema-credits { font-family: var(--en); }
 .credits-controls button:hover, .credits-coda-actions button:hover { color: #f6ce87; border-color: #efc986; }
 .credits-controls .credits-icon { position: relative; flex: 0 0 36px; width: 36px; height: 36px; border: 1px solid currentColor; border-radius: 50%; padding: 0; opacity: .82; font: 21px/1 var(--sans); }
 .credits-controls .credits-icon:hover { opacity: 1; background: #9d3d311a; }
+.credits-play svg { display: block; width: 18px; height: 18px; margin: auto; fill: currentColor; }
+.credits-play[aria-pressed="false"] svg { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linejoin: round; }
+.credits-scroll-hint::before { content: ''; display: block; width: 22px; height: 28px; margin: 0 auto 12px; background: currentColor; mask: url("../assets/scroll-down.svg") center / contain no-repeat; }
 .credits-controls .credits-icon[aria-pressed="true"] { opacity: 1; }
 .credits-sound[aria-pressed="false"]::after { content: ''; position: absolute; left: 4px; top: 17px; width: 27px; height: 1px; background: currentColor; transform: rotate(-44deg); }
 .credits-controls .finale-return { margin: 0; padding: 8px 0; border: 0; font: 14px var(--label); }

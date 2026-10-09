@@ -542,11 +542,11 @@
     localMarks.mogao.name.textContent = name("mogao");
     localMarks.mogao.note.textContent = zh ? "鸣沙山东麓的断崖" : "the cliff on Echoing Sand Hill’s east face";
     localMarks.dunhuang.name.textContent = name("dunhuang");
-    localMarks.dunhuang.note.textContent = zh ? `直线约 ${place("dunhuang").distanceKm} km` : `${place("dunhuang").distanceKm} km in a straight line`;
+    localMarks.dunhuang.note.textContent = "";
     localMarks.mingsha.name.textContent = name("mingsha");
     localMarks.mingsha.note.textContent = "";
     localRiverLabels.forEach(({ name: river, node }) => { node.textContent = (localRiverNames[river] || [river, river])[zh ? 0 : 1]; });
-    villagerLabel.textContent = zh ? `约 ${geography.villagersKm} 公里` : `about ${geography.villagersKm} km`;
+    villagerLabel.textContent = "";
     const globeText = {
       mogao: [name("mogao"), ""],
       beijing: [name("beijing"), zh ? "陈万里受雇于此" : "where Chen Wanli was hired"],

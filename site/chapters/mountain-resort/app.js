@@ -501,7 +501,7 @@
     flatMarks.summer.notes[0].textContent = text("wang-event");
     wallLabel.textContent = zh ? "长城" : "Great Wall";
     mulanLabel.textContent = zh ? "木兰围场 · 官方公布范围" : "Mulan · published extent";
-    memoryLabel.textContent = text("memory-distance");
+    memoryLabel.textContent = "";
     memoryNote.textContent = text("memory-link");
     // on the map the English is shortened; the full phrase stays in the copy
     zoneLabels.chair.textContent = zh ? text("chair-label") : "The hills, a chair back";

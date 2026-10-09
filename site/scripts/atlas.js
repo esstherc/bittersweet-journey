@@ -192,7 +192,7 @@
     ...chapter
   }]);
   const chapterTotal = orderedStories.length;
-  window.ATLAS_STORIES = Object.freeze(orderedStories.map(([id,story]) => Object.freeze({id,storageKey:story.storageKey,title:story.title,seal:story.seal})));
+  window.ATLAS_STORIES = Object.freeze(orderedStories.map(([id,story]) => Object.freeze({id,href:story.href,storageKey:story.storageKey,title:story.title,seal:story.seal})));
 
   function applyRealGeography() {
     const geography = window.REAL_GEOGRAPHY?.global;
