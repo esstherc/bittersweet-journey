@@ -16,8 +16,8 @@
       "curtain-kicker": "第 {n} 章",
       "back-atlas": "总地图",
       source: "文本：余秋雨《文化苦旅》",
-      "notes-button": "Natural Earth",
-      "notes-title": "Natural Earth",
+      "notes-button": "数据来源",
+      "notes-title": "数据来源",
       "notes-keyboard-title": "键盘",
       "notes-keyboard": "↑ ↓ ← → 切换节次 · L 切换语言 · Esc 关闭本面板",
       "close-aria": "关闭",
@@ -38,8 +38,8 @@
       "curtain-kicker": "Chapter {n}",
       "back-atlas": "Atlas",
       source: "Text: Yu Qiuyu, A Bittersweet Journey Through Culture",
-      "notes-button": "Natural Earth",
-      "notes-title": "Natural Earth",
+      "notes-button": "Data Sources",
+      "notes-title": "Data Sources",
       "notes-keyboard-title": "Keyboard",
       "notes-keyboard": "↑ ↓ ← → switch sections · L language · Esc closes this panel",
       "close-aria": "Close",
@@ -94,9 +94,10 @@
     window.localStorage.setItem(LANGUAGE_KEY, state.language);
 
     if (els.notesButton) {
-      const source = document.createElement("span");
-      source.className = "map-source-credit";
-      source.textContent = "Natural Earth";
+      const source = document.createElement("button");
+      source.type = "button";
+      source.className = "map-source-credit site-data-sources-trigger";
+      source.textContent = state.language === "en" ? "Data Sources" : "数据来源";
       els.notesButton.replaceWith(source);
       els.notesButton = null;
     }

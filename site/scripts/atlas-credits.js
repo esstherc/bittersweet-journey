@@ -195,18 +195,14 @@
         return item;
       }));
       set('.credits-attribution h3', english ? 'Words, maps & the people behind them' : '文字、山河与幕後的人');
+      const sourceCredits=(window.MAP_DATA_SOURCES||[]).map(source=>[english?'Data source':'数据来源',source.name,source.url]);
       const credits = [
         [english ? 'Story map' : '故事地图作者', 'Yanbing Chen · Eugenie Huang'],
         [english ? 'Original author' : '原着作者', english ? 'Yu Qiuyu · 余秋雨' : '余秋雨'],
         [english ? 'Chinese edition' : '中文版本', '文化苦旅 · 长江文艺出版社 · 2014'],
         [english ? 'English edition' : '英译版本', 'A Bittersweet Journey Through Culture · CN Times Books · 2015'],
         [english ? 'English translator' : '英译本译者', english ? 'CN Times Books team' : 'CN Times Books 团队'],
-        [english ? 'Coastlines, rivers & terrain regions' : '海岸、水系与地形分区', 'Natural Earth', 'https://www.naturalearthdata.com/'],
-        [english ? 'Roads, places & heritage' : '道路、地点与遗址', '© OpenStreetMap contributors · ODbL', 'https://www.openstreetmap.org/copyright'],
-        [english ? 'Elevation' : '高程地形', 'Copernicus DEM GLO-30 / GLO-90', 'https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM'],
-        [english ? 'Climate & rainfall' : '气候与降水', 'WorldClim 2.1 · 1970–2000', 'https://www.worldclim.org/data/worldclim21.html'],
-        [english ? 'Geographic reference coordinates' : '地理参考座标', 'Wikidata · P625', 'https://www.wikidata.org/wiki/Property:P625'],
-        [english ? 'Standard-map reference' : '标准地图参考', english ? 'Ministry of Natural Resources · China' : '中国自然资源部标准地图服务', 'https://bzdt.ch.mnr.gov.cn/']
+        ...sourceCredits
       ];
       dialog.querySelector('dl').replaceChildren(...credits.flatMap(([role, name, url]) => {
         const dt = document.createElement('dt'), dd = document.createElement('dd'); dt.textContent = role;

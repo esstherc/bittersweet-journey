@@ -110,3 +110,82 @@ body[data-language="en"] .site-masthead .site-progress { letter-spacing: .08em; 
   .site-masthead .site-wordmark { align-self: stretch; align-items: center; }
   .site-masthead .site-language button { min-height: 40px; padding: 0 3px; }
 }
+
+.site-data-sources-trigger {
+  appearance: none;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  cursor: pointer;
+}
+.site-data-sources-trigger:hover,
+.site-data-sources-trigger:focus-visible { color: #9d3d31; }
+.site-data-sources {
+  width: min(430px, calc(100vw - 32px));
+  margin: auto;
+  padding: 34px 34px 30px;
+  border: 1px solid rgba(90, 76, 58, .28);
+  color: #2f352f;
+  background: rgba(244, 239, 228, .98);
+  box-shadow: 0 30px 100px rgba(45, 36, 25, .3);
+}
+.site-data-sources::backdrop {
+  background: rgba(42, 34, 25, .34);
+  backdrop-filter: blur(2px);
+}
+.site-data-sources h2 {
+  margin: 0 44px 24px 0;
+  font: 400 25px/1.3 var(--serif-cn);
+  letter-spacing: .12em;
+}
+body[data-language="en"] .site-data-sources h2 {
+  font-family: var(--serif-en);
+  letter-spacing: .04em;
+}
+.site-data-sources-close {
+  position: absolute;
+  top: 19px;
+  right: 20px;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  background: none;
+  color: #62675f;
+  font: 25px/1 var(--sans);
+  cursor: pointer;
+}
+.site-data-sources-list {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid rgba(90, 76, 58, .18);
+}
+.site-data-sources-list li {
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  align-items: center;
+  min-height: 52px;
+  border-bottom: 1px solid rgba(90, 76, 58, .18);
+}
+.site-data-sources-list span {
+  color: #9a7d5a;
+  font: 10px/1 var(--sans);
+  letter-spacing: .08em;
+}
+.site-data-sources-list a {
+  color: inherit;
+  font: 16px/1.3 var(--serif-en);
+  letter-spacing: .025em;
+  text-decoration: none;
+}
+.site-data-sources-list a::after { content: "↗"; float: right; color: #9a7d5a; font: 13px var(--sans); }
+.site-data-sources-list a:hover,
+.site-data-sources-list a:focus-visible { color: #9d3d31; }
+@media (max-width: 520px) {
+  .site-data-sources { padding: 28px 24px 24px; }
+}
