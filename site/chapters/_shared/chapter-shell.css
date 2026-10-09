@@ -738,7 +738,7 @@ body[data-language="en"] .curtain-thesis {
 .map-source-credit {
   color: var(--ink-soft);
   font-family: var(--sans);
-  font-size: 11px;
+  font-size: 13.5px;
   line-height: 1.4;
   letter-spacing: 0.04em;
 }
@@ -1051,4 +1051,14 @@ body[data-language="en"] .chapter-complete-overlay strong {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* completion screen: the closing line keeps clear of the screen edges on phones (2026-10-09) */
+.chapter-complete-overlay strong,
+.chapter-complete-overlay p {
+  box-sizing: border-box;
+  max-width: min(36em, 100vw);
+  padding: 0 24px;
+  text-align: center;
+  text-wrap: balance;
 }

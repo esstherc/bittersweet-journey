@@ -372,8 +372,17 @@
   function drawFurniture(view) {
     compass.style.setProperty("--north", `${(view.north * 180 / Math.PI).toFixed(1)}deg`);
     const steps = [50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000];
-    const metres = steps.find((m) => m / view.metresPerPixel >= 90) || steps[steps.length - 1];
+    // Keep the current length while its bar stays between 60 and 240 px: the camera sways, and recomputing every
+    // frame made the bar jump between two lengths. The DOM is only written when something changed.
+    let metres = drawFurniture.metres;
+    if (!metres || metres / view.metresPerPixel < 60 || metres / view.metresPerPixel > 240) {
+      metres = steps.find((value) => value / view.metresPerPixel >= 90) || steps[steps.length - 1];
+      drawFurniture.metres = metres;
+    }
     const px = Math.round(metres / view.metresPerPixel);
+    if (px === drawFurniture.px && metres === drawFurniture.shown) return;
+    drawFurniture.px = px;
+    drawFurniture.shown = metres;
     scaleBar.setAttribute("viewBox", `-4 0 ${px + 64} 34`);
     scaleBar.setAttribute("width", String(px + 64));
     scaleBar.querySelector(".scale-line").setAttribute("d", `M0 4V12H${px}V4M${px / 2} 8V12`);

@@ -268,7 +268,7 @@
     const grow = Math.min(pinScale, 1.6);
     svg.querySelector(".overlay-four").setAttribute(
       "transform",
-      `translate(${area.x + inset} ${area.y + area.height - inset}) scale(${grow}) translate(-70 -614)`
+      `translate(${area.x + inset} ${area.y + area.height - inset}) scale(${grow}) translate(-70 -624)`
     );
     svg.querySelector(".overlay-five").setAttribute(
       "transform",
@@ -434,7 +434,7 @@
       };
       drawView(currentView);
       if (t < 1) flight = requestAnimationFrame(step);
-      else resolveCrowding(name);
+      else { flight = 0; resolveCrowding(name); }
     };
     flight = requestAnimationFrame(step);
   }
@@ -493,6 +493,11 @@
     moveCamera(currentLevel(), false);
     scheduleNote();
   }).observe(svg);
+  // Labels are measured to frame each view; web fonts and the 10pt floor (min-type.js, at 0.4 / 1.2 / 3 s) change
+  // their size after the first frame, so the view and the label give-way are worked out again once they settle.
+  const reframe = () => { if (!flight) moveCamera(currentLevel(), false); };
+  document.fonts?.ready.then(reframe);
+  [600, 1500, 3300].forEach((delay) => window.setTimeout(reframe, delay));
   new MutationObserver(scheduleNote).observe(document.querySelector('.unknown-coordinate'),{subtree:true,attributes:true,attributeFilter:['style']});
   document.fonts?.ready.then(scheduleNote);
 

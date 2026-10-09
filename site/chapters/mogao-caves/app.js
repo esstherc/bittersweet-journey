@@ -393,23 +393,25 @@
     const height = cliffSvg.clientHeight || 120;
     cliffSvg.setAttribute("viewBox", `0 0 ${width} ${height}`);
     cliffSvg.replaceChildren();
-    const top = 10;
-    const faceBottom = height - 48; // two caption lines sit below the face
+    // phones: one row of niches and one caption line, so the panel stays short (2026-10-09)
+    const compact = width < 520;
+    const top = compact ? 4 : 10;
+    const faceBottom = height - (compact ? 24 : 48); // caption lines sit below the face
     // the cliff: a slightly uneven top edge, three tiers of niches
     let edge = `M0,${faceBottom}V${top + 8}`;
     for (let x = 0; x <= width; x += width / 12) edge += `L${x.toFixed(1)},${(top + 6 * Math.sin(x / 37) + 4 * Math.cos(x / 13)).toFixed(1)}`;
     make("path", { class: "cliff-face", d: `${edge}V${faceBottom}Z` }, cliffSvg);
-    const tiers = 3;
+    const tiers = compact ? 1 : 3;
     const perTier = Math.ceil(caves.length / tiers);
     const cellW = width / (perTier + 1);
-    const nicheH = Math.min(24, (faceBottom - top - 26) / tiers - 8);
+    const nicheH = Math.min(24, (faceBottom - top - (compact ? 14 : 26)) / tiers - (compact ? 4 : 8));
     const nicheW = Math.min(18, cellW * 0.55, nicheH / 1.3);
     caves.forEach((cave, index) => {
       // columns run in time order; the three tiers are only there to look like a cliff face
       const column = Math.floor(index / tiers);
       const tier = index % tiers;
       const x = cellW * (column + 1) - nicheW / 2 + (tier - 1) * cellW * 0.18;
-      const y = top + 14 + tier * (nicheH + 8);
+      const y = top + (compact ? 10 : 14) + tier * (nicheH + 8);
       const cls = cave.step === activeStep ? "niche is-now" : cave.step < activeStep ? "niche is-past" : "niche";
       const group = make("g", { class: cls }, cliffSvg);
       make("path", { d: `M${x.toFixed(1)},${(y + nicheH).toFixed(1)}V${(y + nicheW / 2).toFixed(1)}A${(nicheW / 2).toFixed(1)},${(nicheW / 2).toFixed(1)} 0 0 1 ${(x + nicheW).toFixed(1)},${(y + nicheW / 2).toFixed(1)}V${(y + nicheH).toFixed(1)}Z` }, group);
@@ -427,7 +429,7 @@
       if (noted) second = zh ? `第 ${noted.number} 窟 · ${noted.note.zh}` : `Cave ${noted.number}: ${noted.note.en}`;
     } else if (activeStep === 5) first = zh ? "宋：原文没有写到具体洞窟" : "Song: the essay names no cave";
     else if (activeStep === 7) first = zh ? "明清：“没有太多的东西可以记住”" : "Ming and Qing: “not much worth remembering”";
-    const lines = [first, second].filter(Boolean);
+    const lines = (compact ? [first] : [first, second]).filter(Boolean);
     lines.forEach((text, index) => {
       const node = make("text", { class: "cliff-caption", x: 4, y: (faceBottom + 20 + index * 20).toFixed(1) }, cliffSvg);
       node.textContent = text;

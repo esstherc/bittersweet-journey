@@ -1108,3 +1108,23 @@ body[data-language="en"] :is(.scene-yellow,.scene-yellow-stories,.scene-yangtze)
   .scene-question h2,
   .opening-link { opacity: 1; filter: none; transform: none; }
 }
+
+/* 10pt floor for HTML text (2026-10-08; SVG labels are handled by site/scripts/min-type.js) */
+.earth-context small, .map-tools button:last-child, .journey-map-tools [data-tour-zoom="home"], .journey-map-coordinate,
+.journey-skip, .journey-preview > span, .book-cover em { font-size: 13.5px; }
+@media (max-width: 900px) {
+  .earth-context { font-size: 13.5px; }
+  .journey-topline, .journey-skip, .journey-count, .journey-instruction, .journey-rain-control button, .tour-map-target { font-size: 13.5px; }
+  .journey-skip { min-height: 36px; padding: 0 4px; }
+}
+
+/* Phones (2026-10-09): the reading map keeps only the key landforms - the large rivers and lakes, the main ranges,
+   plateaus, basins and deserts - so the Yellow River, the Yangtze and the 400 mm line read at a glance. */
+@media (max-width: 900px) {
+  .reader-atlas-contour,
+  .reader-atlas-hachure.weight-0,
+  .reader-atlas-stream:not(.level-1):not(.level-2),
+  .reader-atlas-lake:not(.level-1),
+  .reader-atlas-region.level-3 { display: none; }
+  .reader-atlas-stream { opacity: .7; }
+}

@@ -329,38 +329,10 @@ body[data-reading-level="2"] .flat-map .province-highlight.gansu { opacity: 0.35
   letter-spacing: 0.08em;
 }
 
-/* One-time reading cue when the walk begins to write itself across the terrain. */
-.journey-hint {
-  position: absolute;
-  z-index: 8;
-  left: var(--ctx-pad-x);
-  bottom: 104px;
-  max-width: min(25em, calc(100% - 2 * var(--ctx-pad-x)));
-  margin: 0;
-  padding: 9px 13px 10px;
-  border-left: 2px solid var(--seal);
-  color: var(--ink);
-  background: rgba(243, 239, 229, 0.92);
-  box-shadow: 0 8px 28px rgba(42, 40, 34, 0.1);
-  font: 500 14px/1.6 var(--sans);
-  letter-spacing: 0.08em;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(8px);
-  transition: opacity 0.28s ease, transform 0.36s ease;
-}
-
-.journey-hint.is-visible {
-  opacity: 1;
-  transform: none;
-}
-
-body[data-language="en"] .journey-hint { letter-spacing: 0.02em; }
 
 /* ---------- responsive ---------- */
 
 @media (max-width: 900px) {
-  .journey-hint { left: 20px; bottom: 92px; max-width: calc(100% - 40px); }
   .regional-name { font-size: 26px; }
   .regional-distance { font-size: 20px; }
 }

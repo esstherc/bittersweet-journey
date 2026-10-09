@@ -97,3 +97,29 @@ body[data-language="en"] .physical-label { font-family: var(--en); font-style: i
   .atlas-map-stage { height: 63vh; min-height: 420px; }
   .chapter-preview { padding: 22px 24px 20px; }
 }
+
+/* Phones (2026-10-09): one screen, no page scroll. The map fills everything between the intro and the footer,
+   and the footer stays at the bottom (it used to sit below a fixed 63-70vh map, out of sight). */
+@media (max-width: 900px) {
+  :root { --atlas-footer-h: 0px; }
+  html, body { height: 100%; overflow: hidden; }
+  .atlas-experience { height: 100dvh; min-height: 0; }
+  .atlas-map-stage {
+    height: calc(100dvh - var(--site-header-height, 64px) - var(--atlas-intro-height, 130px) - 34px - var(--atlas-footer-h));
+    min-height: 260px;
+  }
+  .atlas-footer { position: fixed; inset: auto 0 0; z-index: 30; min-height: var(--atlas-footer-h); align-content: center; }
+}
+@media (max-width: 520px) {
+  .atlas-map-stage { height: calc(100dvh - var(--site-header-height, 64px) - var(--atlas-intro-height, 130px) - 34px - var(--atlas-footer-h)); min-height: 260px; }
+}
+/* the language buttons and the sound button sit side by side in their wrapper */
+.site-masthead .site-actions { display: flex; align-items: center; justify-content: flex-end; gap: 12px; }
+@media (max-width: 900px) {
+  .atlas-map-source { font-size: 13.5px; }
+  .atlas-footer .view-stamps, .atlas-footer .reset-progress { min-height: 36px; }
+}
+/* Phones (2026-10-09): no footer - the map gets the space. The seals open from the header's seal count. */
+@media (max-width: 900px) {
+  .atlas-footer { display: none; }
+}

@@ -230,15 +230,16 @@
     make("path", { d: atlas.land, class: "reader-atlas-land", "fill-rule": "evenodd" });
     const regions = make("g", { class: "reader-atlas-regions", filter: "url(#reader-region-wash)" });
     atlas.regions.forEach((feature) => {
-      make("path", { d: feature.d, class: `reader-atlas-region region-${feature.kind}` }, regions);
+      make("path", { d: feature.d, class: `reader-atlas-region region-${feature.kind} level-${feature.level}` }, regions);
       if (feature.kind === "desert") make("path", { d: feature.d, fill: "url(#reader-sand)", opacity: ".5" }, regions);
     });
     const relief = make("g", { class: "reader-atlas-relief" });
     atlas.hachures.forEach((d, index) => make("path", { d, class: `reader-atlas-hachure weight-${index}` }, relief));
     atlas.contours.forEach((feature) => make("path", { d: feature.d, class: "reader-atlas-contour" }, relief));
     const water = make("g", { class: "reader-atlas-water" });
-    atlas.rivers.forEach((feature) => make("path", { d: feature.d, class: "reader-atlas-stream" }, water));
-    atlas.lakes.forEach((feature) => make("path", { d: feature.d, class: "reader-atlas-lake" }, water));
+    // level (Natural Earth scalerank band) lets phones keep only the large rivers, lakes and ranges (styles.css)
+    atlas.rivers.forEach((feature) => make("path", { d: feature.d, class: `reader-atlas-stream level-${feature.level}` }, water));
+    atlas.lakes.forEach((feature) => make("path", { d: feature.d, class: `reader-atlas-lake level-${feature.level}` }, water));
   }
   mountReaderBasemap();
 

@@ -103,3 +103,10 @@ body[data-language="en"] .site-masthead .site-progress { letter-spacing: .08em; 
 @media (max-width: 520px) {
   .site-masthead .site-wordmark span { font-size: 17px; }
 }
+
+/* Phones: the wordmark and language buttons get 40 px tap targets. The sound button takes its own grid column
+   (journey-audio.css), so it can never sit on the seal count whatever the widths. */
+@media (max-width: 900px) {
+  .site-masthead .site-wordmark { align-self: stretch; align-items: center; }
+  .site-masthead .site-language button { min-height: 40px; padding: 0 3px; }
+}

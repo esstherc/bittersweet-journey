@@ -54,7 +54,7 @@ html.has-chapter-opening .reader-panel > .reader-intro { display: none; }
 #chapter-leaf .chapter-leaf-enter i { font-style: normal; font-size: 25px; transition: transform .25s; }
 #chapter-leaf .chapter-leaf-enter:hover i { transform: translateX(7px); }
 #chapter-leaf button:focus-visible, #chapter-leaf a:focus-visible { outline: 1px solid #944b39; outline-offset: 8px; }
-#chapter-leaf .chapter-leaf-back { position: absolute; left: 36px; bottom: 28px; z-index: 1; color: #5c6054; font-size: 13.5px; text-decoration: none; }
+#chapter-leaf .chapter-leaf-back { position: absolute; left: 36px; bottom: 28px; z-index: 1; display: inline-flex; align-items: center; min-height: 36px; color: #5c6054; font-size: 13.5px; text-decoration: none; }
 html.has-chapter-opening #reading:focus,
 html.has-chapter-opening .reader-panel:focus { outline: none; }
 @media (max-width: 760px) {

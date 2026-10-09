@@ -349,3 +349,13 @@ body[data-language="en"] .map-quote {
     font-size: 19px;
   }
 }
+
+/* phones (2026-10-08) */
+@media (max-width: 540px) {
+  .map-quote { display: none; }
+  .plain-title { text-anchor: end; }
+  /* the callout map keeps its places and drops its title, which crowded them */
+  .inset-title { display: none; }
+  /* 宝瓶口 sits at the callout's right edge: its name goes under the point */
+  #core-baopingkou text { text-anchor: middle; transform: translate(-12px, 32px); }
+}

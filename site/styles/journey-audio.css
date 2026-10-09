@@ -27,5 +27,7 @@
 .site-masthead .site-sound-toggle:hover,
 .site-masthead .site-sound-toggle:focus-visible { background: rgba(157, 61, 49, .1); }
 @media (max-width: 900px) {
-  .site-masthead .site-sound-toggle { top: 16px; right: 116px; width: 32px; height: 32px; font-size: 18px; }
+  /* in the header grid between the seal count and the language buttons (the script inserts it there) */
+  .site-masthead:has(.site-sound-toggle) { grid-template-columns: 1fr auto auto auto; }
+  .site-masthead .site-sound-toggle { position: relative; top: auto; right: auto; width: 32px; height: 32px; font-size: 18px; }
 }

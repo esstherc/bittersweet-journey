@@ -63,7 +63,6 @@
       "rail-caption": "阅读行程",
       "rail-aria": "阅读行程",
       "section-aria": "段落 {n}",
-      "journey-hint": "向下阅读，脚印将继续向阳关延伸",
       "notes-keyboard": "↑ ↓ ← → 切换段落 · L 切换语言 · Esc 关闭本面板",
       "data-3d-label": "三维",
       "data-3d": "雪漠地形直接由 DEM 高程网格生成，随阅读切换镜头；雪的覆盖随原文变化：出发时大雪，天晴后低处化出沙底，高处与远山积雪不化。",
@@ -97,7 +96,6 @@
       "rail-caption": "The walk",
       "rail-aria": "Parts of the walk",
       "section-aria": "Part {n}",
-      "journey-hint": "Read downward; the footprints will continue toward Yangguan",
       "notes-keyboard": "↑ ↓ ← → switch parts · L language · Esc closes this panel",
       "data-3d-label": "3D",
       "data-3d": "The snow desert is generated directly from the DEM and changes camera with the reading. Snow follows the essay: heavy at the start, melting on low ground once the sky clears, lasting on the heights and the far mountains.",
@@ -133,13 +131,10 @@
   const svgNS = "http://www.w3.org/2000/svg";
   const scroller = document.querySelector(".reader-scroll");
   const marks = document.querySelector(".terrain-marks");
-  const journeyHint = document.querySelector(".journey-hint");
   const reduced = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   let language = body.dataset.language || "zh";
   let level = 1;
   let progress = 0;
-  let journeyHintShown = false;
-  let journeyHintTimer = 0;
 
   const make = (tag, attributes = {}, parent) => {
     const node = document.createElementNS(svgNS, tag);
@@ -610,16 +605,6 @@
     poemLayer.style.opacity = String(Math.min(1, 0.42 + progress * 0.72));
   }
 
-  function showJourneyHint() {
-    if (!journeyHint || journeyHintShown) return;
-    journeyHintShown = true;
-    journeyHint.classList.add("is-visible");
-    journeyHint.setAttribute("aria-hidden", "false");
-    journeyHintTimer = window.setTimeout(() => {
-      journeyHint.classList.remove("is-visible");
-      journeyHint.setAttribute("aria-hidden", "true");
-    }, 5600);
-  }
 
   // Where in the active part the reader is (0-1), measured like the shell measures sections.
   function updateProgress() {
@@ -669,7 +654,6 @@
     drawCompass();
     window.YANGGUAN_TERRAIN_RENDERER?.setState(level);
     window.YANGGUAN_FLAT_MAP_VIEW?.setState(level);
-    if (level === 3) showJourneyHint();
     updatePoemPresence();
     window.requestAnimationFrame(updateProgress);
   }
@@ -679,7 +663,6 @@
   });
   window.YANGGUAN_FLAT_MAP_VIEW?.onFrame(drawMarks);
   scroller.addEventListener("scroll", () => window.requestAnimationFrame(updateProgress), { passive: true });
-  window.addEventListener("pagehide", () => window.clearTimeout(journeyHintTimer));
   window.requestAnimationFrame(tick);
 
   ChapterShell.init({

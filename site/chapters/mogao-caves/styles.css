@@ -233,8 +233,11 @@ body.is-open .compass { opacity: 1; }
   .note, .river-label, .circle-label { font-size: 15px; }
   .region-label { font-size: 17px; }
   .compass { top: 26px; right: 10px; width: 40px; height: 40px; }
-  .cliff-panel { right: 58px; padding: 8px 10px; }
-  .cliff-elevation { height: 130px; }
+  /* a compact panel: no title, one row of niches, one caption line, the dynasty dots (2026-10-09) */
+  .cliff-panel { right: 58px; padding: 6px 10px 8px; }
+  .cliff-title { display: none; }
+  .cliff-elevation { height: 62px; }
+  .dynasty-track { margin-top: 4px; padding-top: 10px; }
   /* on a phone the track keeps only its dots, and names the current dynasty under its own dot */
   .dynasty-tick { font-size: 0; height: 0; }
   .dynasty-tick.is-now { justify-self: center; height: auto; font-size: 14px; white-space: nowrap; }
