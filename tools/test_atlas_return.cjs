@@ -17,6 +17,7 @@ const server=http.createServer((req,res)=>{
     const context=await browser.newContext();
     await context.route('https://fonts.googleapis.com/**',r=>r.abort());await context.route('https://fonts.gstatic.com/**',r=>r.abort());
     context.on('page',page=>{page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.url().startsWith(base)&&r.status()>=400)missing.push(r.url());});});
+    await context.addInitScript(()=>localStorage.setItem('bittersweet-journey:my-hometown:started','true'));
     const page=await context.newPage();await page.setViewportSize({width:1440,height:900});
     await page.goto(base);await page.waitForURL('**/site/index.html');await page.waitForFunction(()=>window.ATLAS_JOURNEY);
     assert.equal(await page.locator('.kashgar-memory').count(),0);

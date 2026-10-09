@@ -332,6 +332,7 @@
     /* ---------- curtain ---------- */
 
     function openBook({ immediate = false } = {}) {
+      try { window.localStorage.setItem(`bittersweet-journey:${id}:started`, "true"); } catch {}
       if (state.open) return;
       state.open = true;
       window.JOURNEY_AUDIO?.setAmbience(false);

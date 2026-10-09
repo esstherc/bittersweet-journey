@@ -14,6 +14,7 @@ const server=http.createServer((req,res)=>{
   const url='http://127.0.0.1:'+server.address().port+'/site/index.html';
   for(const mobile of [false,true]){
    const page=await browser.newPage({viewport:mobile?{width:390,height:844}:{width:1440,height:900},reducedMotion:mobile?'reduce':'no-preference'});
+   await page.addInitScript(()=>localStorage.setItem('bittersweet-journey:my-hometown:started','true'));
    const errors=[];page.on('pageerror',e=>errors.push(e.message));
    await page.goto(url+'?credits=1&lang='+(mobile?'zh':'en'));
    await page.waitForFunction(()=>window.ATLAS_STORIES && document.querySelector('.credits-replay'));await page.evaluate(()=>document.fonts.ready);

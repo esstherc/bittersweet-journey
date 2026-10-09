@@ -1084,6 +1084,7 @@
   document.querySelector(".reset-progress").addEventListener("click", () => {
     Object.entries(STORIES).forEach(([name, story]) => {
       window.localStorage.removeItem(story.storageKey);
+      window.localStorage.removeItem(story.storageKey.replace(/:complete$/, ':started'));
       window.localStorage.removeItem(`bittersweet-journey:${name}:seal-reveal-seen`);
       state.complete[name] = false;
     });
@@ -1092,6 +1093,7 @@
     window.localStorage.removeItem("bittersweet-journey:my-hometown:intro-seen");
     renderProgress();
     renderPreview();
+    window.ATLAS_INTRO?.enterIfEmpty();
   });
 
   // On a phone the map is wider than the screen and scrolls sideways: start centred on the chapter dots.

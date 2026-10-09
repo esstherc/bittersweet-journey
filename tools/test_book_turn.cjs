@@ -6,6 +6,7 @@ const server=http.createServer((req,res)=>{const p=path.resolve(root,'.'+new URL
   await new Promise(r=>server.listen(0,'127.0.0.1',r));const browser=await chromium.launch();
   try{
     const page=await browser.newPage({viewport:{width:1440,height:900}}),errors=[];page.on('pageerror',e=>errors.push(e.message));
+    await page.addInitScript(()=>localStorage.setItem('bittersweet-journey:my-hometown:started','true'));
     await page.route('https://fonts.googleapis.com/**',route=>route.abort());
     await page.route('https://fonts.gstatic.com/**',route=>route.abort());
     const base=`http://127.0.0.1:${server.address().port}/site/`;

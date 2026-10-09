@@ -12,6 +12,8 @@ const pixel=(page,x,y)=>page.locator('.journey-fog').evaluate((c,p)=>{const rect
   await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));const browser=await chromium.launch();
   try{
     const page=await browser.newPage({viewport:{width:1440,height:900}}),errors=[];
+    // Test map reset visuals in isolation; real intro/reset navigation has its own browser test.
+    await page.route('**/atlas-intro.js*',route=>route.fulfill({contentType:'application/javascript',body:''}));
     page.on('pageerror',e=>errors.push(e.message));
     const url=`http://127.0.0.1:${server.address().port}/site/index.html`;
     await page.goto(url);await page.waitForFunction(()=>window.ATLAS_JOURNEY);
@@ -60,6 +62,7 @@ const pixel=(page,x,y)=>page.locator('.journey-fog').evaluate((c,p)=>{const rect
     await page.locator('.reset-progress').click();await page.waitForTimeout(50);
     assert.equal(await page.locator('.journey-fog').getAttribute('data-completed'),'0','reset also clears permanent lights');
     const mobile=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true,reducedMotion:'reduce'});
+    await mobile.route('**/atlas-intro.js*',route=>route.fulfill({contentType:'application/javascript',body:''}));
     mobile.on('pageerror',e=>errors.push(e.message));
     await mobile.goto(url);await mobile.waitForFunction(()=>window.ATLAS_JOURNEY);
     await mobile.locator('[data-camera="home"]').tap();

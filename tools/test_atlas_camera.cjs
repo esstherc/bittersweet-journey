@@ -15,6 +15,7 @@ const server=http.createServer((req,res)=>{
   const browser=await chromium.launch({headless:true});
   try{
     const page=await browser.newPage({viewport:{width:1440,height:900}}),errors=[];
+    await page.addInitScript(()=>localStorage.setItem('bittersweet-journey:my-hometown:started','true'));
     page.on('pageerror',e=>errors.push(e.message));
     const url=`http://127.0.0.1:${server.address().port}/site/index.html`;
     await page.goto(url);await page.waitForFunction(()=>window.ATLAS_CAMERA);await page.waitForTimeout(500);
