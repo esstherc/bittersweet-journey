@@ -37,7 +37,7 @@
   </g>`;
   stage.append(canvas,traveler);
   const status=document.createElement('span');status.className='journey-status';status.setAttribute('role','status');
-  document.querySelector('.cta-text').append(status);
+  document.querySelector('.atlas-intro').append(status);
   document.body.classList.add('journey-ready');
   const reduced=matchMedia('(prefers-reduced-motion: reduce)');
   const points=[...map.querySelectorAll('.story-point.available, .story-point.primary')];

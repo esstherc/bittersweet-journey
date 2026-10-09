@@ -161,6 +161,10 @@
     }
   };
   const body = document.body;
+  const guidePanel = document.querySelector("[data-atlas-guide]");
+  const guideClose = document.querySelector(".cta-close");
+  const guideReopen = document.querySelector(".cta-reopen");
+  const guideDismissedKey = "bittersweet-journey:atlas-guide-dismissed:v1";
   const languageButtons = [...document.querySelectorAll("[data-language]")];
   const availablePoints = [...document.querySelectorAll(".story-point.available, .story-point.primary")];
   const preview = document.querySelector(".chapter-preview");
@@ -620,6 +624,10 @@
       "receipt-body": "岷江的水，由此化作丰饶的成都平原。",
       "cta-message": "提灯寻路，让山河慢慢亮起",
       "cta-hint": "将游标靠近提灯，拖动地图探索，滚动缩放。完成章节后点亮光圈。",
+      "cta-reward": "集齐九枚山河图章，解锁最终彩蛋。",
+      "cta-close-aria": "关闭玩法提示",
+      "cta-open": "玩法",
+      "cta-open-aria": "打开玩法提示",
       reset: "重置阅读痕迹",
       source: "文本：余秋雨《文化苦旅》",
       "view-stamps": "图章",
@@ -654,6 +662,10 @@
       "receipt-body": "The Min River transforms into the fertile Chengdu Plain.",
       "cta-message": "Carry a light into the landscape",
       "cta-hint": "Hover over or tap the lantern to light the way. Drag to explore, and scroll or pinch to zoom. Complete a chapter to keep its light glowing.",
+      "cta-reward": "Collect all nine seals to unlock the hidden finale.",
+      "cta-close-aria": "Close map guide",
+      "cta-open": "Guide",
+      "cta-open-aria": "Open map guide",
       reset: "Reset reading trace",
       source: "Text: Yu Qiuyu, A Bittersweet Journey Through Culture",
       "view-stamps": "Seals",
@@ -912,6 +924,14 @@
     }
   }
 
+  function setGuideDismissed(dismissed, persist = true) {
+    guidePanel.hidden = dismissed;
+    guideReopen.hidden = !dismissed;
+    body.classList.toggle("atlas-guide-dismissed", dismissed);
+    if (persist) window.localStorage.setItem(guideDismissedKey, String(dismissed));
+    window.requestAnimationFrame(scheduleLayout);
+  }
+
   function renderProgress() {
     body.classList.toggle("my-hometown-complete", state.complete["my-hometown"]);
     body.classList.toggle("dujiangyan-complete", state.complete.dujiangyan);
@@ -1024,6 +1044,9 @@
     });
   });
 
+  guideClose.addEventListener("click", () => setGuideDismissed(true));
+  guideReopen.addEventListener("click", () => setGuideDismissed(false));
+
   availablePoints.forEach((point) => {
     point.addEventListener("pointerenter", event => { if (event.pointerType === 'mouse' && !window.ATLAS_CAMERA?.moving) showPreview(point); });
     point.addEventListener("pointerleave", event => { if (event.pointerType === 'mouse') scheduleHide(); });
@@ -1107,6 +1130,7 @@
   }
 
   applyRealGeography();
+  setGuideDismissed(window.localStorage.getItem(guideDismissedKey) === "true", false);
   new ResizeObserver(entries => {
     body.style.setProperty('--atlas-intro-height',`${entries[0].contentRect.height}px`);
     scheduleLayout();

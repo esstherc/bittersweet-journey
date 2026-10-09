@@ -40,17 +40,61 @@ body[data-language="en"] .physical-label { font-family: var(--en); font-style: i
   position: absolute; right: 28px; bottom: 24px; z-index: 8;
   display: flex; flex-direction: column; align-items: flex-end; gap: 9px;
 }
-.atlas-zoom-controls { display: flex; border: 1px solid #958b7060; background: #f9f4e8ee; box-shadow: 0 2px 12px #5449340b; }
-.atlas-zoom-controls button {
-  border: 0; border-right: 1px solid #958b7038; background: transparent;
-  min-width: 44px; min-height: 44px; padding: 5px 12px; cursor: pointer; font: 24px var(--sans); color: #565c4e;
+.atlas-zoom-controls {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid #958b7030;
+  border-radius: 13px 13px 5px 13px;
+  background: #f3ecddc9;
+  box-shadow: 0 8px 24px #54493416, inset 0 1px #fff8;
+  backdrop-filter: blur(8px);
 }
-.atlas-zoom-controls button:last-child { border-right: 0; }
-.atlas-zoom-controls button.atlas-home { font: 14px var(--cn); letter-spacing: .05em; }
+.atlas-zoom-controls button {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 44px;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: #565c4e;
+  cursor: pointer;
+  font: 0/0 var(--sans);
+}
+.atlas-zoom-controls button + button { box-shadow: inset 1px 0 #958b7018; }
+.atlas-zoom-controls button[data-camera="in"]::before,
+.atlas-zoom-controls button[data-camera="in"]::after,
+.atlas-zoom-controls button[data-camera="out"]::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 13px;
+  height: 1.25px;
+  border-radius: 2px;
+  background: currentColor;
+  transform: translate(-50%, -50%);
+}
+.atlas-zoom-controls button[data-camera="in"]::after { transform: translate(-50%, -50%) rotate(90deg); }
+.atlas-zoom-controls button.atlas-home { width: 52px; font: 14px/1 var(--cn); letter-spacing: .05em; }
 .atlas-zoom-controls button:disabled { opacity: .3; cursor: default; }
-.atlas-zoom-controls button:hover:not(:disabled) { background: #eae0cb; }
-.atlas-zoom-controls button:focus-visible,.atlas-notes-toggle:focus-visible,.atlas-notes-close:focus-visible { outline: 1px solid #944b39; outline-offset: 3px; }
-.atlas-scale { font: 13.5px var(--label); color: #646c5f; padding: 2px 5px; background: #f5efdfcc; }
+.atlas-zoom-controls button:hover:not(:disabled) { background: #e4dac7a6; }
+.atlas-zoom-controls button:focus-visible,.atlas-notes-toggle:focus-visible,.atlas-notes-close:focus-visible { outline: 1px solid #944b39; outline-offset: 2px; }
+.atlas-scale {
+  padding: 4px 8px;
+  border: 1px solid #958b7026;
+  border-radius: 8px 3px 8px 8px;
+  background: #f3ecddbd;
+  color: #646c5f;
+  box-shadow: 0 5px 16px #54493412;
+  font: 13.5px var(--label);
+  backdrop-filter: blur(7px);
+}
 .atlas-footer-source { display: flex; align-items: center; gap: 22px; margin-right: auto; min-width: 0; }
 .atlas-footer-source .atlas-citation { margin-right: 0; }
 .atlas-notes-toggle { display: inline-flex; align-items: center; gap: 8px; min-height: 32px; padding: 0; border: 0; background: none; font: inherit; color: inherit; cursor: pointer; }
