@@ -52,7 +52,13 @@
       "notes-source-3": "降水分界：WorldClim 2.1，BIO12 年降水量，1970–2000 年平均，10 arc-minute；以 GDAL 提取 400 mm 等值线后投影到本站地图。",
       "notes-source-4": "万里长城：© OpenStreetMap contributors，ODbL，relation 318110；遗址坐标参考 UNESCO 世界遗产资料。地图镜头与阅读动画为本站原创视觉表达。",
       "notes-disclaimer": "图上线路是真实气候栅格的 400 毫米多年平均年降水量等值线，不代表每一年的固定边界。其位置会随资料时期与分辨率变化；农业与游牧也不由单一数值绝对决定。",
-      "complete-line": "三条线留下了山河的底色。"
+      "complete-line": "三条线留下了山河的底色。",
+      "project-info-kicker": "关于这张地图",
+      "project-info-title": "余秋雨与这段旅程",
+      "project-info-body-1": "这是一个受余秋雨《文化苦旅》启发的互动阅读体验。这部散文集连接旅行、历史、地方与文化思考。网页地图不把全书呈现为传统章节列表，而是把阅读变成一次穿越中国的探索之旅。",
+      "project-info-body-2": "你可以自由探索地图，选择地点，进入与章节对应的阅读体验。每一章都将文字与所在地及其主题相关的视觉和互动元素结合起来，让界面随着你在地点与故事之间移动而变化。",
+      "project-info-references": "参考文献",
+      "project-info-reference-1": "[1] 余秋雨。1992。《文化苦旅》。知识出版社，中国上海。"
     },
     en: {
       "map-teaser": "Follow three lines into the land.",
@@ -69,7 +75,13 @@
       "notes-source-3": "Rainfall boundary: WorldClim 2.1 BIO12 annual precipitation, 1970–2000 average, 10 arc-minute grid; the 400 mm contour was extracted with GDAL and projected into the atlas.",
       "notes-source-4": "Great Wall: © OpenStreetMap contributors, ODbL, relation 318110; heritage coordinates reference UNESCO World Heritage records. Map camera and reading animation: original site design.",
       "notes-disclaimer": "This line is the 400 mm multi-year mean annual precipitation contour derived from a real climate grid. It is not fixed from year to year, and its position changes with the reference period and resolution. Farming and herding do not follow a single absolute line.",
-      "complete-line": "Three lines leave their trace upon the land."
+      "complete-line": "Three lines leave their trace upon the land.",
+      "project-info-kicker": "About this map",
+      "project-info-title": "Yu Qiuyu and the journey",
+      "project-info-body-1": "This is an interactive reading experience inspired by Yu Qiuyu’s Wenhua Kulu (A Bittersweet Journey through Culture) [1], an essay collection that connects travel, history, place, and cultural reflection. Rather than presenting the book as a traditional list of chapters, this web map turns reading into an exploratory journey across China.",
+      "project-info-body-2": "Instead of following a fixed reading order, explore the map freely, select a location, and enter a chapter-specific reading experience. Each chapter combines text with visual and interactive elements related to its setting and themes, allowing the interface to change as you move between places and stories.",
+      "project-info-references": "References",
+      "project-info-reference-1": "[1] Qiuyu Yu. 1992. Wenhua Kulu (A Bittersweet Journey through Culture). Zhishi Chubanshe, Shanghai, China."
     }
   };
 
@@ -621,6 +633,7 @@
     id: "my-hometown", number: 3, data, sections, copy,
     onRender(nextLanguage, state) {
       language = nextLanguage;
+      $(".credit-info-trigger")?.setAttribute("aria-label", language === "en" ? "About Yu Qiuyu and this reading map" : "关于余秋雨与这次阅读地图的说明");
       renderOpening();
       updateReaderMap(state.active);
       const labels = smallCopy[language];
@@ -636,6 +649,24 @@
     showReaderProgress: false
   });
 
+  const projectInfoDialog = $("#project-info");
+  const projectInfoTrigger = $(".credit-info-trigger");
+  const projectInfoClose = $(".project-info-close");
+  if (projectInfoDialog && projectInfoTrigger && projectInfoClose) {
+    const closeProjectInfo = () => {
+      if (!projectInfoDialog.open) return;
+      projectInfoDialog.close();
+      window.JOURNEY_AUDIO?.play("close", .42);
+    };
+    projectInfoTrigger.addEventListener("click", (event) => {
+      event.stopPropagation();
+      if (!projectInfoDialog.open) projectInfoDialog.showModal();
+      window.JOURNEY_AUDIO?.play("click", .32);
+    });
+    projectInfoClose.addEventListener("click", (event) => { event.stopPropagation(); closeProjectInfo(); });
+    projectInfoDialog.addEventListener("click", (event) => { if (event.target === projectInfoDialog) closeProjectInfo(); });
+    projectInfoDialog.addEventListener("cancel", (event) => { event.preventDefault(); closeProjectInfo(); });
+  }
   // The prologue opens in English unless the URL explicitly requests a language.
   if (!params.has("lang") && (!readSeen() || params.get("tour") === "1")) shell.changeLanguage("en");
 

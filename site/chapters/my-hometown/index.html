@@ -11,9 +11,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="《文化苦旅》双语阅读地图：我的山河。循黄河、长江与降水量线读懂中国地理。"
+      content="Begin with China’s rivers, terrain, and rainfall in My Hometown, a bilingual reading map of A Bittersweet Journey Through Culture."
     />
-    <title>山河显影 · 我的山河</title>
+    <title>Land, Made Visible: My Hometown</title>
+    <link
+      rel="canonical"
+      href="https://yanbingchen.site/bittersweet-journey/site/chapters/my-hometown/index.html?tour=1&amp;lang=en"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Land, Made Visible" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:title" content="Land, Made Visible: My Hometown" />
+    <meta
+      property="og:description"
+      content="Begin with China’s rivers, terrain, and rainfall in My Hometown, a bilingual reading map of A Bittersweet Journey Through Culture."
+    />
+    <meta
+      property="og:url"
+      content="https://yanbingchen.site/bittersweet-journey/site/chapters/my-hometown/index.html?tour=1&amp;lang=en"
+    />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Land, Made Visible: My Hometown" />
+    <meta
+      name="twitter:description"
+      content="Begin with China’s rivers, terrain, and rainfall in My Hometown, a bilingual reading map of A Bittersweet Journey Through Culture."
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -21,7 +43,7 @@
       href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&family=Ysabeau:ital,wght@0,400..700;1,400..700&display=swap"
     />
     <link rel="stylesheet" href="../_shared/chapter-shell.css?v=5ff807f7dbf8" />
-    <link rel="stylesheet" href="./styles.css?v=20261011-map-simplify-3" />
+    <link rel="stylesheet" href="./styles.css?v=20261011-project-info-4" />
     <link rel="stylesheet" href="../../styles/page-transition.css?v=899e8641905a" />
     <link rel="stylesheet" href="../../styles/journey-audio.css?v=1cd11e8f093f">
     <script src="../../scripts/journey-audio.js?v=20261011-music-3"></script>
@@ -277,7 +299,10 @@
 
     <footer class="bottom-bar">
       <div class="bar-left">
-        <span class="credit" data-copy="source">文本：余秋雨《文化苦旅》</span>
+        <button class="credit credit-info-trigger" type="button" aria-haspopup="dialog" aria-controls="project-info" aria-label="About Yu Qiuyu and this reading map">
+          <span data-copy="source">Text: Yu Qiuyu, A Bittersweet Journey Through Culture</span>
+          <span class="credit-info-mark" aria-hidden="true">?</span>
+        </button>
         <button class="notes-button" type="button" aria-expanded="false" aria-controls="notes-drawer">
           <span aria-hidden="true">ⓘ</span>
           <span data-copy="notes-button">地图说明与数据来源</span>
@@ -288,6 +313,15 @@
         <span data-copy="back-atlas">总地图</span>
       </a>
     </footer>
+    <dialog class="project-info-dialog" id="project-info" aria-labelledby="project-info-title">
+      <button class="project-info-close" type="button" data-aria="close-aria" aria-label="Close">×</button>
+      <p class="project-info-kicker" data-copy="project-info-kicker">About this map</p>
+      <h2 id="project-info-title" data-copy="project-info-title">Yu Qiuyu and the journey</h2>
+      <p data-copy="project-info-body-1">This is an interactive reading experience inspired by Yu Qiuyu’s Wenhua Kulu (A Bittersweet Journey through Culture) [1], an essay collection that connects travel, history, place, and cultural reflection. Rather than presenting the book as a traditional list of chapters, this web map turns reading into an exploratory journey across China.</p>
+      <p data-copy="project-info-body-2">Instead of following a fixed reading order, explore the map freely, select a location, and enter a chapter-specific reading experience. Each chapter combines text with visual and interactive elements related to its setting and themes, allowing the interface to change as you move between places and stories.</p>
+      <h3 data-copy="project-info-references">References</h3>
+      <p class="project-info-reference" data-copy="project-info-reference-1">[1] Qiuyu Yu. 1992. Wenhua Kulu (A Bittersweet Journey through Culture). Zhishi Chubanshe, Shanghai, China.</p>
+    </dialog>
 
     <aside class="notes-drawer" id="notes-drawer" aria-hidden="true" aria-labelledby="notes-title">
       <button class="close-notes" type="button" data-aria="close-aria" aria-label="关闭">×</button>
@@ -334,6 +368,6 @@
     <script src="./chapter-data.js?v=2b99e74b27a9"></script>
     <script src="../_shared/chapter-shell.js?v=20261009-data-sources"></script>
     <script src="./globe.js?v=fde662e1efb9"></script>
-    <script src="./app.js?v=20261011-map-simplify-3"></script>
+    <script src="./app.js?v=20261011-project-info-4"></script>
   </body>
 </html>
