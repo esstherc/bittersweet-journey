@@ -9,7 +9,7 @@ const server=http.createServer((req,res)=>{
 });
 
 (async()=>{
- await new Promise(r=>server.listen(0,'127.0.0.1',r));const browser=await chromium.launch();
+ await new Promise(r=>server.listen(0,'127.0.0.1',r));const browser=await chromium.launch(process.env.CHROMIUM_EXECUTABLE_PATH ? {executablePath: process.env.CHROMIUM_EXECUTABLE_PATH} : {});
  try{
   const url='http://127.0.0.1:'+server.address().port+'/site/index.html';
   for(const mobile of [false,true]){
@@ -27,7 +27,7 @@ const server=http.createServer((req,res)=>{
    await page.waitForTimeout(200);assert.equal(await page.locator('.cinema-credits').isVisible(),false);
    await page.evaluate(()=>document.body.dataset.sealCollection='collected');
    await page.locator('.cinema-credits').waitFor({state:'visible'});
-   assert.equal(await page.locator('.credits-replay').isVisible(),true);
+   assert.equal(await page.locator('.credits-replay').evaluate(node=>!node.hidden),true);
    assert.equal(await page.locator('.cta-callout').isVisible(),false);
    assert.equal(await page.locator('.credits-untranslated').count(),6);
    assert((await page.locator('.credits-titles li').first().textContent()).startsWith('01'));
@@ -35,6 +35,16 @@ const server=http.createServer((req,res)=>{
    assert((await page.locator('.credits-attribution').textContent()).includes('Yanbing Chen'));
    assert((await page.locator('.credits-attribution').textContent()).includes('Eugenie Huang'));
    assert((await page.locator('.credits-attribution').textContent()).includes('CN Times Books'));
+   const musicCredit=await page.locator('.credits-music').textContent();
+   if(mobile){
+    assert(musicCredit.includes('音乐鸣谢'));
+    assert(musicCredit.includes('主地图：《醉中天》— 李祥霆'));
+    assert(musicCredit.includes('序章：《日暮云林》— 洞箫：沈英彪 · 古琴：徐君跃'));
+   }else{
+    assert(musicCredit.includes('Music Credits'));
+    assert(musicCredit.includes('Main Map: “Zui Zhong Tian (醉中天)” — Li Xiangting'));
+    assert(musicCredit.includes('Prologue: “Rimu Yunlin (日暮云林)” — Xiao: Shen Yingbiao · Guqin: Xu Junyue'));
+   }
 
    assert.equal(await page.locator('.credits-titles li').count(),26);
    assert.equal(await page.locator('.credits-selected').count(),9);
@@ -109,7 +119,7 @@ const server=http.createServer((req,res)=>{
    const enabled=await page.evaluate(()=>window.JOURNEY_AUDIO.enabled);await page.locator('.credits-sound').click();assert.equal(await page.evaluate(()=>window.JOURNEY_AUDIO.enabled),!enabled);await page.locator('.credits-sound').click();
    await view.evaluate(n=>n.scrollTop=n.scrollHeight);await page.waitForFunction(()=>document.querySelector('.cinema-credits').dataset.scene==='5');
    await page.keyboard.press('Escape');assert.equal(await page.locator('.cinema-credits').isVisible(),false);
-   await page.locator('.credits-replay').click();assert(await page.locator('.cinema-credits').isVisible());
+   await page.locator('.credits-replay').evaluate(node=>node.click());assert(await page.locator('.cinema-credits').isVisible());
    await page.locator('.finale-return').click();assert.equal(await view.evaluate(n=>n.getAnimations().length),0);
    assert(await page.locator('.finale-message').textContent().then(t=>t.includes('9')));
    await page.reload();

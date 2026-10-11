@@ -1235,3 +1235,63 @@ body.mogao-caves-complete [data-story="mogao-caves"] .point-orbit {
 .chapter-seal { transform-box:fill-box; transform-origin:center; }
 .chapter-seal.is-reveal-pending { opacity:0; transition:none; }
 .chapter-seal.is-stamping { transition:none; }
+
+
+.reset-confirmation {
+  width: min(470px, calc(100vw - 32px));
+  margin: auto;
+  padding: 0;
+  border: 1px solid rgba(198, 165, 107, .32);
+  border-radius: 5px 22px 10px 18px;
+  color: #e3dccd;
+  background: linear-gradient(145deg, #3c2c23, #2b211b);
+  box-shadow: 0 30px 100px rgba(20, 12, 8, .48), inset 0 1px rgba(240, 214, 170, .08);
+}
+.reset-confirmation::backdrop { background: rgba(35, 26, 20, .58); backdrop-filter: blur(3px); }
+.reset-confirmation form { padding: 32px 34px 30px; }
+.reset-confirmation-kicker {
+  margin: 0 0 10px;
+  color: #d5b77e;
+  font: 600 12px/1.4 var(--label);
+  letter-spacing: .18em;
+}
+.reset-confirmation h2 {
+  margin: 0 0 14px;
+  font: 400 27px/1.35 var(--cn);
+  letter-spacing: .08em;
+}
+body[data-language="en"] .reset-confirmation h2 { font-family: var(--en); letter-spacing: .025em; }
+.reset-confirmation #reset-confirmation-description {
+  margin: 0;
+  color: #bfc0b3;
+  font: 14px/1.75 var(--label);
+  letter-spacing: .045em;
+}
+.reset-confirmation-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 26px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(198, 165, 107, .18);
+}
+.reset-confirmation-actions button {
+  min-height: 42px;
+  padding: 0 17px;
+  border-radius: 10px 10px 4px 10px;
+  font: 600 13px/1 var(--label);
+  letter-spacing: .07em;
+  cursor: pointer;
+}
+.reset-cancel { border: 1px solid rgba(198, 165, 107, .25); background: transparent; color: #d2cbbb; }
+.reset-cancel:hover,
+.reset-cancel:focus-visible { border-color: rgba(213, 183, 126, .7); color: #f0dfbf; }
+.reset-confirm { border: 1px solid #aa5145; background: #923e34; color: #f7eee2; box-shadow: 0 8px 22px rgba(53, 20, 16, .28); }
+.reset-confirm:hover,
+.reset-confirm:focus-visible { background: #aa4a3d; }
+.reset-confirmation-actions button:focus-visible { outline: 1px solid #e2bd82; outline-offset: 3px; }
+@media (max-width: 520px) {
+  .reset-confirmation form { padding: 27px 22px 22px; }
+  .reset-confirmation-actions { align-items: stretch; flex-direction: column-reverse; }
+  .reset-confirmation-actions button { width: 100%; }
+}

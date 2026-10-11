@@ -5,10 +5,12 @@
   if (window.top !== window) return;
 
   const assetBase = new URL('../assets/sound/', document.currentScript.src);
-  const preferenceKey = 'bittersweet-journey:sound-enabled';
+  const preferenceKey = 'bittersweet-journey:sound-enabled:v2';
   const entranceKey = 'bittersweet-journey:chapter-entrance';
+  const introSeenKey = 'bittersweet-journey:my-hometown:intro-seen';
   const tracks = {
-    ambient: 'bittersweet_map_bgm_ambient_loop.wav',
+    mainMap: 'mainmap-bgm.mp3',
+    intro: 'intro-bgm.mp3',
     click: 'sfx_Q_btn_click.wav',
     page: 'sfx_W_page_turn.wav',
     complete: 'sfx_E_chapter_complete.wav',
@@ -23,6 +25,14 @@
     rain: 'bittersweet_sfx_7_rain_tile.wav',
     flute: 'bittersweet_sfx_8_flute_echo.wav'
   };
+  function chooseBackgroundTrack() {
+    if (!location.pathname.includes('/chapters/my-hometown/')) return 'mainMap';
+    const params = new URLSearchParams(location.search);
+    if (params.get('tour') === '1') return 'intro';
+    if (params.get('open') === '1' || params.get('from') === 'atlas') return 'mainMap';
+    try { return localStorage.getItem(introSeenKey) === 'true' ? 'mainMap' : 'intro'; }
+    catch { return 'intro'; }
+  }
   // Nine stories share eight location recordings. The last entrance blends two quietly.
   const chapterTracks = {
     'my-hometown': [['rain', .55]],
@@ -37,10 +47,12 @@
   };
   let enabled = true;
   try { enabled = localStorage.getItem(preferenceKey) !== 'false'; } catch {}
-  const music = new Audio(new URL(tracks.ambient, assetBase));
+  const backgroundTrack = chooseBackgroundTrack();
+  const backgroundVolume = backgroundTrack === 'intro' ? .55 : .48;
+  const music = new Audio(new URL(tracks[backgroundTrack], assetBase));
   music.loop = true;
   music.preload = 'none';
-  music.volume = .22;
+  music.volume = backgroundVolume;
   let ambienceWanted = true;
   let toggle;
   let musicFade = 0;
@@ -78,7 +90,7 @@
         const progress = Math.max(0, Math.min(1, (now - started) / 320));
         music.volume = from * (1 - progress);
         if (progress < 1 && !ambienceWanted && enabled && !document.hidden) musicFade = requestAnimationFrame(fadeOut);
-        else { music.pause(); music.volume = .22; }
+        else { music.pause(); music.volume = backgroundVolume; }
       };
       musicFade = requestAnimationFrame(fadeOut);
       return;
@@ -88,7 +100,7 @@
       const started = performance.now();
       const raise = now => {
         const progress = Math.max(0, Math.min(1, (now - started) / 520));
-        music.volume = from + (.22 - from) * progress;
+        music.volume = from + (backgroundVolume - from) * progress;
         if (progress < 1 && ambienceWanted && enabled && !document.hidden) musicFade = requestAnimationFrame(raise);
       };
       musicFade = requestAnimationFrame(raise);
@@ -120,7 +132,7 @@
     if (!enabled) {
       cancelAnimationFrame(musicFade);
       music.pause();
-      music.volume = .22;
+      music.volume = backgroundVolume;
       voices.forEach(voice => { voice.pause(); voice.currentTime = 0; });
       voices.clear();
     } else syncAmbience();
@@ -203,5 +215,14 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount, {once: true});
   else mount();
 
-  window.JOURNEY_AUDIO = Object.freeze({play, enterChapter, setAmbience, setEnabled, get enabled() { return enabled; }});
+  window.JOURNEY_AUDIO = Object.freeze({
+    play,
+    enterChapter,
+    setAmbience,
+    setEnabled,
+    get enabled() { return enabled; },
+    get backgroundTrack() { return backgroundTrack; },
+    get backgroundVolume() { return backgroundVolume; },
+    get backgroundActive() { return enabled && ambienceWanted; }
+  });
 })();

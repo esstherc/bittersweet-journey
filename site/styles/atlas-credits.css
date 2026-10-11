@@ -95,6 +95,10 @@ body[data-language="en"] .cinema-credits h2 { font-family: var(--en); }
 .credits-attribution dt { font: 14px var(--label); color: #d5c2a3; margin: 30px 0 9px; }
 .credits-attribution dd { margin: 0; font-size: clamp(18px,2.3vw,25px); line-height: 1.7; overflow-wrap: anywhere; }
 .credits-attribution a { color: inherit; text-decoration-color: #b09465; text-underline-offset: 5px; }
+.credits-music { max-width: 620px; margin: 64px auto 0; padding-top: 42px; border-top: 1px solid #b69a6647; }
+.credits-music h4 { margin: 0 0 24px; color: #d5c2a3; font: 500 15px/1.5 var(--label); letter-spacing: .16em; text-transform: uppercase; }
+.credits-music p { margin: 12px 0; font-size: clamp(17px,2vw,22px); line-height: 1.75; color: #eee2cf; }
+body[data-language="zh"] .credits-music h4 { font-family: var(--cn); letter-spacing: .2em; }
 .credits-coda h3 { white-space: pre-line; color: #f0cd8d; }
 .credits-coda > p { line-height: 1.9; color: #e0d0b7; margin: 0 auto 28px; max-width: 30em; }
 .credits-roll .credits-coda { margin-bottom: 0; }

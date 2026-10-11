@@ -7,22 +7,32 @@ const server=http.createServer((req,res)=>{
  fs.readFile(file,(err,data)=>{if(err){res.writeHead(404).end();return;}res.setHeader('Content-Type',({'.html':'text/html; charset=utf-8','.js':'text/javascript','.css':'text/css','.svg':'image/svg+xml','.jpg':'image/jpeg'})[path.extname(file)]||'application/octet-stream');res.end(data);});
 });
 (async()=>{
- await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));const browser=await chromium.launch();
+ await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));const browser=await chromium.launch(process.env.CHROMIUM_EXECUTABLE_PATH ? {executablePath: process.env.CHROMIUM_EXECUTABLE_PATH} : {});
  try{for(const width of [1440,390]){
   const page=await browser.newPage({viewport:{width,height:900},reducedMotion:'reduce'});
+  await page.addInitScript(()=>{ try { localStorage.setItem('bittersweet-journey:sound-enabled','false'); } catch {} });
   await page.route('https://fonts.googleapis.com/**',route=>route.abort());
   const errors=[];page.on('pageerror',error=>errors.push(error.message));
   const atlas=`http://127.0.0.1:${server.address().port}/repo/site/index.html?lang=zh`;
   await page.goto(atlas);await page.waitForURL('**/chapters/my-hometown/index.html?tour=1&lang=zh');
   await page.locator('.journey').waitFor({state:'visible'});
+  assert.equal(await page.evaluate(()=>window.JOURNEY_AUDIO.backgroundTrack),'intro');
+  assert.equal(await page.evaluate(()=>window.JOURNEY_AUDIO.backgroundVolume),.55);
+  assert.equal(await page.evaluate(()=>window.JOURNEY_AUDIO.enabled),true);
+  assert.equal(await page.evaluate(()=>window.JOURNEY_AUDIO.backgroundActive),true);
+  await page.locator('[data-next="books"]').click();
+  assert.equal(await page.evaluate(()=>window.JOURNEY_AUDIO.backgroundActive),true);
   await page.evaluate(()=>localStorage.setItem('bittersweet-journey:my-hometown:intro-seen','true'));
   await page.goto(atlas);await page.waitForURL('**/chapters/my-hometown/index.html?tour=1&lang=zh');
   await page.locator('.journey').waitFor({state:'visible'});
   await page.locator('[data-skip-tour]').click();
+  assert.equal(await page.evaluate(()=>window.JOURNEY_AUDIO.backgroundActive),false);
   assert.equal(await page.evaluate(()=>localStorage.getItem('bittersweet-journey:my-hometown:started')),'true');
   await page.goto(atlas);await page.waitForFunction(()=>window.ATLAS_STORIES);
   assert.equal(new URL(page.url()).pathname,'/repo/site/index.html');
+  assert.equal(await page.evaluate(()=>window.JOURNEY_AUDIO.backgroundTrack),'mainMap');
   await page.evaluate(()=>document.querySelector('.reset-progress').click());
+  await page.locator('.reset-confirm').click();
   await page.waitForURL('**/chapters/my-hometown/index.html?tour=1&lang=zh');
   await page.locator('.journey').waitFor({state:'visible'});
   await page.evaluate(()=>localStorage.setItem('bittersweet-journey:dujiangyan:complete','true'));

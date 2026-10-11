@@ -122,15 +122,15 @@
     make("path", { d: atlas.land, class: "prologue-atlas-land", "fill-rule": "evenodd" });
     const regions = make("g", { class: "prologue-atlas-regions", filter: "url(#prologue-wash)" });
     atlas.regions.forEach((feature) => {
-      make("path", { d: feature.d, class: `prologue-atlas-region region-${feature.kind}` }, regions);
-      if (feature.kind === "desert") make("path", { d: feature.d, fill: "url(#prologue-sand)", opacity: ".55" }, regions);
+      make("path", { d: feature.d, class: `prologue-atlas-region region-${feature.kind} level-${feature.level}` }, regions);
+      if (feature.kind === "desert") make("path", { d: feature.d, fill: "url(#prologue-sand)", opacity: ".22" }, regions);
     });
     const relief = make("g", { class: "prologue-atlas-relief" });
     atlas.hachures.forEach((d, index) => make("path", { d, class: `prologue-atlas-hachure weight-${index}` }, relief));
     atlas.contours.forEach((feature) => make("path", { d: feature.d, class: "prologue-atlas-contour" }, relief));
     const water = make("g", { class: "prologue-atlas-water" });
-    atlas.rivers.forEach((feature) => make("path", { d: feature.d, class: "prologue-atlas-stream" }, water));
-    atlas.lakes.forEach((feature) => make("path", { d: feature.d, class: "prologue-atlas-lake" }, water));
+    atlas.rivers.forEach((feature) => make("path", { d: feature.d, class: `prologue-atlas-stream level-${feature.level}` }, water));
+    atlas.lakes.forEach((feature) => make("path", { d: feature.d, class: `prologue-atlas-lake level-${feature.level}` }, water));
 
     const { n, C, coeff } = atlas.projection;
     const radians = Math.PI / 180;
@@ -231,7 +231,7 @@
     const regions = make("g", { class: "reader-atlas-regions", filter: "url(#reader-region-wash)" });
     atlas.regions.forEach((feature) => {
       make("path", { d: feature.d, class: `reader-atlas-region region-${feature.kind} level-${feature.level}` }, regions);
-      if (feature.kind === "desert") make("path", { d: feature.d, fill: "url(#reader-sand)", opacity: ".5" }, regions);
+      if (feature.kind === "desert") make("path", { d: feature.d, fill: "url(#reader-sand)", opacity: ".22" }, regions);
     });
     const relief = make("g", { class: "reader-atlas-relief" });
     atlas.hachures.forEach((d, index) => make("path", { d, class: `reader-atlas-hachure weight-${index}` }, relief));
@@ -379,8 +379,13 @@
     setText("[data-enter-copy]", text.enter);
     $$('[data-atlas-en]').forEach((element) => { element.textContent = element.dataset[language === "zh" ? "atlasZh" : "atlasEn"]; });
     $$('[data-map-en]').forEach((element) => { element.textContent = element.dataset[language === "zh" ? "mapZh" : "mapEn"]; });
-    $$(".journey .rain-label, .hometown-map .rain-label").forEach(el => el.textContent = language === "en" ? "≈ 400 mm" : "约 400 mm");
+    $$(".journey .rain-label, .hometown-map .rain-label").forEach(el => el.textContent = language === "en" ? "400 mm isohyet" : "400 mm等降水量线");
     $$(".journey .yellow-label, .hometown-map .yellow-label").forEach(el => el.textContent = labels.yellow);
+    const readerYellowLabel = $(".hometown-map .yellow-label");
+    if (readerYellowLabel) {
+      readerYellowLabel.setAttribute("x", language === "en" ? "560" : "687");
+      readerYellowLabel.setAttribute("y", language === "en" ? "350" : "380");
+    }
     $$(".journey .yangtze-label, .hometown-map .yangtze-label").forEach(el => el.textContent = labels.yangtze);
   }
 
@@ -646,6 +651,7 @@
   makeDraggable(readerMap);
   makeDraggable(tourMap);
   $$('[data-next]').forEach(button => button.addEventListener("click", () => {
+    if (button.matches('.opening-link')) window.JOURNEY_AUDIO?.setAmbience(true);
     const next = sceneSteps[button.dataset.next];
     if (Number.isFinite(next)) advance(next);
   }));

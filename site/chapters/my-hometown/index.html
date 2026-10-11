@@ -21,10 +21,10 @@
       href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&family=Ysabeau:ital,wght@0,400..700;1,400..700&display=swap"
     />
     <link rel="stylesheet" href="../_shared/chapter-shell.css?v=5ff807f7dbf8" />
-    <link rel="stylesheet" href="./styles.css?v=1e76860ae10d" />
+    <link rel="stylesheet" href="./styles.css?v=20261011-map-simplify-3" />
     <link rel="stylesheet" href="../../styles/page-transition.css?v=899e8641905a" />
     <link rel="stylesheet" href="../../styles/journey-audio.css?v=1cd11e8f093f">
-    <script src="../../scripts/journey-audio.js?v=c9d9fd485f62"></script>
+    <script src="../../scripts/journey-audio.js?v=20261011-music-3"></script>
     <script src="../../scripts/page-transition.js?v=c800a690a4d4"></script>
     <link rel="stylesheet" href="../../styles/site-header.css?v=20261009-data-sources" />
     <script src="../../scripts/site-header.js?v=20261009-data-sources"></script>
@@ -57,7 +57,7 @@
           <desc id="svg-desc" data-copy="map-svg-desc">黄河、长江和约四百毫米年降水量分界的文学地理示意。</desc>
           <defs>
             <clipPath id="reader-globe-clip"><rect x="170" y="150" width="860" height="430" rx="8" /></clipPath>
-            <filter id="reader-region-wash" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="1.2" /></filter>
+            <filter id="reader-region-wash" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation=".6" /></filter>
             <pattern id="reader-sand" width="7" height="9" patternUnits="userSpaceOnUse"><path d="M1 3q1.5-1 3 0M4 7h.3" fill="none" stroke="#a88b57" stroke-width=".4" opacity=".45" /></pattern>
             <linearGradient id="reader-globe-ocean" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#edf0e9" /><stop offset="1" stop-color="#c8d7d3" /></linearGradient>
           </defs>
@@ -82,9 +82,9 @@
             <rect class="reader-climate-veil climate-warm" x="0" y="0" width="1200" height="760" />
 
             <g class="reader-geography-labels">
-              <text x="450" y="295" data-map-zh="西北沙漠" data-map-en="Northwestern deserts">Northwestern deserts</text>
-              <text x="510" y="544" data-map-zh="青藏高原" data-map-en="Tibetan Plateau">Tibetan Plateau</text>
-              <text x="914" y="510" data-map-zh="太平洋" data-map-en="Pacific Ocean">Pacific Ocean</text>
+              <text class="geography-landform" x="450" y="295" data-map-zh="西北沙漠" data-map-en="Northwestern deserts">Northwestern deserts</text>
+              <text class="geography-landform" x="510" y="524" data-map-zh="青藏高原" data-map-en="Tibetan Plateau">Tibetan Plateau</text>
+              <text class="geography-ocean" x="934" y="470" data-map-zh="太平洋" data-map-en="Pacific Ocean">Pacific Ocean</text>
             </g>
 
             <g class="reader-thematic-lines">
@@ -96,7 +96,7 @@
             <text class="map-label yellow-label" x="687" y="380" data-map-zh="黄河" data-map-en="Yellow River">Yellow River</text>
             <text class="map-label yangtze-label" x="702" y="524" data-map-zh="长江" data-map-en="Yangtze">Yangtze</text>
             <text class="map-label pearl-label" x="778" y="566" data-map-zh="珠江" data-map-en="Pearl River">Pearl River</text>
-            <text class="map-label rain-label" data-rain-label>约 400 mm</text>
+            <text class="map-label rain-label" data-rain-label>400 mm等降水量线</text>
             <text class="map-label great-wall-label" x="740" y="325" data-map-zh="万里长城" data-map-en="Great Wall">Great Wall</text>
             </g>
 
@@ -137,8 +137,8 @@
             </g>
 
             <g class="reader-boundary-labels">
-              <text x="490" y="185" data-map-zh="游牧文明" data-map-en="Nomadic civilization">Nomadic civilization</text>
-              <text x="688" y="342" data-map-zh="农耕文明" data-map-en="Agrarian civilization">Agrarian civilization</text>
+              <text x="540" y="265" data-map-zh="游牧文明" data-map-en="Nomadic civilization">Nomadic civilization</text>
+              <text x="705" y="455" data-map-zh="农耕文明" data-map-en="Agrarian civilization">Agrarian civilization</text>
               <text class="maritime-civilization" x="920" y="510" text-anchor="end" data-map-zh="海洋文明" data-map-en="Maritime civilization">Maritime civilization</text>
             </g>
           </g>
@@ -334,6 +334,6 @@
     <script src="./chapter-data.js?v=2b99e74b27a9"></script>
     <script src="../_shared/chapter-shell.js?v=20261009-data-sources"></script>
     <script src="./globe.js?v=fde662e1efb9"></script>
-    <script src="./app.js?v=daa5ff2e5a0d"></script>
+    <script src="./app.js?v=20261011-map-simplify-3"></script>
   </body>
 </html>

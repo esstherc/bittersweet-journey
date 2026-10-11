@@ -11,7 +11,7 @@
         <section class="credits-opening" data-ending-scene="1"><div class="credits-map-wrap"><div class="credits-map-snapshot"></div><div class="credits-last-light"></div><img class="credits-last-seal" alt=""/></div><h2 id="atlas-finale-title"></h2><p class="finale-message"></p><p class="credits-scroll-hint"></p></section>
         <section class="credits-departure" data-ending-scene="2"><div class="credits-book" aria-hidden="true"><div class="credits-book-left"></div><div class="credits-book-right"><span class="credits-page-origin"></span><span class="credits-page-threshold"></span></div></div><h3></h3><p></p></section>
         <section class="credits-library" data-ending-scene="3"><h3></h3><p class="credits-legend"></p><ol class="credits-titles"></ol><p class="credits-beyond"></p></section>
-        <section class="credits-attribution" data-ending-scene="4"><h3></h3><dl></dl></section>
+        <section class="credits-attribution" data-ending-scene="4"><h3></h3><dl></dl><div class="credits-music"><h4></h4><p class="credits-main-map-music"></p><p class="credits-prologue-music"></p></div></section>
         <section class="credits-coda" data-ending-scene="5"><h3></h3><p></p><div class="credits-travel-book"><div class="finale-seals"></div><p class="credits-record"></p></div><div class="credits-coda-actions"><button type="button" class="credits-end"></button><button type="button" class="credits-again"></button></div></section>
       </div></div><div class="credits-route" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>`;
     const viewport=dialog.querySelector('.credits-viewport'),play=dialog.querySelector('.credits-play');
@@ -210,6 +210,13 @@
         else dd.textContent = name;
         return [dt, dd];
       }));
+      set('.credits-music h4', english ? 'Music Credits' : '音乐鸣谢');
+      set('.credits-main-map-music', english
+        ? 'Main Map: “Zui Zhong Tian (醉中天)” — Li Xiangting'
+        : '主地图：《醉中天》— 李祥霆');
+      set('.credits-prologue-music', english
+        ? 'Prologue: “Rimu Yunlin (日暮云林)” — Xiao: Shen Yingbiao · Guqin: Xu Junyue'
+        : '序章：《日暮云林》— 洞箫：沈英彪 · 古琴：徐君跃');
       set('.credits-coda h3', english ? 'Rest here.\nThe journey continues.' : '此卷暂歇，\n旅程未完。');
       set('.credits-coda p', english ? 'Open the book again. Let the next story take you somewhere new.' : '再次翻开《文化苦旅》，让下一篇故事，带你走向未曾抵达的远方。');
       set('.credits-end', english ? 'Return to the landscapes →' : '重返山河 →');

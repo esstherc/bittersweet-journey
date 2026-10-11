@@ -186,6 +186,10 @@
   const stampClose = document.querySelector(".stamp-close");
   const stampCount = document.querySelector(".stamp-count");
   const stampGrid = document.querySelector(".stamp-grid");
+  const resetButton = document.querySelector(".reset-progress");
+  const resetDialog = document.querySelector(".reset-confirmation");
+  const resetCancel = document.querySelector(".reset-cancel");
+  const resetConfirm = document.querySelector(".reset-confirm");
   const pageParams = new URLSearchParams(window.location.search);
   const returning = pageParams.get("revealed");
   const requestedLanguage = pageParams.get("lang");
@@ -629,6 +633,11 @@
       "cta-open": "玩法",
       "cta-open-aria": "打开玩法提示",
       reset: "重置阅读痕迹",
+      "reset-dialog-kicker": "重新开始",
+      "reset-dialog-title": "确定重置阅读痕迹吗？",
+      "reset-dialog-description": "这将清除所有章节进度与已收集图章，并返回「你从何处开始认识一片土地？」的开场。此操作无法撤销。",
+      "reset-dialog-cancel": "取消",
+      "reset-dialog-confirm": "清除并重新开始",
       source: "文本：余秋雨《文化苦旅》",
       "view-stamps": "图章",
       "stamp-kicker": "已收藏图章",
@@ -667,6 +676,11 @@
       "cta-open": "Guide",
       "cta-open-aria": "Open map guide",
       reset: "Reset reading trace",
+      "reset-dialog-kicker": "Start over",
+      "reset-dialog-title": "Reset reading trace?",
+      "reset-dialog-description": "This will clear all chapter progress and collected seals, then return you to “Where do you begin to know a land?”. This cannot be undone.",
+      "reset-dialog-cancel": "Cancel",
+      "reset-dialog-confirm": "Reset and start over",
       source: "Text: Yu Qiuyu, A Bittersweet Journey Through Culture",
       "view-stamps": "Seals",
       "stamp-kicker": "Collected seals",
@@ -1104,19 +1118,33 @@
     if (event.target === stampOverlay) closeStampModal();
   });
 
-  document.querySelector(".reset-progress").addEventListener("click", () => {
-    Object.entries(STORIES).forEach(([name, story]) => {
-      window.localStorage.removeItem(story.storageKey);
-      window.localStorage.removeItem(story.storageKey.replace(/:complete$/, ':started'));
-      window.localStorage.removeItem(`bittersweet-journey:${name}:seal-reveal-seen`);
-      state.complete[name] = false;
-    });
-    body.classList.remove("is-returning");
-    ['started', 'scene'].forEach(key => window.localStorage.removeItem(`bittersweet-journey:kashgar:${key}`));
-    window.localStorage.removeItem("bittersweet-journey:my-hometown:intro-seen");
-    renderProgress();
-    renderPreview();
-    window.ATLAS_INTRO?.enterIfEmpty();
+  function openResetDialog() {
+    if (!resetDialog.open) resetDialog.showModal();
+    resetCancel.focus();
+  }
+
+  function resetReadingTrace() {
+    resetDialog.close("confirmed");
+    for (let index = window.localStorage.length - 1; index >= 0; index -= 1) {
+      const key = window.localStorage.key(index);
+      if (
+        /^bittersweet-journey:[^:]+:(complete|started|seal-reveal-seen)(?!.)/.test(key) ||
+        key === "bittersweet-journey:kashgar:scene" ||
+        key === "bittersweet-journey:my-hometown:intro-seen" ||
+        key === "bittersweet-journey:atlas-finale:v1"
+      ) window.localStorage.removeItem(key);
+    }
+    const destination = new URL("./chapters/my-hometown/index.html", window.location.href);
+    destination.searchParams.set("tour", "1");
+    destination.searchParams.set("lang", state.language);
+    document.documentElement.style.visibility = "hidden";
+    window.location.replace(destination.href);
+  }
+
+  resetButton.addEventListener("click", openResetDialog);
+  resetConfirm.addEventListener("click", resetReadingTrace);
+  resetDialog.addEventListener("click", (event) => {
+    if (event.target === resetDialog) resetDialog.close("cancel");
   });
 
   // On a phone the map is wider than the screen and scrolls sideways: start centred on the chapter dots.

@@ -87,19 +87,25 @@
 .reader-atlas-sea { fill: #dce3df; }
 .reader-atlas-land { fill: #f0e9d9; stroke: #738a83; stroke-width: .8; vector-effect: non-scaling-stroke; }
 .reader-atlas-region { stroke: none; }
-.reader-atlas-region.region-mountain { fill: #777d61; opacity: .055; }
-.reader-atlas-region.region-plateau { fill: #b4a17a; opacity: .085; }
-.reader-atlas-region.region-basin { fill: #c5b58c; opacity: .075; }
-.reader-atlas-region.region-desert { fill: #c5a76d; opacity: .24; }
+.reader-atlas-region.region-mountain { fill: #777d61; opacity: .03; }
+.reader-atlas-region.region-plateau { fill: #b4a17a; opacity: .065; }
+.reader-atlas-region.region-basin { fill: #c5b58c; opacity: .04; }
+.reader-atlas-region.region-desert { fill: #c5a76d; opacity: .14; }
 .reader-atlas-hachure,
 .reader-atlas-contour,
 .reader-atlas-stream { fill: none; vector-effect: non-scaling-stroke; }
-.reader-atlas-hachure { stroke: #746e54; stroke-width: .65; opacity: .31; stroke-linecap: round; }
-.reader-atlas-hachure.weight-1 { stroke-width: .8; opacity: .38; }
-.reader-atlas-hachure.weight-2 { stroke-width: .9; opacity: .44; }
-.reader-atlas-contour { stroke: #807953; stroke-width: .65; opacity: .2; }
-.reader-atlas-stream { stroke: #6d9194; stroke-width: .72; opacity: .46; }
-.reader-atlas-lake { fill: #94b2b1; fill-opacity: .55; stroke: #739697; stroke-width: .65; vector-effect: non-scaling-stroke; }
+.reader-atlas-hachure { stroke: #746e54; stroke-width: .6; opacity: .08; stroke-linecap: round; }
+.reader-atlas-hachure.weight-1 { stroke-width: .72; opacity: .13; }
+.reader-atlas-hachure.weight-2 { stroke-width: .82; opacity: .18; }
+.reader-atlas-contour { stroke: #807953; stroke-width: .6; opacity: .07; }
+.reader-atlas-stream { stroke: #6d9194; stroke-width: .68; opacity: .14; }
+.reader-atlas-stream.level-1 { stroke-width: .82; opacity: .32; }
+.reader-atlas-stream.level-2 { opacity: .22; }
+.reader-atlas-stream.level-3,
+.reader-atlas-lake.level-3,
+.reader-atlas-region.level-3 { display: none; }
+.reader-atlas-lake { fill: #94b2b1; fill-opacity: .38; stroke: #739697; stroke-width: .55; opacity: .5; vector-effect: non-scaling-stroke; }
+.reader-atlas-lake.level-1 { opacity: .82; }
 
 .reader-climate-veil { opacity: 0; pointer-events: none; transition: opacity 1.2s ease; }
 .reader-climate-veil.climate-cold { fill: #7895a4; mix-blend-mode: multiply; }
@@ -112,18 +118,24 @@
 .reader-geography-labels text,
 .reader-focus text,
 .reader-boundary-labels text { fill: #565e55; font: 13px var(--serif-cn), var(--serif-en); letter-spacing: .06em; paint-order: stroke; stroke: #eee8dccc; stroke-width: 3px; stroke-linejoin: round; }
+.reader-geography-labels .geography-landform { font-size: 15px; letter-spacing: .1em; }
+.reader-geography-labels .geography-ocean { fill: #5f7c7d; font-size: 13px; font-style: italic; letter-spacing: .14em; }
 body[data-language="en"] :is(.reader-geography-labels text,.reader-focus text,.reader-boundary-labels text) { font-family: var(--serif-en); font-size: 11px; letter-spacing: .02em; }
+body[data-language="en"] .reader-geography-labels .geography-landform { font-size: 12px; letter-spacing: .02em; }
+body[data-language="en"] .reader-geography-labels .geography-ocean { font-size: 11px; letter-spacing: .04em; }
 .reader-geography-labels { opacity: 0; transition: opacity .8s ease; }
-.hometown-map:is([data-scene="sealed"],[data-scene="climate"]) .reader-geography-labels { opacity: .88; }
+.hometown-map:is([data-scene="sealed"],[data-scene="climate"]) .reader-geography-labels { opacity: .8; }
 
 .river { fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 2.4; stroke-dasharray: none; stroke-dashoffset: 0; opacity: .13; transition: opacity .85s ease, stroke-width .85s ease; }
 .river-yellow { stroke: #9a6748; }
 .river-yangtze { stroke: #3d6c78; }
 .river-pearl { stroke: #4b7d84; stroke-width: 2; opacity: 0; }
-.great-wall-line { fill: none; stroke: #8d735a; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; opacity: 0; transition: opacity .9s ease; }
+.great-wall-line { fill: none; stroke: #765238; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; opacity: 0; transition: opacity .9s ease; }
 .rain-line { fill: none; stroke: #52736f; stroke-width: 2.4; stroke-dasharray: 5 8; opacity: 0; transition: opacity .8s ease; }
 .map-label { font: 20px var(--serif-cn); letter-spacing: .16em; fill: #374b4d; opacity: 0; transition: opacity .75s ease; paint-order: stroke; stroke: #ede9dd; stroke-width: 5px; }
 body[data-language="en"] .map-label { font: 18px var(--serif-en); letter-spacing: 0; }
+.great-wall-label { fill: #765238; font-size: 13px; letter-spacing: .06em; }
+body[data-language="en"] .great-wall-label { font-size: 11px; letter-spacing: .02em; }
 .rain-label { font: 14px var(--sans); letter-spacing: .05em; fill: #476b6a; }
 .hometown-map[data-scene="lines"] :is(.river,.rain-line),
 .hometown-map[data-scene="lines"] :is(.yellow-label,.yangtze-label,.rain-label) { opacity: .88; }
@@ -530,25 +542,37 @@ body:has(.journey:not([hidden])) .bottom-bar { transform: translateY(100%); }
 .prologue-atlas-sea { fill: #dce3df; }
 .prologue-atlas-land { fill: #f0e9d9; stroke: #738a83; stroke-width: .8; vector-effect: non-scaling-stroke; }
 .prologue-atlas-region { stroke: none; }
-.prologue-atlas-region.region-mountain { fill: #777d61; opacity: .04; }
-.prologue-atlas-region.region-plateau { fill: #b4a17a; opacity: .065; }
-.prologue-atlas-region.region-basin { fill: #c5b58c; opacity: .06; }
-.prologue-atlas-region.region-desert { fill: #c5a76d; opacity: .21; }
+.prologue-atlas-region.region-mountain { fill: #777d61; opacity: .022; }
+.prologue-atlas-region.region-plateau { fill: #b4a17a; opacity: .045; }
+.prologue-atlas-region.region-basin { fill: #c5b58c; opacity: .025; }
+.prologue-atlas-region.region-desert { fill: #c5a76d; opacity: .12; }
 .prologue-atlas-hachure,
 .prologue-atlas-contour,
 .prologue-atlas-stream,
 .atlas-prologue-routes path { fill: none; vector-effect: non-scaling-stroke; }
-.prologue-atlas-hachure { stroke: #746e54; stroke-width: .65; opacity: .14; stroke-linecap: round; transition: opacity .35s ease; }
-.prologue-atlas-hachure.weight-1 { stroke-width: .8; opacity: .18; }
-.prologue-atlas-hachure.weight-2 { stroke-width: .9; opacity: .22; }
-.prologue-atlas-contour { stroke: #807953; stroke-width: .65; opacity: .1; transition: opacity .35s ease; }
-.prologue-atlas-stream { stroke: #6d9194; stroke-width: .75; opacity: .24; transition: opacity .35s ease; }
-.prologue-atlas-lake { fill: #94b2b1; fill-opacity: .55; stroke: #739697; stroke-width: .65; vector-effect: non-scaling-stroke; }
-.atlas-prologue-map[data-map-detail="2"] .prologue-atlas-hachure { opacity: .28; }
-.atlas-prologue-map[data-map-detail="2"] .prologue-atlas-hachure.weight-1 { opacity: .35; }
-.atlas-prologue-map[data-map-detail="2"] .prologue-atlas-hachure.weight-2 { opacity: .4; }
-.atlas-prologue-map[data-map-detail="2"] .prologue-atlas-contour { opacity: .19; }
-.atlas-prologue-map[data-map-detail="2"] .prologue-atlas-stream { opacity: .42; }
+.prologue-atlas-hachure { stroke: #746e54; stroke-width: .6; opacity: .045; stroke-linecap: round; transition: opacity .35s ease; }
+.prologue-atlas-hachure.weight-0 { display: none; }
+.prologue-atlas-hachure.weight-1 { stroke-width: .72; opacity: .065; }
+.prologue-atlas-hachure.weight-2 { stroke-width: .82; opacity: .085; }
+.prologue-atlas-contour { stroke: #807953; stroke-width: .6; opacity: .035; transition: opacity .35s ease; }
+.prologue-atlas-stream { stroke: #6d9194; stroke-width: .68; opacity: .08; transition: opacity .35s ease; }
+.prologue-atlas-stream.level-1 { stroke-width: .82; opacity: .26; }
+.prologue-atlas-stream.level-2 { opacity: .15; }
+.prologue-atlas-lake { fill: #94b2b1; fill-opacity: .36; stroke: #739697; stroke-width: .55; opacity: .42; vector-effect: non-scaling-stroke; }
+.prologue-atlas-lake.level-1 { opacity: .78; }
+.prologue-atlas-lake.level-2 { opacity: .5; }
+.prologue-atlas-stream.level-3,
+.prologue-atlas-lake.level-3,
+.prologue-atlas-region.level-3 { display: none; }
+.atlas-prologue-map[data-map-detail="2"] .prologue-atlas-hachure { opacity: .11; }
+.atlas-prologue-map[data-map-detail="2"] .prologue-atlas-hachure.weight-0 { display: inline; opacity: .08; }
+.atlas-prologue-map[data-map-detail="2"] .prologue-atlas-hachure.weight-1 { opacity: .15; }
+.atlas-prologue-map[data-map-detail="2"] .prologue-atlas-hachure.weight-2 { opacity: .18; }
+.atlas-prologue-map[data-map-detail="2"] .prologue-atlas-contour { opacity: .08; }
+.atlas-prologue-map[data-map-detail="2"] .prologue-atlas-stream.level-1 { opacity: .34; }
+.atlas-prologue-map[data-map-detail="2"] .prologue-atlas-stream.level-2 { opacity: .24; }
+.atlas-prologue-map[data-map-detail="2"] .prologue-atlas-stream.level-3 { display: inline; opacity: .11; }
+.atlas-prologue-map[data-map-detail="2"] :is(.prologue-atlas-lake.level-3,.prologue-atlas-region.level-3) { display: inline; }
 .prologue-marine-labels { pointer-events: none; }
 .prologue-marine-label {
   fill: #52777a;
@@ -992,6 +1016,7 @@ body[data-language="en"] :is(.scene-yellow,.scene-yellow-stories,.scene-yangtze)
 .scene-prompt { margin: 6px 0 18px; color: #676a60; font: 12px/1.6 var(--sans); letter-spacing: .07em; }
 .opening-action { padding: 7px 1px; color: #964c3b; font-family: var(--serif-cn), var(--serif-en); font-size: 14px; }
 .quote-stack blockquote + blockquote { padding-top: 18px; border-top: 1px solid #8f7d6552; }
+.scene-yellow-stories .quote-stack blockquote + blockquote { border-top: 0; }
 .scene-yellow-stories .quote-stack blockquote { opacity: 0; filter: blur(5px); transform: translateY(10px); }
 .scene-yellow-stories[aria-hidden="false"] .quote-stack blockquote { animation: line-reveal .9s ease .3s forwards; }
 .scene-yellow-stories[aria-hidden="false"] .quote-stack blockquote:nth-child(2) { animation-delay: 2.5s; }
@@ -1126,5 +1151,5 @@ body[data-language="en"] :is(.scene-yellow,.scene-yellow-stories,.scene-yangtze)
   .reader-atlas-stream:not(.level-1):not(.level-2),
   .reader-atlas-lake:not(.level-1),
   .reader-atlas-region.level-3 { display: none; }
-  .reader-atlas-stream { opacity: .7; }
+  .reader-atlas-stream { opacity: .32; }
 }
