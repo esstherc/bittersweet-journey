@@ -1159,7 +1159,7 @@ body[data-language="en"] :is(.scene-yellow,.scene-yellow-stories,.scene-yangtze)
   appearance: none;
   display: inline-flex;
   align-items: center;
-  gap: .48em;
+  gap: .62em;
   min-width: 0;
   overflow: visible;
   padding: 0;
@@ -1169,6 +1169,8 @@ body[data-language="en"] :is(.scene-yellow,.scene-yellow-stories,.scene-yangtze)
   font: inherit;
   letter-spacing: inherit;
   text-align: left;
+  position: relative;
+  z-index: 1;
   cursor: pointer;
 }
 .credit-info-trigger:focus-visible { outline: 1px solid var(--seal); outline-offset: 5px; }
@@ -1176,17 +1178,18 @@ body[data-language="en"] :is(.scene-yellow,.scene-yellow-stories,.scene-yangtze)
   display: inline-grid;
   place-items: center;
   flex: 0 0 auto;
-  width: 1.05em;
-  height: 1.05em;
+  width: 1.2em;
+  height: 1.2em;
   border: 1px solid currentColor;
   border-radius: 50%;
   font: 600 .72em/1 var(--sans);
-  opacity: 0;
-  transform: scale(.72);
+  color: #8d735a;
+  opacity: .38;
+  transform: scale(.86);
   transition: opacity .2s ease, transform .2s ease, color .2s ease;
 }
 .credit-info-trigger:hover .credit-info-mark,
-.credit-info-trigger:focus-visible .credit-info-mark { opacity: .9; transform: scale(1); color: var(--seal); }
+.credit-info-trigger:focus-visible .credit-info-mark { opacity: 1; visibility: visible; transform: scale(1); color: var(--seal); }
 .project-info-dialog {
   width: min(700px, calc(100vw - 36px));
   max-height: min(760px, calc(100vh - 72px));
