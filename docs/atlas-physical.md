@@ -1,5 +1,7 @@
 # Physical reading atlas
 
+Current mobile update (2026-10-15): touch portrait requires rotation. Compact landscape uses a full-width pannable map, floating title, collapsible Guide overlay and fixed footer; no separate title/guide column is allocated. Nine selected chapters are implemented. Empty reading traces open the introduction. The historical phone crop/scroll notes below are superseded where they conflict with this behavior. See mobile-landscape.md.
+
 The homepage is now a north-up, pannable physical atlas. Coastlines, rivers, lakes and landform regions replace the empty backdrop. Administrative boundaries are omitted. Existing story locations, completion seals and chapter navigation remain the foreground.
 
 ## Geography and drawing
@@ -17,7 +19,7 @@ The homepage is now a north-up, pannable physical atlas. Coastlines, rivers, lak
 The SVG `viewBox` is the shared camera, so land, water, names and chapter points stay in the same coordinate system. There is no external map SDK, runtime map service, API key or tile subscription.
 
 - Desktop initial framing uses at least 700 map units of width, adjusted for viewport aspect ratio, instead of the former fixed 944 × 590 extent. At 1440 × 900 the chapter geography is visibly larger while all available chapter points remain in view.
-- Phones start with a 440-unit wide view, allowing horizontal exploration without shrinking text. **All / 全图** fits every chapter into view.
+- Phones start with a 440-unit wide view, allowing horizontal exploration without shrinking text. **All / All** fits every chapter into view.
 - Zoom limits: 0.65–6×. Below 1.65×: major landforms and water. At 1.65×: regional rivers, lakes, contours and names. At 3.2×: remaining source watercourses and additional local reference names. This is a regional atlas, not street-level mapping.
 - All projected geometry is shipped in one static file; zoom changes visibility rather than making network requests. Initial source data is about 2.1 MB uncompressed. Only one hierarchy of labels is shown at a time, with chapter labels taking precedence over physical labels.
 - Screen-sized text, dots and seals; desktop chapter clues 22 px and phone clues 16 px, geography 14–16 px. Names avoid chapter text, title, controls and the open source note.
@@ -41,7 +43,7 @@ This change follows the user's September 28 request for natural-landscape washes
 
 ## Homepage UI consistency
 
-The only view-return control is All / 全图. Map notes open in a closable drawer from the footer button beside the text citation, matching chapter pages. Gesture and reading instructions share the existing CTA callout. Every unread chapter uses one core, one glow and one animated pulse; chapter 09 now pulses, while the extra shapes on 05 and 07 are removed. Completed chapters retain still dots and seals.
+The only view-return control is All / All. Map notes open in a closable drawer from the footer button beside the text citation, matching chapter pages. Gesture and reading instructions share the existing CTA callout. Every unread chapter uses one core, one glow and one animated pulse; chapter 09 now pulses, while the extra shapes on 05 and 07 are removed. Completed chapters retain still dots and seals.
 
 Chapter previews use rectangular thought bubbles with 16 px corners in the original warm paper and muted vermilion palette. Placement candidates start 76 px away from the point so the three tail circles have visible gaps. Circles fade in from the story point toward the card: 90 ms per circle, starting 45 ms apart (180 ms total). The card and its button remain immediately available, without placement transitions. Reduced motion shows every circle immediately; the mouse-leave grace period still permits moving into the button.
 

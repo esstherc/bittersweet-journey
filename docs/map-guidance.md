@@ -1,272 +1,103 @@
-# 地图规范（Map Guidance）
+# Map guidance
 
-本文件汇总至今为各章地图指定、修正与调整过的做法，作为检查所有地图的共同标准。版面（标题栏、阅读区、底栏、说明面板）见 [chapter-layout-guideline.md](chapter-layout-guideline.md)；两份文件冲突时，**地图上的内容以本文件为准**。
+Updated 2026-10-15. These rules govern geographic content; chapter-layout-guideline.md governs the reading shell. Recent explicit requirements below supersede historical migration proposals.
 
-**2026-09-28 主地图更新：** 用户要求以自然地景为底、采用手绘古地图风格并支持拖曳缩放。首页现采用真实地理区域淡染、DEM 坡向排线与分级细节；手机以拖曳／双指缩放取代横向滚动，线索字号为 16 px。视野返回按钮统一为「全图」，显示所有章节点。标题与 callout 固定显示，章节预览为柔和纸色的思考泡泡，三个小圆泡在 180 ms 内依序出现；完成返回时，图章从章节点飞入上方蒐集盒。此项更新覆盖首页的 V-7、S-4 及 M-6 手机线索字号，章节地图仍沿用下文规范。来源、尺度限制与验证见 [主地图实现说明](atlas-physical.md)。逐章图章评估及喀什版面对齐记录见 [设计检视](seal-design-review.md)。
+## Current experience
 
-**提灯探索补充：** 主地图默认以 75% 不透明的深咖啡色遮罩呈现，游标、触碰或键盘焦点照亮附近；完成章节后，章节点周围保留随地图缩放的亮区。戴笠、穿灰蓝长袍的骑马诗人闲置时漫步、缓慢跟随游标，进入章节前先跑到该点。标题、callout、页首与页脚保持暗底可读；减少动态效果时略过移动等待。完成全部八个已开放选读章节、最后一枚图章入盒后，整幅地图点亮并出现集齐图章的祝贺画面；刷新保留全图明亮状态。
+The atlas uses a hand-drawn ancient-map treatment grounded in physical geography, with draggable/pinch-zoomable geographic coordinates. Mountain ranges, lakes, rivers and coastlines take priority over administration. A brown exploration veil, cursor light and a mounted Chinese poet support discovery. Titles and the integrated callout remain readable. Completed chapters illuminate a buffer, stamp the map and send a square pictorial seal to collection. All nine completions illuminate the whole map and unlock credits.
 
-- **用法**：新做或检查一张地图时，依第 1–9 节逐条对照，再用第 10 节的检查表记录结果。
-- **规则编号**：用来在讨论和检查记录里引用，例如 “L-3 未通过”。
-- **来源**：每条规则后的括号注明它来自哪一章的哪次调整，方便回溯。
+Phones require landscape. Portrait touch interaction is blocked by a localized rotation dialog; compact landscape places map and scrolling prose side by side. Chapter curtains have one subtitle. Precise distance labels and scale bars are hidden on chapter maps. Ruled paper stays behind text rather than maps. See mobile-landscape.md and atlas-physical.md.
 
----
+## 1. Geographic evidence (D)
 
-## 1. 内容：地图上画什么（D）
+- D-1: Plot the essay's named places/actions. Do not import complete itineraries or collection histories from other books/chapters. Link related context through notes.
+- D-2: Use sourced coordinates, including Wikidata QID/P625 or OSM node/way ID and retrieval date.
+- D-3: A named region receives a region label, not a fabricated event point. Explicitly identify representative references such as Persepolis for Persia.
+- D-4: When prose and geography differ, retain the prose, map the geography and explain the discrepancy in notes: Phewa Lake versus river wording, published versus DEM elevation, fifteen kilometers versus fifteen miles.
+- D-5: Different editions can require different paragraph-to-stage maps. Explain additions/omissions in notes.
+- D-6: Prefer physical geography; omit administrative borders unless a documented standard-map context is required by the chapter.
+- D-7: Put interpretive/not-surveyed qualifications in source notes. A non-geographic diagram such as the cave facade must still be identified as schematic.
+- D-8: Distances in evidence notes are great-circle measurements, not road mileage. Current chapter maps do not display exact distance numbers or scales. Original distance statements in literary text remain untouched.
+- D-9: Distinguish published elevation and DEM sampling; do not rewrite the prose to match a grid.
+- D-10: Timelines use only supported dates/period names, never invented dates for undated sections.
 
-- **D-1 只画原文写到的。** 地点、人物行踪、路线、年份都以原文为准；原文没写的不补画。千禧之旅的行程出自《千年一叹》、藏经洞出自《道士塔》，这类“别的书／别的章”的内容只在说明面板提及，或在注记里链接。（鱼尾山屋、莫高窟）
-- **D-2 真实坐标，附来源。** 地点用 Wikidata P625（记 QID）或 OpenStreetMap（记 node/way id），并在说明面板写明取得日期。（全部 DEM 章节）
-- **D-3 原文只说区域时，只标区域名、不定点。** 例如“印度”“希腊”“西域”；需要一个点代表时，写明代表点是谁（波斯 → 波斯波利斯）。（鱼尾山屋、莫高窟）
-- **D-4 原文与地理不一致时，地图照地理，正文照原文，差异写进说明面板。** 例：
-  - “清澈的雪水河”实为费瓦湖；
-  - 关口海拔原文 1,900 m、DEM 1,730 m；
-  - 中文“十五公里”、英文“fifteen miles”。
-- **D-5 两个版本的差异写进说明面板。** 英译本依较早版本时，地图随各语言的段落切换，说明面板写明多出或缺少的段落。（莫高窟）
-- **D-6 不画国界。**（鱼尾山屋、道士塔）
-- **D-7 “示意”“非实测”一类说明不写在地图上，放进说明面板。**（阳关雪）
-  - 例外：不是地图的图（断崖立面等），标题须写明“示意”。（莫高窟）
-- **D-8 距离一律是大圆直线距离，写作“直线约 N km”；原文是公路里程时照录原文，并在说明面板附上直线距离。**（鱼尾山屋蓝毗尼）
-- **D-9 海拔同时标公开资料与 DEM，正文照原文。**（鱼尾山屋）
-- **D-10 时间线只用原文给的年份或朝代名，不补年份。**（莫高窟、鱼尾山屋）
+## 2. Views and cameras (V)
 
-## 2. 视图与镜头（V）
+- V-1: Use real Copernicus GLO-90 or GLO-30 terrain where the scene requires 3D relief. Disclose vertical exaggeration.
+- V-2: Regional views face north and fit the relevant coordinates. Oblique local views are justified by the text, such as looking toward peaks or along a cliff/gorge.
+- V-3: Terrain compasses follow projected/camera north and the active language. Projection-dependent world compasses use north at the focal location.
+- V-4: Switch by section or by paragraph where the essay changes scene. The shared reading anchor is 40 percent down the scroll region; language tables remain independent.
+- V-5: Night, dawn, snow and moonlight follow the prose, not invented meteorological data.
+- V-6: Extend real DEM coverage beyond the visible frame. Preserve detailed core samples, model coordinates, elevation baseline and color ramp. Do not use visible edge fading to conceal inadequate coverage. Fish Tail Lodge, Secret Spring and Mogao have dedicated extension tools.
+- V-7: Mobile landscape retains legible map scale with touch dragging/pinching. Portrait requires rotation; do not simulate orientation by rotating the whole DOM/canvas.
 
-- **V-1 地形**：自沙原隐泉起，地图用真实 DEM（Copernicus GLO-90；需要更细时用 GLO-30）以 WebGL 绘成三维地形。高程夸大倍数写进说明面板。
-- **V-2 北方朝上**：大范围与区域视图一律北方朝上，镜头自动拉远到所有当下要显示的点都在画面内（`fitNorthUp`）。
-  - 例外：只有原文写到“朝某方向看”的局部场景可以斜视，例如“从湖边望向雪峰”“沿峡谷望向樟木”“沿断崖走”。（阳关雪：用户把“转向三个地点”改回北方朝上）
-- **V-3 指北针**：所有三维地形都显示指北针，随镜头旋转；北方朝上的二维世界地图不另加。字母依语言写“北”或“N”。（阳关雪起）
-- **V-4 按节切换，必要时按段切换**：原文在一节之内换了场景（夜 → 晨、白俄士兵 → 华尔纳 → 村民 → 陈万里），地图就按段落切换。阅读线在滚动区高度 40% 处；段落与场景的对照表按语言分开写，因为两个版本的段数可能不同。（鱼尾山屋、莫高窟）
-- **V-5 气氛随原文变化**：夜色、晨光、月光只在原文写到时出现，并随阅读进度渐变。（鱼尾山屋、莫高窟）
-- **V-6 画面边缘**：地形四周渐淡，不露出硬边；地形边缘的淡出带里不放重要地点，放不下时就扩大地形范围。（鱼尾山屋：大范围 DEM 西界由 20°E 扩到 8°E）
-- **V-7 手机宽度**：总地图在手机上保持接近桌面的比例、可左右滑动，不缩小整张图。（总地图）
+## 3. Symbols and surface (S)
 
-## 3. 符号（S）
+Shared colors: seal #9d3d31, ink #20251f, soft ink #5b5d53, waterways near #3f5d6c. Focal points use seal-red with a paper outline; ordinary points use quiet ink/paper. Passing/secondary sites remain distinguishable without losing their coordinates. Literary walking paths use alternating footprints. Relationship curves and dashed lines show direction/context rather than surveyed routes. Rivers remain blue; terrain is pale enough to preserve labels and connectors.
 
-以下为 SVG 叠加层的共同符号。颜色用共享变量：`--seal #9d3d31`、`--ink #20251f`、`--ink-soft #5b5d53`、水系 `#3f5d6c`。
+- S-1: Keep chapter map bases light so blue rivers and blood-red lines remain legible.
+- S-2: Quiet terrain further when many connections/places compete; preserve water/land distinction.
+- S-3: Give map text a paper halo with rounded joins; dark scenes may reverse text/halo colors. Use approximately 4-5 px halos and paint-order: stroke.
+- S-4: Background geometry must express useful geography. Ruled patterns are confined to reading content. Crop decorative grid/legacy captions from map views.
+- S-5: Use a continuous 2D world projection for cross-continental relationships. My Hometown's reading globe is an explicit exception: local WebGL globe with a flat fallback and static reduced-motion state.
 
-| 符号 | 用途 | 样式 |
+## 4. Typography (T)
+
+Sizes below are displayed CSS pixels, not blindly scaled SVG units. min-type.js supplies a 13.5 px floor and does not replace hierarchy. Chinese uses the specified Songti/STSong/CJK serif stack; English uses Caudex; UI uses Ysabeau with the Chinese serif fallback.
+
+| Tier | Role | Chinese / English | Compact reference | Style |
+|---|---|---|---|---|
+| T1 | Focal place | 32 / 29 | 28 / 25 | 600, seal-red |
+| T2 | Place/town | 32 / 29 | 28 / 25 | 400, ink |
+| T3 | Region/range/desert/sea | 30 / 30 | 26 / 26 | Category color; English italic where established |
+| T4 | River/lake | 24 / 24 | 24 / 24 | Water blue |
+| T5 | Place annotation | 22 / 22 | 20 / 20 | Soft ink; no exact distance labels |
+| T6 | Legacy on-map caption | Retired | Retired | Move explanations to notes |
+| T7 | Panels/legends | 14-16 | At least 13.5 | 400-600 |
+| T8 | Compass letter | 18 SVG units | At least 13.5 displayed | 600, seal-red |
+
+T-1: Never render map text below 13.5 px. T-2: Use weight/color rather than shrinking focal hierarchy. T-3: Wrap long prose/poetry instead of shrinking it below the floor. T-4: Omit secondary notes/names before sacrificing legibility. T-5: Existing terrain chapters deliberately use the smaller established level: places 24/22, notes 17, water/quotes 18; narrow references 20/18 with other labels near 15. Yangguan's regional flat map retains its documented original units. These are exceptions to the reference table, still subject to the minimum.
+
+## 5. Label placement (L)
+
+L-1: Keep a label near its symbol, usually a 0.25 em gap and at most 0.5 em. L-2: Treat name/note as one aligned movable box. L-3: The nearest label to each point must belong to that point. A candidate must be at least 0.25 em closer to its own symbol than competing symbols, and must not undercut an already labeled neighbor's association.
+
+| Priority | Candidate | Placement relative to point (x,y), radius r, gap g=0.25em |
 |---|---|---|
-| 焦点点 | 原点、“此刻所在”、本章的主角地点 | 圆点 r 4–5，填 `--seal`，2 px 纸色描边 |
-| 一般地点 | 原文点名的地点 | 圆点 r 4，纸色填充，1.4 px `--ink` 描边 |
-| 城镇 | 参照用的城市 | 圆点 r 4，填 `--ink-soft` |
-| 路过／次要 | 原文说“路过”“未及考察” | 淡色填充，虚线描边 |
-| 叙事路线 | 作者走过的路 | 左右交替的椭圆脚印，`--seal` 75%（沙原隐泉、阳关雪） |
-| 连线 | 从原点到各地的关系 | `--seal` 虚线 `2 6`（鱼尾山屋、阳关雪） |
-| 观念的方向 | 思想、艺术的传播方向，不是道路 | 实线箭头 2.4 px；次要来源用虚线 `5 6`（莫高窟） |
-| 道路 | 原文写到的车行路线 | 实线 2.4 px，随阅读逐段画出；全线以 30% 虚线预示（鱼尾山屋） |
-| 远距连线 | 二维世界地图上的远距关系 | `--seal` 虚线 `6 6` 曲线，向上弯，只示意方向（道士塔、莫高窟） |
-| 范围圈 | “约 N 公里外” | `--seal` 虚线 `7 6`，5% 填充（莫高窟） |
-| 河流 | Natural Earth／OSM | 深蓝 1.6–2.2 px；月夜时转亮（莫高窟） |
-| 区域 | 山系、沙漠 | 极淡填充，虚线 `4 3` 外框 |
-| 断崖、城墙等线状地物 | OSM | 依地物用 `--seal` 或土色粗线 |
+| 1 | Upper right | Left x+r+g, bottom y-0.1em |
+| 2 | Lower right, then upper left | Left x+r+g/top y+0.1em, or right x-r-g/bottom y-0.1em |
+| 3 | Lower left | Right x-r-g, top y+0.1em |
+| 4 | Above | Centered, bottom y-r-g |
+| 5 | Below | Centered, top y+r+g |
 
-- **S-1 底色一律浅色**，让深蓝河流与血红虚线清楚可见；地形不用深棕色底。（阳关雪）
-- **S-2 地点多、线多的视图，地形再调淡**：陆地往纸色混合约 38%，海面保持原色。（鱼尾山屋第二、三节）
-- **S-3 文字光晕**：地图文字一律加纸色描边光晕（`paint-order: stroke`，5 px，`rgba(240,240,238,.92)`）；夜色画面改用深色光晕、浅色字。
-- **S-4 底图只画有助理解的真实地理**：河流、原文写到的道路。装饰性的几何纹样（山形弧线）、色块（晕染的区域色）不画；与各章无关的地物（例如运河）不画。（总地图）
-- **S-5 远距视图用二维世界地图**：跨洲的关系用等距圆柱投影的二维世界地图（Natural Earth），镜头在视图之间平移缩放；不用会转动的三维地球，因为裁切容易破图。（道士塔、莫高窟）
+L-4/L-5: Choose the first clear candidate, retaining 6 px panel margins and avoiding all registered points/labels/chrome. L-6: If none works, use hierarchy rather than arbitrary long-distance displacement; where the atlas deliberately separates clustered titles, attach a blood-red leading line to the fixed point. L-7: Reserve compasses, timelines and diagrams first. L-8: Place river/road labels from the middle toward either end, about 8 px above the line; omit when no clear location exists. L-9: Center region labels at representative points without extra symbols. L-10: Register every point radius plus 2 px before labels.
 
-## 4. 地图文字的字号（T）
+## 6. Collision hierarchy (H)
 
-**统一规范。** 以下都是**屏幕上实际显示的 CSS px**。SVG 地图若随面板缩放，要换算成显示后的大小；`site/scripts/min-type.js` 只负责保底 10pt，不代替本表。
-
-| 层级 | 用途 | 中文 | 英文 | ≤ 540 px（中／英） | 字重与样式 | 颜色 |
-|---|---|---|---|---|---|---|
-| T1 焦点地点 | 原点、主角地点 | 32 | 29 | 28 / 25 | 600 | `--seal` |
-| T2 地点 | 原文点名的地点、城镇 | 32 | 29 | 28 / 25 | 400 | `--ink` |
-| T3 区域 | 山系、沙漠、海、古文明区域 | 30 | 30 | 26 / 26 | 400，中文字距 .3em，英文斜体 | 依类别（山系蓝灰、沙漠赭） |
-| T4 水系 | 河流、湖泊 | 24 | 24 | 24 / 24 | 400，英文斜体 | 水系蓝 |
-| T5 注记 | 地名下的第二行：距离、海拔、身份 | 22 | 22 | 20 / 20 | 400 | `--ink-soft` |
-| T6 地图说明 | 左下角两行：第一行视图名、第二行资料来源 | 30 ／ 22 | 30 ／ 22 | 26 ／ 20 | 400 | `--ink` ／ `--ink-soft` |
-| T7 面板与图例 | 地图上的小面板、图例、比例尺、刻度 | 14–16 | 14–16 | 14 | 400–600 | 依内容 |
-| T8 指北针字母 | “北”“N” | 18（viewBox 单位，显示约 19 px） | 同左 | 同左 | 600 | `--seal` |
-
-- **T-1 最小字号**：任何地图文字在任何宽度下都不小于 **10 pt（13.33 px，实作取 13.5 px）**。SVG 文字由 `min-type.js` 自动补到 13.5 px；HTML 文字在样式表里就不得小于 13.5 px。
-- **T-2 层级靠字重和颜色区分，不靠缩小字号**：T1 和 T2 同字号，焦点地点用粗体与印章红。
-- **T-3 过长的文字要换行，不缩到 10 pt 以下**：例如阳关雪手机上的英文诗句，在中间的空格处断成两行。
-- **T-4 手机上放不下时**：先省注记（T5），再省次要地名，见第 6 节 H2、H4；不得缩小到低于本表的手机字号。
-- **T-5 已确认的例外**：阳关雪第二节的区域平面图保持原字号（地名 22、距离 17、注记 15，viewBox 单位；≤ 900 px 时 26、20）。手机上仍由 T-1 保底 13.5 px。（用户指定）
-  - 沙原隐泉（2026-10，用户指定）：地图标签比 T 表小一级，地名 24 / 22（中／英），注记、距离 17，河名、引文 18；≤ 540 px 时地名 20 / 18，其余 15。仍不小于 13.5 px。
-
-## 5. 标签位置（L）
-
-### 5.1 贴近符号
-
-- **L-1 标签尽量贴近它的符号。** 标签框与符号边缘的间距为 0.25 em（以地名字号计，32 px 字约 8 px），不超过 0.5 em。
-- **L-2 地名和注记是一个整体**：地名在上、注记在下，左右对齐方式相同，一起移动。
-- **L-3 每个符号最近的标签必须是它自己的标签。** 不得有别的标签比它自己的标签更靠近它，读者才不会把标签认错符号。
-  - **距离**：从符号中心量到标签框（地名与注记合为一框）最近的一点。
-  - **放置时的判定**：候选位置同时满足以下两项才算“清楚”，否则视同重叠，改试下一个位置（L-4），都不行时依第 6 节处理。
-    1. 候选框到自己符号的距离，比到任何其他符号的距离至少近 0.25 em；
-    2. 对每个已经放好标签的符号 B，候选框到 B 的距离，不得小于 B 自己的标签到 B 的距离。
-  - **检查时的判定**：逐一检查画面上每个有标签的符号，离它最近的标签都必须是它自己的。
-
-### 5.2 点状符号的候选位置（依优先顺序）
-
-```
-      #4        
- #2′  ●  #1     ← #1 右上；#2 右下 或 #2′ 左上（同级）；#3 左下；#4 正上；#5 正下
- #3   #5  #2    
-```
-
-| 顺序 | 位置 | 标签框相对于符号中心 (x, y)，r 为符号半径，g = 0.25 em |
+| Priority | Content | When crowded |
 |---|---|---|
-| #1 | 右上 | 左边 = x + r + g；底边 = y − 0.1 em |
-| #2 | 右下 或 左上 | 右下：左边 = x + r + g，顶边 = y + 0.1 em；左上：右边 = x − r − g，底边 = y − 0.1 em |
-| #3 | 左下 | 右边 = x − r − g；顶边 = y + 0.1 em |
-| #4 | 正上 | 水平居中；底边 = y − r − g |
-| #5 | 正下 | 水平居中；顶边 = y + r + g |
+| H0 | Fixed map controls/diagrams | Reserve and retain |
+| H1 | Focal site | Retain; choose minimum-overlap candidate and clamp into view |
+| H2 | Current named places | Remove note, then name; retain point |
+| H3 | Region names | Hide |
+| H4 | Previously mentioned background sites | Remove note/name; retain point |
+| H5 | Water names | Hide |
+| H6 | Secondary annotations | Hide |
 
-- **L-4 依 #1 → #2 → #3 → #4 → #5 依次尝试，取第一个完全清楚的位置。**“完全清楚”是指：不压到任何已放好的标签和任何符号，也不压到地图固定元素（L-7），留在面板内（边距 6 px），并通过 L-3 的归属判定。
-- **L-5 #2 的两个位置同级**：先试右下，再试左上；两者都清楚时取右下。
-- **L-6 五个位置都不清楚时，依第 6 节的视觉层级处理**，不另找更远的位置。
+H-1: Register fixed elements/points, then place labels by priority. H-2: Place the more crowded side first within a tier. H-3: Collision handling hides labels, not actual geographic points.
 
-### 5.3 线状与面状
+## 7. Readability (A)
 
-- **L-7 地图固定元素不可被遮**：左下角地图说明、指北针、地图上的面板（断崖立面、时间线）。标签放置前先把它们登记为已占用。
-- **L-8 线状地物（河流、道路）**：标签沿线放，从线的中段往两端找第一个清楚的点，放在线上方约 8 px；找不到就不标。
-- **L-9 面状地物（山系、沙漠、海、区域）**：标签放在区域的代表点，居中，不另加符号；与其他标签冲突时依第 6 节处理。
-- **L-10 符号先占位**：所有要显示的点先登记为已占用（半径 + 2 px），再放标签，所以标签不会压到别的点。
+A-1: Aim for 4.5:1 normal text and 3:1 large text contrast against actual background pixels. A-2: Adjust terrain/surface or halo before changing the authored text color. A-3: Keep inactive controls readable; avoid fading useful text into the background. A-4: Show only the active language. Original source/proper names in credits remain identifiable.
 
-## 6. 重叠时依视觉层级避让（H）
+## 8. Pictorial seals (K)
 
-层级越高越先放；低层级的标签避开高层级，不能反过来挪动高层级。
+K-1: Each chapter uses an authored square SVG with simple literary imagery, a double border and monochrome cinnabar near #944b39. Titles/descriptions identify it as symbolic, not geographic geometry. Do not expose old single-character fallback marks as the current design. K-2: Reuse one canonical seal at the atlas/receipt, collection, reader ending, completion and credits. K-3: Check recognition around 40/44/52 px as well as enlarged previews.
 
-| 层级 | 内容 | 放不下时 |
-|---|---|---|
-| H0 | 地图固定元素：说明文字、指北针、地图上的面板 | 不参与避让，永远保留 |
-| H1 | 焦点地点（T1） | 永远显示；五个位置都不清楚时取重叠最少者，并横向挪回面板内 |
-| H2 | 本节或本段原文点名的地点 | 先省注记；仍不清楚就省地名，保留符号 |
-| H3 | 区域名（T3） | 隐藏 |
-| H4 | 前几节已出现、现在作背景的地点 | 先省注记；再省地名，保留符号；手机上默认只留符号 |
-| H5 | 水系名（T4） | 隐藏 |
-| H6 | 注记（T5），包括距离 | 隐藏；只有本节新出现的地点显示距离 |
+## 9. Atlas (M)
 
-- **H-1 放置顺序** = 层级顺序：H0 登记 → 所有符号登记（L-10）→ H1 → H2 → H3 → H4 → H5。
-- **H-2 同层级之间**：画面上最拥挤的一侧先放（例如鱼尾山屋、阳关雪的遗址从东往西放）。
-- **H-3 符号本身不因避让而消失**（H1、H2、H4 的点都保留），只有标签会省略。
+M-1/M-2: Anchor points with the same geographic projection used by atlas-camera.js; pan/zoom may move the view, never the underlying coordinates. Separate nearby labels with leading lines rather than inventing display coordinates. M-3: Keep the title and integrated exploration callout fixed/readable while exploring. M-4: Use only one full-view return control. M-5: Put map notes beside the footer citation. M-6: Maintain readable touch labels and independent foreground symbols at every zoom. Completion lighting/collection follow the existing journey state; the all-complete callout hides and credits become available only after nine selections.
 
-## 7. 可读性（A）
+## 10. Review
 
-- **A-1 对比度**：文字与背后实际像素的对比度，一般文字 ≥ 4.5 : 1，大字（≥ 24 px，或粗体 ≥ 18.66 px）≥ 3 : 1。
-- **A-2 对比不足时先调背景**：加深或调淡底色、加光晕（S-3）、调淡地形（S-2）。只有背景怎样调都达不到时才改文字颜色，例如纸色上的灰字，并在检查记录里写明原因。（全站检查）
-- **A-3 淡化的状态**（未选的语言、未解锁的印记）不透明度 ≥ 0.72。
-- **A-4 一次只显示一种语言**（版面规范 G-1）。地图说明的第二行（资料来源）目前在中文模式下也显示英文，不符合本条，列为待改（见第 10 节）。
-
-## 8. 印记（K）
-
-- **K-1 图像印**：每章一枚图像印，画原文里的一个场景，不用文字。
-  - 规格：viewBox 100 × 100，双线外框，单色 `#944b39`，线宽 0.8–3；`<title>` 写“章名 · 印记名”，`<desc>` 写明“章节象征印记，非地理图形”。
-  - 文字后备字只留在资料里，不显示。（西域喀什起；水／泉／空／影已改成图像印）
-- **K-2 同一枚印出现在四处**：总地图的印章与收据、圖章一览、章末、完成画面。
-- **K-3 44 px 大小时必须认得出**，交付前在 40、52、200 px 三种大小下检查。
-
-## 9. 总地图（M）
-
-- **M-1 真实位置**：光点依 `real-geography.js` 的投影摆放。没有的地点用同一投影拟合，残差须小于 2 px（鱼尾山屋：博克拉）。
-- **M-2 光点固定在真实坐标**：每个光点依该章 geodata 的 WGS 84 坐标、以总地图同一 Albers 投影摆放（`atlas-camera.js`），缩放与平移都不移动光点。太近的地点（敦煌一带）不偏移光点，只让标签散开，并以细引线连回光点（M-8）。
-- **M-3 完成后的光点**：6 px 实心 `#944b39`、光晕 0.3、不闪烁（同西域喀什）。
-- **M-4 印章**：完成后在光点旁盖图像印，不压到文字、河流和其他印章。
-- **M-5 光点文字**：未读时显示原文线索，读完后显示章名，字号依 T-1 保底。
-- **M-6 总地图的字号（总地图专用，取代第 4 节的字号表）**：总地图是全景图、标签多，另订一套字号，都是屏幕上的实际大小：
-
-  | 用途 | 宽于 900 px | 900 px 以下 |
-  |---|---|---|
-  | 光点线索／章名 | 22 | 18 |
-  | 章号 | 16 | 14 |
-  | 河名、道路名 | 16 | 14 |
-  | 章节印章（边长） | 36 | 30 |
-
-  仍依 T-1 不小于 13.5 px。字号与位置由 `atlas.js` 的 `layoutAtlas()` 依地图实际缩放计算，所以 `min-type.js` 不处理总地图（`data-min-type="off"`）。
-- **M-7 读完一章后留在总地图上的物件，各章一致**：
-  - 光点变为 6 px 实心 `#944b39`、不闪烁；
-  - 线索换成章名；
-  - 旁边盖该章的图像印（边长见 M-6），位置依 #3 左下、#5 正下、#2 右下、#2 左上、#4 正上、#1 右上依次尝试，不压到任何标签、光点或其他印章，放不下就不盖（圖章一览里仍有）；
-  - 回到总地图时，刚读完那章的印章有盖印动画；
-  - 不再为个别章节另画示意图（原本的成都平原扇形、月牙泉、藏经洞塔形、山庄门形都已移除）。
-- **M-8 总地图的标签位置依第 5、6 节**：光点先占位；线索与章号为一组，依 #1–#5；八个光点的位置一起搜寻，找不到全都清楚的组合时，才让个别标签取重叠最少的位置；河名、道路名最后放，放不下就不标。
-  - **缩放**：标签字号、章号字号与光晕宽度都依当下缩放换算，屏幕上保持 M-6 的大小与约 3 px 的光晕，放大时不会变粗、互相盖住。
-  - **群聚**：屏幕上 90 px 内还有其他光点时，标签可以离开光点、以细引线连回；引线不得互相交叉，也不得穿过别章的标签或别章的光点（彼此重叠的光点除外）。
-  - **群聚的标签放在光点所在的那一侧**（2026-10-07）：光点在群聚中心以西，标签放左侧；以东，放右侧（例：全图时阳关雪在左，莫高窟、道士塔在右）。同侧的标签上下排列，行距留出标签间距；先试最近的一行。所有标签一起搜寻，取离光点总距离最短的清楚组合，而不是第一个找到的组合。标签离光点不超过屏幕上 120 px，再远就依 H-2 让位（光点与泡泡框仍在）。群聚标签已有引线指明归属，L-3 只要求不贴到别的光点（6 px 内）。背景地图的文字与地形不需避让。
-
-## 10. 检查方法与现况
-
-### 10.1 每张地图的检查步骤
-
-1. **逐条对照**第 1–8 节，在下表记录“通过／未通过／不适用”。
-2. **真实浏览器截图**：headless Edge（SwiftShader WebGL），宽度 1440、800、390，中文和英文，每个视图或阶段各一张。截图用 CDP `Page.captureScreenshot({fromSurface: true})`，整页截图可能残留旧的 SVG。
-3. **自动检查**：
-   - 标签出界、标签互相重叠、标签归属（L-3：每个符号最近的标签是否为它自己的）（每个阶段）；
-   - 全站字号与对比度（每个状态），不合格清单为零才算通过。
-4. **jsdom 测试**：章节结构、双语文案、无 `undefined`/`NaN`、完成状态写入。
-
-检查脚本目前放在本机暂存目录（`claude_pptr_test/`），建议移入仓库的 `tools/qa/`，以便重复使用。
-
-### 10.2 现况（2026-09-28）
-
-| 规则 | 鱼尾山屋 | 阳关雪 | 莫高窟 | 沙原隐泉 | 都江堰 | 道士塔 | 山庄背影 | 西域喀什 |
-|---|---|---|---|---|---|---|---|---|
-| D 内容 | 通过 | 通过 | 通过 | 待检查 | 待检查 | 待检查 | 待检查 | 待检查 |
-| V 视图（V-2 北方朝上、V-3 指北针） | 通过 | 通过 | 通过 | 待检查 | 待检查（平面图，V-3 需另定） | 待检查（平面图，V-3 需另定） | 待检查 | 待检查 |
-| T 字号（本表） | 通过 | 通过（第二节依 T-5 例外） | 通过 | 未通过：旧字号，仅由 min-type 保底 | 同左 | 同左 | 同左 | 同左 |
-| L 位置顺序（#1–#5） | **未通过**：现行程序依“右上、右下、左上、左下、远右上、远左上、远右下、远左下”，缺 #4 正上、#5 正下，且有较远的候选位置 | 同左 | 同左 | 待检查（手工摆放） | 待检查 | 待检查 | 待检查 | 待检查 |
-| L-3 标签归属 | 待检查：现行程序只避免标签压到别的点，没有比较距离 | 同左 | 同左 | 待检查 | 待检查 | 待检查 | 待检查 | 待检查 |
-| H 视觉层级 | 大致通过：焦点地点优先、注记先省；区域与背景地点的先后未完全依本表 | 大致通过 | 大致通过 | 待检查 | 待检查 | 待检查 | 待检查 | 待检查 |
-| A-1/A-2 对比度 | 通过 | 通过 | 待全站复查 | 全站检查余 37 项，多在道士塔、山庄背影、西域喀什的地图标签 | 同左 | 同左 | 同左 | 同左 |
-| A-4 单一语言 | **未通过**（地图说明第二行） | 未通过 | 未通过 | 未通过 | 待检查 | 待检查 | 待检查 | 待检查 |
-| K 印记 | 通过 | 通过 | 通过 | 通过 | 通过 | 通过 | 通过 | 通过 |
-
-说明：“通过”指该章最后一次截图检查的结果；“待检查”指还没依本文件逐条检查过。
-
-### 10.3 总地图检查记录（2026-09-28）
-
-- **检查范围**：宽度 1440、800、390 px，中文与英文，未读与全部读完两种状态，共 12 种组合。
-- **检查方法**：
-  - 实测每个标签显示后的字号、相对于符号的位置与间距、最近的标签是谁、标签之间和标签与符号之间的重叠、有没有超出地图；
-  - 对比度用全站检查脚本量测。
-- **记法**：“正左、正右”指标签与符号大致同高、在左右两侧，不属于 L-4 的五个位置；标签字号、间距在 1440 px 下量测。
-
-| 规则 | 结果 | 发现 |
-|---|---|---|
-| D 内容 | 通过 | 光点、线索、印章都只对应已完成的章节 |
-| V-7 手机宽度 | 通过 | ≤ 540 px 时地图保持 880 px 宽、左右滑动，开启时置中于各光点 |
-| S-3 光晕 | 通过 | 地名、线索都有纸色光晕 |
-| T-1 最小字号 | 通过 | 所有地图文字在三种宽度下都 ≥ 13.5 px（章号、记忆标签在 800 与 390 px 由 `min-type.js` 补到 13.5 px） |
-| T 字号表 | **未通过**（待决定） | 光点线索在 1440／800／390 px 分别约 21.5／16.4／14.9 px，低于 T2 的 32／29（手机 28／25）；记忆标签（成都平原、月牙泉、藏经洞、山庄背影）约 16–19 px。总地图是全景图、标签多，是否套用章节地图的字号表，须另行决定（见下） |
-| L-1 贴近符号 | **未通过** | 阳关的线索贴在点上（间距 0 em）；沙原隐泉 0.57–0.89 em、山庄背影的记忆标签约 1 em、藏经洞 1.4–1.8 em，都超过 0.5 em |
-| L-4 位置顺序 | **未通过** | 8 个光点中，西域喀什、都江堰（正左），山庄背影、莫高窟、鱼尾山屋（正右），以及英文的道士塔、阳关（正右），不在 #1–#5；只有沙原隐泉（#1）、中文的道士塔（#1）与阳关（#2 右下）符合 |
-| L-3 标签归属 | **未通过** | 英文：阳关的线索伸到莫高窟的点上，莫高窟最近的标签变成阳关的；都江堰最近的标签是鱼尾山屋的线索。读完后（中英文）：道士塔的标签压在藏经洞的塔形符号上，山庄背影的标签与章号 “10” 压在山庄的门形符号上 |
-| 重叠 | **未通过** | 中文：莫高窟线索 × 黄河（各宽度）。英文：阳关线索 × 莫高窟线索与点；“04” × 都江堰线索；都江堰线索 × 鱼尾山屋线索；读完后 Library Cave × 道士塔、The Villa × 山庄背影、Yangtze × Chengdu Plain（800、390 px） |
-| 超出地图 | **未通过** | 800 px：西域喀什的线索（中英文、读前读后）超出地图左缘 |
-| H 视觉层级 | **未通过** | 总地图的标签是固定位置，没有避让程序，河名、记忆标签不会让位给光点线索 |
-| M-1 真实位置 | 通过 | 光点依同一投影摆放 |
-| M-2 光点位置 | 通过（2026-10 改为固定真实坐标） | 敦煌一带的光点不再偏移，标签以引线散开 |
-| M-3 完成后的光点 | 通过 | 全部为 6 px 实心、不闪烁 |
-| M-4 印章 | **未通过**（英文） | 英文：莫高窟的印章压在阳关的线索 “Snow on the Southern Pass” 上；中文不压字 |
-| M-5 光点文字 | 通过 | 未读显示线索、读完显示章名 |
-| A-1 对比度 | 大致通过 | 提示行“滚动／悬停／点击以显影” 4.27 : 1、未解锁印记的名称 4.29 : 1，略低于 4.5；“尚未显影” 一项读数 1.46 : 1 是在印记面板开启过程中量到的，需复核 |
-| A-4 单一语言 | 通过 | |
-| K 印记 | 通过 | |
-
-**修正后复查（2026-09-28，同样 12 种组合）**：
-
-- **改了什么**：
-  - 依 M-6 至 M-8 重做总地图的标签与印章；
-  - 移除运河、山形弧线与区域色块（S-4）；
-  - 541–900 px 的地图原本左侧被裁掉，现在完整显示；
-  - 敦煌一带四个点依真实方向拉开一些，让 10 pt 的标签放得下；
-  - 调淡提示框的底色，未解锁印记的名称改为不透明。
-- **结果**：
-  - 12 种组合中，所有线索都在 #1–#5 的位置；
-  - 没有重叠、没有超出地图；
-  - L-3 标签归属全部通过；
-  - 所有文字 ≥ 13.5 px。
-- **对比度**：全站检查只剩“尚未显影”一项读数，是印记面板淡入时量到的背景；画面上实际为纸色底上的灰字，约 5 : 1。
-
-**当时建议的修正方向**（已完成）：
-
-1. 总地图改用与章节地图相同的放置程序：光点先占位 → 线索依 #1–#5 → 章号跟着线索 → 记忆标签与河名、路名依层级让位，并做 L-3 检查。
-2. 西域喀什的线索在 800 px 改放右侧（程序会自动处理）。
-3. 莫高窟印章与阳关线索的冲突，随第 1 点一起解决（印章登记为已占用）。
-4. 两处对比度：提示行与未解锁名称的底色再调淡，或文字加深。
-5. **待决定**：总地图是否套用 T 字号表。若套用，线索在桌面要放大到约 32 px，画面会明显变挤；另一个做法是在第 4 节为总地图另订一行（例如线索 22 px、章号与记忆标签 16 px，手机仍由 T-1 保底）。
+Check evidence/coordinates, language-specific reading stages, bounds at desktop and compact landscape, touch orientation gate, readable labels/halos, collisions/leading lines, no visible DEM edge, no precise distance/scale clutter, source notes, shared seals, reduced motion and keyboard focus. Record actual checks rather than treating older screenshots as evidence for new code.

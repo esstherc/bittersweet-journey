@@ -1,92 +1,62 @@
-# 《鱼尾山屋》地理数据与准确性
+# Fish Tail Lodge geographic provenance
 
-## 局部 DEM 外围扩展（2026-10-08）
+Generated geography-data.js and terrain-data.js primarily come from build_fish_tail_lodge_geodata.py. Wikidata P625 snapshot: 2026-09-27. Open geographic reference claims are not survey certification. Notes explain differences between the prose, published elevations and DEM samples.
 
-第一张地图的博克拉地形扩展至 81–87°E、26–31°N（250 × 253 顶点）；最后一张地图的边境地形扩展至 82–89°E、25–31°N（290 × 210 顶点）。下表所列原范围仍为保留原始分辨率的核心区，高程逐点保留；外围采用同源 Copernicus GLO-90 格网，采样间距由核心向远方逐渐放宽。经纬度采样数组描述非等距网格，镜头和标记继续使用原核心区的坐标与高程基准。两张局部地形完全关闭边缘透明淡出，以真实地形延伸至视野之外。
+## Nepal
 
-重建时先运行 `tools/build_fish_tail_lodge_geodata.py`，再运行 `tools/extend_fish_tail_dem.py`（需要 numpy、GDAL 和网络访问）。扩展资料打包在本地 `terrain-data.js`，浏览时无需下载 DEM。
+| Place | Record | Coordinate |
+|---|---|---|
+| Fish Tail Lodge | Q111402808 | 28.20095 N, 83.96404 E |
+| Phewa Lake | Q1192928 | 28.21417 N, 83.94722 E |
+| Pokhara | Q6640 | 28.20972 N, 83.98528 E |
+| Machhapuchhre | Q1051394 | 28.49500 N, 83.94917 E |
+| Annapurna I | Q16466024 | 28.59580 N, 83.82000 E |
+| Kathmandu | Q3037 | 27.71 N, 85.32 E |
+| Lumbini | Q9213 | 27.48140 N, 83.27583 E |
+| Friendship Bridge | Q7524764 | 27.97344 N, 85.96383 E |
+| Kodari | Q6425224 | 27.97350 N, 85.96280 E |
+| Dram | Q3270229 | 27.99102 N, 85.98120 E |
 
-生成文件：`site/chapters/fish-tail-lodge/geography-data.js`、`terrain-data.js`，由 `tools/build_fish_tail_lodge_geodata.py` 写出。坐标取自 Wikidata P625，取得日期 2026-09-27；这是开放的地理参考数据，不等于测绘认证。页面上的说明面板（Map notes）对读者交代以下各项的要点。
+Phewa is a lake although the prose calls it a clear snowmelt river. Lumbini lies about 105 km from the lodge directly; the prose's six-hundred-kilometer round trip is road mileage. Bridge elevation is 1,900 m in prose, about 1,730 m at the DEM reference and 1,898 m nearby. Dram is 2,600 m in prose versus 2,226 m at its reference (nearby maximum 2,352 m). Published peaks: Machhapuchhre 6,993 m and Annapurna I 8,091 m; grid averaging lowers summits. Machhapuchhre's DEM point is 6,452 m, nearby maximum 6,632 m. Lodge reference: 800 m, nearby maximum 919 m. Original prose stays unchanged.
 
-## 尼泊尔（第一、四、五、六节）
+## Ancient civilization references
 
-| 地点 | 源记录 | 坐标 | 备注 |
-|---|---|---|---|
-| 鱼尾山屋 Fish Tail Lodge | [Q111402808](https://www.wikidata.org/wiki/Q111402808) | 28.20095°N, 83.96404°E | 费瓦湖东岸；原点（“此刻所在”） |
-| 费瓦湖 Phewa Lake | [Q1192928](https://www.wikidata.org/wiki/Q1192928) | 28.21417°N, 83.94722°E | 原文称“清澈的雪水河”，实际是湖；地图画 OSM 湖面，正文照原文 |
-| 博克拉 Pokhara | [Q6640](https://www.wikidata.org/wiki/Q6640) | 28.20972°N, 83.98528°E | |
-| 鱼尾峰 Machhapuchhre | [Q1051394](https://www.wikidata.org/wiki/Q1051394) | 28.49500°N, 83.94917°E | 标公开资料 6,993 m |
-| 安纳布尔纳 I 峰 | [Q16466024](https://www.wikidata.org/wiki/Q16466024) | 28.59580°N, 83.82000°E | 标公开资料 8,091 m |
-| 加德满都 Kathmandu | [Q3037](https://www.wikidata.org/wiki/Q3037) | 27.71°N, 85.32°E | 城市代表点 |
-| 蓝毗尼 Lumbini | [Q9213](https://www.wikidata.org/wiki/Q9213) | 27.48140°N, 83.27583°E | 距鱼尾山屋直线 105 km；原文“来回行车六百公里”是公路里程 |
-| 中尼友谊桥 | [Q7524764](https://www.wikidata.org/wiki/Q7524764) | 27.97344°N, 85.96383°E | |
-| 科达里 Kodari | [Q6425224](https://www.wikidata.org/wiki/Q6425224) | 27.97350°N, 85.96280°E | 尼泊尔海关 |
-| 樟木镇 Dram | [Q3270229](https://www.wikidata.org/wiki/Q3270229) | 27.99102°N, 85.98120°E | |
+| Site | Record | Coordinate |
+|---|---|---|
+| Parthenon | Q10288 | 37.97153 N, 23.72660 E |
+| Olympia | Q38888 | 37.63833 N, 21.63000 E |
+| Mycenae | Q132564 | 37.73083 N, 22.75611 E |
+| Knossos / Crete | Q173527 | 35.29796 N, 25.16316 E |
+| Giza pyramids | Q12508 | 29.97611 N, 31.13278 E |
+| Cairo | Q85 | 30.04444 N, 31.23583 E |
+| Luxor Temple | Q319841 | 25.70000 N, 32.63917 E |
+| Sinai | Q377485 | 28.53840 N, 33.97520 E |
+| Jerusalem | Q1218 | 31.77668 N, 35.23416 E |
+| Baghdad | Q1530 | 33.31528 N, 44.36611 E |
+| Babylon | Q5684 | 32.54250 N, 44.42111 E |
+| Persepolis / Persia | Q129072 | 29.93500 N, 52.89000 E |
+| Mohenjo-daro | Q5725 | 27.32917 N, 68.13889 E |
 
-### 海拔对照
+Olympia's town reference is about 1 km from the sanctuary, below the original wide DEM resolution. Persia uses Persepolis as a declared representative reference. The essay does not enumerate the full travel itinerary; relationship lines are not reconstructed routes.
 
-| 地点 | 原文 | DEM 点位 | DEM 附近最高（5×5 格） | 地图标注 |
+## Copernicus GLO-90
+
+| Terrain | Original core east/north | Grid | Actual range | Display exaggeration |
 |---|---|---|---|---|
-| 友谊桥（关口） | 1,900 m | 1,730 m | 1,898 m | DEM 约 1,730 米 |
-| 樟木镇 | 2,600 m | 2,226 m | 2,352 m | DEM 约 2,226 米（镇子沿陡坡分布） |
-| 鱼尾峰 | — | 6,452 m | 6,632 m | 公开资料 6,993 m（DEM 格网削低峰顶） |
-| 鱼尾山屋 | — | 800 m | 919 m | — |
+| Pokhara | 83.72-84.14 / 28.10-28.66 degrees | 170 by 225 | 527-7,881 m | 1.25 |
+| Border | 85.24-86.10 / 27.62-28.08 degrees | 250 by 150 | 558-5,938 m | 1.6 |
+| Legacy wide 3D | 8-125 / 10-52 degrees | 380 by 160 | 0-6,054 m | 30 |
+| Flat relief | 8-125 / 10-52 degrees | 1,170 by 420 | 0-6,381 m | Hillshade 6 |
+| Nepal overlay | 79-90 / 24-32 degrees | 660 by 480 | 3-8,145 m | Hillshade 2.4 |
 
-正文照原文，地图标 DEM 或公开资料，差异写在说明面板。
+Real context extends Pokhara to 81-87 / 26-31 degrees (250 by 253) and border to 82-89 / 25-31 degrees (290 by 210). Original core heights remain exact; outer longitude/latitude arrays are nonuniform. Original model/elevation frames are retained. Local edge fading is disabled. The extension tool requires numpy/GDAL and a system-temp tile cache.
 
-## 古文明遗址（第二、三节）
+The wide fetcher reads 4,914 COG overview tiles; 657 missing ocean tiles are filled at zero. Heights encode little-endian uint16 metres above baseMetres in base64. The flat map uses spherical Albers; local 3D longitude is scaled by core latitude cosine.
 
-| 地点 | 地图名（中／英） | 源记录 | 坐标 | 节 |
-|---|---|---|---|---|
-| 巴特农神庙 | 巴特农神庙／Parthenon | [Q10288](https://www.wikidata.org/wiki/Q10288) | 37.97153°N, 23.72660°E | 二 |
-| 奥林匹亚 | 奥林匹亚／Olympia | [Q38888](https://www.wikidata.org/wiki/Q38888) | 37.63833°N, 21.63000°E | 二 |
-| 迈锡尼 | 迈锡尼／Mycenae | [Q132564](https://www.wikidata.org/wiki/Q132564) | 37.73083°N, 22.75611°E | 二 |
-| 克诺索斯 | 克里特／Crete | [Q173527](https://www.wikidata.org/wiki/Q173527) | 35.29796°N, 25.16316°E | 二 |
-| 吉萨金字塔群 | 金字塔／The Pyramids | [Q12508](https://www.wikidata.org/wiki/Q12508) | 29.97611°N, 31.13278°E | 二 |
-| 开罗 | 开罗／Cairo | [Q85](https://www.wikidata.org/wiki/Q85) | 30.04444°N, 31.23583°E | 二 |
-| 卢克索神庙 | 卢克索／Luxor | [Q319841](https://www.wikidata.org/wiki/Q319841) | 25.70000°N, 32.63917°E | 二 |
-| 西奈山 | 西奈／Sinai | [Q377485](https://www.wikidata.org/wiki/Q377485) | 28.53840°N, 33.97520°E | 三 |
-| 耶路撒冷 | 耶路撒冷／Jerusalem | [Q1218](https://www.wikidata.org/wiki/Q1218) | 31.77668°N, 35.23416°E | 三 |
-| 巴格达 | 巴格达／Baghdad | [Q1530](https://www.wikidata.org/wiki/Q1530) | 33.31528°N, 44.36611°E | 三 |
-| 巴比伦（遗址） | 巴比伦／Babylon | [Q5684](https://www.wikidata.org/wiki/Q5684) | 32.54250°N, 44.42111°E | 三 |
-| 波斯波利斯 | 波斯／Persia | [Q129072](https://www.wikidata.org/wiki/Q129072) | 29.93500°N, 52.89000°E | 三 |
-| 摩亨佐-达罗 | 摩亨佐-达罗／Mohenjo-daro | [Q5725](https://www.wikidata.org/wiki/Q5725) | 27.32917°N, 68.13889°E | 三（较淡，“深夜路过”） |
+## Water, barriers and roads
 
-- **奥林匹亚**：用的是城镇条目 Q38888。古代圣所遗址在城镇旁约 1 km，在约 29 公里一格的大范围地形上分辨不出差别。
-- **波斯**：原文只说“古代波斯文明”，所以以波斯波利斯为代表点，地图名写“波斯”。
-- **只标点，不连成路线**：千禧之旅的完整行程出自《千年一叹》，本文没有写。虚线从鱼尾山屋拉到各点，数字为大圆距离。
-- **河流**：尼罗河、底格里斯河、幼发拉底河、约旦河、印度河、恒河、黄河、长江取自 Natural Earth 1:50m 河流（公有领域），只作为认方位的线条。黄河、长江只在第四节显示。
+Natural Earth 1:50m supplies Nile, Tigris, Euphrates, Jordan, Indus, Ganges, Yellow and Yangtze rivers. Its 1:10m regions supply Himalayan/Kunlun/Tianshan/Altai ranges, Taklamakan/Gobi and seas, simplified at 0.25 degree. South China Sea labels use the portion north of 14 N. National borders are omitted.
 
-## 中国的天然屏障（第四节）
+OSM/Overpass snapshot 2026-09-27: 114 Pokhara water lines and 198 border water lines, including Bhote Koshi. A graph of trunk/primary roads snaps endpoints below 0.0005 degree; Dijkstra routing from Kathmandu to Friendship Bridge yields 401 vertices and about 112 km of today's Araniko Highway/NH34. Reading footprints follow this modern reference, not a surveyed historical motorcade track.
 
-- **山系与沙漠**：Natural Earth 1:10m 地理区多边形，包括喜马拉雅、昆仑、天山、阿尔泰、塔克拉玛干、戈壁。轮廓以 0.25° 简化，标签放在多边形的代表点上。
-- **海**：黄海、东海、南海取自 Natural Earth 海域多边形。南海的多边形伸出地形南缘，所以标签只取它落在 14°N 以北的部分。
-- **不画国界**，与总图“不显示完整国界”的原则一致。
-
-## 地形（Copernicus DEM GLO-90）
-
-| 地形 | 范围 | 网格 | 一格 | 真实高程 | 显示夸大 |
-|---|---|---|---|---|---|
-| 博克拉 | 83.72–84.14°E、28.10–28.66°N | 170 × 225 | 243 × 276 m | 527–7,881 m | 1.25 倍 |
-| 边境 | 85.24–86.10°E、27.62–28.08°N | 250 × 150 | 约 340 m | 558–5,938 m | 1.6 倍 |
-| 大范围（3D，已不显示） | 8–125°E、10–52°N | 380 × 160 | 约 29 km | 0–6,054 m | 30 倍 |
-| 平面地图晕渲 | 8–125°E、10–52°N（DEM） | 1,170 × 420 | 约 11 km | 0–6,381 m | 晕渲 6 倍 |
-| 尼泊尔叠图 | 79–90°E、24–32°N | 660 × 480 | 约 1.8 km | 3–8,145 m | 晕渲 2.4 倍 |
-
-- **局部地形**：以原生分辨率拼接后精确裁切，再用面积平均（`Image.BOX`）缩到网格，顶点数不超过 65,535（16 位索引）。
-- **大范围地形**：`tools/fetch_fish_tail_wide_dem.py` 读取各图块 COG 的第一层缩图，平均到 1/10°，共 4,914 块，其中 657 块是海洋缺块，补 0。西界设在 8°E，让希腊不落在地形边缘的淡出带里。
-- **编码**：高程存为高出 `baseMetres` 的米数（uint16，小端序，base64）。
-
-## OpenStreetMap（ODbL 1.0，Overpass API，2026-09-27）
-
-- **费瓦湖水面与博克拉一带的河流**：共 114 条线。
-- **边境一带的河流**：共 198 条线，含波特科西河。
-- **公路**：在所有 trunk／primary 道路上以端点吸附（间隙小于 0.0005°）建图，用 Dijkstra 找出加德满都到友谊桥的最短路，得到 401 点、112 km，即今阿尼哥公路（NH34）。地图用它示意车队走的路，不是当年车队的实测轨迹。
-
-## 不上图
-
-- 原文提到的屈原、李白、苏东坡、老子、庄子等是文化人物，不涉及地点。
-- 《一千零一夜》、艾略特等文本引用，不上图。
-- 千禧之旅的完整行程与日期出自《千年一叹》，本文未写，不据别书补画路线。
-
-地图用于文学阅读与地理关系解释，不替代测绘、导航或边境通行信息。
+Cultural figures and textual allusions without geographic action are not plotted. Exact distances are provenance evidence, not current map labels. This atlas does not supply navigation, survey or border-entry guidance.

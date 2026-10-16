@@ -1,83 +1,31 @@
-# 《阳关雪》双语阅读地图
+# Snow on the Southern Pass
 
-入口：`site/chapters/yangguan/index.html`（第八章，id `yangguan`，英文题名 *Snow on the Southern Pass*）。总图上的 08 号光点已可进入。
+Chapter 08 uses five editorial interaction beats, not original numbered sections. The builder validates each opening sentence across languages; an English paragraph merger shifts later indices.
 
-## 结构
+| Beat | Chinese / English paragraph indices | Scene |
+|---|---|---|
+| I: Poems and distant places | 1-6 / 1-5 | Flat China map: Yangguan and three poetic sites |
+| II: Alone in the snow | 7-12 / 6-11 | Same projection zooms to Dunhuang/Yangguan; snow stops with the text |
+| III: Mounds on the wasteland | 13-17 / 12-16 | Low 3D camera, reading footprints and literary mounds |
+| IV: The ruins of Yangguan | 18-22 / 17-21 | Beacon, modern oasis, Han wall and Altyn range |
+| V: West of Yangguan | 23-31 / 22-30 | Westward view, Wang Wei verses and returning snow |
 
-篇幅与结构最接近《沙原隐泉》（单篇、无编号分节、单一真实地点），所以使用共享章节外壳（`site/chapters/_shared/`），并接入站点共用的揭题页、表头与换页过场（`site/scripts/chapter-opening.js`、`site-header.js`、`page-transition.js`）。本章只自带：两块三维地形（第一段的大范围地形、第三至五段的阳关局部地形）、地形上的地物标注、指北针、第二段的区域图、飘雪层与图像印记。
+Sections I-II use flat-map.js with the Taoist standard-map ellipsoidal Albers geometry: 110 E meridian, 25/47 N parallels, Krasovsky ellipsoid. Regional relief is fitted by an affine transform, approximately 2 px error across 1,000 px. Sections III-V retain the detailed local DEM. Earlier wide-3D and separate regional implementations are superseded.
 
-## 阅读节奏
+Footprints and 70 deterministically placed mound symbols are literary interpretations, not surveyed tracks/burial sites. Snow follows narrative, not meteorology. These limits belong in notes rather than map clutter. Wang Wei's English verses follow the supplied translation.
 
-原文没有分节。五个段落只用于交互节奏，阅读区顶部注明“五个段落用于交互节奏，不是原文编号分节。”每一段的切点都落在中英文同一句上；英文版把中文第 4、5 段合为一段，所以英文从第二段起索引少一。`tools/build_yangguan_chapter.py` 用每段的开头句校验切点，语料若有变动会直接报错。
+The curtain has one subtitle; header/footer, notes, completion and square ruined-beacon seal match the site. Exact distance labels, scales and redundant location/counter rows are omitted. Labels keep paper halos and drop notes before names when crowded. Atlas points stay geographically anchored; blood-red leading lines separate crowded labels.
 
-| # | 标签 | 中文段 | 英文段 | 地图 |
-|---|---|---|---|---|
-| 一 | 诗与远方 · Poems and distant places | 1–6 | 1–5 | 从阳关到苏州的大范围地形，俯视、北方朝上；白帝城、黄鹤楼、寒山寺按真实坐标标出，虚线连到原点阳关；长江、黄河；指北针 |
-| 二 | 雪漠孤行 · Alone in the snow | 7–12 | 6–11 | 敦煌县城—阳关区域图（DEM 晕渲），直线约 56.6 km；读到“天竟晴了”雪停 |
-| 三 | 荒原坟冢 · Mounds on the wasteland | 13–17 | 12–16 | 低空镜头，雪在低处化出沙底；镜头从路的起点后上方望向阳关，脚印（左右交替的椭圆，仿沙原隐泉）随阅读一步步向前，坟堆逐渐显出 |
-| 四 | 阳关古址 · The ruins of Yangguan | 18–22 | 17–21 | 抵达烽燧点：绿洲、汉代烽燧线、阿尔金山；风卷残雪 |
-| 五 | 西出阳关 · West of Yangguan | 23–31 | 22–30 | 向西望，王维两句浮在天空；读到末句“怕还要下雪”时雪又落下 |
+Mobile requires landscape with map/text side by side. Parameters: ?lang=zh|en, ?open=1&section=N, ?notes=1. The no-WebGL fallback retains the regional view. See [sources](GEODATA.md).
 
-## 印记
+## Maintenance commands
 
-本章印记是图像，不是文字（仿西域喀什）：`site/chapters/yangguan/assets/seal-yangguan.svg`，半坍的烽燧土墩立于坡上，苇草迎风飘出，雪落，地如冻浪。用在阅读区末尾、完成画面、总图回执、圖章面板，以及总图上的阳关光点旁。
-
-共享外壳新增 `.seal-image`（`chapter-shell.css`），总图 `atlas.js` 的 `STORIES` 条目新增 `seal` 字段：有 `seal` 的章节显示图像，没有的继续显示文字。现有的 水／泉／空／影 以后改成图章时，只需各画一张 SVG、加上 `seal` 字段，并把章节页的 `.seal` 换成 `.seal-image`。
-
-## 文案
-
-- 揭题页：第 08 章 · 阳关雪 · “冲着一首诗，去寻一座关。” · 踏雪出发
-- 完成语：风雪掩关，唐音犹在纸上。／ Snow covers the pass; its verses remain on the page.
-- 总图线索：雪中寻一座关／A pass sought through snow；预览：一座早已坍弛的土墩，为什么仍值得冒雪去寻？
-- 地图上的王维诗句：中文用原文，英文用本书英译本的译法（与正文一致），不另译。
-
-## 总图
-
-阳关距敦煌仅 57 公里，在全国总图上与沙原隐泉的光点只差几个像素，点击会落到沙原隐泉上。因此阳关光点按真实方位（西南）偏移绘制，和道士塔的做法相同（`atlas.js` 的 `DISPLAY_OFFSETS`）。手机版总图的裁切也放宽了，让西域喀什到山庄背影的六个光点都在屏幕内（之前西域喀什在手机上落在屏幕外）。
-
-## 构建与验证
+Prepare inputs/dependencies described by each tool. Commands for superseded source-conversion stages remain as historical references.
 
 ```sh
 python3 tools/build_yangguan_chapter.py content/bilingual-corpus.json site/chapters/yangguan/chapter-data.js
-python3 tools/fetch_yangguan_wide_dem.py work/yangguan/glo90-wide-2arcmin.tif   # 约 400 张瓦片的缩图层，只需一次
+python3 tools/fetch_yangguan_wide_dem.py work/yangguan/glo90-wide-2arcmin.tif
 python3 tools/build_yangguan_geodata.py work/yangguan work/yangguan/yangguan-osm.json site/chapters/yangguan
 python3 tools/version_chapter_assets.py
 node --check site/chapters/yangguan/app.js site/chapters/yangguan/terrain-3d.js
 ```
-
-地理构建需要 `numpy`、`rasterio`、`Pillow`，以及 `work/yangguan/` 下的 DEM 瓦片、大范围 DEM、`ne_50m_rivers.geojson` 与 Overpass 结果，见 [GEODATA.md](./GEODATA.md)。章节浏览本身离线运行，不请求在线地图。
-
-在 Windows 上，`version_chapter_assets.py` 默认以系统编码读写文件会失败；需以 UTF-8 读写并保留各文件原有换行。
-
-URL 参数：`?lang=zh|en`、`?open=1&section=1…5`、`?notes=1`。不支持 WebGL 时，地图改为显示区域图（`body.webgl-fallback`）。
-
-## 已知边界
-
-- 坟堆与脚印（叙事路径）是文学示意，不是测绘坟场或作者的实测路线。地图上不加“示意／非实测”字样，这些说明集中在说明面板。
-- 地形改用浅色底（浅沙色、淡雪影），让深蓝的河流与血红的虚线、脚印保持清楚。
-- 雪的覆盖、融化与飘落依原文叙述，不是气象资料。
-- 第一段的大范围地形约 8 公里一格，只用于表达三地与阳关的相对位置，看不出阳关本地的地物；第三段起换回细网格地形。英文名沿用本书英译本（寒山寺 = Cold Mountain Temple）。
-- 渭城不在这次行程内，未上图。
-
-## 2026-10-07 调整
-
-- **字号依沙原隐泉**：第一、三至五节的地图文字缩小——地名 24 px（英文 22 px）、注记与坐标 17 px、河名 18 px、山名 20 px、《渭城曲》两句 26 px（英文 22 px）；手机（≤540 px）地名 20／18 px、其余 15–17 px，诗句 22／19 px。光晕 4 px，圆角接合。第二节区域地图依先前要求保留原字号。
-- **路线**：脚印本来就仿沙原隐泉；点线改为同样的样式（1.2 px，2 7 虚线）。
-- **外壳**：不显示 `reader-progress`（“02 / 05”）与 `reader-location`（`showReaderProgress: false`、`showReaderLocation: false`）；节次标题不变。
-- **第二节地图重复显示**：`.regional-map` 与 `.terrain-viewport` 去掉 `will-change`。保留时，放大的区域地图在 Edge 里被画成上下重复的图块。
-
-## 2026-10-07 第一、二节改为平面地图（仿道士塔第一张图）
-
-- **一张地图、一种投影**：第一、二节不再用三维大范围地形与独立的区域图，改为 `flat-map.js` 的平面地图——自然资源部标准地图的中国轮廓、省界与甘肃高亮，正轴等积割圆锥投影（中央经线 110°E，标准纬线 25°N／47°N，克拉索夫斯基椭球），与道士塔第一张图同一底图、同一画布。第一节看阳关与三处诗地，第二节同一镜头推近敦煌县城—阳关；三维地形从第三节起接手。
-- **数据**：`python tools/build_yangguan_flat_map.py` 从 `site/chapters/taoist-tower/geography-data.js` 取标准地图，从本章 `geography-data.js` 取区域道路、汉长城与晕渲图，写出 `flat-map-data.js`。区域晕渲原本是 93.85–94.85°E、39.70–40.30°N 的等距圆柱小图，在此投影中约转 9°，以仿射矩阵贴上（误差约为该图 1,000 px 中的 2 px），边缘以遮罩淡入纸色。
-- **投影在 JS 中再算一次**：`flat-map.js` 实现同一椭球 Albers 公式，与 pyproj 结果一致（阳关、寒山寺到小数点后 4 位相同），标签由 `app.js` 以屏幕像素绘制，缩放时字号不变。
-- **标签**：第一节加“甘肃”省名（让位于地名）；手机宽度英文诗地名改用短名（White Emperor、Yellow Crane、Cold Mountain）；第二节沿用原字号，距离与长城注记在挤不下时让位。
-- **台湾**：与道士塔第一张图相同，采用该章去掉台湾与东侧小岛环的标准地图轮廓（`taoist-tower/app.js` 的 `mainlandDetail`）——本章直接用 `outlinePath`，未套用该过滤，故台湾与南海诸岛附图仍在数据中，但不在第一、二节的画面范围内。
-
-## 2026-10-07 第一、二节改为平面地图（仿道士塔第一张图）
-
-- **一张地图、一种投影**：第一、二节不再用三维大范围地形与独立的区域图，改为 `flat-map.js` 的平面地图——自然资源部标准地图的中国轮廓、省界与甘肃高亮，正轴等积割圆锥投影（中央经线 110°E，标准纬线 25°N／47°N，克拉索夫斯基椭球），与道士塔第一张图同一底图、同一画布。第一节看阳关与三处诗地，第二节同一镜头推近敦煌县城—阳关；三维地形从第三节起接手。
-- **数据**：`python tools/build_yangguan_flat_map.py` 从 `site/chapters/taoist-tower/geography-data.js` 取标准地图，从本章 `geography-data.js` 取区域道路、汉长城与晕渲图，写出 `flat-map-data.js`。区域晕渲原本是 93.85–94.85°E、39.70–40.30°N 的等距圆柱小图，在此投影中约转 9°，以仿射矩阵贴上（误差约为该图 1,000 px 中的 2 px），边缘以遮罩淡入纸色。
-- **投影在 JS 中再算一次**：`flat-map.js` 实现同一椭球 Albers 公式，与 pyproj 结果一致（阳关、寒山寺到小数点后 4 位相同）；标签由 `app.js` 以屏幕像素绘制，缩放时字号不变。
-- **标签**：第一节加“甘肃”省名（让位于地名）；手机宽度英文诗地名改用短名（White Emperor、Yellow Crane、Cold Mountain）；第二节沿用原字号，距离与长城注记挤不下时让位。
-- **轮廓**：本章直接用标准地图的完整 `outlinePath`，含台湾与东侧岛屿（未套用道士塔 `app.js` 的 `mainlandDetail` 过滤）；手机宽度下台湾会出现在第一节画面右缘。

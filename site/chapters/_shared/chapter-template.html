@@ -1,7 +1,7 @@
 <!doctype html>
 <!--
   CHAPTER TEMPLATE - copy to site/chapters/<id>/index.html and replace every __PLACEHOLDER__.
-  Rules: docs/chapter-layout-guideline.md. Behavior: ../_shared/chapter-shell.js?v=4d01e8c67b2f. Frame CSS: ../_shared/chapter-shell.css?v=ee18b7e62911.
+  Rules: docs/chapter-layout-guideline.md. Behavior: ../_shared/chapter-shell.js?v=82c51ada1e5e. Frame CSS: ../_shared/chapter-shell.css?v=5ff807f7dbf8.
   Also needed in the chapter folder: chapter-data.js (CHAPTER_DATA), app.js (ChapterShell.init), styles.css (--accent + map canvas).
   Bump every ?v= whenever a referenced file changes.
 -->
@@ -20,9 +20,11 @@
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Caudex:ital,wght@0,400;0,700;1,400;1,700&family=Ysabeau:ital,wght@0,400..700;1,400..700&display=swap"
     />
-    <link rel="stylesheet" href="../_shared/chapter-shell.css?v=ee18b7e62911-2" />
+    <link rel="stylesheet" href="../_shared/chapter-shell.css?v=5ff807f7dbf8-2" />
     <link rel="stylesheet" href="./styles.css?v=20260919-2" />
-  </head>
+    <link rel="stylesheet" href="../../styles/mobile-landscape.css?v=14c90c99231b">
+  <script src="../../scripts/mobile-orientation.js?v=e4272e5ff0ba" defer></script>
+</head>
   <body data-language="zh">
     <div class="paper-noise" aria-hidden="true"></div>
 
@@ -166,7 +168,7 @@
 
     <script src="../../data/real-geography.js?v=49a9ddc8d22f"></script>
     <script src="./chapter-data.js"></script>
-    <script src="../_shared/chapter-shell.js?v=4d01e8c67b2f-2"></script>
+    <script src="../_shared/chapter-shell.js?v=82c51ada1e5e-2"></script>
     <script src="./app.js?v=20260919-2"></script>
   </body>
 </html>

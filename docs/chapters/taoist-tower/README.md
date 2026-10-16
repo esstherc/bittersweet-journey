@@ -1,44 +1,19 @@
-# 《道士塔》交互章节
+# The Taoist Priest's Tower
 
-## 叙事结构
+Chapter 05 retains five original numbered sections on one geographic projection with changing cameras.
 
-页面保留原文五个编号分节，并分别映射为五份阅读档案：
+| Section | Current focus |
+|---|---|
+| I: Stupa | Hubei and Gansu; Wang Yuanlu's documented geography |
+| II: Door | Northwestern China and international context, including Germany |
+| III: Three people | Mogao, Hungary, Britain/the British Museum and India |
+| IV: Twenty-nine crates | Dunhuang and London, without added Paris/Saint Petersburg routes |
+| V: Three graves | Located graves at Dunhuang/Kabul and a compact unknown-grave note for Jiang Xiaowan |
 
-1. 塔：人物地理从湖北麻城，经肃州／酒泉到敦煌；武当山仅作为湖北道教文化背景。
-2. 门：新疆—甘肃的西北联系，以及文章提及的英国、法国、俄国与北京背景。
-3. 三个人：斯坦因与蒋孝琬由喀什前往敦煌，三人在莫高窟相遇。
-4. 二十九箱：世界地图上的敦煌—伦敦方向；巴黎、圣彼得堡作为后续流散背景。
-5. 三座墓：敦煌、喀布尔两个可定位地点，以及蒋孝琬墓址的地理空白。
+Wudang Mountain and its speculative biographical association are removed. Projection/source annotations belong in Map notes and sources. Redundant captions, location lines and section counters are omitted. Taiwan highlighting and the South China Sea inset are excluded from the focused views by the implemented filters. The question-mark note is not a geographic location.
 
-## 页面结构
+The shared reader supplies title leaf, header/footer, rail, notes and completion. No chronology is invented for sections without dates. Completion collects a pictorial stupa/manuscript seal; earlier single-character descriptions are obsolete. Mobile requires landscape with parallel map/text.
 
-页面使用共享的章节外壳（`site/chapters/_shared/`）：标题栏、开卷幕布、阅读区、档案进度条、底栏、说明抽屉和完成画面都由外壳提供；本章只保留分层地理图。版式规则与本章的迁移决定见 [chapter-layout-guideline.md](../../chapter-layout-guideline.md)（§5.7）。
+The standard-map geometry uses ellipsoidal Albers: central meridian 110 E, parallels 25/47 N, Krasovsky ellipsoid. Natural Earth country context is projected onto the same canvas by tools/build_taoist_one_projection.py; fitting residual is below 0.01 px. Land west of 30 W or south of 60 S is omitted. The China detail retains the standard-map planar geometry rather than substituting Natural Earth administrative boundaries.
 
-- 全章只有一张地图：五份档案是同一张地图上的五个镜头——中国（塔）→ 欧洲到北京（门）→ 伦敦、匈牙利、印度到莫高窟（三个人）→ 伦敦到敦煌（二十九箱）→ 喀布尔到敦煌（三座墓）。切换档案时镜头平滑移动与缩放；地名和符号钉在地图点上，任何缩放下保持同样大小。装箱记录与蒋孝琬的“?”注记不是地点，固定在画面左下／右下角。
-- 地图左下角的一行小字说明当前地图视图（例如“1900 · 西北考古与全球权力背景”）。
-- 底栏的“地图说明与数据来源”按钮展开说明面板：实线、虚线、武当山与“空白”的读法，投影，数据来源与声明。
-- 本章没有时间线：原文只在第二、第五节给出年份，其余节没有可核验的日期。
-- 完成章节的印章是“空”，与总地图上的印章一致。
-- URL 参数：`?lang=zh|en`、`?open=1&section=1…5`、`?notes=1`。
-
-## 制图边界
-
-- 全章共用一种投影：标准地图服务底图本身的正轴等积割圆锥投影（Albers，
-  中央经线 110°E，标准纬线 25°N／47°N，克拉索夫斯基椭球）。中国以外的国家取自
-  Natural Earth 1:110m Admin 0 Countries，由 `tools/build_taoist_one_projection.py`
-  换算到同一投影、同一画布（由故事地点拟合出标准地图的平面变换，残差 < 0.01 px），
-  写入 `geography-data.js` 的 `atlas`。30°W 以西、60°S 以南的陆地不在任何一节的画面内，
-  且跨越此投影 70°W 的接缝，已舍去。离中央经线越远越倾斜，欧洲约向左偏 60°。
-- Natural Earth 自带的中国大陆与海南轮廓不进入陆地层，中国只画标准地图一套边界。
-- 中国近景直接使用自然资源部标准地图服务公开的自助制图拓扑底图，经
-  `ogr2ogr` 转为 GeoJSON 后生成 SVG；其中包含 34 个省级政区、台湾省、
-  西藏自治区、港澳及南海诸岛附图布局。
-- 中国近景保留标准地图服务的平面几何，不再由 Natural Earth 经纬度数据
-  模拟中国轮廓。
-- 所有文章地点按经纬度投影到同一投影；各节的中国高亮都是标准地图轮廓（不再用
-  Natural Earth 1:10m 的 China point-of-view 版本）。
-- 敦煌—伦敦为本篇叙述方向；巴黎、圣彼得堡以不同颜色的虚线表示补充收藏背景。
-- 王圆箓籍贯湖北麻城、曾在肃州当兵、后来到敦煌为道士有资料依据。
-- 未发现可靠资料证明王圆箓曾在武当山或武功山修行；武当山节点明确标注为文化背景，不是人物足迹。
-- 本章不把经卷设计成可收集物；主要视觉隐喻是“离开后的空白”。
-- 完成本章后，完成画面停留 3 秒，再返回总地图。
+Parameters: ?lang=zh|en, ?open=1&section=N, ?notes=1. See [map revision](MAP-REVISION.md) and [shared layout](../../chapter-layout-guideline.md).

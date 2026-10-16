@@ -1,7 +1,7 @@
-# 阅读地球场景
+# Reading globe
 
-`globe.js` 使用 WebGL 球面投影与光照，海岸线复用本地 Natural Earth `WORLD_LAND`。无网络请求、无第三方渲染依赖；无 WebGL 时保留平面世界地图。首节缓慢旋转，第二节转向亚洲并停止旋转，以便阅读标签。减少动态效果设置使用静止地球；场景隐藏和页面不可见时停止绘制。
+The local globe.js uses WebGL sphere projection/lighting and packaged Natural Earth WORLD_LAND coastlines. It needs no remote map or rendering library. The flat world map remains available without WebGL.
 
-第二节旁侧按原文展示 7/10 海洋、3/10 陆地，再标出欧亚大陆、中国、太平洋、西北沙漠与青藏高原。球面的色带为位置示意，不是行政界线或精确地貌边界。中国自然地理与三条线仍沿用原有数据。结尾并列游牧、农耕与海洋文明。
+Section one rotates slowly. Section two faces Asia and stops for readable labels: seven tenths ocean, three tenths land, Eurasia, China, Pacific, northwestern deserts and Tibetan Plateau. Washes indicate approximate geography, not administrative or precise landform boundaries. Later scenes retain the China map and three lines. The ending includes nomadic, agrarian and maritime civilizations.
 
-验证：`tools/test_hometown_globe.cjs`，需要通过 `PLAYWRIGHT_MODULE` 指定已安装的 Playwright。
+Reduced motion uses a static globe; drawing stops while hidden. Compact landscape puts globe/context side by side, with independent reading scroll. Validation: tools/test_hometown_globe.cjs, using PLAYWRIGHT_MODULE if needed.

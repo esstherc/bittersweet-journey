@@ -1,15 +1,19 @@
-# 《我的山河》开场与阅读地图
+# My Hometown
 
-第 03 章和其他章节一样，从总图的章节光点进入。它不绑定一个精确故乡坐标，而是以黄河与长江之间的文学坐标表达整片山河。第一次进入时呈现五步互动：点亮黄河、拖动视野找长江、放大、打开降水图层、点章节光点。每步都有按钮替代操作，键盘和触屏均可完成。可以跳过；之后直接进入正文，地图中的“重看开场”可再次打开。完成章节后，总图会在该节点展开光圈并落下“河”字印记。`?tour=1` 强制重看，`?open=1&section=3` 直接预览正文。
+Chapter 03 combines the introduction with five original bilingual reading sections. Its atlas anchor between the Yellow and Yangtze Rivers is literary, not a claimed birthplace coordinate.
 
-开场的居中视觉、逐幕文案和动效节奏见 [交互开场分镜](OPENING-STORYBOARD.md)。
+An empty atlas trace redirects here with ?tour=1, regardless of an older intro-seen flag. Starting reading writes a started trace; completion collects the pictorial seal. ?open=1&section=N opens a reading preview. The replay-tour control reopens the introduction.
 
-五节中英文正文来自现有语料，保留原文分节。更新正文数据：
+The current opening asks where knowledge begins, presents two editions, opens the selected book, introduces three great lines, then follows the Yellow River, cultural roots and Yangtze. This supersedes the earlier five-task map tutorial. See [storyboard](OPENING-STORYBOARD.md).
+
+The first reading scene is a rotating globe; the second faces Asia and illustrates ocean/land, Eurasia, China and natural enclosure. Later maps emphasize natural geography, the Yellow River, Yangtze and approximately 400 mm rainfall boundary. The ending includes nomadic, agrarian and maritime civilizations. See [globe](GLOBE.md).
+
+Natural Earth supplies coastlines/rivers; OSM supplies the Great Wall and WorldClim the rainfall boundary. Washes indicate approximate locations. Prose remains separate from geographic interpretation. Mobile readers must rotate to landscape; map and text then sit side by side.
+
+## Existing maintenance commands
+
+Prepare the inputs and dependencies described by each tool before running.
 
 ```bash
 python3 tools/build_my_hometown_chapter.py content/bilingual-corpus.json site/chapters/my-hometown/chapter-data.js
 ```
-
-黄河、长江路径复用 `site/data/real-geography.js` 的 Natural Earth 全国河流几何。地形色块、长城线、约 400 毫米年降水量线均为文学示意，不是测绘或逐年降水等值线。地图说明面板会向读者标明这一区别；长城和降水分界分别绘制。
-
-正文使用共享 `ChapterShell`：滚动或点节次切换五节，语言切换保留节次，完成后回总图增加“河”字印记。总图的文字印和进度共用 `bittersweet-journey:my-hometown:complete`。

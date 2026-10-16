@@ -1,5 +1,7 @@
 # Journey end credits
 
+Current updates: story map authors Yanbing Chen and Eugenie Huang lead the attribution list. Playback uses authored SVG play/pause icons; the scrolling hint has a downward arrow. The former sentence describing gold titles/seals has been removed. Paintings are resolved from actual chapter hrefs rather than atlas IDs (chengde maps to mountain-resort). The required mobile portrait gate pauses playback; compact landscape adapts book/control sizes. These refinements retain the five-scene sequence below.
+
 The existing all-selected-chapters finale now opens a full-screen, coffee-colored credit roll after the final seal collection and map illumination. Its existing persisted signature prevents automatic replay. The atlas footer offers replay only after all chapters are complete; individual chapters have no credits entry. URL parameters cannot bypass completion. The atlas exploration callout is hidden after completion and restored when progress is reset.
 
 The sequence shows nine selected seals, all 26 essays in Chinese-edition order, book and map credits, geographic sources, and an invitation to continue reading. `site/data/book-contents.js` contains titles only, drawn from `content/chapter-alignment.json`, sorted by `zh_file`. Twenty have titles from the 2015 English selection; six retain their Chinese titles rather than inventing published translations. The English Mogao title corrects the edition's “Mogai” typo, as the chapter itself does.

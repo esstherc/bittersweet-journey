@@ -1,89 +1,28 @@
-# 《沙原隐泉》地理数据与制图说明
+# Secret Spring geographic provenance
 
-## 第二张地图 DEM 扩展（2026-10-08）
+## Current terrain
 
-敦煌至榆林窟的区域地形扩展至东经 92–99°、北纬 37–43°，使用同源 Copernicus DEM GLO-90。原 280 × 210 核心格网的高程逐点保留，外围采用逐渐变疏的采样，合计 400 × 330 顶点。镜头、标记和核心地形配色继续沿用原坐标与高程基准；区域地形关闭边缘透明淡出，改由实际地形填满视野。第一、三、四张地图的数据范围不变。
+| Mesh | Core extent east/north | Core grid | Actual elevation | Exaggeration |
+|---|---|---|---|---|
+| Mingsha, I/III/IV | 94.62-94.72 / 40.05-40.13 degrees | 180 by 150, about 48 by 59 m | 1,132-1,579 m | 2.2 |
+| Dunhuang-Yulin, II | 94.35-96.15 / 39.55-40.55 degrees | 280 by 210, about 550 by 530 m | 1,030-4,413 m | 2.6 |
 
-运行原地形构建工具后，再运行 `tools/extend_secret_spring_dem.py`（numpy、GDAL；首次需联网下载公开 DEM，随后使用系统临时目录缓存）。扩展结果保存在本地 `terrain-data.js`，读者无需在线获取地形。
+The regional extension covers 92-99 E, 37-43 N with 400 by 330 vertices. Original heights remain exact; outer sampling gets coarser. Longitude/latitude arrays describe the nonuniform grid. Model bounds, baseline and core colors preserve camera/label placement. Regional edge fading is disabled.
 
-## 地图范围与投影
+Run build_secret_spring_3d.py with its required Copernicus tiles, followed by extend_secret_spring_dem.py. Extension needs numpy/GDAL and public DEM access initially; resampled tiles are cached in system temp. Readers use packaged terrain-data.js. Earlier UTM 46N processing and the 96 by 100 browser grid are source history, superseded by the current meshes.
 
-- 鸣沙山局部地图范围：东经 94.62°—94.72°、北纬 40.05°—40.13°。
-- 制图投影：WGS 84 / UTM zone 46N（EPSG:32646）。
-- 实际覆盖范围约 8.7 × 9.0 公里。
-- 页面保持三维地形、月牙泉、鸣沙山与党河的相对位置和比例。
-- 区域视图覆盖敦煌至榆林窟，使用 WGS84 坐标定位；标注距离为大圆直线距离，不是道路里程。
+## Sources
 
-## 数据来源
+Local relief: Copernicus GLO-30 N40E094, retrieved 2026-07-24. Regional context: GLO-90. OSM/Overpass supplies Crescent Spring water way 1308452182, Mingsha scenic extent way 689578966, Dang River ways and Mingsha node 9204864657. Snapshot water shapes are not permanent surveyed shorelines.
 
-### 地形
+| Anchor | Reference |
+|---|---|
+| Dunhuang | Wikidata P625 Q319114 |
+| Mogao | Wikidata P625 Q43286 |
+| Yulin | Wikidata P625 Q751622 |
+| Mingsha | OSM node 9204864657; 40.0837 N, 94.6749 E |
+| Crescent Spring | Center of OSM way 1308452182; 40.0874 N, 94.6695 E |
 
-- 数据：Copernicus DEM GLO-30。
-- 瓦片：`Copernicus_DSM_COG_10_N40_00_E094_00_DEM`。
-- 网格间距：约 30 米。
-- 获取日期：2026-07-24。
-原始 DEM 被裁切后重投影到 UTM 46N，供浏览器三维地形使用。页面不再叠加二维 hillshade 或等高线。
+Current great-circle checks: Dunhuang-Crescent Spring 6.0 km, Crescent Spring-Mogao 12.7 km, Mogao-Yulin 96.4 km. Earlier illustrative references gave 6.6/12.3/95.9 km. These are provenance checks rather than road mileage or visible map annotations. Original OSM canvas geometry is converted to WGS 84 with the same UTM 46N transform.
 
-### 三维地形
-
-- 原始 GLO-30 局部 DEM 被重采样为 96 × 100、90 米间距的浏览器高程网格。
-- 高程值被量化并离线保存在 `terrain-data.js` 中。
-- WebGL 网格由这些高程值直接生成，不使用装饰性山峰模型。
-- 四个阅读路标分别使用低空掠沙、区域拉远、向泉下潜和泉边低空四个镜头状态，并在滚动过程中插值过渡。
-- 不支持 WebGL 时，页面仍保留地物、方向与文学路径图层，不显示二维地形替代图。
-
-### 地物
-
-- 数据：OpenStreetMap contributors。
-- 获取方式：Overpass API。
-- 获取日期：2026-07-24。
-- 使用对象：
-  - 月牙泉水面：OSM way `1308452182`；
-  - 鸣沙山月牙泉范围：OSM way `689578966`；
-  - 党河：范围内标记为“党河”的 OSM ways；
-  - 鸣沙山标记：OSM node `9204864657`。
-
-水面与地物轮廓反映本次数据快照，不声明为永久不变的测绘形态。
-
-### 敦煌石窟区域关系
-
-区域视图使用以下锚点：
-
-- 敦煌城区：40.142°N, 94.662°E；
-- 鸣沙山/月牙泉：40.084°N, 94.675°E；
-- 莫高窟：40.043°N, 94.809°E；
-- 榆林窟：40.059°N, 95.936°E。
-
-由这些坐标计算得到：
-
-- 敦煌—鸣沙山/月牙泉：约 6.6 公里；
-- 鸣沙山/月牙泉—莫高窟：约 12.3 公里；
-- 莫高窟—榆林窟：约 95.9 公里。
-
-莫高窟坐标参考甘肃省文化和旅游主管部门公开资料；榆林窟坐标参考开放地理数据，并以敦煌研究院“位于瓜州县城南约七十公里南山峡谷”的位置说明交叉核对。区域图用于解释相对位置，不替代道路导航。
-
-## 文学路径的准确性边界
-
-《沙原隐泉》描述了攀登、登顶、俯瞰和下坡，但没有提供可核验的坐标、方位或完整路线。因此：
-
-- 页面中的虚线脚印是交互叙事路径；
-- 它位于真实的鸣沙山地形范围内；
-- 它不表示余秋雨本人的实测行走路线；
-- 页面在地图内和“地图说明与数据来源”面板中都明确标注“非实测路线”。
-
-地图用于文学阅读与地理关系解释，不替代测绘、导航或景区安全信息。
-
-## 2026-10 改版后的数据
-
-| 地形 | 范围 | 网格 | 一格 | 真实高程 | 显示夸大 |
-|---|---|---|---|---|---|
-| 鸣沙山（第一、三、四节） | 94.62–94.72°E、40.05–40.13°N | 180 × 150 | 约 48 × 59 m | 1,132–1,579 m | 2.2 倍 |
-| 敦煌至榆林窟（第二节） | 94.35–96.15°E、39.55–40.55°N | 280 × 210 | 约 550 × 530 m | 1,030–4,413 m | 2.6 倍 |
-
-- **地点**：
-  - 敦煌 Q319114、莫高窟 Q43286、榆林窟 Q751622，取自 Wikidata P625；
-  - 鸣沙山取自 OSM node（94.6749°E, 40.0837°N）；
-  - 月牙泉为 OSM way 1308452182 的中心（94.6695°E, 40.0874°N）。
-- **距离**：大圆直线距离，敦煌—月牙泉约 6.0 km，月牙泉—莫高窟约 12.7 km，莫高窟—榆林窟约 96.4 km（原手绘示意图为 6.6、12.3、95.9 km）。
-- **地物**：鸣沙山范围、党河、月牙泉由原 OSM 快照的画布坐标，以同一 UTM 46N 变换换算回经纬度。
-- **叙事路径**：仍是编辑性的示意，不是实测路线。
+The essay supplies no verifiable climbing coordinates or complete route. Footprints illustrate reading progress within real terrain. This literary map does not replace surveying, navigation or visitor-safety information.

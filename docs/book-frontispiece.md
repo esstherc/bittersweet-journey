@@ -2,7 +2,7 @@
 
 The editable production artwork is `site/assets/transition-book.svg`: blank warm paper, a cover, page edges and spine shading. Desktop, mobile and both languages share this file. There is no generated template, illustration, title font or language-specific book asset.
 
-Only atlas-to-chapter entry plays the book sequence (1800 ms desktop, 1450 ms mobile). The book is 1.5 times the original size; its outer edges extend beyond the viewport. Entering the reading and returning to the atlas use a 280 ms fade. Reduced motion skips both effects.
+Only atlas-to-chapter entry plays the book sequence (1800 ms desktop, 1450 ms on narrow screens). The book is 1.5 times the original size; its outer edges extend beyond the viewport. Entering the reading and returning to the atlas use a 280 ms fade. Reduced motion skips both effects.
 
 `site/scripts/page-transition.js` handles navigation markers, cached-page restoration and compatibility. Book entry prepares the destination in a temporary iframe and awaits `CHAPTER_OPENING.ready`, including artwork decoding and its first paint. This also warms the destination assets before native cross-document navigation. The compatibility path captures the prepared frame before navigating. There is no five-second artwork deadline. Browsers without snapshot support use an opacity fade. Keep this fallback: it is required for file previews and browser compatibility.
 

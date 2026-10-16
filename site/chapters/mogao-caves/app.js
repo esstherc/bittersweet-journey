@@ -388,30 +388,37 @@
 
   const caves = [...geography.caves.list].sort((a, b) => a.step - b.step || a.number - b.number);
   let activeStep = -1;
+  const cliffCaptions = document.createElement("div");
+  cliffCaptions.className = "cliff-caption-copy";
+  cliffSvg.after(cliffCaptions);
+  const dynastyCurrent = document.createElement("p");
+  dynastyCurrent.className = "dynasty-current";
+  dynastyTrack.after(dynastyCurrent);
   function drawCliffPanel() {
-    const width = cliffSvg.clientWidth || 600;
-    const height = cliffSvg.clientHeight || 120;
+    const width = cliffSvg.clientWidth;
+    const height = cliffSvg.clientHeight;
+    if (!width || !height) return; // Draw only after the actual panel has been laid out.
     cliffSvg.setAttribute("viewBox", `0 0 ${width} ${height}`);
     cliffSvg.replaceChildren();
-    // phones: one row of niches and one caption line, so the panel stays short (2026-10-09)
+    // Match the CSS container query, rather than the viewport's orientation/width.
     const compact = width < 520;
     const top = compact ? 4 : 10;
-    const faceBottom = height - (compact ? 24 : 48); // caption lines sit below the face
+    const faceBottom = height - 4; // HTML captions wrap below the drawing.
     // the cliff: a slightly uneven top edge, three tiers of niches
     let edge = `M0,${faceBottom}V${top + 8}`;
     for (let x = 0; x <= width; x += width / 12) edge += `L${x.toFixed(1)},${(top + 6 * Math.sin(x / 37) + 4 * Math.cos(x / 13)).toFixed(1)}`;
     make("path", { class: "cliff-face", d: `${edge}V${faceBottom}Z` }, cliffSvg);
-    const tiers = compact ? 1 : 3;
+    const tiers = compact ? 2 : 3;
     const perTier = Math.ceil(caves.length / tiers);
     const cellW = width / (perTier + 1);
-    const nicheH = Math.min(24, (faceBottom - top - (compact ? 14 : 26)) / tiers - (compact ? 4 : 8));
+    const nicheH = Math.min(24, (faceBottom - top - 16) / tiers - 6);
     const nicheW = Math.min(18, cellW * 0.55, nicheH / 1.3);
     caves.forEach((cave, index) => {
       // columns run in time order; the three tiers are only there to look like a cliff face
       const column = Math.floor(index / tiers);
       const tier = index % tiers;
       const x = cellW * (column + 1) - nicheW / 2 + (tier - 1) * cellW * 0.18;
-      const y = top + (compact ? 10 : 14) + tier * (nicheH + 8);
+      const y = top + 10 + tier * (nicheH + 6);
       const cls = cave.step === activeStep ? "niche is-now" : cave.step < activeStep ? "niche is-past" : "niche";
       const group = make("g", { class: cls }, cliffSvg);
       make("path", { d: `M${x.toFixed(1)},${(y + nicheH).toFixed(1)}V${(y + nicheW / 2).toFixed(1)}A${(nicheW / 2).toFixed(1)},${(nicheW / 2).toFixed(1)} 0 0 1 ${(x + nicheW).toFixed(1)},${(y + nicheW / 2).toFixed(1)}V${(y + nicheH).toFixed(1)}Z` }, group);
@@ -429,16 +436,9 @@
       if (noted) second = zh ? `第 ${noted.number} 窟 · ${noted.note.zh}` : `Cave ${noted.number}: ${noted.note.en}`;
     } else if (activeStep === 5) first = zh ? "宋：原文没有写到具体洞窟" : "Song: the essay names no cave";
     else if (activeStep === 7) first = zh ? "明清：“没有太多的东西可以记住”" : "Ming and Qing: “not much worth remembering”";
-    const lines = (compact ? [first] : [first, second]).filter(Boolean);
-    lines.forEach((text, index) => {
-      const node = make("text", { class: "cliff-caption", x: 4, y: (faceBottom + 20 + index * 20).toFixed(1) }, cliffSvg);
-      node.textContent = text;
-      // a list too long for the panel becomes a count
-      if (index === 0 && node.getComputedTextLength && node.getComputedTextLength() > width - 8 && now.length) {
-        node.textContent = zh ? `${stepName}：${now.length} 个洞窟示例` : `${stepName}: ${now.length} example caves`;
-      }
-      if (index === 1 && node.getComputedTextLength && node.getComputedTextLength() > width - 8) node.remove();
-    });
+    cliffCaptions.replaceChildren(...[first, second].filter(Boolean).map(text => {
+      const node = document.createElement("p"); node.textContent = text; return node;
+    }));
   }
 
   function renderDynastyTrack() {
@@ -453,6 +453,7 @@
       return tick;
     }));
     dynastyTrack.style.setProperty("--f", String(Math.max(0, activeStep) / (steps.length - 1)));
+    dynastyCurrent.textContent = activeStep >= 0 ? steps[activeStep] : "";
   }
 
   /* ---------- part four: the world map (2D, as in 道士塔) ---------- */
@@ -621,6 +622,7 @@
   });
   scroller.addEventListener("scroll", () => window.requestAnimationFrame(updateStage), { passive: true });
   window.addEventListener("resize", () => window.requestAnimationFrame(drawCliffPanel));
+  new ResizeObserver(drawCliffPanel).observe(cliffSvg);
 
   ChapterShell.init({
     id: "mogao-caves",

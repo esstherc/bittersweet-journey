@@ -1,94 +1,20 @@
-# 《莫高窟》双语阅读地图
+# Mogao Caves
 
-**状态：已完成（2026-09-28）。** 页面在 `site/chapters/mogao-caves/`，章节 id `mogao-caves`，第 6 章，英文题名 *Mogao Caves*。地理数据与准确性见同目录 `GEODATA.md`。
+Chapter 06 retains four original numbered sections without a preface. The published Mogai Caves heading is corrected for display. The English edition follows an earlier text, adding ten opening paragraphs in section I and further passages in IV. Language-specific stage tables drive maps; paragraph indices are not interchangeable.
 
-## 内容与切分
+| Section | Chinese / English paragraphs | Scene |
+|---|---|---|
+| I: Where the caves came from | 5 / 15 | Flat Equal Earth world map; India/Gandhara and Greek influence toward Dunhuang |
+| II: A thousand years alive | 11 / 11 | Dunhuang 3D terrain, dusk and moonlight |
+| III: Cave by cave | 18 / 18 | GLO-30 cliff, chronological facade diagram, dynasty axis |
+| IV: Drifting far away | 16 / 21 | Russian soldiers, American collectors, villagers, Beijing and world relationships |
 
-原文 `content/bilingual-corpus.json` 第 6 章（`chapter-06`）：**四个编号小节**，没有作者说明，直接按原文小节切分。英文标题在语料中作 “Mogai Caves”（英译本标题的笔误），构建脚本改为 *Mogao Caves*。
+The reading anchor lies 40 percent down the scroll area. World curves show relationships, not surveyed transport routes. The facade's 31 cave examples are grouped chronologically, not by surveyed positions. Library Cave dispersal links to the Taoist chapter rather than repeating that story.
 
-| 节 | 标签（中／英） | 中文段 | 英文段 | 地图 |
-|---|---|---|---|---|
-| 一 | 一 · 石窟的来路／I · Where the caves came from | 5 | 15 | 大范围地形：印度 → 犍陀罗（希腊汇入）→ 敦煌 |
-| 二 | 二 · 活了一千年／II · A thousand years alive | 11 | 11 | 敦煌一带三维地形；闭馆后的黄昏转为月夜 |
-| 三 | 三 · 一窟一窟／III · Cave by cave | 18 | 18 | 断崖三维地形（30 米）＋断崖立面示意＋朝代顺序 |
-| 四 | 四 · 远处飘零／IV · Drifting far away | 16 | 21 | 莫高窟 → 美国 → 15 公里圈 → 北京 → 世界地图 |
+The second map's DEM extends to 93-97 E, 38-42 N with a 400 by 380 nonuniform mesh. All 52,800 original central samples and the camera/elevation frame are preserved. Real context fills the viewport with local edge fading disabled. The other three DEM datasets remain unchanged. Run extend_mogao_local_dem.py after rebuilding core terrain. WebGL 1 row strips keep indices within 16-bit limits.
 
-- **两个版本**：英文本依较早版本。第一节开头多出 10 段写“西域”，第四节多出“主人”等段落。地图依各自的段落切换（`app.js` 的 `stages` 表按语言分列）。
-- **英文句首**：各节开头的全大写改为句首大写。
+World assets use Equal Earth centered at 130 E so Greece/America share one continuous view. The villagers' circle uses the separate 250 by 230 regional mesh. Precise distance labels, redundant captions/location/counter rows are omitted. The seal uses cliffs, eaves and arches, replacing the unreadable flying figure. Mobile requires landscape with map left and scrolling text right.
 
-## 地图（依段落切换）
+See [provenance](GEODATA.md). Validation includes tools/test_mogao_dem.cjs.
 
-地图不是按节整体切换，而是按读者读到的段落切换：阅读线在滚动区高 40% 处。
-
-- **第一节**：
-  - 大范围地形约 15–105°E、18–48°N，北方朝上。
-  - 箭头表示原文所说的观念走向，不是道路：印度 → 犍陀罗，希腊从西边以虚线汇入犍陀罗；读到“佛教从印度一进入中国”时，犍陀罗 → 敦煌。
-  - 印度、希腊只写区域名；英文本读“西域”各段时标出“Western Regions”（手机宽度放不下时由底部说明文字承担）。
-- **第二节**：
-  - 敦煌一带三维地形：莫高窟断崖（OSM）、大泉河、党河、敦煌市区、鸣沙山。
-  - 读到“闭馆之后的黄昏”，地形转暗、升起月亮，大泉河在月色下发亮。
-- **第三节**：
-  - 镜头贴近断崖（GLO-30），随朝代由北往南沿断崖移动。
-  - 地图上方的面板是**断崖立面示意**：31 个窟龛按朝代排列，当前朝代的窟龛亮起；下方两行文字列出洞窟编号和一则与原文段落相应的注记（隋 420 窟飞天、唐 220 窟西方净土变、中唐 112 窟反弹琵琶、五代 61 窟、元 3 窟千手千眼观音）。
-  - 朝代刻度只用原文的朝代名，不附年份：十六国、魏晋南北朝、隋、唐、安史之乱后、宋、元、明清。宋、明清没有例窟，照原文说明。
-  - 手机宽度下刻度只留圆点，当前朝代写在地图说明文字里。
-- **第四节**：
-  - 白俄士兵：莫高窟近景。
-  - 华尔纳、杰恩：二维世界地图（与《道士塔》同样的等距圆柱投影），从哈佛大学、费城艺术博物馆画曲线到莫高窟，只示意方向。
-  - 村民：回到地形，以莫高窟为圆心画 15 公里圈（依中文）。
-  - 陈万里：世界地图拉近到中国，北京 → 莫高窟。
-  - 最后两段：世界地图拉远到全球，三条线都在，对应“几乎环绕了整个地球”。（初版用会转动的三维地球，裁切时会破图，2026-09-28 改为二维地图。）
-- **标签**：沿用鱼尾山屋的放置方法与字号（地名 32 px 等，为第一批章节的两倍）。
-
-## 印记与文案
-
-- **圖章**：`assets/seal-mogao-caves.svg`，以崖壁、拱形窟龛和层叠屋檐表现莫高窟；依辨识度反馈移除飞天人物。文字后备“窟”只存在 `atlas.js` 的资料里。
-- **揭题页**：第 06 章 · 莫高窟 · “一座小山包，半部中国艺术史。” · 论点“看活了一千年的生命。” · 按钮“走进洞窟”。
-- **完成语**：“千年不枯的笑容，延伸到整个世界。”／*A smile that has not withered for a thousand years, reaching across the world.*（出自原文最后一句；英文依英译本同一句缩写）。
-- **总图**：
-  - 线索：一座沉默的小山包／*A quiet hill of caves*。
-  - 预览：“为什么打得你死我活的各方，都愿意为这里做一点好事？”
-  - 进入：走进洞窟／再进莫高窟。
-  - 完成后与其他章一样变为较大的红点、不再闪烁。
-
-## 总图（首页）
-
-- **位置**：莫高窟在敦煌东南约 17 公里，与沙原隐泉、道士塔、阳关同在敦煌一处，所以依 `DISPLAY_OFFSETS` 往东南偏移绘制（+62, +56），与真实方向一致。印章画在点的左侧，避开黄河与月牙泉标签。
-- **改动**：
-  - `index.html`：光点与印章；
-  - `atlas.js`：`STORIES["mogao-caves"]`、偏移、完成状态；
-  - `atlas.css`：完成前后的样式；
-  - `site-header.js`、`page-transition.js`：白名单加上 `mogao-caves`。
-
-## 重新构建
-
-1. **章节文字**：`python tools/build_mogao_chapter.py content/bilingual-corpus.json site/chapters/mogao-caves/chapter-data.js`
-2. **地形、地理与洞窟表**：`python tools/build_mogao_geodata.py WORK site/chapters/mogao-caves`，`WORK` 需要的文件见脚本开头：
-   - GLO-90 局部图块、GLO-30 图块；
-   - 《鱼尾山屋》的大范围 DEM；
-   - Natural Earth 河流与陆地；
-   - `mogao-osm.json`。
-3. **资源版本号**：`python tools/version_chapter_assets.py`（Windows 上需以 UTF-8 读写）。
-
-## 验证
-
-- **jsdom**：全部通过，覆盖：
-  - 四节与段数（中 5/11/18/16，英 15/11/18/21）、英文句首；
-  - 双语文案与说明面板；
-  - 31 个窟龛、8 个朝代刻度、世界地图陆地；
-  - 键盘、完成状态。
-- **真实 Edge（headless，SwiftShader WebGL）**：
-  - 各阶段在 1440／800／390 px 下的中英文都已截图检查：第一节三个阶段、黄昏、第三节各朝代、第四节五个阶段。
-  - 标签没有出界或重叠，没有脚本错误。
-  - 首页光点、预览、揭题页、完成后的印记、收据与圖章都已走过一遍。
-
-## 2026-10-07 调整（依鱼尾山屋、阳关雪的做法）
-
-- **一张世界地图**：第一节（希腊、犍陀罗、印度到敦煌）与第四节的世界部分（美国、北京、几乎整个地球）改为同一张平面世界地图（`world-map.js`），一种投影、一个镜头，随段落移动与缩放；第二、三节与第四节的“俄国士兵”“村民”仍是三维地形。原来第一节的三维大范围地形与第四节自带的等距圆柱世界图不再显示。
-  - 投影：Equal Earth（Šavrič、Patterson、Jenny 2018），中央经线 130°E。道士塔的 Albers（110°E）在 70°W 有接缝，放不下哈佛与费城；以 130°E 为中心，希腊与美国都在同一张图上，接缝落在大西洋 50°W，没有任何线跨过它。
-  - 底图：Natural Earth 1:50m 陆地与湖泊；希腊到河西走廊叠一层灰阶晕渲（GLO-90 平均到 1/10°，与鱼尾山屋平面地图同一 DEM），以 multiply 叠在陆地上，只加深坡面。
-  - 构建：`python tools/build_mogao_world_map.py WORK/glo90-wide-6arcmin.tif ne_50m_land.geojson ne_50m_lakes.geojson`，生成 `world-map-data.js` 与 `assets/world-relief.jpg`；`world-map.js` 用同一公式，与 Python 结果一致到小数点后 4 位。
-- **字号依沙原隐泉**：地名 24 px（英文 22 px）、注记与村民圈 17 px、河名 18 px、区域名 20 px；手机 20／18 px、其余 15–17 px。光晕 4 px，圆角接合。
-- **移除**：左下角的镜头说明（“从印度到犍陀罗 / Wide terrain”等，与沙原隐泉相同的处理）、`reader-progress`（“01 / 04”）与 `reader-location`。手机上原本靠左下说明显示当前朝代，现改为朝代轴只在当前那一点下方写出朝代名。
-- **指北针**：世界地图上不再隐藏；Equal Earth 的经线随经度倾斜，指北针量的是莫高窟处的北方。
-- **村民的十五公里**：这一段原本用“敦煌一带”地形（约 37 × 34 km，157 m 一格），比 30 km 宽的圆只大一点，画面四周露出地形边界。改用新的 `region` 地形：94.0–95.6°E、39.45–40.62°N，约 136 × 130 km，GLO-90 平均到约 550 m 一格（250 × 230，在 WebGL 16 位索引之内），镜头框住圆时地形远超画面四边。由 `python tools/build_mogao_region_terrain.py` 经 HTTP 读取四块 GLO-90 图块，只替换 `terrain-data.js` 里的 `region`，其余地形不动。第二、四节其他段落仍用 157 m 的“敦煌一带”地形。
+The cave facade responds to its own panel width rather than the device viewport. Narrow panels show two rows of niches and a separate current-dynasty label; wider panels keep three rows and the full timeline. Captions are HTML paragraphs below the SVG so cave lists and descriptions wrap naturally. A ResizeObserver redraws after the actual panel becomes visible or changes size. The diagram stays within the map and can scroll vertically on unusually short screens. Validation: tools/test_mogao_cliff.cjs covers both languages, all narrative dynasty stages, desktop and two compact landscape sizes.

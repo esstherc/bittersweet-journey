@@ -1,21 +1,12 @@
-# 地理数据与制图说明
+# Dujiangyan geographic provenance
 
-本原型在浏览器中离线运行，不会在运行时请求地图服务。
+Packaged assets support reading without map-tile requests.
 
-## 数据来源
+| Layer | Source | Processing |
+|---|---|---|
+| National rivers | Natural Earth 1:10m Rivers and Lake Centerlines, WGS 84 | China-focused Albers equal-area projection |
+| Local waterways/places | OpenStreetMap contributors through Overpass, WGS 84 | WGS 84 / UTM zone 48N; clipping and Douglas-Peucker simplification |
+| Engineering relationships | UNESCO heritage documentation | Cross-check of diversion, weir and channel locations |
+| Terrain | Copernicus DEM GLO-90 | Multidirectional hillshade and 200 m contours |
 
-- 全国主要河流：Natural Earth 1:10m Rivers + Lake Centerlines，WGS84。
-- 都江堰—成都平原水系与地点：OpenStreetMap contributors，经 Overpass API 获取，WGS84。
-- 都江堰、鱼嘴、飞沙堰、宝瓶口的空间关系同时参考 UNESCO 世界遗产资料。
-- 地形：Copernicus DEM GLO-90，用于生成多向 hillshade，并提取 200 米等高线。
-
-## 视觉处理
-
-- 不显示国界、省界或普通道路。
-- 原始河流经过裁剪和 Douglas–Peucker 抽稀，只保留叙事需要的水系层级。
-- 全国图采用中国范围的 Albers 等积投影。
-- 都江堰区域采用 WGS84 / UTM zone 48N 投影。
-- 地形晕渲与区域水系使用相同的 UTM 48N 范围和画布位置，西部山地保留较高对比度，向成都平原渐隐。
-- 水利工程核心区使用真实坐标的局部放大图；区域图保持都江堰与成都的真实相对方位。
-
-地图用于文学阅读与地理关系解释，不替代工程图、行政地图或导航地图。
+Terrain and waterways share the same UTM 48N extent. Western mountains retain contrast while the plain is quieter. The enlarged engineering inset preserves geographic relationships. Administrative borders and unrelated roads are omitted. Ruled texture belongs to the reading panel. This map does not replace an engineering, administrative or navigation map.

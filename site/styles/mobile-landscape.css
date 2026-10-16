@@ -1,0 +1,62 @@
+/* Final responsive layer shared by the atlas, introduction and all chapters. */
+.mobile-orientation {
+  width: 100vw; max-width: none; height: 100dvh; max-height: none;
+  margin: 0; padding: max(24px, env(safe-area-inset-top)) 28px;
+  border: 0; background: #ece7db; color: #28332e;
+  font-family: "Songti SC", "STSong", "Noto Serif CJK SC", "Source Han Serif SC", serif;
+  text-align: center;
+}
+.mobile-orientation[open] { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px; }
+.mobile-orientation::backdrop { background: #ece7db; }
+.mobile-orientation:lang(en) { font-family: "Caudex", Georgia, serif; }
+.mobile-orientation svg { width: 92px; height: 92px; fill: none; stroke: #9d3d31; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; }
+.mobile-orientation h2 { margin: 0; font-size: 26px; font-weight: 400; line-height: 1.5; }
+.mobile-orientation p { max-width: 25em; margin: 0; font-size: 17px; line-height: 1.8; color: #5b5d53; }
+@media (orientation: landscape) and (max-height: 600px) and (max-width: 1100px) {
+  :root { --site-header-height: 52px; --site-header-pad: max(16px, env(safe-area-inset-left)); --bar-top: 52px; --bar-bottom: 44px; --atlas-footer-h: 44px; --rail-h: 44px; --ctx-min: 260px; --ctx-pad-x: 20px; }
+  .chapter-frame, .chapter-layout, .map-expanded .chapter-layout {
+    grid-template-columns: minmax(0, 52fr) minmax(260px, 48fr);
+    grid-template-rows: minmax(0, 1fr);
+  }
+  .chapter-frame .map-stage, .chapter-layout .map-stage { min-height: 0; height: auto; border-bottom: 0; border-right: 1px solid var(--line); }
+  .chapter-layout .reader-panel { border-left: 0; }
+  .reader-scroll { padding: 20px var(--ctx-pad-x) 30px; }
+  .reading-rail { padding: 0 10px; gap: 6px; }
+  .reading-rail .rail-caption, .reading-rail .timeline-caption { display: none; }
+  .section-buttons { gap: 0; }
+  .section-button { min-width: 36px; min-height: 44px; padding: 0 5px; }
+  .site-masthead .site-wordmark span, body[data-language="en"] .site-masthead .site-wordmark span { max-width: 40vw; font-size: 17px; }
+  .bottom-bar, .atlas-footer { padding-inline: max(16px, env(safe-area-inset-left)); }
+  body:has(.atlas-experience) { overflow: hidden; }
+  .atlas-experience { height: 100dvh; min-height: 0; padding-top: 0; overflow: hidden; }
+  .atlas-intro { position: absolute; top: calc(var(--site-header-height) + 12px); left: 16px; width: calc(100% - 32px); height: auto; padding: 0; display: block; pointer-events: none; }
+  .atlas-intro h1, body[data-language="en"] .atlas-intro h1 { font-size: clamp(18px, 2.6vw, 23px); line-height: 1.25; white-space: normal; }
+  .journey-ready .atlas-intro { background: none; box-shadow: none; }
+  body[data-language="en"] .atlas-intro .question-tail::before { content: ' '; }
+  .atlas-intro .cta-callout { width: min(330px, 100%); max-height: calc(100dvh - 174px); overflow-y: auto; margin-top: 10px; padding: 12px 34px 12px 12px; gap: 6px; pointer-events: auto; }
+  .atlas-intro .cta-reopen { margin-top: 10px; pointer-events: auto; }
+  .atlas-readings-complete .cta-reopen { display: none; }
+  .atlas-map-stage { position: absolute; inset: var(--site-header-height) 0 44px; margin: 0; height: auto; min-height: 0; }
+  .atlas-footer { display: flex; position: fixed; inset: auto 0 0; height: 44px; min-height: 44px; flex-wrap: nowrap; padding-block: 0; gap: 14px; }
+  .atlas-footer-source { flex: 1 1 auto; flex-wrap: nowrap; gap: 12px; }
+  .atlas-footer-source .atlas-citation { display: none; }
+  .atlas-footer .view-stamps, .atlas-footer .reset-progress, .site-data-sources-trigger { min-height: 44px; }
+  .atlas-footer .view-stamps { display: none; }
+  #chapter-leaf .chapter-leaf-content { min-height: 100dvh; padding: 64px 24px 50px; }
+  #chapter-leaf .chapter-leaf-number { margin-bottom: 8px; }
+  #chapter-leaf .chapter-leaf-title { font-size: clamp(32px, 5vw, 48px); }
+  #chapter-leaf:lang(en) .chapter-leaf-title { font-size: clamp(28px, 4.4vw, 42px); }
+  #chapter-leaf .chapter-leaf-line { margin-top: 10px; }
+  #chapter-leaf .chapter-leaf-enter { margin-top: 14px; padding: 8px 0; }
+  #chapter-leaf .chapter-painted-image { inset: 0; height: 100%; object-position: center; mask-image: none; }
+  #chapter-leaf.has-painted-landscape .chapter-leaf-content, #chapter-leaf.has-landscape .chapter-leaf-content { padding: 64px 24px 50px; }
+  .earth-scene { flex-direction: row; gap: 12px; padding: 12px; }
+  .earth-orb { flex: 1 1 54%; width: auto; max-width: 54%; }
+  .earth-context { flex: 1 1 46%; width: auto; columns: auto; max-height: 100%; overflow-y: auto; font-size: 13.5px; }
+  .earth-context ul { display: block; }
+  .earth-context h2 { font-size: 17px; }
+  .credits-controls { padding: 8px 20px; }
+  .credits-roll { padding-top: 76px; }
+  .credits-book { height: 150px; width: min(480px, 82%); margin-bottom: 28px; }
+  .credits-traveler { width: 100px; }
+}

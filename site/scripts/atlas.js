@@ -1158,7 +1158,9 @@
   }
 
   applyRealGeography();
-  setGuideDismissed(window.localStorage.getItem(guideDismissedKey) === "true", false);
+  const savedGuidePreference = window.localStorage.getItem(guideDismissedKey);
+  const compactLandscape = matchMedia('(orientation: landscape) and (max-height: 600px) and (max-width: 1100px)').matches;
+  setGuideDismissed(savedGuidePreference === "true" || (savedGuidePreference === null && compactLandscape), false);
   new ResizeObserver(entries => {
     body.style.setProperty('--atlas-intro-height',`${entries[0].contentRect.height}px`);
     scheduleLayout();

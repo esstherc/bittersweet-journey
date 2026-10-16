@@ -1,28 +1,19 @@
-# 圖章與喀什版面檢視 · 2026-09-28
+# Pictorial seal review
 
-逐章並排檢視 opening 背景與現有 SVG 圖章。保留單色朱紅、略不規則的雙方框、簡單輪廓；圖章是章節象徵，不是地形縮圖。縮小後仍可辨認主體，比堆疊背景中的所有物件更重要。
+Historical review dated 2026-09-28, updated for current behavior. Monochrome cinnabar, irregular double square borders and simple silhouettes connect the chapter artwork. Seals symbolize stories rather than reproduce terrain.
 
-| 章節 | 背景與文字意象 | 評估與處理 |
-| --- | --- | --- |
-| 04 都江堰 | 岷江、魚嘴分水、山間激流 | 原圖的眼睛與橫紋容易被看成魚。移除眼睛、細紋，改為楔形分水堤，保留兩側分流。 |
-| 05 道士塔 | 荒漠白塔、空窟、散失經卷 | 保留。塔、空洞、飛散紙頁三個符號已能說明本章，且能與莫高窟區分。 |
-| 06 莫高窟 | 崖壁窟龕、樓閣 | 依後續回饋移除難辨識的飛天，改以層疊屋檐、兩側崖壁及三個拱洞組成清楚的建築圖章。 |
-| 07 沙原隱泉 | 沙丘環抱月牙泉、小亭 | 保留沙脊與實心月牙泉；刪除天空虛線和泉內細白線，讓泉水負形更乾淨。 |
-| 08 陽關雪 | 雪原、殘損烽燧、風 | 原先塔側苇草曲線近似旗幟。改為缺損的夯土塔頂與兩道橫向土層，保留雪點、雪坡及一道風線。 |
-| 09 西域喀什 | 帕米爾雪峰、河谷、白色旗幡 | 保留。三角雪峰與旗幡簡潔、辨識清楚；旗幡承接文末雪煙的比喻，不是宣稱背景中有實體旗杆。 |
-| 10 山庄背影 | 遠山、湖面、樓閣與背影 | 保留峰石和亭閣；將過細的虛線倒影改為較粗、分段的幾何倒影，縮小後仍看得見。 |
-| 11 魚尾山屋 | 雙峰、小屋、山水 | 保留。雙峰與亮窗小屋已形成明確對比，不必再加入湖岸樹木。 |
+| Chapter | Decision |
+|---|---|
+| My Hometown | Now available with its own pictorial seal; the unavailable placeholder is obsolete. |
+| Dujiangyan | Remove fish-like eye/stripes; keep a wedge-shaped weir and diverging flows. |
+| Taoist Tower | Retain stupa, void and scattered manuscripts. |
+| Mogao | Remove the unreadable flying figure; emphasize eaves, cliffs and cave arches. |
+| Secret Spring | Keep dunes/crescent water; remove redundant dashed/detail lines. |
+| Yangguan | Replace flag-like reeds with a broken earthen top and soil bands; retain snow/wind. |
+| Kashgar | Keep snow peaks and banner; the banner interprets the snow-plume metaphor. |
+| Mountain Resort | Retain peaks/pavilion and simplify the segmented reflection. |
+| Fish Tail Lodge | Retain double peak and lit lodge; avoid extra tree detail. |
 
-03「我的山河」目前尚未開放，沒有章節背景或正式 SVG 圖章，本次不替未完成內容臆造圖案。舊 `seal-water.svg` 是未引用的歷史資產，正式都江堰圖章使用 `seal-dujiangyan.svg`。
+One canonical SVG appears at the reader ending, completion, atlas collection/flight and credits. Credits use square seals. Earlier single-character descriptions are historical, not current artwork.
 
-所有圖章仍共用於正文結尾、完成畫面、主圖收藏與飛行動畫。網站及文件中的收藏名稱统一為「圖章」，中英文說明也不再以單字描述收藏內容。
-
-## 喀什版面
-
-接入共用 `chapter-shell.css`，以 `layout.css` 對接喀什專用地圖：桌面採共用雙欄比例，900 px 以下改上下排列，固定頁首與 footer，僅正文面板捲動。閱讀進度列移入正文底部；正文行距、內距、章末圖章與完成按鈕對齊共用版型。
-
-地圖的大標題改為無障礙標題，保留地名索引與地圖操作。引用、資料說明、返回總圖統一放入 footer；資料說明採靠近 footer 的非模態抽屜。返回連結保留語言。
-
-同步更新隨文相機、段落跳轉、返回閱讀位置與語言切換，改以正文容器的位置判定。保留原文五節、16 個語義錨點與地名連動。章末使用共用的完成畫面：章節底色、紙色圖章、顯影提示與收尾文字，三秒後自動返回總圖並觸發收藏飛行。減少動態效果時內容直接顯示；離開頁面會清除計時器，歷史返回會解除完成狀態與操作鎖定。
-
-驗證：`tools/test_kashgar_layout.cjs` 覆蓋桌面、平板、手機及手機橫向，檢查版面邊界、正文捲動、語言切換、地名卡、資料抽屜及收藏返回。`tools/test_atlas_camera.cjs` 檢查思考泡泡時序及八章圖章飛行。
+Kashgar retains five sections, sixteen anchors and geographic linking while using the shared header/footer/rail/notes/completion treatment. Completion returns automatically, followed by illumination and collection. Notes sit beside the citation. Required mobile landscape with parallel map/text supersedes the older stacked layout. Tests: test_kashgar_layout.cjs and test_atlas_camera.cjs under tools/.

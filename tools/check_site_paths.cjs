@@ -13,6 +13,8 @@ for(const file of [...files,path.join(root,'index.html')].filter(p=>/(?:index\.h
     const clean=decodeURIComponent(ref.split(/[?#]/)[0]);if(!clean)continue;
     let target=path.resolve(path.dirname(file),clean);if(clean.endsWith('/'))target=path.join(target,'index.html');
     const relative=path.relative(root,target).split(path.sep).join('/');
+    // This ignored local configuration is optional; the chapter keeps its packaged DEM without it.
+    if(relative==='site/chapters/fish-tail-lodge/mapbox-config.js'&&!exact.has(relative))continue;
     assert(exact.has(relative),`Missing or incorrectly cased asset: ${file}: ${ref}`);checked++;
   }
 }

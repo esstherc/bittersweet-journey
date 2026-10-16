@@ -1,33 +1,20 @@
-# 山庄背影 / The Villa from Behind
+# The Villa from Behind
 
-第 10 章互动阅读页，以“罗圈椅背”为持续空间意象。原文五个编号章节保持不变，滚动状态依次为：
+Chapter 10 lives at site/chapters/mountain-resort/index.html. The atlas ID is chengde while folder/storage use mountain-resort. revealId adapts chapter returns; credits resolve the painting from the actual URL.
 
-1. 门外：对清代的历史情绪
-2. 椅背：北岭、山庄与康熙
-3. 万树：外庙、乾隆与 1793 年英国使团
-4. 闭门：咸丰、辛酉政变与 1861 年山庄再度关闭
-5. 背影：1927 年王国维与湖面倒影
+Five original sections cover the exterior historical response, northern encircling hills, temples/1793 embassy, the 1861 closure, and Wang Guowei's 1927 memory. The Qing/1703/1793/1861/1927 timeline follows the same reading state.
 
-页面入口：`site/chapters/mountain-resort/index.html`
+Sections I/V use the flat standard-map canvas: Beijing-Gubeikou-Chengde-Mulan, then Chengde/Summer Palace. Sections II-IV use GLO-30 terrain at 117.80-118.08 E, 40.91-41.10 N, approximately 24 by 21 km and threefold vertical exaggeration. The real hills express the chair-back metaphor; the earlier decorative chair silhouette is superseded.
 
-数据脚本由 `tools/build_mountain_resort_chapter.py` 从 `content/bilingual-corpus.json` 的第 10 章生成。不要直接编辑 `chapter-data.js`。
+OSM supplies palace walls, lakes, Wulie River, temples and Lizheng Gate (relation 8008565). Wanshu Garden uses approximate yurt node 8659379119 because it lacks an OSM outline. OSM walls enclose about 540 ha versus UNESCO's 611.2 ha heritage area: different definitions, both explained in notes.
 
-## 视觉与交互
+The Great Wall uses 1,451 OSM ways merged into 538 lines over 114.8-119.8 E, 39.4-42.2 N. Battlements appear on the northern side every 7 px. Flat relief extends to 114.8-119.8 E, 39.0-42.8 N, sampled at 1/240 degree and rendered 2160 px wide. Province context uses quiet solid lines, not background dashes.
 
-- 左侧地图以西北山岭包围山庄，形成“罗圈椅背”构图。
-- 第一节先展示北京—古北口—承德—木兰围场的北巡轴线，第二节以交叉淡化和缩放进入山庄尺度。
-- 外庙点位按 WGS 84 经纬度投影。
-- 第三节以独立事件卡把 1793 年英国使团落到万树园，并明确其园内位置为示意。
-- 第五节把王国维事件放回北京颐和园，以约 179 km 的跨城记忆线连接作者所在的承德湖面。
-- 原文五节驱动地图显影、时间轴和闭门/倒影状态。
-- 中英文均使用常规字形，不使用斜体。
-- 正文字号 17–19px（随窗口宽度），地图说明抽屉正文 14px。
-- 页面框架（标题栏、开卷幕布、右侧阅读栏、时间线、底栏、说明抽屉、完成页）来自 `site/chapters/_shared/`，本章自己只保留地图、地图说明文字和 `--accent`。
-- 时间线（清代 · 1703 · 1793 · 1861 · 1927）位于地图下方，与右侧“原文章节”进度条同一基线，二者由同一个当前节次驱动。
-- 预览参数：`?open=1&section=N` 跳过幕布，`?notes=1` 打开地图说明抽屉，`?lang=zh|en` 指定语言。
-- 首页仍把本章称为 `chengde`（`?revealed=chengde`），本章目录与本地存储键为 `mountain-resort`；`app.js` 中的 `revealId` 负责这层对应。
+Current UI omits precise distance labels, scales and redundant location/counter rows. Curtains have one subtitle. Mobile requires landscape with parallel map/text and independently scrolling prose. See [sources](GEODATA.md).
 
-## 重建文本数据
+## Maintenance commands
+
+Prepare inputs/dependencies described by the tools. Earlier conversion stages are retained for reference.
 
 ```bash
 python3 tools/build_mountain_resort_chapter.py \
@@ -35,26 +22,7 @@ python3 tools/build_mountain_resort_chapter.py \
   site/chapters/mountain-resort/chapter-data.js
 ```
 
-## 2026-10-08 改为真实地图
-
-地图不再是手绘示意图（罗圈椅剪影、四个色块分区、两张 980 × 760 的 SVG），改为两种真实地图，节次、时间线与正文不变：
-
-- **第一、五节：一张平面地图**（`flat-map.js`，仿阳关雪与道士塔第一张图）。标准地图的轮廓与省界，正轴等积割圆锥投影（中央经线 110°E），叠燕山一带的 GLO-90 晕渲（`assets/region-relief.jpg`，逐像素换算进同一投影，不是仿射近似）。第一节看北京—古北口—承德—木兰围场；第五节同一镜头移到承德与颐和园，画出约 179 km 的记忆连线。
-- **第二至四节：真实三维地形**（`terrain-3d.js`）。Copernicus DEM GLO-30，117.80–118.08°E、40.91–41.10°N，约 24 × 21 km、约 100 m 一格，高程夸大三倍。镜头从南面低角度看过去，山庄西北的山岭就立在后面——原文的“罗圈椅背”由真实地形呈现。
-  - 第二节：宫墙、湖泊、武烈河（OpenStreetMap），山区／平原区／湖区标签放在真实的山地、园北平地与湖面上，区间界线不画；“山岭如椅背 · 面南而坐”标在宫墙外西北的最高处。
-  - 第三节：镜头拉远，十座外庙的真实轮廓（标出原有的六座），1793 年使团事件落在万树园。OSM 没有万树园的范围，以园中“蒙古包”节点（8659379119）约略标出。
-  - 第四节：镜头压低到真实的丽正门（OSM 关系 8008565），地形转暗。
-- **标签**：字号依沙原隐泉（地名 24 px、注记 17 px、区名 20 px，手机 15–20 px），光晕 4 px 圆角；指北针与比例尺随镜头。不显示 `reader-progress` 与 `reader-location`。
-- **构建**：
-  ```bash
-  python tools/build_mountain_resort_geodata.py WORK     # terrain-data.js, features-data.js（OSM 回应缓存在 WORK/osm-*.json）
-  python tools/build_mountain_resort_flat_map.py WORK   # flat-map-data.js, assets/region-relief.jpg（DEM 网格与长城回应缓存在 WORK）
-  ```
-  公共 Overpass 服务器常超时，构建脚本会轮换三个镜像并重试；成功的回应缓存在 WORK，删除对应文件即重新抓取。
-- **差异说明**：OSM 宫墙围合约 540 公顷，UNESCO 的山庄遗产区为 611.2 公顷，两者口径不同，说明面板两个数字都写。
-
-### 2026-10-08 第一、五节修订
-
-- **长城**：不再是五个点连成的示意虚线，改用 OpenStreetMap 中标为“长城”的墙体（114.8–119.8°E、39.4–42.2°N，1,451 段合并为 538 条线），以城墙的惯用符号表示：实线加北侧（墙外）每 7 px 一个垛口。第一、五节都画，第一节在古北口南侧标名。
-- **背景虚线**：那是标准地图的省界，原本画成虚线，在这个比例尺下显得杂乱；改为浅色细实线。
-- **晕渲解析度**：由 1/60°（约 1.6 km）提高到 1/240°（约 350 m），范围扩大到 114.8–119.8°E、39.0–42.8°N，画面边缘不再看到晕渲的边界；图片 2160 px 宽、约 430 KB。
+```bash
+python tools/build_mountain_resort_geodata.py WORK
+  python tools/build_mountain_resort_flat_map.py WORK
+```

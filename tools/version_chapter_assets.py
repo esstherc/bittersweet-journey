@@ -11,6 +11,6 @@ for page in [root/'site/index.html', *(root/'site/chapters').glob('*/index.html'
             return match[0]
         digest = hashlib.sha256(path.read_bytes()).hexdigest()[:12]
         return match[1] + match[2] + '?v=' + digest + '"'
-    markup = re.sub(r'((?:src|href)=")((?:\./|\.\./)[^"?]+\.(?:js|css))(?:\?[^" ]*)?"', version, page.read_text())
-    page.write_text(markup)
+    markup = re.sub(r'((?:src|href)=")((?:\./|\.\./)[^"?]+\.(?:js|css))(?:\?[^" ]*)?"', version, page.read_bytes().decode('utf-8'))
+    page.write_bytes(markup.encode('utf-8'))
     print('Versioned', page.relative_to(root))

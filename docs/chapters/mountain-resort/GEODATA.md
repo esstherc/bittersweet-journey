@@ -33,10 +33,10 @@ The line from Beijing through Gubeikou and Chengde toward Mulan expresses the hi
 | Lakes, Wulie River | OpenStreetMap natural=water, waterway | lakes clipped to the wall |
 | Outlying temples | OpenStreetMap place_of_worship footprints | ten temples drawn, six labelled |
 | Lizheng Gate | OpenStreetMap relation 8008565 | section four |
-| Wanshu Garden | OpenStreetMap node 8659379119 (蒙古包) | approximate: the garden has no outline in OSM |
+| Wanshu Garden | OpenStreetMap node 8659379119 (Yurt) | approximate: the garden has no outline in OSM |
 | Chair-back label | highest DEM cell within ~1.5 km outside the north and west walls | a label anchor, not a named summit |
 | Relief, sections 1 and 5 | Copernicus DEM GLO-90 at 1/240° (~350 m), 114.8–119.8°E, 39.0–42.8°N | warped into the standard map's Albers projection |
-| Great Wall, sections 1 and 5 | OpenStreetMap ways named 长城 (historic=citywalls / barrier=city_wall), 114.8–119.8°E, 39.4–42.2°N | 1,451 ways merged into 538 lines; drawn with battlements on the north side |
+| Great Wall, sections 1 and 5 | OpenStreetMap ways named Great Wall (historic=citywalls / barrier=city_wall), 114.8–119.8°E, 39.4–42.2°N | 1,451 ways merged into 538 lines; drawn with battlements on the north side |
 
 ## Diagrammatic elements
 

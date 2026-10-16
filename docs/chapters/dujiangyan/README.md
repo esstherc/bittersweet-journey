@@ -1,35 +1,17 @@
-# 《文化苦旅》双语阅读地图闭环原型
+# Dujiangyan Irrigation System
 
-这是“通过阅读使中国显影”的第一版完整闭环，以《都江堰》作为可阅读章节。
+Chapter 04 at site/chapters/dujiangyan/index.html retains four original sections: the Min River, Fish Mouth diversion, Flying Sand Weir/Bottle Mouth system, and Mount Qingcheng. Complete supplied texts are preserved; language switching retains the section.
 
-## 核心交互
+The engineering inset uses real coordinates with a paper halo and clear leading line. Mount Qingcheng has a mountain symbol and blood-red labeling/halo. Redundant location lines and per-section counters are omitted; the reading rail provides progress. Completion returns to the atlas and collects the square diversion-weir seal.
 
-- `site/index.html` 是没有完整国界的中国总地图，只保留河流、古道、零星地形和故事光点。
-- 点击都江堰光点，地图放大并进入 `site/chapters/dujiangyan/index.html`。
-- 章节地图初始几乎空白，点击“开卷”后才出现岷江。
-- 四个文本节次分别显影：岷江、鱼嘴分流、飞沙堰与宝瓶口、青城山。
-- 顶部可切换中文与英文，右侧/下方阅读区域使用用户提供 EPUB 中的完整本章文本。
-- 第四节阅读完毕后点击“完成本章”，返回中国总图。
-- 返回后，都江堰光点永久获得地名、成都平原和灌溉水网；进度从 `00 / 20` 变为 `01 / 20`。
-- 支持方向键切换节次，`L` 切换语言。
-- 阅读状态保存在浏览器本地；总地图底部提供“重置阅读痕迹”用于重新体验。
+The shared reader supplies the title leaf, header/footer, notes, rail and completion. Phones require landscape and side-by-side map/text panels. The curtain has one localized subtitle; map distances/scales are hidden. Notes sit beside the footer citation. Arrow keys switch sections and L changes language. Use ?lang=zh|en, ?open=1&section=N and ?notes=1 for previews.
 
-## 真实地理骨架
+See [geographic sources](GEODATA.md) and [shared layout](../../chapter-layout-guideline.md).
 
-- 全国黄河、长江及关键支流采用 Natural Earth 河流数据，并投影到中国范围的 Albers 等积坐标。
-- 都江堰—成都平原采用 OpenStreetMap 水系，使用 UTM 48N 保持地点与水流的相对关系。
-- 西部地形由 Copernicus DEM GLO-90 生成多向 hillshade，并叠加抽稀后的 200 米等高线；不使用装饰性山峰符号。
-- 鱼嘴、飞沙堰和宝瓶口因区域尺度上彼此接近，保留真实坐标并放入工程局部放大框。
-- 页面离线运行，不会在阅读时请求在线地图服务。完整来源和处理方式见同目录的 `GEODATA.md`。
+## Existing maintenance commands
 
-## 本地打开
-
-在项目根目录双击 `index.html`，从中国总地图开始。也可以在项目根目录运行：
+Prepare the inputs and dependencies described by each tool before running.
 
 ```bash
 python3 -m http.server 8000
 ```
-
-再访问 `http://localhost:8000/`。
-
-地图是文学示意图，并非行政地图或测绘地图。
