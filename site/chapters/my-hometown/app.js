@@ -376,8 +376,8 @@
       scene.toggleAttribute("inert", !active);
     });
     $$(".journey-progress i").forEach((item, index) => item.classList.toggle("is-done", index <= step));
-    $("[data-skip-tour]").textContent = labels.skip;
-    $(".journey-map-coordinate").textContent = labels.coord;
+    // before a book (language) is chosen the prologue speaks English only
+    $("[data-skip-tour]").textContent = step <= sceneSteps.books ? smallCopy.en.skip : labels.skip;
     setText("#tour-svg-title", copy[language]["map-svg-title"]);
     setText("#tour-svg-desc", copy[language]["map-svg-desc"]);
     setText("[data-lines-quote]", text.linesQuote);
@@ -391,7 +391,7 @@
     setText("[data-enter-copy]", text.enter);
     $$('[data-atlas-en]').forEach((element) => { element.textContent = element.dataset[language === "zh" ? "atlasZh" : "atlasEn"]; });
     $$('[data-map-en]').forEach((element) => { element.textContent = element.dataset[language === "zh" ? "mapZh" : "mapEn"]; });
-    $$(".journey .rain-label, .hometown-map .rain-label").forEach(el => el.textContent = language === "en" ? "400 mm isohyet" : "400 mm等降水量线");
+    $$(".journey .rain-label, .hometown-map .rain-label").forEach(el => el.textContent = language === "en" ? "400 mm isohyet" : "400 毫米等降水量线");
     $$(".journey .yellow-label, .hometown-map .yellow-label").forEach(el => el.textContent = labels.yellow);
     const readerYellowLabel = $(".hometown-map .yellow-label");
     if (readerYellowLabel) {

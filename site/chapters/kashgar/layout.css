@@ -120,5 +120,5 @@ body[data-language="en"] .map-label.region text { font-size: 20px; letter-spacin
 
 /* phones: tap targets at least 36 px tall */
 @media (max-width: 900px) {
-  #toggle-map, .place-index summary { min-height: 36px; display: inline-flex; align-items: center; }
+  .place-index summary { min-height: 36px; display: inline-flex; align-items: center; }
 }

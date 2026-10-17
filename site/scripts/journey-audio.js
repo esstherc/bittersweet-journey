@@ -27,9 +27,11 @@
   };
   function chooseBackgroundTrack() {
     if (!location.pathname.includes('/chapters/my-hometown/')) return 'mainMap';
+    // Same rule as my-hometown/app.js: the prologue plays unless the reader is sent straight to the text.
+    // (Entering from the atlas dot before the prologue was seen still shows the prologue, so it gets its music.)
     const params = new URLSearchParams(location.search);
+    if (params.get('open') === '1') return 'mainMap';
     if (params.get('tour') === '1') return 'intro';
-    if (params.get('open') === '1' || params.get('from') === 'atlas') return 'mainMap';
     try { return localStorage.getItem(introSeenKey) === 'true' ? 'mainMap' : 'intro'; }
     catch { return 'intro'; }
   }
@@ -198,7 +200,11 @@
     if (!control || control.matches('.site-sound-toggle, .hometown-entry, .enter-story, .open-book, .chapter-leaf-enter, .finish-chapter, #finish, .stamp-close, .close-notes, #close-data')) return;
     play('click', .32);
   });
+  // Browsers start audio only after a user activation. A touch pointerdown is not one (pointerup, touchend and
+  // click are), so the music retries on each of them until it is playing.
+  const retryAmbience = () => { if (music.paused && enabled && ambienceWanted) syncAmbience(); };
   document.addEventListener('pointerdown', () => syncAmbience(), {capture: true});
+  ['pointerup', 'touchend', 'click'].forEach(type => document.addEventListener(type, retryAmbience, {capture: true}));
   document.addEventListener('keydown', event => {
     if (event.key === 'Enter' || event.key === ' ') syncAmbience();
   }, {capture: true});

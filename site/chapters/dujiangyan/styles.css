@@ -359,3 +359,10 @@ body[data-language="en"] .map-quote {
   /* 宝瓶口 sits at the callout's right edge: its name goes under the point */
   #core-baopingkou text { text-anchor: middle; transform: translate(-12px, 32px); }
 }
+
+@media (orientation: landscape) and (max-height: 600px) and (max-width: 1100px) {
+  .map-quote { display: none; }
+  .plain-title { text-anchor: end; }
+  .inset-title { display: none; }
+  #core-baopingkou text { text-anchor: middle; transform: translate(-12px, 32px); }
+}

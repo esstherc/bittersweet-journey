@@ -535,3 +535,7 @@ body[data-reading-level="4"] .departure-route {
   body:not([data-reading-level="1"]) :is(.geo-legend, .projection-label) { font-size: 16px; }
   body:not([data-reading-level="1"]) .crate-label { font-size: 18px; }
 }
+
+/* a small map panel (phones): only "29 只大木箱" and the scroll count, at full size, on a paper halo */
+.overlay-four.is-compact :is(.crate-manifest-sheet, .crate-stack, .manifest-kicker) { display: none; }
+.overlay-four.is-compact text { paint-order: stroke fill; stroke: var(--paper); stroke-width: 4px; stroke-linejoin: round; }

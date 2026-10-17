@@ -60,3 +60,23 @@
   .credits-book { height: 150px; width: min(480px, 82%); margin-bottom: 28px; }
   .credits-traveler { width: 100px; }
 }
+
+/* 2026-10-16 audit at 667x375, 844x390, 915x412, 932x430 */
+@media (orientation: landscape) and (max-height: 600px) and (max-width: 1100px) {
+  .site-masthead .site-wordmark { align-self: stretch; align-items: center; }
+  .site-masthead .site-language button { min-height: 40px; padding: 0 3px; }
+  .section-rail .rail-caption { display: none; }
+  .section-rail { padding: 0 10px; gap: 6px; }
+  .site-data-sources-trigger { min-height: 40px; }
+}
+@media (orientation: landscape) and (max-height: 600px) and (max-width: 1100px) {
+  .atlas-intro .cta-reopen { font-size: 13.5px; }
+}
+
+@media (orientation: landscape) and (max-height: 600px) and (max-width: 1100px) {
+  .timeline { gap: 10px; padding: 0 12px; }
+  .timeline-caption { display: none; }
+  .timeline-track::before, .timeline-fill { top: 9px; }
+  .timeline-tick { padding-top: 16px; font-size: 13.5px; line-height: 1.1; }
+  .timeline-tick::before { top: 5px; }
+}

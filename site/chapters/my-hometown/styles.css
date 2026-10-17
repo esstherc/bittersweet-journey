@@ -1,4 +1,4 @@
-:root { --accent: #426475; }
+:root { --accent: #6b4a2f; } /* dark brown emphasis (was navy #426475) */
 
 .map-stage { background: #e8e5d9; }
 .earth-scene { position: absolute; inset: 0; display: flex; align-items: center; padding: 28px 22px; gap: 0; color: #344e4c; }
@@ -11,7 +11,7 @@
 .earth-orb svg circle { fill: #8f3029; }
 .earth-orb svg text { fill: #632b26; text-anchor: middle; font: 16px var(--serif-en), var(--serif-cn); paint-order: stroke; stroke: #eee7d9; stroke-width: 4px; stroke-linejoin: round; }
 .earth-context { flex: 0 0 29%; font: 15px/1.6 var(--serif-en), var(--serif-cn); }
-.earth-context h2 { font: 26px/1.25 var(--serif-en), var(--serif-cn); margin: 0 0 22px; color: #334c4a; }
+.earth-context h2 { font: 26px/1.25 var(--serif-en), var(--serif-cn); margin: 0 0 22px; color: #6b4a2f; }
 .earth-context h3 { font: inherit; color: #8f3029; margin: 24px 0 8px; }
 .earth-context p { margin: 14px 0; }
 .earth-context ul { list-style: none; padding: 0; margin: 10px 0; }
@@ -19,14 +19,14 @@
 .earth-context small { display: block; font: 11px/1.5 var(--sans); color: #626255; }
 .earth-fractions { display: flex; gap: 20px; }
 .earth-fractions span { display: flex; flex-direction: column; }
-.earth-fractions b { font-size: 30px; font-weight: 400; color: #326369; }
+.earth-fractions b { font-size: 30px; font-weight: 400; color: #6b4a2f; }
 .earth-fractions span:last-child b { color: #806a44; }
 .earth-ratio { display: flex; gap: 3px; margin: 14px 0 22px; }
 .earth-ratio i { flex: 1; height: 7px; background: #517f83; }
 .earth-ratio .land { background: #b09a6c; }
 .earth-landmass { color: #775b32; }
 .civilization-list li { padding: 8px 0; border-bottom: 1px solid #7b796044; }
-.civilization-list li:last-child { color: #326369; }
+.civilization-list li:last-child { color: #6b4a2f; }
 @media (max-width: 1100px) and (min-width: 761px) {
   .earth-scene { flex-direction: column; justify-content: center; padding: 16px; }
   .earth-orb { flex: 0 1 auto; width: min(100%, 470px); }
@@ -731,7 +731,7 @@ body[data-language="en"] .prologue-story-point .point-clue { font: 10px var(--se
   gap: 18px;
   padding: 7px 2px 8px;
   border-bottom: 0;
-  color: #355d58;
+  color: #6b4a2f;
   font: italic clamp(20px, 1.7vw, 27px)/1.5 var(--serif-en);
   letter-spacing: .03em;
   opacity: 0;
@@ -745,7 +745,7 @@ body[data-language="en"] .prologue-story-point .point-clue { font: 10px var(--se
 .book-choice:focus-visible { outline: 2px solid #b15a43; outline-offset: 7px; }
 .opening-link:focus,
 .opening-link:focus-visible { outline: 0; box-shadow: none; }
-.opening-link:hover { color: #254a47; }
+.opening-link:hover { color: #4f3521; }
 .opening-link-label { margin-left: 0; }
 .arrow-trail { display: inline-flex; gap: 1px; margin-left: 0; }
 .arrow-trail i {
@@ -1211,3 +1211,51 @@ body[data-language="zh"] .project-info-dialog p { font-family: var(--serif-cn); 
 .project-info-close { appearance: none; position: absolute; top: 15px; right: 17px; width: 38px; height: 38px; border: 0; background: none; color: var(--ink-soft); font: 25px/1 var(--sans); cursor: pointer; }
 .project-info-close:hover, .project-info-close:focus-visible { color: var(--seal); }
 @media (max-width: 700px) { .project-info-dialog { padding: 36px 24px 28px; } .project-info-dialog p { font-size: 14px; line-height: 1.7; } }
+/* phones: 太平洋 ends at its anchor, so it stays inside the narrow map; the credit is a full-height tap target */
+@media (max-width: 900px), (orientation: landscape) and (max-height: 600px) and (max-width: 1100px) {
+  .reader-geography-labels .geography-ocean { text-anchor: end; }
+  .credit-info-trigger { min-height: 36px; }
+}
+
+/* the prologue on phones (landscape), as on desktop: the map is the background, shifted right so the rivers sit
+   beside the quotes; the quotes stay in front on the left over a soft fade, not a solid block (2026-10-17) */
+@media (orientation: landscape) and (max-height: 600px) and (max-width: 1100px) {
+  .journey .tour-map { transform: translateX(9%) scale(1.18); transform-origin: 50% 50%; }
+  .scene-yellow,
+  .scene-yellow-stories,
+  .scene-yangtze,
+  .scene-third-line {
+    top: 50%;
+    bottom: auto;
+    left: 16px;
+    right: auto;
+    width: calc(46% - 16px);
+    max-height: calc(100% - 56px);
+    overflow: auto;
+    scrollbar-width: none;
+    padding: 14px 30px 12px 18px;
+    transform: translate(0, calc(-50% + 18px));
+    background: linear-gradient(90deg, #eee9deee 0 72%, #eee9de00 100%);
+  }
+  .scene-yellow[aria-hidden="false"],
+  .scene-yellow-stories[aria-hidden="false"],
+  .scene-yangtze[aria-hidden="false"],
+  .scene-third-line[aria-hidden="false"] { transform: translate(0, -50%); }
+  .scene-yellow blockquote,
+  .scene-yellow-stories blockquote,
+  .scene-yangtze blockquote,
+  body[data-language="en"] :is(.scene-yellow,.scene-yellow-stories,.scene-yangtze) blockquote { margin-bottom: 12px; font-size: 15px; line-height: 1.55; }
+  .quote-stack blockquote + blockquote { padding-top: 12px; }
+  .scene-third-line h2 { font-size: 22px; }
+  .scene-third-line > p:not(.scene-index) { margin-bottom: 14px; font-size: 14px; line-height: 1.6; }
+  /* the English sea names are too long for the narrow map: they covered the river names; South China Sea stays */
+  body[data-language="en"] .journey .prologue-marine-label:nth-child(-n+3) { display: none; }
+  .scene-yangtze .opening-action.primary { margin-top: 2px; padding: 7px 12px; }
+}
+@media (orientation: landscape) and (max-height: 600px) and (max-width: 760px) {
+  :is(.scene-yellow,.scene-yellow-stories,.scene-yangtze,.scene-third-line) { width: calc(50% - 16px); }
+  :is(.scene-yellow,.scene-yellow-stories,.scene-yangtze) blockquote,
+  body[data-language="en"] :is(.scene-yellow,.scene-yellow-stories,.scene-yangtze) blockquote { margin-bottom: 8px; font-size: 14px; line-height: 1.5; }
+  .quote-stack blockquote + blockquote { padding-top: 8px; }
+}
+

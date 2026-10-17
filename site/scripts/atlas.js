@@ -290,7 +290,7 @@
 
     // H0: the heading and call-out float over the map on wide screens (L-7)
     const taken = [];
-    [".atlas-intro h1", ".cta-callout", ".atlas-navigation", ".atlas-geography-notes"].forEach((selector) => {
+    [".atlas-intro h1", ".cta-callout", ".cta-reopen", ".atlas-navigation", ".atlas-geography-notes"].forEach((selector) => {
       const node = document.querySelector(selector);
       if (!shownElement(node)) return;
       const b = node.getBoundingClientRect();

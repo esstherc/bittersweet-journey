@@ -219,7 +219,7 @@
     const offsets = {
       "#node-london-two": [-12, -24, "end"], "#node-paris-two": [-12, 30, "end"],
       "#node-germany-two": [12, 8, "start"], "#node-britain-three": [10, -48, "start"],
-      "#node-hungary-three": [12, 24, "start"], "#node-london-four": [-18, -34, "end"],
+      "#node-hungary-three": [12, 24, "start"], "#node-india-three": [0, 26, "middle"], "#node-london-four": [-18, -34, "end"],
       "#node-kashgar-three": [-10, -60, "end"]
     };
     Object.entries(offsets).forEach(([selector, [x, y, anchor]]) => svg.querySelectorAll(`${selector} text`).forEach((node) => {
@@ -265,14 +265,17 @@
   function placeOverlays() {
     const area = visibleArea();
     const inset = 24 / area.scale;
-    const grow = Math.min(pinScale, 1.6);
+    // a small panel: the record keeps its words at their full size and drops the crate grid (styles.css)
+    const compact = pinScale > 1.6;
+    const grow = pinScale;
+    svg.querySelector(".overlay-four").classList.toggle("is-compact", compact);
     svg.querySelector(".overlay-four").setAttribute(
       "transform",
       `translate(${area.x + inset} ${area.y + area.height - inset}) scale(${grow}) translate(-70 -624)`
     );
     svg.querySelector(".overlay-five").setAttribute(
       "transform",
-      `translate(${area.x + area.width - inset - 100 * grow} ${area.y + area.height - inset - 84 * grow}) scale(${grow})`
+      `translate(${area.x + area.width - inset * 0.5 - 48 * grow} ${area.y + area.height - inset * 0.5 - 78 * grow}) scale(${grow})`
     );
   }
 

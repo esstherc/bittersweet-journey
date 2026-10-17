@@ -354,6 +354,8 @@
     [memoryLabel, memoryNote].forEach((node) => { node.style.visibility = "hidden"; });
     hide(flatMarks.summer);
     [["chengde", "chengde"], ["beijing", "beijing"], ["gubeikou", "gubeikou"]].forEach(([key, id]) => place(flatMarks[key], at(id), taken, size, { force: key === "chengde" }));
+    const resortName = regionalPlace("chengde")[language === "zh" ? "zh" : "en"];
+    flatMarks.chengde.name.textContent = size.width < 420 ? resortName.split(" · ")[0] : resortName;
     place(flatMarks.mulan, at("mulan"), taken, size);
     placeText(mulanLabel, project((mulan.west + mulan.east) / 2, mulan.north + 0.06), taken, size);
     // the wall's name sits just south of the wall where the tour crosses it, at Gubeikou
