@@ -80,3 +80,14 @@
   .timeline-tick { padding-top: 16px; font-size: 13.5px; line-height: 1.1; }
   .timeline-tick::before { top: 5px; }
 }
+
+/* atlas chapter bubble on phones (2026-10-17): smaller card and type, so it stays inside the map below the header */
+@media (orientation: landscape) and (max-height: 600px) and (max-width: 1100px) {
+  .chapter-preview { width: 212px; padding: 11px 14px 8px; border-radius: 12px; }
+  body[data-language="en"] .chapter-preview { width: 228px; }
+  .chapter-preview > p[data-copy="preview-text"] { margin: 0 0 6px; font-size: 14.5px; line-height: 1.55; letter-spacing: .02em; }
+  body[data-language="en"] .chapter-preview > p[data-copy="preview-text"] { font-size: 15px; line-height: 1.4; }
+  .chapter-preview .enter-story { min-height: 36px; padding: 4px 0; gap: 10px; font-size: 13.5px; letter-spacing: .1em; }
+  .chapter-preview .enter-story svg { width: 34px; }
+}
+

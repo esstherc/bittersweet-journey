@@ -148,13 +148,6 @@
     if (background?.content) {
       dialog.classList.add('has-landscape');
       sheet.append(background.content.cloneNode(true));
-      motionButton = make('button', 'chapter-leaf-motion');
-      motionButton.type = 'button';
-      motionButton.addEventListener('click', () => {
-        dialog.classList.toggle('is-motion-paused');
-        refresh();
-      });
-      sheet.append(motionButton);
       const visibility = () => dialog.classList.toggle('is-background-hidden', document.hidden);
       document.addEventListener('visibilitychange', visibility);
       visibility();

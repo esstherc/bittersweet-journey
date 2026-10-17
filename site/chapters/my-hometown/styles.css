@@ -1220,7 +1220,7 @@ body[data-language="zh"] .project-info-dialog p { font-family: var(--serif-cn); 
 /* the prologue on phones (landscape), as on desktop: the map is the background, shifted right so the rivers sit
    beside the quotes; the quotes stay in front on the left over a soft fade, not a solid block (2026-10-17) */
 @media (orientation: landscape) and (max-height: 600px) and (max-width: 1100px) {
-  .journey .tour-map { transform: translateX(9%) scale(1.18); transform-origin: 50% 50%; }
+  .journey .tour-map { transform: translateX(8%) scale(1.45); transform-origin: 50% 50%; }
   .scene-yellow,
   .scene-yellow-stories,
   .scene-yangtze,
@@ -1244,7 +1244,7 @@ body[data-language="zh"] .project-info-dialog p { font-family: var(--serif-cn); 
   .scene-yellow blockquote,
   .scene-yellow-stories blockquote,
   .scene-yangtze blockquote,
-  body[data-language="en"] :is(.scene-yellow,.scene-yellow-stories,.scene-yangtze) blockquote { margin-bottom: 12px; font-size: 15px; line-height: 1.55; }
+  body[data-language="en"] :is(.scene-yellow,.scene-yellow-stories,.scene-yangtze) blockquote { margin-bottom: 12px; font-size: 20px; line-height: 1.55; }
   .quote-stack blockquote + blockquote { padding-top: 12px; }
   .scene-third-line h2 { font-size: 22px; }
   .scene-third-line > p:not(.scene-index) { margin-bottom: 14px; font-size: 14px; line-height: 1.6; }
@@ -1255,7 +1255,8 @@ body[data-language="zh"] .project-info-dialog p { font-family: var(--serif-cn); 
 @media (orientation: landscape) and (max-height: 600px) and (max-width: 760px) {
   :is(.scene-yellow,.scene-yellow-stories,.scene-yangtze,.scene-third-line) { width: calc(50% - 16px); }
   :is(.scene-yellow,.scene-yellow-stories,.scene-yangtze) blockquote,
-  body[data-language="en"] :is(.scene-yellow,.scene-yellow-stories,.scene-yangtze) blockquote { margin-bottom: 8px; font-size: 14px; line-height: 1.5; }
+  body[data-language="en"] :is(.scene-yellow,.scene-yellow-stories,.scene-yangtze) blockquote { margin-bottom: 8px; font-size: 20px; line-height: 1.5; }
+  .journey .tour-map { transform: translateX(12%) scale(1.45); }
   .quote-stack blockquote + blockquote { padding-top: 8px; }
 }
 

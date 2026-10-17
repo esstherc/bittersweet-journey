@@ -774,11 +774,15 @@
     const cy = core.top + core.height / 2 - host.top;
     const width = preview.offsetWidth;
     const height = preview.offsetHeight;
-    const near = 76;
-    const gaps = [near, near + 44, near + 88, near + 132];
-    const shift = 44;
-    const margin = 12;
-    const minTop = parseFloat(getComputedStyle(experience).paddingTop) + margin;
+    // phones: the card sits closer to its point, and never under the fixed title bar
+    const compact = window.matchMedia("(orientation: landscape) and (max-height: 600px) and (max-width: 1100px)").matches;
+    const near = compact ? 44 : 76;
+    const step = compact ? 28 : 44;
+    const gaps = [near, near + step, near + step * 2, near + step * 3];
+    const shift = step;
+    const margin = compact ? 8 : 12;
+    const header = document.querySelector(".site-masthead")?.getBoundingClientRect();
+    const minTop = Math.max(parseFloat(getComputedStyle(experience).paddingTop), header ? header.bottom - host.top : 0) + margin;
     const footer = document.querySelector(".atlas-footer").getBoundingClientRect();
     const maxBottom = (footer.top < host.bottom ? footer.top : host.bottom) - host.top - margin;
 
@@ -804,7 +808,10 @@
     });
     const headline = document.createRange();
     headline.selectNodeContents(document.querySelector(".atlas-intro h1"));
-    const intro = [headline, document.querySelector(".cta-callout")].map((node) => rel(node.getBoundingClientRect()));
+    // the title, the guide and the zoom controls stay uncovered
+    const intro = [headline, ...document.querySelectorAll(".cta-callout, .cta-reopen:not([hidden]), .atlas-navigation")]
+      .map((node) => rel(node.getBoundingClientRect()))
+      .filter((box) => box.right > box.left && box.bottom > box.top);
 
     const clampX = (x) => Math.min(Math.max(x, margin), host.width - margin - width);
     const clampY = (y) => Math.min(Math.max(y, minTop), maxBottom - height);
@@ -835,7 +842,7 @@
         Math.max(0, box.bottom - maxBottom);
       const covered =
         weighed.reduce((sum, item) => sum + overlapArea(box, item.box) * item.weight, 0) +
-        intro.reduce((sum, item) => sum + overlapArea(box, item), 0) * 3;
+        intro.reduce((sum, item) => sum + overlapArea(box, item), 0) * (compact ? 80 : 3);
       // the card's button (bottom-left) must never land on a dot: a tap there would enter the wrong chapter
       const button = {
         left: box.left + 8,
