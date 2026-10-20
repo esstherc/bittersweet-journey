@@ -272,6 +272,7 @@
     if(state.returnTo){const r=state.returnTo;let pi=r.paragraph;if(r.section===3&&pi>=9)pi=9;if(r.section===4&&pi>=6)pi=lang==='en'?(pi<=7?6:pi-1):(pi===6?6:pi+1);r.paragraph=pi;}
   }
   function enterReading(scene=1){
+    if(!state.opened)window.JOURNEY_ANALYTICS?.event('chapter_start',{chapter_id:'kashgar',chapter_number:9,site_language:state.lang});
     document.body.classList.remove('is-unopened');
     document.body.classList.add('is-open');
     state.opened=true;state.scene=scene;state.cameraParagraph=null;state.maxScene=Math.max(state.maxScene,scene);state.selected=null;setFollow(true);
@@ -287,6 +288,7 @@
     if(document.body.classList.contains('is-completing'))return;
     window.JOURNEY_AUDIO?.play('complete', .58);
     save('bittersweet-journey:kashgar:complete','true');state.maxScene=16;
+    window.JOURNEY_ANALYTICS?.onceLocal('chapter_complete','chapter_complete:kashgar',{chapter_id:'kashgar',chapter_number:9,site_language:state.lang});
     hideCard();
     document.body.classList.add('is-completing');
     $('#completion').setAttribute('aria-hidden','false');

@@ -12,8 +12,12 @@
   const replay=document.createElement('button');replay.type='button';replay.className='credits-replay';
   document.querySelector('.atlas-footer-source').append(replay);
   function localize(){credits.render();replay.textContent=document.body.dataset.language==='en'?'End credits':'旅程谢幕';}
-  function show(){if(!complete())return;previousFocus=document.activeElement;credits.open();}
-  replay.addEventListener('click',show);
+  function show(method='automatic'){
+    if(!complete()||dialog.open)return;
+    previousFocus=document.activeElement;credits.open();
+    window.JOURNEY_ANALYTICS?.event('finale_view',{view_method:method,chapter_count:stories.length,site_language:document.body.dataset.language});
+  }
+  replay.addEventListener('click',()=>show('replay'));
   function close(){dialog.close();if(previousFocus?.isConnected)previousFocus.focus({preventScroll:true});}
 
   dialog.addEventListener('cancel',event=>{event.preventDefault();close();});
@@ -26,6 +30,10 @@
       try{localStorage.removeItem(key);}catch{}
       animating=false;if(dialog.open)close();return;
     }
+    window.JOURNEY_ANALYTICS?.onceLocal('journey_complete',`journey_complete:${signature}`,{
+      chapter_count:stories.length,
+      site_language:document.body.dataset.language
+    });
     if(seen()||animating||dialog.open)return;
     const returning=document.body.dataset.returningStory;
     if(document.readyState!=='complete'||document.hidden||document.documentElement.matches('.land-in-transit')||document.querySelector('.stamp-overlay.is-visible')||(returning&&document.body.dataset.sealCollection!=='collected')){
@@ -36,7 +44,7 @@
   }
   window.addEventListener('atlas-map-illuminated',()=>{
     if(!animating||!complete())return;
-    animating=false;window.SITE_HEADER?.refresh();show();
+    animating=false;window.SITE_HEADER?.refresh();show('automatic');
     try{localStorage.setItem(key,signature);}catch{}
 
   });
@@ -49,7 +57,7 @@
   localize();
   if(new URLSearchParams(location.search).get('credits')==='1') {
     const url=new URL(location.href);url.searchParams.delete('credits');history.replaceState({},'',url);
-    show();
+    show('direct');
   }
   attempt();
 })();

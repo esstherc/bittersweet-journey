@@ -1320,4 +1320,8 @@
       window.setTimeout(()=>target.classList.remove('is-receiving'),300);
     }
   }
+  window.JOURNEY_ANALYTICS?.onceSession('atlas_view', 'atlas_view', {
+    chapter_count: chapterTotal,
+    site_language: state.language
+  });
 })();

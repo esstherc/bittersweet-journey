@@ -24,6 +24,9 @@
     const destination = new URL('chapters/my-hometown/index.html', base);
     destination.searchParams.set('tour', '1');
     destination.searchParams.set('lang', language === 'zh' ? 'zh' : 'en');
+    ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid','dclid','gbraid','wbraid'].forEach(key=>{
+      if(query.has(key))destination.searchParams.set(key,query.get(key));
+    });
     document.documentElement.style.visibility = 'hidden';
     redirecting = true;
     location.replace(destination.href);

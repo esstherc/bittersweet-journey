@@ -336,6 +336,11 @@
       try { window.localStorage.setItem(`bittersweet-journey:${id}:started`, "true"); } catch {}
       if (state.open) return;
       state.open = true;
+      window.JOURNEY_ANALYTICS?.event("chapter_start", {
+        chapter_id: id,
+        chapter_number: number,
+        site_language: state.language
+      });
       window.JOURNEY_AUDIO?.setAmbience(false);
       if (!immediate) window.JOURNEY_AUDIO?.play('page', .48);
       if (immediate) els.curtain.style.transition = "none";
@@ -369,6 +374,11 @@
       window.JOURNEY_AUDIO?.play('complete', .58);
       window.localStorage.setItem(`bittersweet-journey:${id}:complete`, "true");
       window.localStorage.setItem(LANGUAGE_KEY, state.language);
+      window.JOURNEY_ANALYTICS?.onceLocal("chapter_complete", `chapter_complete:${id}`, {
+        chapter_id: id,
+        chapter_number: number,
+        site_language: state.language
+      });
       window.setTimeout(() => {
         const destination = `${ATLAS_URL}?revealed=${config.revealId || id}&lang=${state.language}`;
         if (window.LAND_TRANSITION) window.LAND_TRANSITION.navigate(destination);
