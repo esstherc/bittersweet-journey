@@ -1282,3 +1282,26 @@ body[data-language="zh"] .project-info-dialog p { font-family: var(--serif-cn); 
   .scene-books .book-choices { transform: scale(.7); transform-origin: 50% 0; margin-bottom: -76px; }
   .question-answers { margin: 14px auto 18px; }
 }
+
+/* Reduce Motion (on by default on many iPhones) removes every journey animation, and these only fade in through
+   animations: without this they stayed at opacity 0, hiding the questions, the quotes and the enter button. */
+@media (prefers-reduced-motion: reduce) {
+  .question-answers span,
+  .scene-yellow-stories .quote-stack blockquote,
+  .scene-yangtze .yangtze-quote-stack blockquote,
+  .scene-yangtze .opening-action.primary { opacity: 1; filter: none; transform: none; }
+  .question-answers span { opacity: .82; }
+}
+
+/* Short landscape phones: a quieter first page with more air above and below; books and their caption sit
+   clear of the progress line, which now runs along the top. */
+@media (orientation: landscape) and (max-height: 440px) and (max-width: 1100px) {
+  .scene-question h2 { font-size: clamp(26px, 9.5vh, 36px); }
+  .question-answers { gap: 4px 18px; margin: 10px auto 14px; font-size: 15px; }
+  .opening-link { font-size: 17px; }
+  .journey-progress { top: 14px; }
+  .scene-books { top: calc(50% + 14px); }
+  .scene-books .author-intro { font-size: 14px; }
+  .scene-books .book-choices { transform: scale(.6); margin-bottom: -96px; }
+  .scene-books .book-caption { bottom: -8px; font-size: 20px; }
+}
