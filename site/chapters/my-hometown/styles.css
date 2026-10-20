@@ -1260,3 +1260,25 @@ body[data-language="zh"] .project-info-dialog p { font-family: var(--serif-cn); 
   .quote-stack blockquote + blockquote { padding-top: 8px; }
 }
 
+
+/* iPhone Safari leaves ~300-370 px in landscape (2026-10-20): the quote box scrolled with no visible scrollbar,
+   hiding the second quote and the enter button. Quotes get a wider, smaller-type panel; only the stack scrolls,
+   so the button stays on screen; books scale down; progress moves to the top so it clears the panel. */
+@media (orientation: landscape) and (max-height: 440px) and (max-width: 1100px) {
+  .journey-progress { top: 22px; bottom: auto; }
+  :is(.scene-yellow,.scene-yellow-stories,.scene-yangtze,.scene-third-line) {
+    width: calc(58% - 16px);
+    max-height: calc(100% - 28px);
+    padding: 10px 26px 10px 16px;
+  }
+  :is(.scene-yellow,.scene-yellow-stories,.scene-yangtze) blockquote,
+  body[data-language="en"] :is(.scene-yellow,.scene-yellow-stories,.scene-yangtze) blockquote { margin-bottom: 6px; font-size: 16px; line-height: 1.5; }
+  .quote-stack blockquote + blockquote { padding-top: 6px; }
+  .scene-yangtze { display: flex; flex-direction: column; align-items: flex-start; overflow: hidden; }
+  .scene-yangtze .yangtze-quote-stack { min-height: 0; overflow: auto; scrollbar-width: none; }
+  .scene-yangtze .opening-action.primary { flex: none; min-height: 36px; margin-top: 6px; }
+  .journey .tour-map { transform: translateX(18%) scale(1.45); }
+  .scene-books .author-intro { max-width: min(560px, calc(100vw - 260px)); margin-bottom: 10px; font-size: 15px; line-height: 1.5; }
+  .scene-books .book-choices { transform: scale(.7); transform-origin: 50% 0; margin-bottom: -76px; }
+  .question-answers { margin: 14px auto 18px; }
+}
