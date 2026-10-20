@@ -17,10 +17,8 @@
     if (redirecting) return true;
     if (hasReadingTrace()) return false;
     const query = new URLSearchParams(location.search);
-    let language = query.get('lang');
-    if (!['zh', 'en'].includes(language)) {
-      try { language = localStorage.getItem('bittersweet-journey:language'); } catch {}
-    }
+    const requestedLanguage = query.get('lang');
+    const language = ['zh', 'en'].includes(requestedLanguage) ? requestedLanguage : 'en';
     const destination = new URL('chapters/my-hometown/index.html', base);
     destination.searchParams.set('tour', '1');
     destination.searchParams.set('lang', language === 'zh' ? 'zh' : 'en');

@@ -10,10 +10,11 @@ function setup(entries={},search=''){
  return {values,visits,events,api:window.ATLAS_INTRO};
 }
 for(const entries of [{},{'bittersweet-journey:language':'zh'},{'bittersweet-journey:my-hometown:intro-seen':'true'},{'bittersweet-journey:dujiangyan:complete':'false'}]){
- const state=setup(entries);assert.equal(state.visits.length,1);const url=new URL(state.visits[0]);assert.equal(url.pathname,'/repo/site/chapters/my-hometown/index.html');assert.equal(url.searchParams.get('tour'),'1');state.events.get('pageshow')();assert.equal(state.visits.length,1);
+ const state=setup(entries);assert.equal(state.visits.length,1);const url=new URL(state.visits[0]);assert.equal(url.pathname,'/repo/site/chapters/my-hometown/index.html');assert.equal(url.searchParams.get('tour'),'1');assert.equal(url.searchParams.get('lang'),'en');state.events.get('pageshow')();assert.equal(state.visits.length,1);
 }
 for(const entries of [{'bittersweet-journey:dujiangyan:complete':'true'},{'bittersweet-journey:mountain-resort:started':'true'},{'bittersweet-journey:kashgar:scene':'3'}]){
  const state=setup(entries);assert.equal(state.visits.length,0);state.values.clear();state.events.get('pageshow')();assert.equal(state.visits.length,1);
 }
 assert.equal(new URL(setup({'bittersweet-journey:language':'en'},'?lang=zh').visits[0]).searchParams.get('lang'),'zh');
+assert.equal(new URL(setup({'bittersweet-journey:language':'zh'},'?lang=en').visits[0]).searchParams.get('lang'),'en');
 console.log('PASS: empty traces, stale intro flag, completed and partial reading, restored pages, language and project paths.');

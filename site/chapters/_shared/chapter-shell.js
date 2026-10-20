@@ -357,6 +357,10 @@
     /* ---------- language ---------- */
 
     function changeLanguage(language) {
+      if (!["zh", "en"].includes(language)) return;
+      const url = new URL(window.location.href);
+      url.searchParams.set("lang", language);
+      window.history.replaceState(window.history.state, "", url.href);
       if (language === state.language) return;
       state.language = language;
       window.localStorage.setItem(LANGUAGE_KEY, language);

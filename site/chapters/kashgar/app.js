@@ -260,7 +260,7 @@
   }
 
   function resizeMap(animate=false){const rect=$('#map').getBoundingClientRect();mapSize={w:rect.width,h:rect.height};$('#map').setAttribute('viewBox',`0 0 ${mapSize.w} ${mapSize.h}`);if(state.follow||!state.camera)moveCamera(sceneCamera(),animate);else drawMap();}
-  function changeLanguage(lang){if(lang===state.lang)return;const reading=state.opened?currentReading():null,selected=state.selected;state.lang=lang;save('bittersweet-journey:language',lang);renderLanguage();drawMap();
+  function changeLanguage(lang){if(!['zh','en'].includes(lang))return;const url=new URL(location.href);url.searchParams.set('lang',lang);history.replaceState(history.state,'',url.href);if(lang===state.lang)return;const reading=state.opened?currentReading():null,selected=state.selected;state.lang=lang;save('bittersweet-journey:language',lang);renderLanguage();drawMap();
     if(reading){const target=anchors.find(a=>+a.dataset.scene===reading.scene);if(target){const sceneAnchors=anchors.filter(a=>+a.dataset.scene===reading.scene),oldCount=chapter[lang==='zh'?'en':'zh'].sections[reading.section].paragraphs.length,newCount=chapter[lang].sections[reading.section].paragraphs.length;
       // I–III are manually checked one-to-one; IV and V contain merged paragraphs.
       let pi=reading.paragraph;if(reading.section===3&&pi>=9)pi=lang==='en'?9:9;

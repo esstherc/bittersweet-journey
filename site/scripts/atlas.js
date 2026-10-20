@@ -646,7 +646,7 @@
     },
     en: {
       "site-title": "Land, Made Visible",
-      "document-title": "Land, Made Visible · A Reading Atlas of A Bittersweet Journey",
+      "document-title": "Land, Made Visible",
       "view-stamps-aria": "View the collected seals",
       "close-aria": "Close",
       "stage-aria": "Story map of China for A Bittersweet Journey Through Culture",
@@ -1060,6 +1060,9 @@
     button.addEventListener("click", () => {
       state.language = button.dataset.language;
       window.localStorage.setItem("bittersweet-journey:language", state.language);
+      const url = new URL(window.location.href);
+      url.searchParams.set("lang", state.language);
+      window.history.replaceState(window.history.state, "", url.href);
       renderLanguage();
       renderProgress();
     });
@@ -1206,7 +1209,12 @@
       if (firstReturnReveal) localStorage.setItem(revealSeenKey, "true");
     } catch { firstReturnReveal = true; }
   }
-  if (STORIES[returning]) window.history.replaceState({}, "", "./index.html");
+  if (STORIES[returning]) {
+    const url = new URL(window.location.href);
+    url.searchParams.delete("revealed");
+    url.searchParams.set("lang", state.language);
+    window.history.replaceState(window.history.state, "", url.href);
+  }
 
   if (firstReturnReveal) {
     renderReceipt(returning);
