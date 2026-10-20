@@ -91,3 +91,26 @@
   .chapter-preview .enter-story svg { width: 34px; }
 }
 
+
+/* iPhone Safari (2026-10-20): every phone visitor rotates to landscape, and iOS inflates text on rotation unless the size is pinned. */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+
+/* Safari's toolbars leave ~300-340 px of landscape height; slimmer chrome keeps the reader to more than two lines. */
+@media (orientation: landscape) and (max-height: 440px) and (max-width: 1100px) {
+  :root { --site-header-height: 44px; --bar-top: 44px; --bar-bottom: 36px; --atlas-footer-h: 36px; --rail-h: 38px; --ctx-pad-x: 16px; }
+  .site-masthead .site-language button { min-height: 36px; }
+  .reader-scroll { padding: 12px var(--ctx-pad-x) 24px; }
+  .reading-copy { font-size: 16px; }
+  .reader-section-label { font-size: 17px; }
+  .reader-rule { margin: 10px 0 14px; }
+  .reading-section + .reading-section { margin-top: 36px; padding-top: 36px; }
+  .reading-section-body p:first-child:not(.no-dropcap)::first-letter { font-size: 2.6em; }
+  .reader-note { margin-bottom: 24px; font-size: 15px; line-height: 1.75; }
+  .section-button { min-height: 38px; }
+  .atlas-map-stage { inset: var(--site-header-height) 0 var(--atlas-footer-h); }
+  .atlas-footer { height: var(--atlas-footer-h); min-height: var(--atlas-footer-h); }
+  .atlas-footer .view-stamps, .atlas-footer .reset-progress, .site-data-sources-trigger { min-height: var(--atlas-footer-h); }
+  .atlas-intro { top: calc(var(--site-header-height) + 8px); }
+  .atlas-intro .cta-callout { max-height: calc(100dvh - var(--site-header-height) - var(--atlas-footer-h) - 60px); }
+  .scene-question h2 { max-width: 70vw; font-size: clamp(30px, 12vh, 44px); }
+}
