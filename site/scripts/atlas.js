@@ -603,7 +603,7 @@
   const copy = {
     zh: {
       "site-title": "山河显影",
-      "document-title": "山河显影 · 文化苦旅阅读地图",
+      "document-title": "Land, Made Visible",
       "view-stamps-aria": "查看已显影的图章",
       "close-aria": "关闭",
       "stage-aria": "文化苦旅中国故事地图",
