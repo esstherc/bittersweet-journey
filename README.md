@@ -2,7 +2,7 @@
 
 [![Land, Made Visible poster showing the literary atlas, chapter maps, and ways to explore](site/assets/land-made-visible-poster.webp)](<site/assets/Land Made Visible.pdf>)
 
-[Enter the story map](https://yanbingchen.site/bittersweet-journey/) · [View or download the poster (PDF)](<site/assets/Land Made Visible.pdf>)
+[Enter the story map](https://yanbingchen.site/bittersweet-journey/) · [Watch the video](https://www.youtube.com/watch?v=Q7rjfPDkKVA) · [View or download the poster (PDF)](<site/assets/Land Made Visible.pdf>)
 
 **An interactive journey through literature and landscape.**
 
