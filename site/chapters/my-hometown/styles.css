@@ -1184,9 +1184,10 @@ body[data-language="en"] :is(.scene-yellow,.scene-yellow-stories,.scene-yangtze)
   border-radius: 50%;
   font: 600 .72em/1 var(--sans);
   color: #8d735a;
-  opacity: .38;
-  transform: scale(.86);
-  transition: opacity .2s ease, transform .2s ease, color .2s ease;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-.2em) scale(.78);
+  transition: opacity .2s ease, transform .2s ease, color .2s ease, visibility .2s ease;
 }
 .credit-info-trigger:hover .credit-info-mark,
 .credit-info-trigger:focus-visible .credit-info-mark { opacity: 1; visibility: visible; transform: scale(1); color: var(--seal); }
@@ -1195,6 +1196,7 @@ body[data-language="en"] :is(.scene-yellow,.scene-yellow-stories,.scene-yangtze)
   max-height: min(760px, calc(100vh - 72px));
   margin: auto;
   padding: 42px 46px 40px;
+  overflow-y: auto;
   border: 1px solid rgba(90, 76, 58, .28);
   color: var(--ink);
   background: rgba(244, 239, 228, .98);
@@ -1203,14 +1205,18 @@ body[data-language="en"] :is(.scene-yellow,.scene-yellow-stories,.scene-yangtze)
 .project-info-dialog::backdrop { background: rgba(42, 34, 25, .34); backdrop-filter: blur(2px); }
 .project-info-dialog h2 { margin: 0 48px 24px 0; font: 400 clamp(27px, 4vw, 40px)/1.1 var(--serif-en); letter-spacing: -.02em; }
 body[data-language="zh"] .project-info-dialog h2 { font-family: var(--serif-cn); letter-spacing: .08em; }
-.project-info-dialog h3 { margin: 28px 0 8px; color: var(--seal); font: 600 12px/1.4 var(--sans); letter-spacing: .16em; text-transform: uppercase; }
 .project-info-dialog p { margin: 0 0 18px; color: var(--ink-soft); font: 15px/1.8 var(--serif-en); letter-spacing: .005em; }
 body[data-language="zh"] .project-info-dialog p { font-family: var(--serif-cn); letter-spacing: .04em; }
-.project-info-kicker { margin-bottom: 12px !important; color: var(--seal) !important; font: 600 11px/1.4 var(--sans) !important; letter-spacing: .18em !important; text-transform: uppercase; }
-.project-info-reference { margin-bottom: 0 !important; font-size: 13px !important; color: var(--ink-soft) !important; }
+.project-info-dialog cite { font-style: italic; }
+body[data-language="zh"] .project-info-dialog cite { font-style: normal; }
+.project-info-dialog .project-info-reveal { color: var(--ink); }
+.project-info-dialog .project-info-signature { margin: 28px 0 0; color: var(--seal); font-family: var(--sans); font-size: 13px; letter-spacing: .08em; }
 .project-info-close { appearance: none; position: absolute; top: 15px; right: 17px; width: 38px; height: 38px; border: 0; background: none; color: var(--ink-soft); font: 25px/1 var(--sans); cursor: pointer; }
 .project-info-close:hover, .project-info-close:focus-visible { color: var(--seal); }
 @media (max-width: 700px) { .project-info-dialog { padding: 36px 24px 28px; } .project-info-dialog p { font-size: 14px; line-height: 1.7; } }
+@media (hover: none) {
+  .credit-info-mark { opacity: .58; visibility: visible; transform: none; }
+}
 /* phones: 太平洋 ends at its anchor, so it stays inside the narrow map; the credit is a full-height tap target */
 @media (max-width: 900px), (orientation: landscape) and (max-height: 600px) and (max-width: 1100px) {
   .reader-geography-labels .geography-ocean { text-anchor: end; }
@@ -1259,8 +1265,6 @@ body[data-language="zh"] .project-info-dialog p { font-family: var(--serif-cn); 
   .journey .tour-map { transform: translateX(12%) scale(1.45); }
   .quote-stack blockquote + blockquote { padding-top: 8px; }
 }
-
-
 /* iPhone Safari leaves ~300-370 px in landscape (2026-10-20): the quote box scrolled with no visible scrollbar,
    hiding the second quote and the enter button. Quotes get a wider, smaller-type panel; only the stack scrolls,
    so the button stays on screen; books scale down; progress moves to the top so it clears the panel. */

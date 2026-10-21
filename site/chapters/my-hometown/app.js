@@ -53,12 +53,14 @@
       "notes-source-4": "万里长城：© OpenStreetMap contributors，ODbL，relation 318110；遗址坐标参考 UNESCO 世界遗产资料。地图镜头与阅读动画为本站原创视觉表达。",
       "notes-disclaimer": "图上线路是真实气候栅格的 400 毫米多年平均年降水量等值线，不代表每一年的固定边界。其位置会随资料时期与分辨率变化；农业与游牧也不由单一数值绝对决定。",
       "complete-line": "三条线留下了山河的底色。",
-      "project-info-kicker": "关于这张地图",
-      "project-info-title": "余秋雨与这段旅程",
-      "project-info-body-1": "这是一个受余秋雨《文化苦旅》启发的互动阅读体验。这部散文集连接旅行、历史、地方与文化思考。网页地图不把全书呈现为传统章节列表，而是把阅读变成一次穿越中国的探索之旅。",
-      "project-info-body-2": "你可以自由探索地图，选择地点，进入与章节对应的阅读体验。每一章都将文字与所在地及其主题相关的视觉和互动元素结合起来，让界面随着你在地点与故事之间移动而变化。",
-      "project-info-references": "参考文献",
-      "project-info-reference-1": "[1] 余秋雨。1992。《文化苦旅》。知识出版社，中国上海。"
+      "project-info-title": "我们为什么创作这件作品",
+      "project-info-body-1": "当文学与它所描写的真实地理相遇时，会产生怎样一种新的数字人文体验？阅读能否变得更具视觉性、空间感与沉浸感——不再只是翻动书页，而更像走进一片风景？",
+      "project-info-body-2-before": "我们从余秋雨的",
+      "project-info-book-title": "《文化苦旅》",
+      "project-info-body-2-after": "出发。余秋雨写的是行走中国的旅程，但地点从来不是唯一的主题。一条河、一处遗址或一座古城，都会成为进入历史与文化记忆的入口。景观与思考之间的这种紧密联系，让这本书自然成为我们的起点。",
+      "project-info-body-3": "我们不想把这些散文做成一部常规的数字版本，而是想创造一个读者可以在其中移动的世界。地图不只是标出每一章的位置，也塑造旅程、揭示联系，让故事在探索中展开。它既是阅读体验，也是地图集和游戏——是我们对数字人文可能性的一次小小实验。",
+      "project-info-body-4": "完成全部章节后，旅程的终点会出现一份隐藏菜单！",
+      "project-info-signature": "Yanbing Chen & Eugenie Huang"
     },
     en: {
       "map-teaser": "Follow three lines into the land.",
@@ -76,12 +78,14 @@
       "notes-source-4": "Great Wall: © OpenStreetMap contributors, ODbL, relation 318110; heritage coordinates reference UNESCO World Heritage records. Map camera and reading animation: original site design.",
       "notes-disclaimer": "This line is the 400 mm multi-year mean annual precipitation contour derived from a real climate grid. It is not fixed from year to year, and its position changes with the reference period and resolution. Farming and herding do not follow a single absolute line.",
       "complete-line": "Three lines leave their trace upon the land.",
-      "project-info-kicker": "About this map",
-      "project-info-title": "Yu Qiuyu and the journey",
-      "project-info-body-1": "This is an interactive reading experience inspired by Yu Qiuyu’s Wenhua Kulu (A Bittersweet Journey through Culture) [1], an essay collection that connects travel, history, place, and cultural reflection. Rather than presenting the book as a traditional list of chapters, this web map turns reading into an exploratory journey across China.",
-      "project-info-body-2": "Instead of following a fixed reading order, explore the map freely, select a location, and enter a chapter-specific reading experience. Each chapter combines text with visual and interactive elements related to its setting and themes, allowing the interface to change as you move between places and stories.",
-      "project-info-references": "References",
-      "project-info-reference-1": "[1] Qiuyu Yu. 1992. Wenhua Kulu (A Bittersweet Journey through Culture). Zhishi Chubanshe, Shanghai, China."
+      "project-info-title": "Why We Made This",
+      "project-info-body-1": "What new kind of digital humanities experience becomes possible when literature meets the real geography it describes? Can reading become more visual, spatial, and immersive, less like turning pages, and more like stepping into a landscape?",
+      "project-info-body-2-before": "We began with Yu Qiuyu’s ",
+      "project-info-book-title": "A Bittersweet Journey Through Culture",
+      "project-info-body-2-after": ". Yu writes about journeys across China, but his subject is never place alone. A river, a ruin, or an ancient city becomes a way into history and cultural memory. This close relationship between landscape and reflection made the book a natural starting point for us.",
+      "project-info-body-3": "Rather than turning the essays into a conventional digital edition, we wanted to create a world that readers could move through. The map does more than locate each chapter. It shapes the journey, reveals connections, and allows the story to unfold through exploration. The result is part reading experience, part atlas, and part game—a small experiment in what digital humanities can make possible.",
+      "project-info-body-4": "Complete every chapter, and a hidden menu will appear at the end of your journey!",
+      "project-info-signature": "Yanbing Chen & Eugenie Huang"
     }
   };
 
@@ -633,7 +637,7 @@
     id: "my-hometown", number: 3, data, sections, copy,
     onRender(nextLanguage, state) {
       language = nextLanguage;
-      $(".credit-info-trigger")?.setAttribute("aria-label", language === "en" ? "About Yu Qiuyu and this reading map" : "关于余秋雨与这次阅读地图的说明");
+      $(".credit-info-trigger")?.setAttribute("aria-label", language === "en" ? "Read why we made this project" : "阅读我们的创作动机");
       renderOpening();
       updateReaderMap(state.active);
       const labels = smallCopy[language];
