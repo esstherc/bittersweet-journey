@@ -52,15 +52,7 @@
       "notes-source-3": "降水分界：WorldClim 2.1，BIO12 年降水量，1970–2000 年平均，10 arc-minute；以 GDAL 提取 400 mm 等值线后投影到本站地图。",
       "notes-source-4": "万里长城：© OpenStreetMap contributors，ODbL，relation 318110；遗址坐标参考 UNESCO 世界遗产资料。地图镜头与阅读动画为本站原创视觉表达。",
       "notes-disclaimer": "图上线路是真实气候栅格的 400 毫米多年平均年降水量等值线，不代表每一年的固定边界。其位置会随资料时期与分辨率变化；农业与游牧也不由单一数值绝对决定。",
-      "complete-line": "三条线留下了山河的底色。",
-      "project-info-title": "我们为什么创作这件作品",
-      "project-info-body-1": "当文学与它所描写的真实地理相遇时，会产生怎样一种新的数字人文体验？阅读能否变得更具视觉性、空间感与沉浸感——不再只是翻动书页，而更像走进一片风景？",
-      "project-info-body-2-before": "我们从余秋雨的",
-      "project-info-book-title": "《文化苦旅》",
-      "project-info-body-2-after": "出发。余秋雨写的是行走中国的旅程，但地点从来不是唯一的主题。一条河、一处遗址或一座古城，都会成为进入历史与文化记忆的入口。景观与思考之间的这种紧密联系，让这本书自然成为我们的起点。",
-      "project-info-body-3": "我们不想把这些散文做成一部常规的数字版本，而是想创造一个读者可以在其中移动的世界。地图不只是标出每一章的位置，也塑造旅程、揭示联系，让故事在探索中展开。它既是阅读体验，也是地图集和游戏——是我们对数字人文可能性的一次小小实验。",
-      "project-info-body-4": "完成全部章节后，旅程的终点会出现一份隐藏菜单！",
-      "project-info-signature": "Yanbing Chen & Eugenie Huang"
+      "complete-line": "三条线留下了山河的底色。"
     },
     en: {
       "map-teaser": "Follow three lines into the land.",
@@ -77,15 +69,7 @@
       "notes-source-3": "Rainfall boundary: WorldClim 2.1 BIO12 annual precipitation, 1970–2000 average, 10 arc-minute grid; the 400 mm contour was extracted with GDAL and projected into the atlas.",
       "notes-source-4": "Great Wall: © OpenStreetMap contributors, ODbL, relation 318110; heritage coordinates reference UNESCO World Heritage records. Map camera and reading animation: original site design.",
       "notes-disclaimer": "This line is the 400 mm multi-year mean annual precipitation contour derived from a real climate grid. It is not fixed from year to year, and its position changes with the reference period and resolution. Farming and herding do not follow a single absolute line.",
-      "complete-line": "Three lines leave their trace upon the land.",
-      "project-info-title": "Why We Made This",
-      "project-info-body-1": "What new kind of digital humanities experience becomes possible when literature meets the real geography it describes? Can reading become more visual, spatial, and immersive, less like turning pages, and more like stepping into a landscape?",
-      "project-info-body-2-before": "We began with Yu Qiuyu’s ",
-      "project-info-book-title": "A Bittersweet Journey Through Culture",
-      "project-info-body-2-after": ". Yu writes about journeys across China, but his subject is never place alone. A river, a ruin, or an ancient city becomes a way into history and cultural memory. This close relationship between landscape and reflection made the book a natural starting point for us.",
-      "project-info-body-3": "Rather than turning the essays into a conventional digital edition, we wanted to create a world that readers could move through. The map does more than locate each chapter. It shapes the journey, reveals connections, and allows the story to unfold through exploration. The result is part reading experience, part atlas, and part game—a small experiment in what digital humanities can make possible.",
-      "project-info-body-4": "Complete every chapter, and a hidden menu will appear at the end of your journey!",
-      "project-info-signature": "Yanbing Chen & Eugenie Huang"
+      "complete-line": "Three lines leave their trace upon the land."
     }
   };
 
@@ -637,7 +621,6 @@
     id: "my-hometown", number: 3, data, sections, copy,
     onRender(nextLanguage, state) {
       language = nextLanguage;
-      $(".credit-info-trigger")?.setAttribute("aria-label", language === "en" ? "Read why we made this project" : "阅读我们的创作动机");
       renderOpening();
       updateReaderMap(state.active);
       const labels = smallCopy[language];
@@ -653,24 +636,6 @@
     showReaderProgress: false
   });
 
-  const projectInfoDialog = $("#project-info");
-  const projectInfoTrigger = $(".credit-info-trigger");
-  const projectInfoClose = $(".project-info-close");
-  if (projectInfoDialog && projectInfoTrigger && projectInfoClose) {
-    const closeProjectInfo = () => {
-      if (!projectInfoDialog.open) return;
-      projectInfoDialog.close();
-      window.JOURNEY_AUDIO?.play("close", .42);
-    };
-    projectInfoTrigger.addEventListener("click", (event) => {
-      event.stopPropagation();
-      if (!projectInfoDialog.open) projectInfoDialog.showModal();
-      window.JOURNEY_AUDIO?.play("click", .32);
-    });
-    projectInfoClose.addEventListener("click", (event) => { event.stopPropagation(); closeProjectInfo(); });
-    projectInfoDialog.addEventListener("click", (event) => { if (event.target === projectInfoDialog) closeProjectInfo(); });
-    projectInfoDialog.addEventListener("cancel", (event) => { event.preventDefault(); closeProjectInfo(); });
-  }
   // The prologue opens in English unless the URL explicitly requests a language.
   if (!params.has("lang") && (!readSeen() || params.get("tour") === "1")) shell.changeLanguage("en");
 

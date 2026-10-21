@@ -189,3 +189,86 @@ body[data-language="en"] .site-data-sources h2 {
 @media (max-width: 520px) {
   .site-data-sources { padding: 28px 24px 24px; }
 }
+
+/* The text credit opens the project statement in every chapter. */
+.credit-info-trigger {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: .62em;
+  min-width: 0;
+  min-height: 28px;
+  overflow: visible;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.credit-info-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.credit-info-trigger:focus-visible { outline: 1px solid #9d3d31; outline-offset: 4px; }
+.credit-info-mark {
+  display: inline-grid;
+  flex: 0 0 auto;
+  width: 18px;
+  height: 18px;
+  color: #8d735a;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-3px) scale(.78);
+  transition: opacity .2s ease, transform .2s ease, color .2s ease, visibility .2s ease;
+}
+.credit-info-mark svg { width: 100%; height: 100%; overflow: visible; }
+.credit-info-mark circle:first-child,
+.credit-info-mark path { fill: none; stroke: currentColor; stroke-width: 1.35; stroke-linecap: round; stroke-linejoin: round; }
+.credit-info-mark .dot { fill: currentColor; stroke: none; }
+.credit-info-trigger:hover .credit-info-mark,
+.credit-info-trigger:focus-visible .credit-info-mark { opacity: 1; visibility: visible; transform: none; color: #9d3d31; }
+.project-info-dialog {
+  width: min(700px, calc(100vw - 36px));
+  max-height: min(760px, calc(100vh - 72px));
+  margin: auto;
+  padding: 42px 46px 40px;
+  overflow-y: auto;
+  border: 1px solid rgba(90, 76, 58, .28);
+  color: var(--ink, #20251f);
+  background: rgba(244, 239, 228, .99);
+  box-shadow: 0 30px 100px rgba(45, 36, 25, .3);
+}
+.project-info-dialog::backdrop { background: rgba(42, 34, 25, .34); backdrop-filter: blur(2px); }
+.project-info-dialog h2 { margin: 0 48px 24px 0; font: 400 clamp(27px, 4vw, 40px)/1.1 var(--serif-en); letter-spacing: -.02em; }
+body[data-language="zh"] .project-info-dialog h2 { font-family: var(--serif-cn); letter-spacing: .08em; }
+.project-info-dialog p { margin: 0 0 18px; color: var(--ink-soft, #5b5d53); font: 15px/1.8 var(--serif-en); letter-spacing: .005em; }
+body[data-language="zh"] .project-info-dialog p { font-family: var(--serif-cn); letter-spacing: .04em; }
+.project-info-dialog cite { font-style: italic; }
+body[data-language="zh"] .project-info-dialog cite { font-style: normal; }
+.project-info-dialog .project-info-reveal { color: var(--ink, #20251f); }
+.project-info-dialog .project-info-signature { margin: 28px 0 0; color: #9d3d31; font-family: var(--sans); font-size: 13px; letter-spacing: .08em; }
+.project-info-close {
+  appearance: none;
+  position: absolute;
+  top: 15px;
+  right: 17px;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--ink-soft, #5b5d53);
+  cursor: pointer;
+}
+.project-info-close svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; }
+.project-info-close:hover,
+.project-info-close:focus-visible { color: #9d3d31; }
+@media (max-width: 700px) {
+  .project-info-dialog { padding: 36px 24px 28px; }
+  .project-info-dialog p { font-size: 14px; line-height: 1.7; }
+}
+@media (hover: none) {
+  .credit-info-mark { opacity: .58; visibility: visible; transform: none; }
+}
